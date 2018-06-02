@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.SharedKernel", "InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj", "{387EEC6B-6FAE-4E34-92ED-8ADB64635595}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Infrastructure", "InitialEnterprise.Domain.Infrastructure\InitialEnterprise.Domain.Infrastructure.csproj", "{311E98C0-CA24-477E-B3A1-3ECB9CD20555}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.Infrastructure.Tests", "InitialEnterprise.Domain.Infrastructure.Tests\InitialEnterprise.Domain.Infrastructure.Tests.csproj", "{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Infrastructure.Tests", "InitialEnterprise.Infrastructure.Tests\InitialEnterprise.Infrastructure.Tests.csproj", "{12A1E287-5F47-4E77-9F7B-4CFB2301249D}"
@@ -57,10 +55,6 @@ Global
 		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Release|Any CPU.Build.0 = Release|Any CPU
-		{311E98C0-CA24-477E-B3A1-3ECB9CD20555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{311E98C0-CA24-477E-B3A1-3ECB9CD20555}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{311E98C0-CA24-477E-B3A1-3ECB9CD20555}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{311E98C0-CA24-477E-B3A1-3ECB9CD20555}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Release|Any CPU.ActiveCfg = Release|Any CPU

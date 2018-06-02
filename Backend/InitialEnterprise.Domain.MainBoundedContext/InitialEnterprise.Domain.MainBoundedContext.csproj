@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Currency\Aggregate\" />
+    <Folder Include="Currency\Commands\" />
+    <Folder Include="Currency\Events\" />
+    <Folder Include="Currency\Handler\" />
+    <Folder Include="Currency\Repository\" />
+    <Folder Include="Currency\Services\" />
+    <Folder Include="Currency\Validations\" />
+  </ItemGroup>
+
 </Project>
