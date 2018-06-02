@@ -8,7 +8,6 @@
     <Folder Include="CurrencyModule\Events\" />
     <Folder Include="CurrencyModule\Handler\" />
     <Folder Include="CurrencyModule\Repository\" />
-    <Folder Include="CurrencyModule\Services\" />
     <Folder Include="CurrencyModule\Validations\" />
   </ItemGroup>
 

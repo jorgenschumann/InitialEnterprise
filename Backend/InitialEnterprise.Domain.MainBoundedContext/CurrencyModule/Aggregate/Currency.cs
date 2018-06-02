@@ -10,6 +10,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         public string IsoCode { get; private set; }
 
         public decimal Rate { get; private set; }
+        
+        private Currency()
+        {
+        }
 
         public Currency(CreateCommand createCommand)
         {
