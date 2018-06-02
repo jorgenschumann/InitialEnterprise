@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Currency\Aggregate\" />
-    <Folder Include="Currency\Commands\" />
-    <Folder Include="Currency\Events\" />
-    <Folder Include="Currency\Handler\" />
-    <Folder Include="Currency\Repository\" />
-    <Folder Include="Currency\Services\" />
-    <Folder Include="Currency\Validations\" />
+    <Folder Include="CurrencyModule\Commands\" />
+    <Folder Include="CurrencyModule\Events\" />
+    <Folder Include="CurrencyModule\Handler\" />
+    <Folder Include="CurrencyModule\Repository\" />
+    <Folder Include="CurrencyModule\Services\" />
+    <Folder Include="CurrencyModule\Validations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
