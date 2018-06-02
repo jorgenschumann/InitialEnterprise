@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CurrencyModule\Commands\" />
     <Folder Include="CurrencyModule\Events\" />
     <Folder Include="CurrencyModule\Handler\" />
     <Folder Include="CurrencyModule\Repository\" />

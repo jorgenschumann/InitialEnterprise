@@ -9,6 +9,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         public string IsoCode { get; private set; }
 
         public decimal Rate { get; private set; }
+
+        public Currency(ICommand createCommand)
+        {
+
+        }
       
     }
 }
