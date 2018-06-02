@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DryIoc" Version="2.12.10" />
-  </ItemGroup>
-
 </Project>

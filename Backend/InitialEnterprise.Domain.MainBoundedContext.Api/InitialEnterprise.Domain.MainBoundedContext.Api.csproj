@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DryIoc" Version="2.12.10" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
