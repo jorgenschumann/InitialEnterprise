@@ -10,6 +10,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 
         public decimal Rate { get;  set; }
 
+        public bool IsValid => true;
+
         public object Validate()
         {
             throw new System.NotImplementedException();

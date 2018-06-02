@@ -7,5 +7,7 @@ namespace InitialEnterprise.Domain.SharedKernel
     public interface IValidatable
     {
         Object Validate();
+
+        Boolean IsValid { get; }
     }
 }

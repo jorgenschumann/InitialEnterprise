@@ -1,4 +1,5 @@
-﻿using InitialEnterprise.Domain.SharedKernel;
+﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
+using InitialEnterprise.Domain.SharedKernel;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
@@ -10,10 +11,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 
         public decimal Rate { get; private set; }
 
-        public Currency(ICommand createCommand)
+        public Currency(CreateCommand createCommand)
         {
-
-        }
-      
+            if (createCommand.IsValid)
+            {
+                Name = createCommand.Name;
+                IsoCode = createCommand.IsoCode;
+                Rate = createCommand.Rate;
+            }
+        }      
     }
 }
