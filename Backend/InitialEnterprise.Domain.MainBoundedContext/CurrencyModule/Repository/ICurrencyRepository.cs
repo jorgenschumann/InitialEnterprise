@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
