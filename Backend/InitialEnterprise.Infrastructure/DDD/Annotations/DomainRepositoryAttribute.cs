@@ -3,7 +3,7 @@
 namespace InitialEnterprise.Infrastructure.DDD.Annotations
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class DomainServiceAttribute : Attribute
+    public class DomainRepositoryAttribute : Attribute
     {
     }
 }
