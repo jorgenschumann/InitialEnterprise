@@ -8,4 +8,11 @@
     <PackageReference Include="SimpleInjector" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CQRS\Annotations\" />
+    <Folder Include="CQRS\Query\" />
+    <Folder Include="DDD\Annotations\" />
+    <Folder Include="DDD\Application\" />
+  </ItemGroup>
+
 </Project>

@@ -9,31 +9,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.PaymentBoundedContext", "InitialEnterprise.Domain.PaymentBoundedContext\InitialEnterprise.Domain.PaymentBoundedContext.csproj", "{52B16E7F-0512-4B0E-A767-7BF6590439B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.SharedKernel", "InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj", "{387EEC6B-6FAE-4E34-92ED-8ADB64635595}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Infrastructure.Tests", "InitialEnterprise.Domain.Infrastructure.Tests\InitialEnterprise.Domain.Infrastructure.Tests.csproj", "{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.Infrastructure.Tests", "InitialEnterprise.Domain.Infrastructure.Tests\InitialEnterprise.Domain.Infrastructure.Tests.csproj", "{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Infrastructure.Tests", "InitialEnterprise.Infrastructure.Tests\InitialEnterprise.Infrastructure.Tests.csproj", "{12A1E287-5F47-4E77-9F7B-4CFB2301249D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Infrastructure.Tests", "InitialEnterprise.Infrastructure.Tests\InitialEnterprise.Infrastructure.Tests.csproj", "{12A1E287-5F47-4E77-9F7B-4CFB2301249D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.MainBoundedContext.Tests", "InitialEnterprise.Domain.MainBoundedContext.Tests\InitialEnterprise.Domain.MainBoundedContext.Tests.csproj", "{7A50D607-3EB4-46B5-93C8-7BD08E527244}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.MainBoundedContext.Tests", "InitialEnterprise.Domain.MainBoundedContext.Tests\InitialEnterprise.Domain.MainBoundedContext.Tests.csproj", "{7A50D607-3EB4-46B5-93C8-7BD08E527244}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.PaymentBoundedContext.Tests", "InitialEnterprise.Domain.PaymentBoundedContext.Tests\InitialEnterprise.Domain.PaymentBoundedContext.Tests.csproj", "{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.PaymentBoundedContext.Tests", "InitialEnterprise.Domain.PaymentBoundedContext.Tests\InitialEnterprise.Domain.PaymentBoundedContext.Tests.csproj", "{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.SharedKernel.Tests", "InitialEnterprise.Domain.SharedKernel.Tests\InitialEnterprise.Domain.SharedKernel.Tests.csproj", "{CA444CB1-829D-4FCE-9A75-331E35725822}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Infrastructure.CrossCutting.IoC", "InitialEnterprise.Infrastructure.CrossCutting.IoC\InitialEnterprise.Infrastructure.CrossCutting.IoC.csproj", "{93DC2115-15DD-4EAF-8CD6-E57CFB795929}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Infrastructure.Crosscutting", "InitialEnterprise.Infrastructure.Crosscutting\InitialEnterprise.Infrastructure.Crosscutting.csproj", "{F5222FC8-E5EF-45E8-B09D-4C166F7F1FDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Infrastructure.Crosscutting", "InitialEnterprise.Infrastructure.Crosscutting\InitialEnterprise.Infrastructure.Crosscutting.csproj", "{F5222FC8-E5EF-45E8-B09D-4C166F7F1FDE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.MainBoundedContext.Api", "InitialEnterprise.Domain.MainBoundedContext.Api\InitialEnterprise.Domain.MainBoundedContext.Api.csproj", "{8F5B1C5C-7EE6-4AE2-A3CF-55310BF635A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.PaymentBoundedContext.Api", "InitialEnterprise.Domain.PaymentBoundedContext.Api\InitialEnterprise.Domain.PaymentBoundedContext.Api.csproj", "{B3F403D5-546F-47F5-B552-69B0A4A6935D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.MainBoundedContext.Api.Tests", "InitialEnterprise.Domain.MainBoundedContext.Api.Tests\InitialEnterprise.Domain.MainBoundedContext.Api.Tests.csproj", "{6CE0D2CD-1BD4-44D1-9232-A46CADFB1AB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.MainBoundedContext.Api.Tests", "InitialEnterprise.Domain.MainBoundedContext.Api.Tests\InitialEnterprise.Domain.MainBoundedContext.Api.Tests.csproj", "{6CE0D2CD-1BD4-44D1-9232-A46CADFB1AB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests", "InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests\InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests.csproj", "{6EA8F7F1-93BA-43E0-8AA4-658E58048E47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests", "InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests\InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests.csproj", "{6EA8F7F1-93BA-43E0-8AA4-658E58048E47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.Testfixture", "InitialEnterprise.Testfixture\InitialEnterprise.Testfixture.csproj", "{0F9D5D46-D753-4522-BA3C-395D471786AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Testfixture", "InitialEnterprise.Testfixture\InitialEnterprise.Testfixture.csproj", "{0F9D5D46-D753-4522-BA3C-395D471786AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +47,6 @@ Global
 		{52B16E7F-0512-4B0E-A767-7BF6590439B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52B16E7F-0512-4B0E-A767-7BF6590439B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52B16E7F-0512-4B0E-A767-7BF6590439B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{387EEC6B-6FAE-4E34-92ED-8ADB64635595}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,14 +63,6 @@ Global
 		{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA444CB1-829D-4FCE-9A75-331E35725822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA444CB1-829D-4FCE-9A75-331E35725822}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA444CB1-829D-4FCE-9A75-331E35725822}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA444CB1-829D-4FCE-9A75-331E35725822}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93DC2115-15DD-4EAF-8CD6-E57CFB795929}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93DC2115-15DD-4EAF-8CD6-E57CFB795929}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93DC2115-15DD-4EAF-8CD6-E57CFB795929}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93DC2115-15DD-4EAF-8CD6-E57CFB795929}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5222FC8-E5EF-45E8-B09D-4C166F7F1FDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5222FC8-E5EF-45E8-B09D-4C166F7F1FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5222FC8-E5EF-45E8-B09D-4C166F7F1FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
