@@ -7,4 +7,6 @@ namespace InitialEnterprise.Domain.SharedKernel
     public interface ICommand: IValidatable
     {
     }
+
+   
 }

@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         {
         }
 
-        public Currency(CreateCommand createCommand)
+        public Currency(CreateCurrencyCommand createCommand)
         {
             if (createCommand.IsValid)
             {

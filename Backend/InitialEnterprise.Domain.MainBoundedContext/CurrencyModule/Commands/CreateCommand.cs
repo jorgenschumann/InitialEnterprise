@@ -2,7 +2,7 @@
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class CreateCommand: ICommand
+    public class CreateCurrencyCommand: ICommand
     {
         public string Name { get;  set; }
 

@@ -22,7 +22,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Tests
         public void Should_Create_Entity_With_Command_Over_Protected_Ctor()
         {
             //Arrange
-            var createCommand = new CreateCommand
+            var createCommand = new CreateCurrencyCommand
             {
                 Name = "British Pound",
                 IsoCode = "GBP",

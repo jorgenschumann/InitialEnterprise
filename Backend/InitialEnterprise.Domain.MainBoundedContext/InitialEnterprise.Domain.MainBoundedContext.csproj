@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="CurrencyModule\Events\" />
-    <Folder Include="CurrencyModule\Handler\" />
     <Folder Include="CurrencyModule\Validations\" />
   </ItemGroup>
 
