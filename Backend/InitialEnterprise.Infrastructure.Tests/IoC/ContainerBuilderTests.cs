@@ -13,18 +13,34 @@ namespace InitialEnterprise.Infrastructure.Tests
             
             //act
             var container = containerBuilder.Initialize();
+            var service = container.GetInstance<ITestDomainService>() as TestDomainService;
 
-            //assert
-            Assert.NotNull(container.GetInstance<ITestDomainService>());
+            //assert          
+            Assert.NotNull(service);
+            Assert.NotNull(service.testRepository);
         }
     }
 
     [DomainService]
     public class TestDomainService : ITestDomainService
     {
+        public ITestRepository testRepository;
+        public TestDomainService(ITestRepository  testRepository)
+        {
+            this.testRepository = testRepository;
+        }
     }
 
     public interface ITestDomainService
+    {
+    }
+
+    [DomainRepository]
+    public class TestRepository : ITestRepository
+    {
+    }
+
+    public interface ITestRepository
     {
     }
 

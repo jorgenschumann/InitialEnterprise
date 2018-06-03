@@ -19,7 +19,9 @@ namespace InitialEnterprise.Infrastructure.IoC
             {
                 var registrations =
                   from type in assembly.GetExportedTypes()                 
-                  where type.IsDefined(typeof(DomainServiceAttribute))
+                  where type.IsDefined(typeof(DomainServiceAttribute)) || 
+                        type.IsDefined(typeof(DomainRepositoryAttribute))
+
                   select new { Service = type.GetInterfaces().Single(), Implementation = type };
 
                 foreach (var registration in registrations)
