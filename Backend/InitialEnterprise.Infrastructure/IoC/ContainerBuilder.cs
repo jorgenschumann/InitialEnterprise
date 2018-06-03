@@ -22,9 +22,9 @@ namespace InitialEnterprise.Infrastructure.IoC
                   where type.IsDefined(typeof(DomainServiceAttribute))
                   select new { Service = type.GetInterfaces().Single(), Implementation = type };
 
-                foreach (var registrationCandidate in registrations)
+                foreach (var registration in registrations)
                 {
-                    container.Register(registrationCandidate.Service, registrationCandidate.Implementation, Lifestyle.Transient);
+                    container.Register(registration.Service, registration.Implementation, Lifestyle.Transient);
                 }
             }
 
@@ -32,10 +32,11 @@ namespace InitialEnterprise.Infrastructure.IoC
         } 
 
         private Assembly[] ListAssemblies()
-        {
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-
-            return currentDomain.GetAssemblies().Where(a => a.FullName.StartsWith("InitialEnterprise")).ToArray();
+        {     
+            return AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Where(a => a.FullName.StartsWith("InitialEnterprise"))
+                .ToArray();
         }
     }
 }
