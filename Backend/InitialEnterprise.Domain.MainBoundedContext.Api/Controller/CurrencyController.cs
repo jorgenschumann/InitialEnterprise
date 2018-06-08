@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InitialEnterprise.Domain.MainBoundedContext.Api.Application;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using InitialEnterprise.Infrastructure.Application;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     [Route("api/[controller]")]
     public class CurrencyController : Controller
     {
+
+        private readonly ICurrencyApplication currencyApplication;
+        public CurrencyController(ICurrencyApplication currencyApplication)
+        {
+            this.currencyApplication = currencyApplication;
+        }
+
         [HttpGet]
-        [AddHeaderWithFactory]
-      
+        [AddHeaderWithFactory]      
         public IEnumerable<string> Get()
         {
             var retval = new string[] { "value1", "value2" };

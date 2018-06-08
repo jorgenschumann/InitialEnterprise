@@ -20,7 +20,8 @@ namespace InitialEnterprise.Infrastructure.IoC
                 var registrations =
                   from type in assembly.GetExportedTypes()
                   where type.IsDefined(typeof(DomainServiceAttribute)) ||
-                        type.IsDefined(typeof(DomainRepositoryAttribute))
+                        type.IsDefined(typeof(DomainRepositoryAttribute)) ||
+                        type.IsDefined(typeof(ApplicationServiceAttribute))
 
                   select new { Service = type.GetInterfaces().Single(), Implementation = type };
 
