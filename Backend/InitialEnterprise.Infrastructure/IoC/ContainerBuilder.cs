@@ -30,6 +30,7 @@ namespace InitialEnterprise.Infrastructure.IoC
                     container.Register(registration.Service, registration.Implementation, Lifestyle.Transient);
                 }
             }
+
             container.Register(typeof(ICommandDispatcher),typeof(CommandDispatcher));
             container.Register(typeof(ICommandHandler<>), assemblies);
 

@@ -10,9 +10,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application
         CurrencyDto Read(string name);
     }
 
-    [ApplicationServiceAttribute]
+    [ApplicationService]
     public class CurrencyApplication : ICurrencyApplication
     {
+        public CurrencyApplication()
+        {
+        }
+
         public CurrencyDto Read(string name)
         {
             throw new NotImplementedException();
