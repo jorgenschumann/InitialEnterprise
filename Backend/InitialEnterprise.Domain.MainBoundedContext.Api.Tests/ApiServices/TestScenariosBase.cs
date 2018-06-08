@@ -1,7 +1,10 @@
 ﻿using System.IO;
+using System.Net.Http;
+using System.Text;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Newtonsoft.Json;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
 {
@@ -16,5 +19,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
             }
             return new TestServer(webHostBuilder);
         }
-    }
+
+        public StringContent BuildContentString(object model)
+        {
+            return new StringContent(JsonConvert.SerializeObject(model),
+                UTF8Encoding.UTF8, "application/json");
+        }       
+    }   
 }
