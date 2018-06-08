@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InitialEnterprise.Infrastructure.Api.Filter;
+using InitialEnterprise.Infrastructure.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
@@ -10,20 +12,27 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     public class CurrencyController : Controller
     {
         [HttpGet]
+        [AddHeaderWithFactory]
+      
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            var retval = new string[] { "value1", "value2" };
+
+            return retval;
         }
 
         [HttpGet("{id}")]
+        [ValidateModel] [AddHeaderWithFactory]
         public string Get(int id)
         {
             return "value";
         }
 
         [HttpPost]
-        public void Post([FromBody]string value)
+        [ValidateModel]
+        public void Post([FromBody]BaseDataTransferObject value)
         {
+            var foo = value;
         }
 
         [HttpPut("{id}")]

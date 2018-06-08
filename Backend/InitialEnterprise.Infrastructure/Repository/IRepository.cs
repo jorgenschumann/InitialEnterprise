@@ -29,4 +29,6 @@ namespace InitialEnterprise.Infrastructure.Repository
     {
         TEntity Delete(TEntity entity);       
     }  
+
+  
 }
