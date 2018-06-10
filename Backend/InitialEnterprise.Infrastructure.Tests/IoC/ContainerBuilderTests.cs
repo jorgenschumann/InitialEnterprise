@@ -1,6 +1,6 @@
 using InitialEnterprise.Domain.SharedKernel;
-using InitialEnterprise.Infrastructure.DDD.Annotations;
 using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterprise.Infrastructure.Repository;
 using Xunit;
 
 namespace InitialEnterprise.Infrastructure.Tests
@@ -27,8 +27,8 @@ namespace InitialEnterprise.Infrastructure.Tests
         }
     }
 
-    [DomainService]
-    public class TestDomainService : ITestDomainService
+  
+    public class TestDomainService : ITestDomainService, IInjectableDomainService
     {
         public ITestRepository testRepository;
         public TestDomainService(ITestRepository  testRepository)
@@ -41,9 +41,13 @@ namespace InitialEnterprise.Infrastructure.Tests
     {
     }
 
-    [DomainRepository]
-    public class TestRepository : ITestRepository
+    public class TestRepository : ITestRepository, IInjectableRepository
     {
+        IUnitOfWork unitOfWork;
+        public TestRepository(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
     }
 
     public interface ITestRepository

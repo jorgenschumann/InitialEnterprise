@@ -1,6 +1,6 @@
 ﻿namespace InitialEnterprise.Infrastructure.Repository
 {
-    public interface InjectableRepository
+    public interface IInjectableRepository
     {
     }
 }

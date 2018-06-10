@@ -17,7 +17,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Handler
         {
             var currency = new Currency(command);        
 
-            currencyRepository.Save(currency);
+            currencyRepository.Add(currency);
         }
     }
 }

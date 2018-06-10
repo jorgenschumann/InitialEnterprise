@@ -1,25 +1,29 @@
 ﻿using System;
+using System.Threading.Tasks;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Services;
 using InitialEnterprise.Infrastructure.Application;
-using InitialEnterprise.Infrastructure.DDD.Annotations;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application
 {
 
     public interface ICurrencyApplication
     {
-        CurrencyDto Read(string name);
+        Task<CurrencyDto> Read(Guid currencyId);
     }
 
-    [ApplicationService]
-    public class CurrencyApplication : ICurrencyApplication
+    public class CurrencyApplication : ICurrencyApplication,IInjectableApplicationService
     {
-        public CurrencyApplication()
+        private readonly ICurrencyService currencyService;
+        public CurrencyApplication(ICurrencyService currencyService)
         {
+            this.currencyService = currencyService;
         }
 
-        public CurrencyDto Read(string name)
+        public async Task<CurrencyDto> Read(Guid currencyId)
         {
-            throw new NotImplementedException();
+            var currency = await this.currencyService.Read(currencyId);
+            
+            return new CurrencyDto { Id = currency.Id, IsoCode = currency.IsoCode, Name = currency.Name, Rate = currency.Rate.ToString() };
         }
     }
 
@@ -27,11 +31,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application
     {
         public Guid Id { get; set; }
 
-        public string Name { get; private set; }
+        public string Name { get;  set; }
 
-        public string IsoCode { get; private set; }
+        public string IsoCode { get;  set; }
 
-        public string Rate { get; private set; }
+        public string Rate { get;  set; }
 
     }
 

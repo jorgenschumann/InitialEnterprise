@@ -1,69 +1,142 @@
-﻿using InitialEnterprise.Infrastructure.IoC;
+﻿using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+using InitialEnterprise.Infrastructure.Api.Middlewares;
+using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterprise.Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
+using SimpleInjector.Lifestyles;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
     public class Startup
     {
-        private readonly Container container;
-        
-        public Startup()
+        private readonly IHostingEnvironment hostingEnvironment;
+        private Container container;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            container = new ContainerBuilder().Initialize();          
+            this.Configuration = configuration;
+            this.hostingEnvironment = hostingEnvironment;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        public virtual void Configure(IApplicationBuilder applicationBuilder)
+        {         
+            RegisterMvcControllersInContainer(applicationBuilder, container);
+
+            if (hostingEnvironment.IsDevelopment())
+            {
+                applicationBuilder.UseDeveloperExceptionPage();
+
+                applicationBuilder.UseCors(c =>
+                {
+                    c.AllowAnyHeader();
+                    c.AllowAnyMethod();
+                    c.AllowAnyOrigin();
+                });
+            }
+
+            container.RegisterInstance(Configuration);
+
+            container.Verify();
+
+            applicationBuilder.UseAuthentication();
+
+            applicationBuilder.UseMvc();
+
+            applicationBuilder.UseSwagger();
+        }
+
+        public static void ConfigureDatabase(IServiceCollection services, string connectionString, Container container)
+        {
+            var contextOptions = new DbContextOptionsBuilder<MainDbContext>().UseInMemoryDatabase(connectionString).Options;
+
+            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
+
+            container.Register(() => { return contextOptions; }, Lifestyle.Scoped);
+
+            container.Register(() => { return new MainDbContext(contextOptions); }, Lifestyle.Scoped);
+
+            container.Register<IUnitOfWork, MainDbContext>(Lifestyle.Scoped);
+        }
+
+        private void ConfigureEntityFrameworkContext(IServiceCollection services)
+        {
+            if (hostingEnvironment.IsEnvironment("Test"))
+            {
+                
+            }
+            else
+            {
+                ConfigureDatabase(services, Configuration.GetConnectionString("InitialEnterprise"), container);
+            }
         }
 
         public void ConfigureServices(IServiceCollection services)
-        { 
-            services.AddMvc();
+        {
+            InitializeContainer(services);
 
-            services.EnableSimpleInjectorCrossWiring(container);
+            var mvcBuilder = services.AddMvc();
+            ConfigureJsonSerializer(mvcBuilder);
+
+            services.AddCors();
 
             RegisterControllerActivators(services, container);
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "API", Version = "v1" });
-            });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
+
+            services.EnableSimpleInjectorCrossWiring(container);
+                       
+            ConfigureEntityFrameworkContext(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
         {
-            InitializeContainer(app);
-
-            //container.AutoCrossWireAspNetComponents(app);
-
-            if (env.IsDevelopment())
+            mvcBuilder.AddJsonOptions(options =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            
-            app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "InitialEnterprise API V1");
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-        }
-
-        private void InitializeContainer(IApplicationBuilder app)
-        {
-            container.RegisterMvcControllers(app);
-            container.RegisterMvcViewComponents(app);
-            //container.AutoCrossWireAspNetComponents(app);
         }
 
         private static void RegisterControllerActivators(IServiceCollection services, Container injectionContainer)
         {
-            services.AddSingleton<Microsoft.AspNetCore.Mvc.Controllers.IControllerActivator>(new SimpleInjectorControllerActivator(injectionContainer));
+            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(injectionContainer));
             services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(injectionContainer));
+            services.UseSimpleInjectorAspNetRequestScoping(injectionContainer);
         }
 
+        private void InitializeContainer(IServiceCollection services)
+        {             
+            this.container = new ContainerBuilder(new AsyncScopedLifestyle()).Initialize();
+        }
+
+        private void RegisterMvcControllersInContainer(IApplicationBuilder applicationBuilder, Container injectionContainer)
+        {
+            injectionContainer.RegisterMvcControllers(applicationBuilder);
+            injectionContainer.RegisterMvcViewComponents(applicationBuilder);
+        }
+
+        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        {
+            if (Configuration.GetValue<bool>("UseLoadTest"))
+            {
+                app.UseMiddleware<AuthenticationByPassMiddleware>();
+            }
+
+            app.UseAuthentication();
+        }
     }
 }

@@ -1,21 +1,36 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
-using InitialEnterprise.Infrastructure.DDD.Annotations;
+using InitialEnterprise.Infrastructure.Repository;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
-    [DomainRepository]
-    public class CurrencyRepository : ICurrencyRepository
+    public class CurrencyRepository : ICurrencyRepository, IInjectableRepository
     {
-        private readonly MainDbContext mainDbContext;
-        public CurrencyRepository(MainDbContext mainDbContext)
+        private readonly IUnitOfWork unitOfWork;
+        private IMainDbContext MainDbContext { get { return unitOfWork as IMainDbContext; } }
+
+        public CurrencyRepository(IUnitOfWork unitOfWork)
         {
-            this.mainDbContext = mainDbContext;
+            this.unitOfWork = unitOfWork;
         }
 
-        public Currency Save(Currency currency)
+        public Currency Add(Currency currency)
         {
-           return mainDbContext.Currencies.Add(currency).Entity;
+            throw new NotImplementedException();
         }
+
+        public async Task<Currency> ReadAsync(Guid currencyId)
+        {
+            return await MainDbContext.Currencies.FindAsync(currencyId);          
+        }
+               
+        public Currency Update(Currency currency)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
-    [Route("api/[controller]")]
-    public class CurrencyController : Controller
+    [Route("api/[controller]")]    public class CurrencyController : Controller
     {
 
         private readonly ICurrencyApplication currencyApplication;
@@ -24,15 +23,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public IEnumerable<string> Get()
         {
             var retval = new string[] { "value1", "value2" };
+                       
 
             return retval;
         }
 
         [HttpGet("{id}")]
         [ValidateModel] [AddHeaderWithFactory]
-        public string Get(int id)
+        public async Task<CurrencyDto> Get(Guid id)
         {
-            return "value";
+          return await this.currencyApplication.Read(id);        
         }
 
         [HttpPost]
