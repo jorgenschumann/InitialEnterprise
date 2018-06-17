@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleInjector;
 
-namespace Weapsy.Cqrs.Dependencies
+namespace InitialEnterprise.Infrastructure.CQRS
 {
-    public class Resolver : IResolver
+    public class Resolver : IResolver, IInjectable
     {
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IServiceProvider serviceProvider;
 
-        public Resolver(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
+        public Resolver(Container serviceProvider)//, IHttpContextAccessor httpContextAccessor)
         {
-            _serviceProvider = serviceProvider;
-            _httpContextAccessor = httpContextAccessor;
+            this.serviceProvider = serviceProvider;
         }
 
         public T Resolve<T>()
         {
-            return _httpContextAccessor.HttpContext.RequestServices.GetService<T>();
+            return serviceProvider.GetService<T>();
         }
 
         public IEnumerable<T> ResolveAll<T>()
         {
-            return _httpContextAccessor.HttpContext.RequestServices.GetServices<T>();
+            return serviceProvider.GetServices<T>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using InitialEnterprise.Infrastructure.DDD.Event;
 
 namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
@@ -16,25 +17,26 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
         protected AggregateRoot(Guid id)
         {
             if (id == Guid.Empty)
+            {
                 id = Guid.NewGuid();
-
+            }
             Id = id;
         }
 
         public void ApplyEvents(IEnumerable<IDomainEvent> events)
         {
             foreach (var @event in events)
-                this.AsDynamic().Apply(@event);
+            {
+                //this.AsDynamic().Apply(@event);//TODO:ReflectionMagic 
+            }
         }
-
-        /// <summary>
-        /// Adds the event to the new events collection and calls the related apply method.
-        /// </summary>
-        /// <param name="event">The event.</param>
+        
         protected void AddEvent(IDomainEvent @event)
         {
             Events.Add(@event);
-            this.AsDynamic().Apply(@event);
+            {
+                //this.AsDynamic().Apply(@event); //TODO:ReflectionMagic 
+            }
         }
     }
 }

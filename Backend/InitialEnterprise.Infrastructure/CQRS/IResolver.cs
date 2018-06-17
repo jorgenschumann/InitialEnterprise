@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Weapsy.Cqrs.Dependencies
+namespace InitialEnterprise.Infrastructure.CQRS
 {
     public interface IResolver
     {

@@ -1,10 +1,11 @@
+using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.DDD;
 using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
 using SimpleInjector.Lifestyles;
 using Xunit;
 
-namespace InitialEnterprise.Infrastructure.Tests
+namespace InitialEnterprise.Infrastructure.Tests.IoC
 {
     public class ContainerBuilderTests
     {
@@ -12,24 +13,20 @@ namespace InitialEnterprise.Infrastructure.Tests
         public void Should_Initialize_Container_By_Scanning()
         {
             //arr
-            var containerBuilder = new IoCContainerBuilder(new AsyncScopedLifestyle());
+            var containerBuilder = new InjectionContainerBuilder(new AsyncScopedLifestyle());
 
             //act
             var container = containerBuilder.Initialize();
             var service = container.GetInstance<ITestDomainService>() as TestDomainService;
-            var handler = container.GetInstance<TestCommandHandler>();
-       
+          
             //assert          
             Assert.NotNull(service);
             Assert.NotNull(service.testRepository);
-
-            Assert.NotNull(handler);
-            Assert.NotNull(handler.testDomainService);           
         }
     }
 
   
-    public class TestDomainService : ITestDomainService, IInjectableDomainService
+    public class TestDomainService : ITestDomainService, IInjectable
     {
         public ITestRepository testRepository;
         public TestDomainService(ITestRepository  testRepository)
@@ -42,7 +39,7 @@ namespace InitialEnterprise.Infrastructure.Tests
     {
     }
 
-    public class TestRepository : ITestRepository, IInjectableRepository
+    public class TestRepository : ITestRepository, IInjectable
     {
         IUnitOfWork unitOfWork;
         public TestRepository(IUnitOfWork unitOfWork)
@@ -54,20 +51,7 @@ namespace InitialEnterprise.Infrastructure.Tests
     public interface ITestRepository
     {
     }
-       
-    public class TestCommandHandler : ICommandHandler<TestCommand>
-    {
-        public ITestDomainService testDomainService;
-        public TestCommandHandler(ITestDomainService testDomainService)
-        {
-            this.testDomainService = testDomainService;
-        }
-
-        public void Handle(TestCommand command)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
+ 
 
     public class TestCommand : ICommand
     {

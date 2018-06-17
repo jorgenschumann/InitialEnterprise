@@ -1,14 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Queries
 {
-    /// <inheritdoc />
-    /// <summary>
-    /// QueryDispatcherAsync
-    /// </summary>
-    /// <seealso cref="T:Weapsy.Cqrs.Queries.IQueryDispatcherAsync" />
-    public class QueryProcessorAsync : IQueryProcessorAsync
+    public class QueryProcessorAsync : IQueryProcessorAsync, IInjectable
     {
         private readonly IResolver _resolver;
 
@@ -16,8 +12,6 @@ namespace InitialEnterprise.Infrastructure.CQRS.Queries
         {
             _resolver = resolver;
         }
-
-        /// <inheritdoc />
         public async Task<TResult> ProcessAsync<TQuery, TResult>(TQuery query) where TQuery : IQuery
         {
             if (query == null)

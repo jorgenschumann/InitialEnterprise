@@ -1,28 +1,62 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Events;
+using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
-    public class Currency : BaseEntity
+    public class Currency : AggregateRoot
     {
         public string Name { get; private set; }
 
         public string IsoCode { get; private set; }
 
         public decimal Rate { get; private set; }
-        
-        public Currency()
+
+        public Currency(CreateCurrencyCommand command)
         {
+            if (command.IsValid)
+            {
+                Name = command.Name;
+                IsoCode = command.IsoCode;
+                Rate = command.Rate;
+
+                AddEvent(new CurrencyCreated { AggregateRootId = Id , Name = command.Name, UserId =  command.UserId});
+            }
         }
 
-        public Currency(CreateCurrencyCommand createCommand)
+        public void Update(UpdateIsoCodeCommand command)
         {
-            if (createCommand.IsValid)
+            if (command.IsValid)
             {
-                Name = createCommand.Name;
-                IsoCode = createCommand.IsoCode;
-                Rate = createCommand.Rate;
+                IsoCode = command.IsoCode;
+
+                AddEvent(new CurrencyIsoCodeUpdated { AggregateRootId = Id, IsoCode = command.IsoCode });
             }
-        }      
+        }
+
+        public void Update(UpdateRateCommand command)
+        {
+            if (command.IsValid)
+            {
+                Rate = command.Rate;
+
+                AddEvent(new CurrencyRateUpdated { AggregateRootId = Id , Rate = command.Rate});
+            }
+        }
+
+        private void Apply(CurrencyCreated @event)
+        {
+            Id = @event.AggregateRootId;
+        }
+
+        private void Apply(CurrencyIsoCodeUpdated @event)
+        {
+            Id = @event.AggregateRootId;
+        }
+
+        private void Apply(CurrencyRateUpdated @event)
+        {
+            Id = @event.AggregateRootId;
+        }
     }
-    
 }

@@ -2,11 +2,12 @@
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
-    public class CurrencyRepository : ICurrencyRepository, IInjectableRepository
+    public class CurrencyRepository : ICurrencyRepository, IInjectable
     {
         public IUnitOfWork UnitOfWork
         {

@@ -3,10 +3,11 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.DDD;
+using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Services
 {
-    public class CurrencyService : ICurrencyService , IInjectableDomainService
+    public class CurrencyService : ICurrencyService , IInjectable
     {
         private readonly ICurrencyRepository currencyRepository;
         public CurrencyService(ICurrencyRepository currencyRepository)

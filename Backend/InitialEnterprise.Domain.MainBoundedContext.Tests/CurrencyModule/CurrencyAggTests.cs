@@ -3,7 +3,7 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using Xunit;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Tests
+namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
 {
     public class CurrencyAggTests
     {

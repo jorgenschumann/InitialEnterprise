@@ -1,6 +1,6 @@
 ﻿namespace InitialEnterprise.Infrastructure.IoC
 {
-    public interface Injectable
+    public interface IInjectable
     {
     }
 }

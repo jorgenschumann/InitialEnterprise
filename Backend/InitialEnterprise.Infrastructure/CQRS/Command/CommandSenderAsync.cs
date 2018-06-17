@@ -1,45 +1,42 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Weapsy.Cqrs.Dependencies;
-using Weapsy.Cqrs.Domain;
-using Weapsy.Cqrs.Events;
+using InitialEnterprise.Infrastructure.CQRS.Events;
+using InitialEnterprise.Infrastructure.DDD.Command;
+using InitialEnterprise.Infrastructure.DDD.Domain;
+using InitialEnterprise.Infrastructure.DDD.Event;
+using InitialEnterprise.Infrastructure.IoC;
 
-namespace Weapsy.Cqrs.Commands
+namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
-    /// <inheritdoc />
-    /// <summary>
-    /// CommandSenderAsync
-    /// </summary>
-    /// <seealso cref="T:Weapsy.Cqrs.Commands.ICommandSenderAsync" />
-    public class CommandSenderAsync : ICommandSenderAsync
+    public class CommandSenderAsync : ICommandSenderAsync, IInjectable
     {
-        private readonly IResolver _resolver;
-        private readonly IEventPublisherAsync _eventPublisherAsync;
-        private readonly IEventFactory _eventFactory;
-        private readonly IEventStore _eventStore;
-        private readonly ICommandStore _commandStore;
+        private readonly IResolver resolver;
+        private readonly IEventPublisherAsync eventPublisherAsync;
+        private readonly IEventFactory eventFactory;
+        private readonly IEventStore eventStore;
+        private readonly ICommandStore commandStore;
 
-        public CommandSenderAsync(IResolver resolver,
-            IEventPublisherAsync eventPublisherAsync, 
+        public CommandSenderAsync(
+            IResolver resolver,
+            IEventPublisherAsync eventPublisherAsync,
             IEventFactory eventFactory,
-            IEventStore eventStore, 
+            IEventStore eventStore,
             ICommandStore commandStore)
         {
-            _resolver = resolver;
-            _eventPublisherAsync = eventPublisherAsync;
-            _eventFactory = eventFactory;
-            _eventStore = eventStore;
-            _commandStore = commandStore;
+            this.resolver = resolver;
+            this.eventPublisherAsync = eventPublisherAsync;
+            this.eventFactory = eventFactory;
+            this.eventStore = eventStore;
+            this.commandStore = commandStore;
         }
 
-        /// <inheritdoc />
         public async Task SendAsync<TCommand>(TCommand command) 
             where TCommand : ICommand
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
-            var handler = _resolver.Resolve<ICommandHandlerAsync<TCommand>>();
+            var handler = resolver.Resolve<ICommandHandlerAsync<TCommand>>();
 
             if (handler == null)
                 throw new ApplicationException($"No handler of type CommandHandlerAsync<TCommand> found for command '{command.GetType().FullName}'");
@@ -47,7 +44,6 @@ namespace Weapsy.Cqrs.Commands
             await handler.HandleAsync(command);
         }
 
-        /// <inheritdoc />
         public async Task SendAsync<TCommand, TAggregate>(TCommand command) 
             where TCommand : IDomainCommand 
             where TAggregate : IAggregateRoot
@@ -55,9 +51,9 @@ namespace Weapsy.Cqrs.Commands
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
-            await _commandStore.SaveCommandAsync<TAggregate>(command);
+            await commandStore.SaveCommandAsync<TAggregate>(command);
 
-            var handler = _resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
+            var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
 
             if (handler == null)
                 throw new ApplicationException($"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
@@ -67,19 +63,18 @@ namespace Weapsy.Cqrs.Commands
             foreach (var @event in aggregateRoot.Events)
             {
                 @event.CommandId = command.Id;
-                var concreteEvent = _eventFactory.CreateConcreteEvent(@event);
-                await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
+                var concreteEvent = eventFactory.CreateConcreteEvent(@event);
+                await eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
             }
         }
 
-        /// <inheritdoc />
         public async Task SendAndPublishAsync<TCommand>(TCommand command) 
             where TCommand : ICommand
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
-            var handler = _resolver.Resolve<ICommandHandlerWithEventsAsync<TCommand>>();
+            var handler = resolver.Resolve<ICommandHandlerWithEventsAsync<TCommand>>();
 
             if (handler == null)
                 throw new ApplicationException($"No handler of type ICommandHandlerWithEventsAsync<TCommand> found for command '{command.GetType().FullName}'");
@@ -88,12 +83,11 @@ namespace Weapsy.Cqrs.Commands
 
             foreach (var @event in events)
             {
-                var concreteEvent = _eventFactory.CreateConcreteEvent(@event);
-                await _eventPublisherAsync.PublishAsync(concreteEvent);
+                var concreteEvent = eventFactory.CreateConcreteEvent(@event);
+                await eventPublisherAsync.PublishAsync(concreteEvent);
             }
         }
 
-        /// <inheritdoc />
         public async Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command) 
             where TCommand : IDomainCommand
             where TAggregate : IAggregateRoot
@@ -101,9 +95,9 @@ namespace Weapsy.Cqrs.Commands
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
-            await _commandStore.SaveCommandAsync<TAggregate>(command);
+            await commandStore.SaveCommandAsync<TAggregate>(command);
 
-            var handler = _resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
+            var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
 
             if (handler == null)
                 throw new ApplicationException($"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
@@ -113,9 +107,9 @@ namespace Weapsy.Cqrs.Commands
             foreach (var @event in aggregateRoot.Events)
             {
                 @event.CommandId = command.Id;
-                var concreteEvent = _eventFactory.CreateConcreteEvent(@event);
-                await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
-                await _eventPublisherAsync.PublishAsync(concreteEvent);
+                var concreteEvent = eventFactory.CreateConcreteEvent(@event);
+                await eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
+                await eventPublisherAsync.PublishAsync(concreteEvent);
             }
         }
     }

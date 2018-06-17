@@ -7,6 +7,6 @@ namespace InitialEnterprise.Infrastructure.Repository
     {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

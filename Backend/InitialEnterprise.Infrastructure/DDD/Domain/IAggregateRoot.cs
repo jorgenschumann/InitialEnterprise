@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using InitialEnterprise.Infrastructure.DDD.Event;
 
 namespace InitialEnterprise.Infrastructure.DDD.Domain
 {

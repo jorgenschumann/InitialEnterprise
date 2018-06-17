@@ -1,7 +1,13 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
+
 using InitialEnterprise.Infrastructure.IoC;
 using MediatR;
 using MediatR.Pipeline;
@@ -18,6 +24,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
 using Swashbuckle.AspNetCore.Swagger;
+using InitialEnterprise.Infrastructure.CQRS.Command;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
@@ -69,7 +76,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             container.Register(() => { return contextOptions; }, Lifestyle.Scoped);
 
-            container.Register(() => { return new MainDbContext(contextOptions, new NoMediator() ); }, Lifestyle.Scoped);
+            container.Register(() => { return new MainDbContext(contextOptions ); }, Lifestyle.Scoped);
 
             container.Register<IMainDbContext, MainDbContext>(Lifestyle.Scoped);
         }
@@ -123,9 +130,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         private void InitializeContainer(IServiceCollection services)
         {
-            this.container = new IoCContainerBuilder(new AsyncScopedLifestyle()).Initialize();
+            this.container = new InjectionContainerBuilder(new AsyncScopedLifestyle()).Initialize();
         }
-
+        
         private void RegisterMvcControllersInContainer(IApplicationBuilder applicationBuilder, Container injectionContainer)
         {
             injectionContainer.RegisterMvcControllers(applicationBuilder);

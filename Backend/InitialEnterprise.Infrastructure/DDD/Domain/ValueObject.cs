@@ -5,12 +5,6 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
     public abstract class ValueObject
     {
-        /// <summary>
-        /// Helper function for implementing overloaded equality operator.
-        /// </summary>
-        /// <param name="left">Left-hand side object.</param>
-        /// <param name="right">Right-hand side object.</param>
-        /// <returns></returns>
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
             if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
@@ -19,30 +13,14 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
             }
             return ReferenceEquals(left, null) || left.Equals(right);
         }
-
-        /// <summary>
-        /// Helper function for implementing overloaded inequality operator.
-        /// </summary>
-        /// <param name="left">Left-hand side object.</param>
-        /// <param name="right">Right-hand side object.</param>
-        /// <returns></returns>
+        
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
         {
             return !(EqualOperator(left, right));
         }
-
-        /// <summary>
-        /// To be overridden in inheriting clesses for providing a collection of atomic values of
-        /// this Value Object.
-        /// </summary>
-        /// <returns>Collection of atomic values.</returns>
+        
         protected abstract IEnumerable<object> GetAtomicValues();
-
-        /// <summary>
-        /// Compares two Value Objects according to atomic values returned by <see cref="GetAtomicValues"/>.
-        /// </summary>
-        /// <param name="obj">Object to compare to.</param>
-        /// <returns>True if objects are considered equal.</returns>
+        
         public override bool Equals(object obj)
         {
             if (obj == null || obj.GetType() != GetType())
@@ -65,12 +43,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
             }
             return !thisValues.MoveNext() && !otherValues.MoveNext();
         }
-
-        /// <summary>
-        /// Returns hashcode value calculated according to a collection of atomic values
-        /// returned by <see cref="GetAtomicValues"/>.
-        /// </summary>
-        /// <returns>Hashcode value.</returns>
+        
         public override int GetHashCode()
         {
             return GetAtomicValues()

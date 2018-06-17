@@ -1,6 +1,7 @@
 ﻿using System;
+using InitialEnterprise.Infrastructure.CQRS.Command;
 
-namespace InitialEnterprise.Infrastructure.DDD.Domain
+namespace InitialEnterprise.Infrastructure.DDD.Command
 {
     public interface IDomainCommand : ICommand
     {

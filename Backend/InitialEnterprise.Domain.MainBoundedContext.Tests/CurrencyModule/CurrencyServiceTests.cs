@@ -16,15 +16,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             //Arr
             var expected = TestdataFactory.Currencies().First();
             var mockRepository = new Mock<ICurrencyRepository>();
-            mockRepository.Setup(x => x.Update(expected)).Returns(expected);
             
             var currencyService = new CurrencyService(mockRepository.Object);
 
             //Act      
-            var actual = currencyService.Save(expected);
 
             //Assert
-            Assert.Same(expected, actual);
         
         }
     }

@@ -5,22 +5,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CQRS\Query\**" />
     <Compile Remove="DDD\Application\**" />
+    <EmbeddedResource Remove="CQRS\Query\**" />
     <EmbeddedResource Remove="DDD\Application\**" />
+    <None Remove="CQRS\Query\**" />
     <None Remove="DDD\Application\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.0" />
     <PackageReference Include="MediatR" Version="5.0.1" />
     <PackageReference Include="MediatR.SimpleInjector" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Include="SimpleInjector" Version="4.3.0" />
     <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc.Core" Version="4.3.0" />
     <PackageReference Include="Swashbuckle.Core.Extension" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Query\" />
+    <Folder Include="CQRS\Events\" />
+    <Folder Include="CQRS\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

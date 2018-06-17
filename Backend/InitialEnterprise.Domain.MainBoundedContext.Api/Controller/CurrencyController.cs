@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application;
+using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.Api
+namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
     [Route("api/[controller]")]
-    public class CurrencyController : Controller
+    public class CurrencyController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ICurrencyApplication currencyApplication;
         public CurrencyController(ICurrencyApplication currencyApplication)
         {
             this.currencyApplication = currencyApplication;
-        }
-
-        [HttpGet]       
-        public async Task<CurrencyDto> Get()
-        {
-            return new CurrencyDto();
         }
 
         [HttpGet("{id}")]
@@ -30,22 +24,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         [HttpPost]
         [ValidateModel]
-        public async Task<CurrencyDto> Post([FromBody]CurrencyDto value)
+        public async Task Post([FromBody]CurrencyDto value)
         {
-            return await this.currencyApplication.Save(value);
-        }
-
-        [HttpPut]
-        [ValidateModel]
-        public async Task<CurrencyDto> Put([FromBody]CurrencyDto value)
-        {
-            return new CurrencyDto();
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(Guid id)
-        {
-
+             await this.currencyApplication.Save(value);
         }
     }
 }

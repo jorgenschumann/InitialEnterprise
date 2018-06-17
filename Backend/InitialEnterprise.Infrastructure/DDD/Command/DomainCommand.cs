@@ -1,13 +1,11 @@
 ﻿using System;
 
-namespace InitialEnterprise.Infrastructure.DDD.Domain
+namespace InitialEnterprise.Infrastructure.DDD.Command
 {
-    public class DomainEvent : IDomainEvent
+    public class DomainCommand : IDomainCommand
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public Guid AggregateRootId { get; set; }
-        public Guid CommandId { get; set; }
-        public int Version { get; set; }
         public Guid UserId { get; set; }
         public string Source { get; set; }
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;

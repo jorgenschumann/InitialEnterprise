@@ -1,7 +1,7 @@
 ﻿using System;
 using InitialEnterprise.Infrastructure.CQRS.Events;
 
-namespace InitialEnterprise.Infrastructure.DDD.Domain
+namespace InitialEnterprise.Infrastructure.DDD.Event
 {
     public interface IDomainEvent : IEvent
     {

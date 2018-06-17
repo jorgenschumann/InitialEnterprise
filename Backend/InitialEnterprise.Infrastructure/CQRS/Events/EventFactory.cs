@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using InitialEnterprise.Infrastructure.IoC;
 
-namespace Weapsy.Cqrs.Events
+namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
-    public class EventFactory : IEventFactory
+    public class EventFactory : IEventFactory, IInjectable
     {
         public dynamic CreateConcreteEvent(object @event)
         {
@@ -12,7 +13,9 @@ namespace Weapsy.Cqrs.Events
                 cfg.CreateMap(type, type);
             });
             var mapper = config.CreateMapper();
+
             dynamic result = mapper.Map(@event, type, type);
+
             return result;
         }
     }

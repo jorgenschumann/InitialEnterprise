@@ -1,4 +1,4 @@
-﻿namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
+﻿namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
     public class CurrencyTestScenariosBase : TestScenariosBase
     {

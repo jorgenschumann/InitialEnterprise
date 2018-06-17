@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using InitialEnterprise.Domain.SharedKernel;
 using InitialEnterprise.Infrastructure.Application;
-using InitialEnterprise.Infrastructure.Behaviors;
 using InitialEnterprise.Infrastructure.CQRS.Command;
+using InitialEnterprise.Infrastructure.DDD;
 using InitialEnterprise.Infrastructure.Repository;
-using MediatR;
-using MediatR.Pipeline;
 using SimpleInjector;
-using SimpleInjector.Lifestyles;
 
 namespace InitialEnterprise.Infrastructure.IoC
 {
-    public class IoCContainerBuilder
+    public class InjectionContainerBuilder
     {
         private Container container;
 
-        public IoCContainerBuilder(ScopedLifestyle defaultScopedLifestyle)
+        public InjectionContainerBuilder(ScopedLifestyle defaultScopedLifestyle)
         {
             container = new Container();
             container.Options.DefaultScopedLifestyle = defaultScopedLifestyle;
@@ -28,13 +24,11 @@ namespace InitialEnterprise.Infrastructure.IoC
         public Container Initialize()
         {                      
             var assemblies = LoadAssemblies();
-                  
-            //RegisterContext(assemblies, typeof(IInjectableUnitOfWork));
-            RegisterContainerInjectables(assemblies, typeof(IInjectableRepository));
-            RegisterContainerInjectables(assemblies, typeof(IInjectableDomainService));
-            RegisterContainerInjectables(assemblies, typeof(IInjectableApplicationService));
 
-            
+            RegisterContainerInjectables(assemblies, typeof(IInjectable));
+        
+            RegisterContainerOpenGenericInjectables(assemblies);
+
             return container;
         }
 
@@ -61,43 +55,11 @@ namespace InitialEnterprise.Infrastructure.IoC
             }           
         }
 
-        private void RegisterCommandPipeline()
+        private void RegisterContainerOpenGenericInjectables(IEnumerable<Assembly> assemblies)
         {
-            container.RegisterSingleton<IMediator, Mediator>();
+            var commandHandlerImplementation = container.GetTypesToRegister(typeof(ICommandHandlerWithAggregateAsync<>), assemblies);
+            container.Register(typeof(ICommandHandlerWithAggregateAsync<>), commandHandlerImplementation);
         }
-
-    
-        ////https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples.SimpleInjector/Program.cs
-        //private IMediator BuildMediator(Assembly[] assemblies)
-        //{            
-        //    container.RegisterSingleton<IMediator, Mediator>();
-        //    container.Register(typeof(IRequestHandler<,>), assemblies);
-
-        //     var notificationHandlerTypes = container.GetTypesToRegister(typeof(INotificationHandler<>), assemblies, new TypesToRegisterOptions
-        //    {
-        //        IncludeGenericTypeDefinitions = true,
-        //        IncludeComposites = false
-        //    });
-
-        //    container.Register(typeof(INotificationHandler<>), notificationHandlerTypes);
-             
-        //    //Pipeline
-        //    container.Collection.Register(typeof(IPipelineBehavior<,>), new[]
-        //    {
-        //        typeof(RequestPreProcessorBehavior<,>),
-        //        typeof(RequestPostProcessorBehavior<,>)
-        //    });
-
-        //    //container.Register(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-        //    //container.Register(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-
-        //    //container.Collection.Register(typeof(IRequestPreProcessor<>), new[] { typeof(GenericRequestPreProcessor<>) });
-        //    //container.Collection.Register(typeof(IRequestPostProcessor<,>), new[] { typeof(GenericRequestPostProcessor<,>), typeof(ConstrainedRequestPostProcessor<,>) });
-
-        //    container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);
-            
-        //    return container.GetInstance<IMediator>();         
-        //}
 
         private IEnumerable<Type> GetInterfacesWithoutInheritance(Type type)
         {

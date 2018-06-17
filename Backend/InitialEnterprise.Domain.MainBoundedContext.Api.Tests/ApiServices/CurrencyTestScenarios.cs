@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.Application;
 using Xunit;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
+namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
     public class CurrencyTestScenarios : CurrencyTestScenariosBase
     {

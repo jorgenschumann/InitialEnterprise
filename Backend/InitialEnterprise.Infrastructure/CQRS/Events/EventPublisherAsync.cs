@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
-    /// <inheritdoc />
-    /// <summary>
-    /// EventPublisherAsync
-    /// </summary>
-    /// <seealso cref="T:Weapsy.Cqrs.Events.IEventPublisherAsync" />
-    public class EventPublisherAsync : IEventPublisherAsync
+    public class EventPublisherAsync : IEventPublisherAsync, IInjectable
     {
         private readonly IResolver _resolver;
 
@@ -16,8 +12,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
         {
             _resolver = resolver;
         }
-
-        /// <inheritdoc />
+      
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
             if (@event == null)
@@ -26,7 +21,9 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
             var handlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 
             foreach (var handler in handlers)
+            {
                 await handler.HandleAsync(@event);
+            }
         }
     }
 }
