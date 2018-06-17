@@ -2,7 +2,6 @@
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
 using System;
 using System.Threading.Tasks;
-using InitialEnterprise.Infrastructure.DDD;
 using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Services

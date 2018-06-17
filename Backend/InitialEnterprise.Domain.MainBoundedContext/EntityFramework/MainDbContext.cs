@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 {
-    public class MainDbContext : DbContext,  IMainDbContext, IInjectable
+    public class MainDbContext : DbContext,  IMainDbContext//, IInjectable
     {
         public MainDbContext(DbContextOptions<MainDbContext> options) : base (options) { }
            

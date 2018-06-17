@@ -24,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             }
         }
 
-        public void Update(UpdateIsoCodeCommand command)
+        public void Update(UpdateCurrencyIsoCodeCommand command)
         {
             if (command.IsValid)
             {
@@ -34,13 +34,23 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             }
         }
 
-        public void Update(UpdateRateCommand command)
+        public void Update(UpdateCurrencyRateCommand command)
         {
             if (command.IsValid)
             {
                 Rate = command.Rate;
 
                 AddEvent(new CurrencyRateUpdated { AggregateRootId = Id , Rate = command.Rate});
+            }
+        }
+
+        public void Update(UpdateCurrencyCommand command)
+        {
+            if (command.IsValid)
+            {
+                Rate = command.Rate;
+
+                AddEvent(new CurrencyUpdated() { AggregateRootId = Id, Name =  command.Name});
             }
         }
 

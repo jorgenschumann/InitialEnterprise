@@ -11,6 +11,7 @@
                 return $"{ApiUrlBase}/{id}";
             }
         }
+
         public static class Put
         {
 
@@ -21,9 +22,6 @@
             public static string Currency = $"{ApiUrlBase}/";
         }
 
-        public static class Delete
-        {
-
-        }
+       
     }
 }

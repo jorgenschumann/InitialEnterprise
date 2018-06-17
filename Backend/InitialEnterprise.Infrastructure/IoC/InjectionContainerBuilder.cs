@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using InitialEnterprise.Infrastructure.Application;
 using InitialEnterprise.Infrastructure.CQRS.Command;
-using InitialEnterprise.Infrastructure.DDD;
-using InitialEnterprise.Infrastructure.Repository;
+using InitialEnterprise.Infrastructure.DDD.Command;
 using SimpleInjector;
 
 namespace InitialEnterprise.Infrastructure.IoC
@@ -22,17 +19,17 @@ namespace InitialEnterprise.Infrastructure.IoC
         }
 
         public Container Initialize()
-        {                      
-            var assemblies = LoadAssemblies();
+        {
+            var assemblies = ListAssemblies();
 
             RegisterContainerInjectables(assemblies, typeof(IInjectable));
-        
+
             RegisterContainerOpenGenericInjectables(assemblies);
 
             return container;
         }
 
-         void RegisterContainerInjectables(Assembly[] assemblies, Type interfaceType)
+        void RegisterContainerInjectables(Assembly[] assemblies, Type interfaceType)
         {
             var implementations = FindInjectableImplementation(assemblies, interfaceType);
 
@@ -40,7 +37,14 @@ namespace InitialEnterprise.Infrastructure.IoC
             {
                 var registrationInterface = GetInterfacesWithoutInheritance(implementation).First();
 
-                container.Register(registrationInterface, implementation);
+                if (registrationInterface == typeof(IInjectable))
+                {
+                    container.Register(implementation);
+                }
+                else
+                {
+                    container.Register(registrationInterface, implementation);
+                }
             }
         }
         private void RegisterContext(Assembly[] assemblies, Type interfaceType)
@@ -50,15 +54,24 @@ namespace InitialEnterprise.Infrastructure.IoC
             foreach (var implementation in implementations)
             {
                 var registrationInterface = GetInterfacesWithoutInheritance(implementation).First();
-                var registration =  Lifestyle.Singleton.CreateRegistration(implementation, container);
+                var registration = Lifestyle.Singleton.CreateRegistration(implementation, container);
                 container.AddRegistration(registrationInterface, registration);
-            }           
+            }
         }
 
         private void RegisterContainerOpenGenericInjectables(IEnumerable<Assembly> assemblies)
         {
-            var commandHandlerImplementation = container.GetTypesToRegister(typeof(ICommandHandlerWithAggregateAsync<>), assemblies);
-            container.Register(typeof(ICommandHandlerWithAggregateAsync<>), commandHandlerImplementation);
+            //TODO: make it dynamic
+
+            var commandHandlerWithAggregateAsync = container.GetTypesToRegister(typeof(ICommandHandlerWithAggregateAsync<>), assemblies);
+            container.Register(typeof(ICommandHandlerWithAggregateAsync<>), commandHandlerWithAggregateAsync);
+
+            var commandHandlerAsync = container.GetTypesToRegister(typeof(ICommandHandlerAsync<>), assemblies);
+            container.Register(typeof(ICommandHandlerAsync<>), commandHandlerAsync);
+
+            var commandHandlerWithEventsAsync = container.GetTypesToRegister(typeof(ICommandHandlerWithEventsAsync<>), assemblies);
+            container.Register(typeof(ICommandHandlerWithEventsAsync<>), commandHandlerWithEventsAsync);
+
         }
 
         private IEnumerable<Type> GetInterfacesWithoutInheritance(Type type)
@@ -72,18 +85,6 @@ namespace InitialEnterprise.Infrastructure.IoC
                 .Where(type => type.IsClass && interfaceType.IsAssignableFrom(type));
 
             return injectables;
-        }
-
-        public Assembly[] LoadAssemblies()
-        {
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            List<Assembly> appAssemblies = new List<Assembly>();
-            List<string> assemblyFiles = Directory.GetFiles(path, "InitialEnterprise.*.dll").Select(filePath => Path.GetFileNameWithoutExtension(filePath)).ToList();
-            foreach (string dllFileName in assemblyFiles)
-            {
-                appAssemblies.Add(Assembly.Load(new AssemblyName(dllFileName)));
-            }
-            return appAssemblies.ToArray();
         }
 
         private Assembly[] ListAssemblies()

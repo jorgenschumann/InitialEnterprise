@@ -5,10 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CurrencyModule\Validations\" />
+    <Compile Remove="CurrencyModule\Validations\**" />
+    <EmbeddedResource Remove="CurrencyModule\Validations\**" />
+    <None Remove="CurrencyModule\Validations\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.6.103" />
     <PackageReference Include="MediatR.SimpleInjector" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.0" />

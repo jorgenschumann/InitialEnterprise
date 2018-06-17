@@ -29,6 +29,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 
         public async Task Save(CurrencyDto currencyDto)
         {
+            var updateCommand = new UpdateCurrencyIsoCodeCommand
+            {
+                IsoCode = currencyDto.IsoCode
+            };
+
+            await dispatcher.SendAsync<UpdateCurrencyIsoCodeCommand, CurrencyModule.Aggregate.Currency>(updateCommand);
+
             var command = new CreateCurrencyCommand
             {
                 Name = currencyDto.Name,
@@ -37,6 +44,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
             };
 
             await dispatcher.SendAsync<CreateCurrencyCommand,CurrencyModule.Aggregate.Currency>(command);
+
         }
 
         public async Task<CurrencyDto> Read(Guid currencyId)
