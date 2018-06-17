@@ -1,6 +1,7 @@
-using InitialEnterprise.Domain.SharedKernel;
+using InitialEnterprise.Infrastructure.DDD;
 using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
+using SimpleInjector.Lifestyles;
 using Xunit;
 
 namespace InitialEnterprise.Infrastructure.Tests
@@ -11,8 +12,8 @@ namespace InitialEnterprise.Infrastructure.Tests
         public void Should_Initialize_Container_By_Scanning()
         {
             //arr
-            var containerBuilder = new ContainerBuilder();
-            
+            var containerBuilder = new IoCContainerBuilder(new AsyncScopedLifestyle());
+
             //act
             var container = containerBuilder.Initialize();
             var service = container.GetInstance<ITestDomainService>() as TestDomainService;

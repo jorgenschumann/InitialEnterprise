@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 
 namespace InitialEnterprise.Infrastructure.Api.Middlewares
 {
@@ -16,8 +12,9 @@ namespace InitialEnterprise.Infrastructure.Api.Middlewares
             requestDelegate = next;           
         }
 
-        public async Task Invoke(HttpContext context)
-        { 
+        public async Task Invoke(HttpContext httpContext)
+        {
+            await requestDelegate.Invoke(httpContext);
         }
     }
 }

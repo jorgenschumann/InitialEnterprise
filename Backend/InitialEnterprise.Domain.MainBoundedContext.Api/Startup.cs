@@ -1,7 +1,10 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
 using InitialEnterprise.Infrastructure.IoC;
-using InitialEnterprise.Infrastructure.Repository;
+using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -32,7 +35,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public IConfiguration Configuration { get; }
 
         public virtual void Configure(IApplicationBuilder applicationBuilder)
-        {         
+        {
             RegisterMvcControllersInContainer(applicationBuilder, container);
 
             if (hostingEnvironment.IsDevelopment())
@@ -66,16 +69,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             container.Register(() => { return contextOptions; }, Lifestyle.Scoped);
 
-            container.Register(() => { return new MainDbContext(contextOptions); }, Lifestyle.Scoped);
+            container.Register(() => { return new MainDbContext(contextOptions, new NoMediator() ); }, Lifestyle.Scoped);
 
-            container.Register<IUnitOfWork, MainDbContext>(Lifestyle.Scoped);
+            container.Register<IMainDbContext, MainDbContext>(Lifestyle.Scoped);
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment("Test"))
             {
-                
+
             }
             else
             {
@@ -97,7 +100,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
 
             services.EnableSimpleInjectorCrossWiring(container);
-                       
+
             ConfigureEntityFrameworkContext(services);
         }
 
@@ -119,8 +122,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         }
 
         private void InitializeContainer(IServiceCollection services)
-        {             
-            this.container = new ContainerBuilder(new AsyncScopedLifestyle()).Initialize();
+        {
+            this.container = new IoCContainerBuilder(new AsyncScopedLifestyle()).Initialize();
         }
 
         private void RegisterMvcControllersInContainer(IApplicationBuilder applicationBuilder, Container injectionContainer)
@@ -137,6 +140,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
 
             app.UseAuthentication();
-        }
-    }
+        }       
+    }   
 }

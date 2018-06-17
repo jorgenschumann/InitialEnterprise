@@ -5,18 +5,21 @@ using System.Linq;
 using System.Reflection;
 using InitialEnterprise.Domain.SharedKernel;
 using InitialEnterprise.Infrastructure.Application;
+using InitialEnterprise.Infrastructure.Behaviors;
 using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.Repository;
+using MediatR;
+using MediatR.Pipeline;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
 namespace InitialEnterprise.Infrastructure.IoC
 {
-    public class ContainerBuilder
+    public class IoCContainerBuilder
     {
         private Container container;
 
-        public ContainerBuilder(ScopedLifestyle defaultScopedLifestyle)
+        public IoCContainerBuilder(ScopedLifestyle defaultScopedLifestyle)
         {
             container = new Container();
             container.Options.DefaultScopedLifestyle = defaultScopedLifestyle;
@@ -24,21 +27,18 @@ namespace InitialEnterprise.Infrastructure.IoC
 
         public Container Initialize()
         {                      
-
             var assemblies = LoadAssemblies();
-
+                  
             //RegisterContext(assemblies, typeof(IInjectableUnitOfWork));
             RegisterContainerInjectables(assemblies, typeof(IInjectableRepository));
             RegisterContainerInjectables(assemblies, typeof(IInjectableDomainService));
             RegisterContainerInjectables(assemblies, typeof(IInjectableApplicationService));
 
-            container.Register(typeof(ICommandDispatcher), typeof(CommandDispatcher));
-            container.Register(typeof(ICommandHandler<>), assemblies);
-
+            
             return container;
         }
 
-        private void RegisterContainerInjectables(Assembly[] assemblies, Type interfaceType)
+         void RegisterContainerInjectables(Assembly[] assemblies, Type interfaceType)
         {
             var implementations = FindInjectableImplementation(assemblies, interfaceType);
 
@@ -58,8 +58,46 @@ namespace InitialEnterprise.Infrastructure.IoC
                 var registrationInterface = GetInterfacesWithoutInheritance(implementation).First();
                 var registration =  Lifestyle.Singleton.CreateRegistration(implementation, container);
                 container.AddRegistration(registrationInterface, registration);
-            }
+            }           
         }
+
+        private void RegisterCommandPipeline()
+        {
+            container.RegisterSingleton<IMediator, Mediator>();
+        }
+
+    
+        ////https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples.SimpleInjector/Program.cs
+        //private IMediator BuildMediator(Assembly[] assemblies)
+        //{            
+        //    container.RegisterSingleton<IMediator, Mediator>();
+        //    container.Register(typeof(IRequestHandler<,>), assemblies);
+
+        //     var notificationHandlerTypes = container.GetTypesToRegister(typeof(INotificationHandler<>), assemblies, new TypesToRegisterOptions
+        //    {
+        //        IncludeGenericTypeDefinitions = true,
+        //        IncludeComposites = false
+        //    });
+
+        //    container.Register(typeof(INotificationHandler<>), notificationHandlerTypes);
+             
+        //    //Pipeline
+        //    container.Collection.Register(typeof(IPipelineBehavior<,>), new[]
+        //    {
+        //        typeof(RequestPreProcessorBehavior<,>),
+        //        typeof(RequestPostProcessorBehavior<,>)
+        //    });
+
+        //    //container.Register(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+        //    //container.Register(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+
+        //    //container.Collection.Register(typeof(IRequestPreProcessor<>), new[] { typeof(GenericRequestPreProcessor<>) });
+        //    //container.Collection.Register(typeof(IRequestPostProcessor<,>), new[] { typeof(GenericRequestPostProcessor<,>), typeof(ConstrainedRequestPostProcessor<,>) });
+
+        //    container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);
+            
+        //    return container.GetInstance<IMediator>();         
+        //}
 
         private IEnumerable<Type> GetInterfacesWithoutInheritance(Type type)
         {

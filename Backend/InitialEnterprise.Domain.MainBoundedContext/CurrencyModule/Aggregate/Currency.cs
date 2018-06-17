@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
-using InitialEnterprise.Domain.SharedKernel;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
@@ -11,7 +10,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 
         public decimal Rate { get; private set; }
         
-        private Currency()
+        public Currency()
         {
         }
 
@@ -25,4 +24,5 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             }
         }      
     }
+    
 }

@@ -1,9 +1,8 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
-using InitialEnterprise.Domain.SharedKernel;
-using System.Linq;
 using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Infrastructure.DDD;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Services
 {
@@ -13,16 +12,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Services
         public CurrencyService(ICurrencyRepository currencyRepository)
         {
             this.currencyRepository = currencyRepository;
-        }
+        }     
 
         public async Task<Currency> Read(Guid currencyId)
         {
-            return await currencyRepository.ReadAsync(currencyId);
-        }
-
-        public Currency Save(Currency currency)
-        {            
-            throw new System.NotImplementedException();
+            return await currencyRepository.Read(currencyId);
         }
     }
 

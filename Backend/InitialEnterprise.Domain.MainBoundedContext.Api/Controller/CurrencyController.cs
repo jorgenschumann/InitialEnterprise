@@ -1,35 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Application;
 using InitialEnterprise.Infrastructure.Api.Filter;
-using InitialEnterprise.Infrastructure.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
-    [Route("api/[controller]")]    public class CurrencyController : Controller
+    [Route("api/[controller]")]
+    public class CurrencyController : Controller
     {
-
         private readonly ICurrencyApplication currencyApplication;
         public CurrencyController(ICurrencyApplication currencyApplication)
         {
             this.currencyApplication = currencyApplication;
         }
 
-        [HttpGet]
-        [AddHeaderWithFactory]      
-        public IEnumerable<string> Get()
+        [HttpGet]       
+        public async Task<CurrencyDto> Get()
         {
-            var retval = new string[] { "value1", "value2" };
-                       
-
-            return retval;
+            return new CurrencyDto();
         }
 
         [HttpGet("{id}")]
-        [ValidateModel] [AddHeaderWithFactory]
+        [ValidateModel]
         public async Task<CurrencyDto> Get(Guid id)
         {
           return await this.currencyApplication.Read(id);        
@@ -37,19 +30,22 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         [HttpPost]
         [ValidateModel]
-        public void Post([FromBody]BaseDataTransferObject value)
+        public async Task<CurrencyDto> Post([FromBody]CurrencyDto value)
         {
-            var foo = value;
+            return await this.currencyApplication.Save(value);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [ValidateModel]
+        public async Task<CurrencyDto> Put([FromBody]CurrencyDto value)
         {
+            return new CurrencyDto();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+
         }
     }
 }

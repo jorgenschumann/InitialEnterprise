@@ -7,7 +7,7 @@ namespace InitialEnterprise.Testfixture
     public class TestdataFactory
     {
         public static List<Currency> Currencies()
-        {
+        {       
             var activatedCurrency = Activator.CreateInstance(typeof(Currency), true);
 
             activatedCurrency.GetType().GetProperty(nameof(Currency.Id)).SetValue(activatedCurrency, Guid.NewGuid(), null);

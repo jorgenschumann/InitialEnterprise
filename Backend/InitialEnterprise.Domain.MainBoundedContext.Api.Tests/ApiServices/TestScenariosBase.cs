@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.Text;
+using InitialEnterprise.Infrastructure.Api.Middlewares;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -23,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
         public StringContent BuildContentString(object model)
         {
             return new StringContent(JsonConvert.SerializeObject(model),
-                UTF8Encoding.UTF8, "application/json");
+                Encoding.UTF8, "application/json");
         }       
     }   
 }

@@ -1,4 +1,4 @@
-﻿namespace InitialEnterprise.Domain.SharedKernel
+﻿namespace InitialEnterprise.Infrastructure.DDD
 {
     public interface IInjectableDomainService
     {

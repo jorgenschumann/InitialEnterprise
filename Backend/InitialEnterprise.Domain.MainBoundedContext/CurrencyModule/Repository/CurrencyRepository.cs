@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
@@ -9,28 +8,30 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
     public class CurrencyRepository : ICurrencyRepository, IInjectableRepository
     {
-        private readonly IUnitOfWork unitOfWork;
-        private IMainDbContext MainDbContext { get { return unitOfWork as IMainDbContext; } }
-
-        public CurrencyRepository(IUnitOfWork unitOfWork)
+        public IUnitOfWork UnitOfWork
         {
-            this.unitOfWork = unitOfWork;
+            get
+            {
+                return mainDbContext as IUnitOfWork;
+            }
+        }
+
+        private readonly IMainDbContext mainDbContext;
+
+   
+        public CurrencyRepository(IMainDbContext context)
+        {
+            this.mainDbContext = context;
+        }       
+
+        public async Task<Currency> Read(Guid currencyId)
+        {
+            return await mainDbContext.Currencies.FindAsync(currencyId);
         }
 
         public Currency Add(Currency currency)
         {
-            throw new NotImplementedException();
+            return mainDbContext.Currencies.Add(currency).Entity;
         }
-
-        public async Task<Currency> ReadAsync(Guid currencyId)
-        {
-            return await MainDbContext.Currencies.FindAsync(currencyId);          
-        }
-               
-        public Currency Update(Currency currency)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

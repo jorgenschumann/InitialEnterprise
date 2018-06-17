@@ -1,8 +1,8 @@
-﻿using InitialEnterprise.Domain.SharedKernel;
+﻿using MediatR;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class CreateCurrencyCommand: ICommand
+    public class CreateCurrencyCommand: ICommand, IRequest<bool>
     {
         public string Name { get;  set; }
 

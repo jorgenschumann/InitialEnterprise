@@ -1,11 +1,7 @@
-﻿
-
-using InitialEnterprise.Domain.SharedKernel;
-
-namespace InitialEnterprise.Infrastructure.Repository
+﻿namespace InitialEnterprise.Infrastructure.Repository
 {
     public interface IRepository<T> where T : IEntity // IAggregateRoot
     {
-        //IUnitOfWork UnitOfWork { get; }
+        IUnitOfWork UnitOfWork { get; }
     }  
 }

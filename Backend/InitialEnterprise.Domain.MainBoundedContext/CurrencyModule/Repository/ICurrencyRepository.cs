@@ -6,12 +6,9 @@ using InitialEnterprise.Infrastructure.Repository;
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
     public interface ICurrencyRepository :  IRepository<Currency>
-    {      
+    {
         Currency Add(Currency currency);
 
-        Currency Update(Currency currency);
-
-        Task<Currency> ReadAsync(Guid currencyId);        
-
+        Task<Currency> Read(Guid currencyId);
     }
 }

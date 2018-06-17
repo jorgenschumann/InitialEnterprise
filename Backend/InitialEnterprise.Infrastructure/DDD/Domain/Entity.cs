@@ -1,66 +1,22 @@
 ﻿using System;
 
-namespace InitialEnterprise.Domain.SharedKernel
+namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
-    public abstract partial class BaseEntity : IEntity
+    public abstract class Entity : IEntity
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; protected set; }
 
-        private static bool IsTransient(BaseEntity obj)
+        protected Entity()
         {
-            return obj != null && Equals(obj.Id, default(int));
+            Id = Guid.Empty;
         }
 
-        private Type GetUnproxiedType()
+        protected Entity(Guid id)
         {
-            return GetType();
-        }
+            if (id == Guid.Empty)
+                id = Guid.NewGuid();
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as BaseEntity);
-        }
-
-        public virtual bool Equals(BaseEntity other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (!IsTransient(this) && !IsTransient(other) && Equals(Id, other.Id))
-            {
-                var otherType = other.GetUnproxiedType();
-                var thisType = GetUnproxiedType();
-                return thisType.IsAssignableFrom(otherType) || otherType.IsAssignableFrom(thisType);
-            }
-
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            if (Equals(Id, default(int)))
-            {
-                return base.GetHashCode();
-            }
-
-            return Id.GetHashCode();
-        }
-
-        public static bool operator ==(BaseEntity x, BaseEntity y)
-        {
-            return Equals(x, y);
-        }
-
-        public static bool operator !=(BaseEntity x, BaseEntity y)
-        {
-            return !(x == y);
-        }
+            Id = id;
+        }        
     }
 }

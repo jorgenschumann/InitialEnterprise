@@ -10,6 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="5.0.1" />
+    <PackageReference Include="MediatR.SimpleInjector" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.0" />
     <PackageReference Include="SimpleInjector" Version="4.3.0" />
   </ItemGroup>

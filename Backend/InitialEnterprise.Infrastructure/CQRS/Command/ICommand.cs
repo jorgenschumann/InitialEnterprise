@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace InitialEnterprise.Domain.SharedKernel
+﻿namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
-    public interface ICommand: IValidatable
+    public interface ICommand
     {
     }
-
-   
 }
