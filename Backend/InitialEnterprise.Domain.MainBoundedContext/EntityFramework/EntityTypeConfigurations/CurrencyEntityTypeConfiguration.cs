@@ -13,7 +13,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
             builder.Property(o => o.Name);
             builder.Property(o => o.IsoCode);
             builder.Property(o => o.Rate);
-            //builder.Ignore(b => b.DomainEvents);
+
+            builder.Ignore(b => b.Events);
         }
     }
 }

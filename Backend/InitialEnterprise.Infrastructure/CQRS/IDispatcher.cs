@@ -7,19 +7,23 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {
- 
     public interface IDispatcher
     {
         Task SendAsync<TCommand>(TCommand command)where TCommand : ICommand;
         
-        Task SendAsync<TCommand, TAggregate>(TCommand command) where TCommand : IDomainCommand where TAggregate : IAggregateRoot;
+        Task SendAsync<TCommand, TAggregate>(TCommand command) where TCommand :
+            IDomainCommand where TAggregate : IAggregateRoot;
         
-        Task SendAndPublishAsync<TCommand>(TCommand command)where TCommand : ICommand;
+        Task SendAndPublishAsync<TCommand>(TCommand command)where TCommand :
+            ICommand;
         
-        Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command)where TCommand : IDomainCommand where TAggregate : IAggregateRoot;
+        Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command)where TCommand : 
+            IDomainCommand where TAggregate : IAggregateRoot;
         
-        Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent;
+        Task PublishAsync<TEvent>(TEvent @event) where TEvent :
+            IEvent;
         
-        Task<TResult> GetResultAsync<TQuery, TResult>(TQuery query)where TQuery : IQuery;
+        Task<TResult> GetResultAsync<TQuery, TResult>(TQuery query)where TQuery : 
+            IQuery;
     }
 }

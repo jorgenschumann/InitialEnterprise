@@ -7,6 +7,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
     public abstract class AggregateRoot : IAggregateRoot
     {
         public Guid Id { get; protected set; }
+
         public IList<IDomainEvent> Events { get; } = new List<IDomainEvent>();
 
         protected AggregateRoot()

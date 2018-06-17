@@ -5,8 +5,7 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Handler
 {
-    public class UpdateCurrencyCommandHandler :
-        ICommandHandlerWithAggregateAsync<UpdateCurrencyCommand>
+    public class UpdateCurrencyCommandHandler : ICommandHandlerWithAggregateAsync<UpdateCurrencyCommand>
     {
         public async Task<IAggregateRoot> HandleAsync(UpdateCurrencyCommand currencyCommand)
         {

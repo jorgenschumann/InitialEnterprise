@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentValidation;
 using InitialEnterprise.Infrastructure.CQRS.Command;
+using InitialEnterprise.Infrastructure.DDD;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using SimpleInjector;
 
@@ -66,11 +68,16 @@ namespace InitialEnterprise.Infrastructure.IoC
             var commandHandlerWithAggregateAsync = container.GetTypesToRegister(typeof(ICommandHandlerWithAggregateAsync<>), assemblies);
             container.Register(typeof(ICommandHandlerWithAggregateAsync<>), commandHandlerWithAggregateAsync);
 
+            var commandHandlerWithEventsAsync = container.GetTypesToRegister(typeof(ICommandHandlerWithEventsAsync<>), assemblies);
+            container.Register(typeof(ICommandHandlerWithEventsAsync<>), commandHandlerWithEventsAsync);
+
             var commandHandlerAsync = container.GetTypesToRegister(typeof(ICommandHandlerAsync<>), assemblies);
             container.Register(typeof(ICommandHandlerAsync<>), commandHandlerAsync);
 
-            var commandHandlerWithEventsAsync = container.GetTypesToRegister(typeof(ICommandHandlerWithEventsAsync<>), assemblies);
-            container.Register(typeof(ICommandHandlerWithEventsAsync<>), commandHandlerWithEventsAsync);
+            var commandValidator = container.GetTypesToRegister(typeof(IValidator<>), assemblies);
+            container.Register(typeof(IValidator<>), commandValidator);
+
+            container.RegisterDecorator(typeof(ICommandHandlerWithAggregateAsync<>), typeof(ValidationCommandHandlerDecorator<>));
 
         }
 

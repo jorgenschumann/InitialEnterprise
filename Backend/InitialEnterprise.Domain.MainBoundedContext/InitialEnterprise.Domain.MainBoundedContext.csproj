@@ -11,6 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="CurrencyModule\Handler\UpdateCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\Handler\UpdateIsoCodeCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\Handler\UpdateRateCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\ValidationHandler\UpdateCurrencyCommandValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="7.6.103" />
     <PackageReference Include="MediatR.SimpleInjector" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />

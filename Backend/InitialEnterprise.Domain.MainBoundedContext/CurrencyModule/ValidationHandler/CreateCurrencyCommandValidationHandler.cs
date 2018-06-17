@@ -1,15 +1,18 @@
-﻿using FluentValidation;
+﻿using System.Threading.Tasks;
+using FluentValidation;
 using FluentValidation.Results;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
-using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterprise.Infrastructure.CQRS.Command;
+using InitialEnterprise.Infrastructure.DDD.Command;
+using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class UpdateCurrencyCommandValidator : AbstractValidator<UpdateCurrencyCommand> 
+    public class CreateCurrencyCommandValidationHandler : AbstractValidator<CreateCurrencyCommand>
     {
-        public override ValidationResult Validate(ValidationContext<UpdateCurrencyCommand> context)
+        public override ValidationResult Validate(ValidationContext<CreateCurrencyCommand> context)
         {
-            return base.Validate(context);  
+            return base.Validate(context);
         }
 
         //protected void ValidateName()
@@ -25,5 +28,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
         //        .NotEmpty().WithMessage("IsoCode")
         //        .Length(3, 3).WithMessage("IsoCode must have....");
         //}
+
+        //public ValidationResult Validate(ValidationContext<CreateCurrencyCommand> context)
+        //{
+        //    return this.Validate(context);
+        //}
     }
+
+
+   
 }

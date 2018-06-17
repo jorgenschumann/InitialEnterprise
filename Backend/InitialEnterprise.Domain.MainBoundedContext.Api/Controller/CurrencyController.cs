@@ -9,7 +9,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
     [Route("api/[controller]")]
     public class CurrencyController : Microsoft.AspNetCore.Mvc.Controller
     {
-        private readonly ICurrencyApplication currencyApplication;
+        readonly ICurrencyApplication currencyApplication;
         public CurrencyController(ICurrencyApplication currencyApplication)
         {
             this.currencyApplication = currencyApplication;
