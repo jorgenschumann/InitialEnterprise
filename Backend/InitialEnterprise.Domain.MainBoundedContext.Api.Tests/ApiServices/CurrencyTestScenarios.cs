@@ -1,5 +1,6 @@
+using System;
 using System.Threading.Tasks;
-using InitialEnterprise.Infrastructure.Application;
+using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
 using Xunit;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
@@ -15,9 +16,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             {
                 var response = await server.CreateClient()
                    .PostAsync(Post.Currency, 
-                   BuildContentString(new BaseDataTransferObject
+                   BuildContentString(new CurrencyDto
                    {
-                       UserId = 12
+                       UserId = 12, IsoCode = "GBP", Id = Guid.NewGuid(), Name = "British Pound", Rate = "1.327898"
                    }));
 
                 response.EnsureSuccessStatusCode();

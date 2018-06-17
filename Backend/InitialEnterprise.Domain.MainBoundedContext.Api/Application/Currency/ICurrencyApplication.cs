@@ -47,7 +47,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
         }
     }
 
-    public class CurrencyDto: BaseDataTransferObject
+    public class CurrencyDto: DataTransferObject
     {
         public Guid Id { get; set; }
 

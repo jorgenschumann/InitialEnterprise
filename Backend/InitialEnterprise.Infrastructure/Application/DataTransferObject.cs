@@ -2,7 +2,7 @@
 
 namespace InitialEnterprise.Infrastructure.Application
 {
-    public class BaseDataTransferObject : IDataTransferObject
+    public abstract class DataTransferObject : IDataTransferObject
     {
         [Required]
         public int UserId { get; set; }
