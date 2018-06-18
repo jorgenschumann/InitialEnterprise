@@ -5,6 +5,7 @@ using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
@@ -33,8 +34,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
         public async Task SendAsync<TCommand>(TCommand command) 
             where TCommand : ICommand
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
+            Guard.ArgumentNotNull(command);
 
             var handler = resolver.Resolve<ICommandHandlerAsync<TCommand>>();
 
@@ -48,16 +48,14 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             where TCommand : IDomainCommand 
             where TAggregate : IAggregateRoot
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
-
+            Guard.ArgumentNotNull(command);
+      
             await commandStore.SaveCommandAsync<TAggregate>(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
-
-            if (handler == null)
-                throw new ApplicationException($"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
-
+            
+            Guard.AgainstNotNull<ApplicationException>(handler, $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
+            
             var aggregateRoot = await handler.HandleAsync(command);
 
             foreach (var @event in aggregateRoot.Events)
@@ -71,14 +69,15 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
         public async Task SendAndPublishAsync<TCommand>(TCommand command) 
             where TCommand : ICommand
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
+            Guard.ArgumentNotNull(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithEventsAsync<TCommand>>();
 
             if (handler == null)
-                throw new ApplicationException($"No handler of type ICommandHandlerWithEventsAsync<TCommand> found for command '{command.GetType().FullName}'");
+                throw new ApplicationException();
 
+            Guard.AgainstNotNull<ApplicationException>(handler,$"No handler of type ICommandHandlerWithEventsAsync<TCommand> found for command '{command.GetType().FullName}'");
+            
             var events = await handler.HandleAsync(command);
 
             foreach (var @event in events)
@@ -92,16 +91,14 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             where TCommand : IDomainCommand
             where TAggregate : IAggregateRoot
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
+            Guard.ArgumentNotNull(command);
 
             await commandStore.SaveCommandAsync<TAggregate>(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
-
-            if (handler == null)
-                throw new ApplicationException($"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
-
+            
+            Guard.AgainstNotNull<ApplicationException>(handler, $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
+            
             var aggregateRoot = await handler.HandleAsync(command);
 
             foreach (var @event in aggregateRoot.Events)
