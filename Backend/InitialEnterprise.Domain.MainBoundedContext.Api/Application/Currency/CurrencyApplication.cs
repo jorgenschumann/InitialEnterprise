@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Services;
 using InitialEnterprise.Infrastructure.CQRS;
 using InitialEnterprise.Infrastructure.IoC;
-using NewLibrary.ForString;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 {
@@ -22,26 +22,18 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 
         public async Task Save(CurrencyDto currencyDto)
         {
-            var command = new CreateCurrencyCommand
-            {
-                Name = currencyDto.Name,
-                Rate = currencyDto.Rate.toDecimal(),
-                IsoCode = currencyDto.IsoCode
-            };
+            var command = Mapper.Map<CurrencyDto, CreateCurrencyCommand>(currencyDto);
 
-            await dispatcher.SendAsync<CreateCurrencyCommand,CurrencyModule.Aggregate.Currency>(command);
+            await dispatcher.SendAsync<CreateCurrencyCommand, CurrencyModule.Aggregate.Currency>(command);
         }
-        
-        public async Task<CurrencyDto> Read(Guid currencyId)
-        {
-            var query = new GetCurrency
-            {
-                Id = currencyId
-            };
 
-            var currency = await dispatcher.GetResultAsync<GetCurrency, CurrencyModule.Aggregate.Currency>(query);
-            
-            return new CurrencyDto { Id = currency.Id, IsoCode = currency.IsoCode, Name = currency.Name, Rate = currency.Rate.ToString() };
+        public async Task<CurrencyDto> Query(Guid id)
+        {
+            var query = new CurrencyQuery {Id = id};
+
+            var currency = await dispatcher.GetResultAsync<CurrencyQuery, CurrencyModule.Aggregate.Currency>(query);
+
+            return Mapper.Map<CurrencyModule.Aggregate.Currency, CurrencyDto>(currency);
         }
     }
 }

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
 
@@ -44,6 +47,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public virtual void Configure(IApplicationBuilder applicationBuilder)
         {
             RegisterMvcControllersInContainer(applicationBuilder, container);
+
+            InitializeAutoMapper();
 
             if (hostingEnvironment.IsDevelopment())
             {
@@ -147,6 +152,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
 
             app.UseAuthentication();
-        }       
+        }
+
+        private void InitializeAutoMapper()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMissingTypeMaps = true;
+                cfg.CreateMap<CurrencyDto, CreateCurrencyCommand>();
+            });
+        }
     }   
 }

@@ -6,7 +6,7 @@ using InitialEnterprise.Infrastructure.CQRS.Queries;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries
 {
-    public class QueryCurrencyHandlerAsync: IQueryHandlerAsync<GetCurrency, Currency>
+    public class QueryCurrencyHandlerAsync: IQueryHandlerAsync<CurrencyQuery, Currency>
     {
         private readonly ICurrencyService currencyService;
 
@@ -15,13 +15,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries
             this.currencyService = currencyService;
         }
 
-        public async Task<Currency> RetrieveAsync(GetCurrency query)
+        public async Task<Currency> RetrieveAsync(CurrencyQuery query)
         {
             return await currencyService.Read(query.Id);
         }
     }
 
-    public class GetCurrency : IQuery
+    public class CurrencyQuery : IQuery
     {
         public Guid Id { get; set; }
     }

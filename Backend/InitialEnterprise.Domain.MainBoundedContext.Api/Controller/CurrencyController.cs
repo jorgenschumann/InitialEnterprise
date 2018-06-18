@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [ValidateModel]
         public async Task<CurrencyDto> Get(Guid id)
         {
-          return await this.currencyApplication.Read(id);        
+          return await this.currencyApplication.Query(id);        
         }
 
         [HttpPost]

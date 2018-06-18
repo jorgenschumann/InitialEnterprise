@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Infrastructure.Application;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 {
     public interface ICurrencyApplication
     {
-        Task<CurrencyDto> Read(Guid currencyId);
+        Task<CurrencyDto> Query(Guid id);
 
         Task Save(CurrencyDto currencyDto);
     }
