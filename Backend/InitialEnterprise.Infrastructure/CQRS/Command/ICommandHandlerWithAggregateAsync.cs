@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using FluentValidation;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 

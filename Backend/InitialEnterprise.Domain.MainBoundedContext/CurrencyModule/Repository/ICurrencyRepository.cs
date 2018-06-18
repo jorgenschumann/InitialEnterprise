@@ -7,7 +7,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
     public interface ICurrencyRepository :  IRepository<Currency>
     {
-        Currency Add(Currency currency);
+        Task<Currency> Add(Currency currency);
 
         Task<Currency> Read(Guid currencyId);
     }

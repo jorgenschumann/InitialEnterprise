@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FluentValidation;
 using InitialEnterprise.Infrastructure.CQRS.Command;
-using InitialEnterprise.Infrastructure.DDD;
+using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using SimpleInjector;
 
@@ -76,9 +76,11 @@ namespace InitialEnterprise.Infrastructure.IoC
 
             var commandValidator = container.GetTypesToRegister(typeof(IValidator<>), assemblies);
             container.Register(typeof(IValidator<>), commandValidator);
-
+            
             container.RegisterDecorator(typeof(ICommandHandlerWithAggregateAsync<>), typeof(ValidationCommandHandlerDecorator<>));
-
+            
+            var queryHandlerAsync = container.GetTypesToRegister(typeof(IQueryHandlerAsync<,>), assemblies);
+            container.Register(typeof(IQueryHandlerAsync<,>), queryHandlerAsync);
         }
 
         private IEnumerable<Type> GetInterfacesWithoutInheritance(Type type)

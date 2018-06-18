@@ -1,4 +1,6 @@
-﻿namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
+﻿using System;
+
+namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
     public class CurrencyTestScenariosBase : TestScenariosBase
     {
@@ -6,7 +8,7 @@
 
         public static class Get
         {
-            public static string GetCurrency(int id)
+            public static string GetCurrency(Guid id)
             {
                 return $"{ApiUrlBase}/{id}";
             }

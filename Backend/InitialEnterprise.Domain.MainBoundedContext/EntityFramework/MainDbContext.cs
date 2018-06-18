@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations;
-using InitialEnterprise.Infrastructure.IoC;
-using InitialEnterprise.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework

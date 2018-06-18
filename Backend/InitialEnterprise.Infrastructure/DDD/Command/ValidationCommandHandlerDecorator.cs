@@ -5,7 +5,6 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Infrastructure.DDD.Command
 {  
-
     public class ValidationCommandHandlerDecorator<TCommand> : ICommandHandlerWithAggregateAsync<TCommand> where TCommand : IDomainCommand
     {
         private readonly IValidator<TCommand> validator;
@@ -19,7 +18,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
 
         public async Task<IAggregateRoot> HandleAsync(TCommand command)
         {
-            this.validator.Validate(command);
+            var result = this.validator.Validate(command);
 
             await this.decoratee.HandleAsync(command);
 
