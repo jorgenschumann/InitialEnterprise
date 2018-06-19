@@ -1,2 +1,2 @@
 # InitialEnterprise
-Initial Enterprise Archtecture for a .net core based business critical backend softwaresystem 
+Initial Enterprise Architecture for a .net core based business critical backend softwaresystem 

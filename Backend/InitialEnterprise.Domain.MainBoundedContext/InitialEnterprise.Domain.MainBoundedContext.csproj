@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CurrencyModule\Validations\**" />
+    <EmbeddedResource Remove="CurrencyModule\Validations\**" />
+    <None Remove="CurrencyModule\Validations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="CurrencyModule\Handler\UpdateCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\Handler\UpdateIsoCodeCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\Handler\UpdateRateCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\ValidationHandler\UpdateCurrencyCommandValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.6.103" />
+    <PackageReference Include="MediatR.SimpleInjector" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.0" />
+    <PackageReference Include="SimpleInjector" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.1.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
