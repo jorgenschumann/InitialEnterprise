@@ -37,10 +37,10 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             Guard.ArgumentNotNull(command);
 
             var handler = resolver.Resolve<ICommandHandlerAsync<TCommand>>();
-
-            if (handler == null)
-                throw new ApplicationException($"No handler of type CommandHandlerAsync<TCommand> found for command '{command.GetType().FullName}'");
-
+            
+            Guard.AgainstNotNull<ApplicationException>(handler, 
+                $"No handler of type CommandHandlerAsync<TCommand> found for command '{command.GetType().FullName}'");
+            
             await handler.HandleAsync(command);
         }
 
@@ -54,7 +54,8 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
 
             var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
             
-            Guard.AgainstNotNull<ApplicationException>(handler, $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
+            Guard.AgainstNotNull<ApplicationException>(handler, 
+                $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
             
             var aggregateRoot = await handler.HandleAsync(command);
 
@@ -72,11 +73,9 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             Guard.ArgumentNotNull(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithEventsAsync<TCommand>>();
-
-            if (handler == null)
-                throw new ApplicationException();
-
-            Guard.AgainstNotNull<ApplicationException>(handler,$"No handler of type ICommandHandlerWithEventsAsync<TCommand> found for command '{command.GetType().FullName}'");
+            
+            Guard.AgainstNotNull<ApplicationException>(handler,
+                $"No handler of type ICommandHandlerWithEventsAsync<TCommand> found for command '{command.GetType().FullName}'");
             
             var events = await handler.HandleAsync(command);
 
@@ -97,7 +96,8 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
 
             var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
             
-            Guard.AgainstNotNull<ApplicationException>(handler, $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
+            Guard.AgainstNotNull<ApplicationException>(handler,
+                $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
             
             var aggregateRoot = await handler.HandleAsync(command);
 
