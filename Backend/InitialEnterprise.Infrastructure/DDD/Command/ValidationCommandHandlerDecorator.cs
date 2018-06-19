@@ -4,7 +4,7 @@ using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Infrastructure.DDD.Command
-{  
+{
     public class ValidationCommandHandlerDecorator<TCommand> : ICommandHandlerWithAggregateAsync<TCommand> where TCommand : IDomainCommand
     {
         private readonly IValidator<TCommand> validator;
@@ -20,9 +20,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
         {
             var result = this.validator.Validate(command);
 
-            await this.decoratee.HandleAsync(command);
-
-            return null;
+            return await this.decoratee.HandleAsync(command);
         }
     }
 }

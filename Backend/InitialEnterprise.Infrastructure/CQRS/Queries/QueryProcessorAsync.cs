@@ -15,11 +15,11 @@ namespace InitialEnterprise.Infrastructure.CQRS.Queries
         }
         public async Task<TResult> ProcessAsync<TQuery, TResult>(TQuery query) where TQuery : IQuery
         {
-            Guard.ArgumentNotNull(query);
+            Guard.AgainstArgumentNull(query);
 
             var handler = _resolver.Resolve<IQueryHandlerAsync<TQuery, TResult>>();
 
-            Guard.AgainstNotNull<ArgumentException>(handler, $"No handler of type Weapsy.Cqrs.Queries.IQueryHandlerAsync<TQuery, TResult>> found for query '{query.GetType().FullName}'");
+            Guard.AgainstNotNull<ArgumentException>(handler, $"No handler of type IQueryHandlerAsync<TQuery, TResult>> found for query '{query.GetType().FullName}'");
 
             return await handler.RetrieveAsync(query);
         }

@@ -16,7 +16,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
       
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         { 
-           Guard.ArgumentNotNull(@event);
+           Guard.AgainstArgumentNull( @event);
 
             var handlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 

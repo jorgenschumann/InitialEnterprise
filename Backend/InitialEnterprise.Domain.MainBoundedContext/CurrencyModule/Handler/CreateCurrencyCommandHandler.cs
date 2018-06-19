@@ -22,7 +22,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Handler
 
         public async Task<IAggregateRoot> HandleAsync(CreateCurrencyCommand command)
         {
-            return await this.currencyRepository.Add(new Currency(command));
+            var currency = new Currency(command);
+
+            return await this.currencyRepository.Add(currency);
         }
     }
 }

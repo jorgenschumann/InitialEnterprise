@@ -28,6 +28,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
                 IsoCode = "GBP",
                 Rate = 1
             };
+
             //Act
             var activatedCurrency = Activator.CreateInstance(typeof(Currency), createCommand);
 

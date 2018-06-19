@@ -34,7 +34,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
         public async Task SendAsync<TCommand>(TCommand command) 
             where TCommand : ICommand
         {
-            Guard.ArgumentNotNull(command);
+            Guard.AgainstNull<ArgumentNullException>(command);
 
             var handler = resolver.Resolve<ICommandHandlerAsync<TCommand>>();
             
@@ -48,13 +48,13 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             where TCommand : IDomainCommand 
             where TAggregate : IAggregateRoot
         {
-            Guard.ArgumentNotNull(command);
+            Guard.AgainstNull<ArgumentNullException>(command);
       
             await commandStore.SaveCommandAsync<TAggregate>(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
             
-            Guard.AgainstNotNull<ApplicationException>(handler, 
+            Guard.AgainstNull<ApplicationException>(handler, 
                 $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
             
             var aggregateRoot = await handler.HandleAsync(command);
@@ -70,11 +70,11 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
         public async Task SendAndPublishAsync<TCommand>(TCommand command) 
             where TCommand : ICommand
         {
-            Guard.ArgumentNotNull(command);
+            Guard.AgainstNull<ArgumentNullException>(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithEventsAsync<TCommand>>();
             
-            Guard.AgainstNotNull<ApplicationException>(handler,
+            Guard.AgainstNull<ApplicationException>(handler,
                 $"No handler of type ICommandHandlerWithEventsAsync<TCommand> found for command '{command.GetType().FullName}'");
             
             var events = await handler.HandleAsync(command);
@@ -90,13 +90,13 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             where TCommand : IDomainCommand
             where TAggregate : IAggregateRoot
         {
-            Guard.ArgumentNotNull(command);
+            Guard.AgainstNull<ArgumentNullException>(command);
 
             await commandStore.SaveCommandAsync<TAggregate>(command);
 
             var handler = resolver.Resolve<ICommandHandlerWithAggregateAsync<TCommand>>();
             
-            Guard.AgainstNotNull<ApplicationException>(handler,
+            Guard.AgainstNull<ApplicationException>(handler,
                 $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
             
             var aggregateRoot = await handler.HandleAsync(command);

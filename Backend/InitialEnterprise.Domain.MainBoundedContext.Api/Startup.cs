@@ -75,13 +75,24 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public static void ConfigureDatabase(IServiceCollection services, string connectionString, Container container)
         {
-            var contextOptions = new DbContextOptionsBuilder<MainDbContext>().UseInMemoryDatabase(connectionString).Options;
+            var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
+                .UseInMemoryDatabase(connectionString)
+                .Options;
 
-            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
+            services.AddDbContext<MainDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
 
-            container.Register(() => { return contextOptions; }, Lifestyle.Scoped);
+            container.Register(() =>
+            {
+                return contextOptions;
+            }, Lifestyle.Scoped);
 
-            container.Register(() => { return new MainDbContext(contextOptions ); }, Lifestyle.Scoped);
+            container.Register(() =>
+            {
+                return new MainDbContext(contextOptions );
+            }, Lifestyle.Scoped);
 
             container.Register<IMainDbContext, MainDbContext>(Lifestyle.Scoped);
         }
@@ -106,6 +117,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             ConfigureJsonSerializer(mvcBuilder);
 
             services.AddCors();
+
+            services.AddMvc();
 
             RegisterControllerActivators(services, container);
 

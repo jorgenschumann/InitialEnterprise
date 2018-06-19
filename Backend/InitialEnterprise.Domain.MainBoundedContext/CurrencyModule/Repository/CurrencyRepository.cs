@@ -25,9 +25,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 
         public async Task<Currency> Add(Currency currency)
         {
-            var result = await mainDbContext.Currencies.AddAsync(currency);
+            var addedCurrency= await mainDbContext.Currencies.AddAsync(currency);
 
-            return result.Entity;
+            return addedCurrency.Entity;
         }
     }
 }
