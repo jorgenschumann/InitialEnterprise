@@ -11,19 +11,5 @@ namespace InitialEnterprise.Infrastructure.DDD.Event
         Task SaveEventAsync<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot;
         
         Task<IEnumerable<DomainEvent>> GetEventsAsync(Guid aggregateId);
-     
-    }
-
-    public class EventStore: IEventStore, IInjectable
-    {
-        public Task SaveEventAsync<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<DomainEvent>> GetEventsAsync(Guid aggregateId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

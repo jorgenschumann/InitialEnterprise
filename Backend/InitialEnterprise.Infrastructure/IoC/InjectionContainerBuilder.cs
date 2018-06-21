@@ -79,6 +79,7 @@ namespace InitialEnterprise.Infrastructure.IoC
             
             container.RegisterDecorator(typeof(ICommandHandlerWithAggregateAsync<>), typeof(ValidationCommandHandlerDecorator<>));
             
+            
             var queryHandlerAsync = container.GetTypesToRegister(typeof(IQueryHandlerAsync<,>), assemblies);
             container.Register(typeof(IQueryHandlerAsync<,>), queryHandlerAsync);
         }

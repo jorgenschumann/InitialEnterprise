@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
@@ -14,9 +15,8 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
         }
       
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
-        {
-            if (@event == null)
-                throw new ArgumentNullException(nameof(@event));
+        { 
+           Guard.AgainstArgumentNull( @event);
 
             var handlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 

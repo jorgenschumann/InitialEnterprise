@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Queries
 {
@@ -14,13 +15,11 @@ namespace InitialEnterprise.Infrastructure.CQRS.Queries
         }
         public async Task<TResult> ProcessAsync<TQuery, TResult>(TQuery query) where TQuery : IQuery
         {
-            if (query == null)
-                throw new ArgumentNullException(nameof(query));
+            Guard.AgainstArgumentNull(query);
 
             var handler = _resolver.Resolve<IQueryHandlerAsync<TQuery, TResult>>();
 
-            if (handler == null)
-                throw new ApplicationException($"No handler of type Weapsy.Cqrs.Queries.IQueryHandlerAsync<TQuery, TResult>> found for query '{query.GetType().FullName}'");
+            Guard.AgainstNotNull<ArgumentException>(handler, $"No handler of type IQueryHandlerAsync<TQuery, TResult>> found for query '{query.GetType().FullName}'");
 
             return await handler.RetrieveAsync(query);
         }

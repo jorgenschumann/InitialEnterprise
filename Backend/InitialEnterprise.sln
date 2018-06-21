@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TDDInfrastructure", "TDDInfrastructure", "{FEED2EF5-618E-491D-9768-153C7718913D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.TestDataSeeding", "InitialEnterprise.TestDataSeeding\InitialEnterprise.TestDataSeeding.csproj", "{4B2BCD38-874D-4C88-9DEC-E78473565E08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.TestDataSeeding", "InitialEnterprise.TestDataSeeding\InitialEnterprise.TestDataSeeding.csproj", "{4B2BCD38-874D-4C88-9DEC-E78473565E08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
