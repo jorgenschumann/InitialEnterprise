@@ -1,15 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
 using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
-using Microsoft.EntityFrameworkCore;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Handler
+namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHandler
 {
     public class CreateCurrencyCommandHandler : ICommandHandlerWithAggregateAsync<CreateCurrencyCommand>
     {
@@ -22,7 +18,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Handler
 
         public async Task<IAggregateRoot> HandleAsync(CreateCurrencyCommand command)
         {
-            return await this.currencyRepository.Add(new Currency(command));
+            var currency = new Currency(command);
+
+            return await this.currencyRepository.Add(currency);
         }
     }
 }
