@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
@@ -11,21 +12,21 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
     {
         public IUnitOfWork UnitOfWork => mainDbContext as IUnitOfWork;
 
-        private readonly IMainDbContext mainDbContext;
+        private readonly MainDbContext mainDbContext;
 
-        public CurrencyRepository(IMainDbContext context)
+        public CurrencyRepository(MainDbContext context)
         {
             this.mainDbContext = context;
         }
 
-        public async Task<Currency> Read(Guid currencyId)
+        public async Task<Currency> Query(Guid currencyId)
         {
             return await mainDbContext.Currencies.FindAsync(currencyId);
         }
 
-        public async Task<Currency> Add(Currency currency)
+        public async Task<Currency> Insert(Currency currency)
         {
-            var addedCurrency= await mainDbContext.Currencies.AddAsync(currency);
+            var addedCurrency = await mainDbContext.Currencies.AddAsync(currency);
 
             return addedCurrency.Entity;
         }

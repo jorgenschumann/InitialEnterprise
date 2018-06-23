@@ -17,6 +17,6 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
                 id = Guid.NewGuid();
 
             Id = id;
-        }        
+        }
     }
 }

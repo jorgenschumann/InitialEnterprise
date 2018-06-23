@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
@@ -16,7 +17,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             {
                 webHostBuilder.UseContentRoot(Directory.GetCurrentDirectory() + $"\\{directory}");
                 webHostBuilder.UseStartup<Startup>();
+                webHostBuilder.UseEnvironment("Test");
+                webHostBuilder.ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    config.AddJsonFile("appsettings.json");
+                });
             }
+
             return new TestServer(webHostBuilder);
         }
 
@@ -24,6 +31,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         {
             return new StringContent(JsonConvert.SerializeObject(model),
                 Encoding.UTF8, "application/json");
-        }       
-    }   
+        }
+    }
 }

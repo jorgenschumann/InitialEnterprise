@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandler
 {
-    public class QueryCurrencyHandlerAsync: IQueryHandlerAsync<CurrencyQuery, Currency>
+    public class QueryCurrencyHandlerAsync : IQueryHandlerAsync<CurrencyQuery, Currency>
     {
         private readonly ICurrencyRepository currencyRepository;
 
@@ -17,13 +17,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
 
         public async Task<Currency> RetrieveAsync(CurrencyQuery query)
         {
-            return await currencyRepository.Read(query.Id);
+            return await currencyRepository.Query(query.Id);
         }
     }
-
-    public class CurrencyQuery : IQuery
-    {
-        public Guid Id { get; set; }
-    }
-    
 }

@@ -13,14 +13,14 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
             }
             return ReferenceEquals(left, null) || left.Equals(right);
         }
-        
+
         protected static bool NotEqualOperator(ValueObject left, ValueObject right)
         {
             return !(EqualOperator(left, right));
         }
-        
+
         protected abstract IEnumerable<object> GetAtomicValues();
-        
+
         public override bool Equals(object obj)
         {
             if (obj == null || obj.GetType() != GetType())
@@ -43,7 +43,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
             }
             return !thisValues.MoveNext() && !otherValues.MoveNext();
         }
-        
+
         public override int GetHashCode()
         {
             return GetAtomicValues()

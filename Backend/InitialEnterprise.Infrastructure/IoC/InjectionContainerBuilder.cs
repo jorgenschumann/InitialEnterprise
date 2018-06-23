@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using FluentValidation;
 using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.DDD.Command;
+using InitialEnterprise.Infrastructure.DDD.Decorators;
 using SimpleInjector;
 
 namespace InitialEnterprise.Infrastructure.IoC
@@ -22,19 +24,23 @@ namespace InitialEnterprise.Infrastructure.IoC
 
         public Container Initialize()
         {
-            var assemblies = ListAssemblies();
+            var assemblies = ListDirectoryAssemblies();
+
+            var listAssemblies = ListAssemblies();
 
             RegisterContainerInjectables(assemblies, typeof(IInjectable));
+
+            //var foo = FindInjectableImplementation(ListDirectoryAssemblies(), typeof(IInjectable));
+            //var bar = FindInjectableImplementation(ListAssemblies(), typeof(IInjectable));
 
             RegisterContainerOpenGenericInjectables(assemblies);
 
             return container;
         }
 
-        void RegisterContainerInjectables(Assembly[] assemblies, Type interfaceType)
+        private void RegisterContainerInjectables(Assembly[] assemblies, Type interfaceType)
         {
             var implementations = FindInjectableImplementation(assemblies, interfaceType);
-
             foreach (var implementation in implementations)
             {
                 var registrationInterface = GetInterfacesWithoutInheritance(implementation).First();
@@ -49,6 +55,7 @@ namespace InitialEnterprise.Infrastructure.IoC
                 }
             }
         }
+
         private void RegisterContext(Assembly[] assemblies, Type interfaceType)
         {
             var implementations = FindInjectableImplementation(assemblies, interfaceType);
@@ -76,10 +83,9 @@ namespace InitialEnterprise.Infrastructure.IoC
 
             var commandValidator = container.GetTypesToRegister(typeof(IValidator<>), assemblies);
             container.Register(typeof(IValidator<>), commandValidator);
-            
+
             container.RegisterDecorator(typeof(ICommandHandlerWithAggregateAsync<>), typeof(ValidationCommandHandlerDecorator<>));
-            
-            
+
             var queryHandlerAsync = container.GetTypesToRegister(typeof(IQueryHandlerAsync<,>), assemblies);
             container.Register(typeof(IQueryHandlerAsync<,>), queryHandlerAsync);
         }
@@ -97,13 +103,30 @@ namespace InitialEnterprise.Infrastructure.IoC
             return injectables;
         }
 
+        private Assembly[] ListDirectoryAssemblies()
+        {
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            var appAssemblies = new List<Assembly>();
+            var assemblyFiles =
+                Directory.GetFiles(path, "InitialEnterprise.*.dll").Select(Path.GetFileNameWithoutExtension).ToList();
+            foreach (string dllFileName in assemblyFiles)
+            {
+                appAssemblies.Add(Assembly.Load(new AssemblyName(dllFileName)));
+            }
+            return appAssemblies.ToArray();
+
+            //return
+            //    Directory.GetFiles
+            //    (Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            //        "InitialEnterprise*.dll").Select(Assembly.LoadFile).ToArray();
+        }
+
         private Assembly[] ListAssemblies()
         {
             return AppDomain.CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.FullName.StartsWith("InitialEnterprise"))
+                .Where(a => a.FullName.StartsWith("InitialEnterprise."))
                 .ToArray();
         }
     }
-
 }

@@ -8,12 +8,12 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
 {
     public interface ICommandStore
     {
-        Task SaveCommandAsync<TAggregate>(IDomainCommand command)where TAggregate : IAggregateRoot;
-        
+        Task SaveCommandAsync<TAggregate>(IDomainCommand command) where TAggregate : IAggregateRoot;
+
         Task<IEnumerable<DomainCommand>> GetCommandsAsync(Guid aggregateId);
     }
 
-    public class CommandStore: ICommandStore,IInjectable
+    public class CommandStore : ICommandStore, IInjectable
     {
         public async Task SaveCommandAsync<TAggregate>(IDomainCommand command) where TAggregate : IAggregateRoot
         {

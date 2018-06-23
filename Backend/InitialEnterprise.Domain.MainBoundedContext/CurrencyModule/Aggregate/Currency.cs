@@ -6,13 +6,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
     public class Currency : AggregateRoot
     {
-        public string Name { get; private set; }
+        public string Name { get; private  set; }
 
         public string IsoCode { get; private set; }
 
         public decimal Rate { get; private set; }
         
-        private Currency()
+        public Currency()
         {
         }
 
@@ -24,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
                 IsoCode = command.IsoCode;
                 Rate = command.Rate;
 
-                AddEvent(new CurrencyCreated { AggregateRootId = Id , Name = command.Name, UserId =  command.UserId});
+                AddEvent(new CurrencyCreated { AggregateRootId = Id, Name = command.Name, UserId = command.UserId });
             }
         }
 
@@ -44,7 +44,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             {
                 Rate = command.Rate;
 
-                AddEvent(new CurrencyRateUpdated { AggregateRootId = Id , Rate = command.Rate});
+                AddEvent(new CurrencyRateUpdated { AggregateRootId = Id, Rate = command.Rate });
             }
         }
 
@@ -54,7 +54,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             {
                 Rate = command.Rate;
 
-                AddEvent(new CurrencyUpdated() { AggregateRootId = Id, Name =  command.Name});
+                AddEvent(new CurrencyUpdated() { AggregateRootId = Id, Name = command.Name });
             }
         }
 
@@ -73,4 +73,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             Id = @event.AggregateRootId;
         }
     }
+
+   
 }

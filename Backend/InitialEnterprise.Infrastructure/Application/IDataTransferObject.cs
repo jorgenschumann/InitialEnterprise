@@ -1,7 +1,9 @@
-﻿namespace InitialEnterprise.Infrastructure.Application
+﻿using System;
+
+namespace InitialEnterprise.Infrastructure.Application
 {
     public interface IDataTransferObject
     {
-         int UserId { get; set; }
+        Guid UserId { get; set; }
     }
 }

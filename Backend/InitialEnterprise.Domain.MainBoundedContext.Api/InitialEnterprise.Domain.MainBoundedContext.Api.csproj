@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.TestDataSeeding\InitialEnterprise.TestDataSeeding.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.TestDataSeeding\InitialEnterpriseTests.DataSeeding.csproj" />
   </ItemGroup>
 
 </Project>

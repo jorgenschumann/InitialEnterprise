@@ -33,7 +33,6 @@
   <ItemGroup>
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext.Api\InitialEnterprise.Domain.MainBoundedContext.Api.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.Testfixture\InitialEnterprise.Testfixture.csproj" />
   </ItemGroup>
 
   <ItemGroup>

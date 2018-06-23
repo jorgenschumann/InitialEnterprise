@@ -6,7 +6,6 @@ using InitialEnterprise.Infrastructure.DDD.Event;
 
 namespace InitialEnterprise.Infrastructure.DDD.Repository
 {
-
     public class Repository<T> : IRepository<T> where T : IAggregateRoot
     {
         private readonly IEventStore _eventStore;
@@ -21,7 +20,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Repository
             foreach (var @event in aggregate.Events)
                 await _eventStore.SaveEventAsync<T>(@event);
         }
-        
+
         public async Task<T> GetByIdAsync(Guid id)
         {
             var events = await _eventStore.GetEventsAsync(id);

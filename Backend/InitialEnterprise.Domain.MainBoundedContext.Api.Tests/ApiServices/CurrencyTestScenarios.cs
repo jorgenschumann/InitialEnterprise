@@ -15,10 +15,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             using (var server = base.CreateServer(directory))
             {
                 var response = await server.CreateClient()
-                   .PostAsync(Post.Currency, 
+                   .PostAsync(Post.Currency,
                    BuildContentString(new CurrencyDto
                    {
-                       UserId = 12, IsoCode = "GBP", Id = Guid.NewGuid(), Name = "British Pound", Rate = "1.327898"
+                       UserId = Guid.NewGuid(),
+                       IsoCode = "GBP",
+                       Id = Guid.NewGuid(),
+                       Name = "British Pound",
+                       Rate = "1.327898"
                    }));
 
                 response.EnsureSuccessStatusCode();
@@ -34,7 +38,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                     .PostAsync(Post.Currency,
                         BuildContentString(new CurrencyDto
                         {
-                            UserId = 12,
+                            UserId = Guid.NewGuid(),
                             IsoCode = "MORE_THEN_3",
                             Id = Guid.NewGuid(),
                             Name = "B",
@@ -50,7 +54,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         {
             using (var server = base.CreateServer(directory))
             {
-                var response = await server.CreateClient().GetAsync(Get.GetCurrency(Guid.NewGuid()));
+                var response = await server.CreateClient().GetAsync(Get.GetCurrency(Guid.Parse("97cc44c9-3902-ce2d-06be-d06a26267441")));
 
                 response.EnsureSuccessStatusCode();
             }

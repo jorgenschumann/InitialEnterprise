@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
+using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterpriseTests.DataSeeding;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -37,7 +40,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         {
             RegisterMvcControllersInContainer(applicationBuilder, container);
 
-            InitializeAutoMapper();
+            ConfigureAutoMapper();
 
             if (hostingEnvironment.IsDevelopment())
             {
@@ -62,8 +65,28 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             applicationBuilder.UseSwagger();
         }
 
-        public static void ConfigureDatabase(IServiceCollection services, string connectionString, Container container)
+        public void ConfigureDatabase(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("InitialEnterprise");
+
+            var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+
+            services.AddDbContext<MainDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+            container.Register(() => contextOptions, Lifestyle.Singleton);
+
+            container.Register(() => new MainDbContext(contextOptions), Lifestyle.Singleton);
+        }
+
+        public void ConfigureTestDatabase(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("InitialEnterpriseInMemory");
+
             var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
                 .UseInMemoryDatabase(connectionString)
                 .Options;
@@ -73,34 +96,41 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.UseSqlServer(connectionString);
             });
 
-            container.Register(() =>
-            {
-                return contextOptions;
-            }, Lifestyle.Scoped);
+            container.Register(() => contextOptions, Lifestyle.Singleton);
 
             container.Register(() =>
             {
-                return new MainDbContext(contextOptions );
-            }, Lifestyle.Scoped);
+                var context = new MainDbContext(contextOptions);
+                var currencySeed = SeedDataBuilder.BuildCurrencies();
 
-            container.Register<IMainDbContext, MainDbContext>(Lifestyle.Scoped);
+                foreach (var currency in currencySeed)
+                {
+                    currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
+                }
+
+                context.Currencies.AddRange(currencySeed);
+                context.SaveChanges();
+
+                return context;
+
+            }, Lifestyle.Singleton);
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment("Test"))
             {
-
+                ConfigureTestDatabase(services);
             }
             else
             {
-                ConfigureDatabase(services, Configuration.GetConnectionString("InitialEnterprise"), container);
+                ConfigureDatabase(services);
             }
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            InitializeContainer(services);
+            InitializeContainer();
 
             var mvcBuilder = services.AddMvc();
             ConfigureJsonSerializer(mvcBuilder);
@@ -117,7 +147,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             ConfigureEntityFrameworkContext(services);
         }
-
+        
         private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
         {
             mvcBuilder.AddJsonOptions(options =>
@@ -135,11 +165,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             services.UseSimpleInjectorAspNetRequestScoping(injectionContainer);
         }
 
-        private void InitializeContainer(IServiceCollection services)
+        private void InitializeContainer()
         {
             this.container = new InjectionContainerBuilder(new AsyncScopedLifestyle()).Initialize();
         }
-        
+
         private void RegisterMvcControllersInContainer(IApplicationBuilder applicationBuilder, Container injectionContainer)
         {
             injectionContainer.RegisterMvcControllers(applicationBuilder);
@@ -156,13 +186,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             app.UseAuthentication();
         }
 
-        private void InitializeAutoMapper()
+        private void ConfigureAutoMapper()
         {
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMissingTypeMaps = true;
                 cfg.CreateMap<CurrencyDto, CreateCurrencyCommand>();
+                cfg.CreateMap<Currency, CurrencyDto>();
+                cfg.CreateMap<IDomainEvent, DomainEventDto>();
             });
         }
-    }   
+    }
 }

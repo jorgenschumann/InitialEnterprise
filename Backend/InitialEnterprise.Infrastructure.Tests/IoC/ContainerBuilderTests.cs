@@ -1,5 +1,4 @@
 using InitialEnterprise.Infrastructure.CQRS.Command;
-using InitialEnterprise.Infrastructure.DDD;
 using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
 using SimpleInjector.Lifestyles;
@@ -18,18 +17,18 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
             //act
             var container = containerBuilder.Initialize();
             var service = container.GetInstance<ITestDomainService>() as TestDomainService;
-          
-            //assert          
+
+            //assert
             Assert.NotNull(service);
             Assert.NotNull(service.testRepository);
         }
     }
 
-  
     public class TestDomainService : ITestDomainService, IInjectable
     {
         public ITestRepository testRepository;
-        public TestDomainService(ITestRepository  testRepository)
+
+        public TestDomainService(ITestRepository testRepository)
         {
             this.testRepository = testRepository;
         }
@@ -41,7 +40,8 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
 
     public class TestRepository : ITestRepository, IInjectable
     {
-        IUnitOfWork unitOfWork;
+        private IUnitOfWork unitOfWork;
+
         public TestRepository(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
@@ -51,7 +51,6 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
     public interface ITestRepository
     {
     }
- 
 
     public class TestCommand : ICommand
     {

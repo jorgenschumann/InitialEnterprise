@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="CurrencyModule\ValidationHandler\UpdateCurrencyCommandValidator.cs" />
+    <Compile Remove="CurrencyModule\CommandHandler\UpdateCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\CommandHandler\UpdateIsoCodeCurrencyCommandHandler.cs" />
+    <Compile Remove="CurrencyModule\CommandHandler\UpdateRateCurrencyCommandHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>

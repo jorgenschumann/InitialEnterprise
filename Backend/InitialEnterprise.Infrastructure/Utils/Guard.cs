@@ -4,7 +4,6 @@ namespace InitialEnterprise.Infrastructure.Utils
 {
     public static class Guard
     {
-        
         public static void Against<TException>(bool assertion, string message) where TException : Exception
         {
             if (assertion)
@@ -21,7 +20,7 @@ namespace InitialEnterprise.Infrastructure.Utils
             }
         }
 
-        public static void AgainstNull<TException>(object candidate, string message ="") where TException : Exception
+        public static void AgainstNull<TException>(object candidate, string message = "") where TException : Exception
         {
             if (candidate == null)
             {
@@ -36,7 +35,7 @@ namespace InitialEnterprise.Infrastructure.Utils
                 throw (TException)Activator.CreateInstance(typeof(TException), message);
             }
         }
-      
+
         public static void AgainstArgumentNull(object value, string message = "")
         {
             if (value == null)
@@ -44,6 +43,7 @@ namespace InitialEnterprise.Infrastructure.Utils
                 throw new ArgumentNullException(message);
             }
         }
+
         public static void InheritsFrom<TBase>(object instance, string message) where TBase : Type
         {
             InheritsFrom<TBase>(instance.GetType(), message);

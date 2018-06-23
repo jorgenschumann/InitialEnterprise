@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.Testfixture\InitialEnterprise.Testfixture.csproj" />
   </ItemGroup>
 
 </Project>

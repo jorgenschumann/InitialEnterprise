@@ -22,7 +22,5 @@
         //In case the type of a cached instance implements System.IDisposable, the container
         //will ensure its disposal when the active scope gets disposed.
         Scoped
-
     }
-     
 }

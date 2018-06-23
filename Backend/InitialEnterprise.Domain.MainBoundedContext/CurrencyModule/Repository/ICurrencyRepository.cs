@@ -5,10 +5,10 @@ using InitialEnterprise.Infrastructure.Repository;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
-    public interface ICurrencyRepository :  IRepository<Currency>
+    public interface ICurrencyRepository : IRepository<Currency>
     {
-        Task<Currency> Add(Currency currency);
+        Task<Currency> Insert(Currency currency);
 
-        Task<Currency> Read(Guid currencyId);
+        Task<Currency> Query(Guid currencyId);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using InitialEnterprise.Infrastructure.CQRS;
-using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Repository;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -12,12 +12,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
     {
         private readonly IDispatcher dispatcher;
 
-        public CurrencyApplication( IDispatcher dispatcher)
+        public CurrencyApplication(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
         }
 
-        public async Task Save(CurrencyDto currencyDto)
+        public async Task Insert(CurrencyDto currencyDto)
         {
             var command = Mapper.Map<CurrencyDto, CreateCurrencyCommand>(currencyDto);
 
@@ -26,11 +26,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 
         public async Task<CurrencyDto> Query(Guid id)
         {
-            var query = new CurrencyQuery {Id = id};
-
+            var query = new CurrencyQuery { Id = id };
+            
             var currency = await dispatcher.GetResultAsync<CurrencyQuery, CurrencyModule.Aggregate.Currency>(query);
-
-            return Mapper.Map<CurrencyModule.Aggregate.Currency, CurrencyDto>(currency);
+           
+           return Mapper.Map<CurrencyModule.Aggregate.Currency, CurrencyDto>(currency);
         }
     }
 }

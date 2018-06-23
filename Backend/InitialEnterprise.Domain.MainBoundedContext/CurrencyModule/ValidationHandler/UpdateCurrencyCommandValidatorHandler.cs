@@ -4,9 +4,9 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class CreateCurrencyCommandValidationHandler : AbstractValidator<CreateCurrencyCommand>
+    public class UpdateCurrencyCommandValidatorHandler : AbstractValidator<UpdateCurrencyCommand>
     {
-        public override ValidationResult Validate(ValidationContext<CreateCurrencyCommand> context)
+        public override ValidationResult Validate(ValidationContext<UpdateCurrencyCommand> context)
         {
             ValidateName();
             ValidateIsoCode();

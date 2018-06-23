@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Utils;
 
@@ -13,10 +12,10 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
         {
             _resolver = resolver;
         }
-      
+
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
-        { 
-           Guard.AgainstArgumentNull( @event);
+        {
+            Guard.AgainstArgumentNull(@event);
 
             var handlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 
