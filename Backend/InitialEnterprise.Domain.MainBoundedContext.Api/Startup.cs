@@ -3,6 +3,7 @@ using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+using InitialEnterprise.Infrastructure.Api.Filter;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
 using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.IoC;
@@ -134,10 +135,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             var mvcBuilder = services.AddMvc();
             ConfigureJsonSerializer(mvcBuilder);
-
+            
             services.AddCors();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            }).AddControllersAsServices();
 
             RegisterControllerActivators(services, container);
 
