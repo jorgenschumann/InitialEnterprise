@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {
-    public class Resolver : IResolver, IInjectable
+    public class Resolver : IResolver
     {
         private readonly IServiceProvider serviceProvider;
 

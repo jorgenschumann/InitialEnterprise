@@ -4,7 +4,7 @@ using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
-    public class EventPublisherAsync : IEventPublisherAsync, IInjectable
+    public class EventPublisherAsync : IEventPublisherAsync
     {
         private readonly IResolver _resolver;
 

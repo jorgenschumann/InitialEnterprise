@@ -13,7 +13,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
         Task<IEnumerable<DomainCommand>> GetCommandsAsync(Guid aggregateId);
     }
 
-    public class CommandStore : ICommandStore, IInjectable
+    public class CommandStore : ICommandStore
     {
         public async Task SaveCommandAsync<TAggregate>(IDomainCommand command) where TAggregate : IAggregateRoot
         {

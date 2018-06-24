@@ -8,7 +8,7 @@ using InitialEnterprise.Infrastructure.Repository;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
-    public class CurrencyRepository : ICurrencyRepository, IInjectable
+    public class CurrencyRepository : ICurrencyRepository
     {
         public IUnitOfWork UnitOfWork => mainDbContext as IUnitOfWork;
 

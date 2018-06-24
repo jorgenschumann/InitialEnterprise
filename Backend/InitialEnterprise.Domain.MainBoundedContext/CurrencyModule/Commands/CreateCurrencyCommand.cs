@@ -3,7 +3,7 @@ using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class CreateCurrencyCommand : DomainCommand, IInjectable
+    public class CreateCurrencyCommand : DomainCommand
     {
         public string Name { get; set; }
 

@@ -8,7 +8,7 @@ using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {
-    public class Dispatcher : IDispatcher, IInjectable
+    public class Dispatcher : IDispatcher
     {
         private readonly ICommandSenderAsync commandSenderAsync;
         private readonly IEventPublisherAsync eventPublisherAsync;

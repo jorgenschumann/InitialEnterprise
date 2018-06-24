@@ -9,7 +9,7 @@ using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
-    public class CommandSenderAsync : ICommandSenderAsync, IInjectable
+    public class CommandSenderAsync : ICommandSenderAsync
     {
         private readonly IResolver resolver;
         private readonly IEventPublisherAsync eventPublisherAsync;

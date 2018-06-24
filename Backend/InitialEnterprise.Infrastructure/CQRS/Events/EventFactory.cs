@@ -3,7 +3,7 @@ using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
-    public class EventFactory : IEventFactory, IInjectable
+    public class EventFactory : IEventFactory
     {
         public dynamic CreateConcreteEvent(object @event)
         {

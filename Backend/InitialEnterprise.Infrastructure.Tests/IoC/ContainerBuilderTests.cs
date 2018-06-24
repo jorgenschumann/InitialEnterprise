@@ -10,7 +10,7 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
       
     }
 
-    public class TestDomainService : ITestDomainService, IInjectable
+    public class TestDomainService : ITestDomainService
     {
         public ITestRepository testRepository;
 
@@ -24,7 +24,7 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
     {
     }
 
-    public class TestRepository : ITestRepository, IInjectable
+    public class TestRepository : ITestRepository
     {
         private IUnitOfWork unitOfWork;
 

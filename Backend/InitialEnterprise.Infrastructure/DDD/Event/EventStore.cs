@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.DDD.Domain;
-using InitialEnterprise.Infrastructure.IoC;
+
 
 namespace InitialEnterprise.Infrastructure.DDD.Event
 {
-    public class EventStore : IEventStore, IInjectable
+    public class EventStore : IEventStore
     {
         public async Task SaveEventAsync<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
         {

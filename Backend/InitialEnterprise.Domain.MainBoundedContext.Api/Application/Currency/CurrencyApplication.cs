@@ -8,7 +8,7 @@ using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 {
-    public class CurrencyApplication : ICurrencyApplication, IInjectable
+    public class CurrencyApplication : ICurrencyApplication
     {
         private readonly IDispatcher dispatcher;
 
