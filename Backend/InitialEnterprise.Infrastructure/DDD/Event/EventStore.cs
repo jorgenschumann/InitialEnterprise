@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 
-
 namespace InitialEnterprise.Infrastructure.DDD.Event
 {
     public class EventStore : IEventStore

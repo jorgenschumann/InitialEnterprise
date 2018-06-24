@@ -10,7 +10,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Event
         Guid CommandId { get; set; }
         Int64 Version { get; set; }
         Guid UserId { get; set; }
-        String  Source { get; set; }
+        String Source { get; set; }
         DateTime TimeStamp { get; set; }
     }
 }

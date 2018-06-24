@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Infrastructure.DDD.Command;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {

@@ -4,7 +4,6 @@ using InitialEnterprise.Infrastructure.CQRS.Events;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {

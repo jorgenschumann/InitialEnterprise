@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events

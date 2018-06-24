@@ -6,12 +6,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
     public class Currency : AggregateRoot
     {
-        public string Name { get; private  set; }
+        public string Name { get; private set; }
 
         public string IsoCode { get; private set; }
 
         public decimal Rate { get; private set; }
-        
+
         public Currency()
         {
         }
@@ -73,6 +73,4 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             Id = @event.AggregateRootId;
         }
     }
-
-   
 }

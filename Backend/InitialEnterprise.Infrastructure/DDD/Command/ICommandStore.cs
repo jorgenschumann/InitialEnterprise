@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InitialEnterprise.Infrastructure.DDD.Domain;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.DDD.Command
 {

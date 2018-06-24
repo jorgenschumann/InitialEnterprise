@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.Extensions.DependencyInjection;
-
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {

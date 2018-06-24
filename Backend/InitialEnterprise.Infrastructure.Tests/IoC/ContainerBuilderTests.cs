@@ -1,13 +1,10 @@
 using InitialEnterprise.Infrastructure.CQRS.Command;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
-using Xunit;
 
 namespace InitialEnterprise.Infrastructure.Tests.IoC
 {
     public class ContainerBuilderTests
     {
-      
     }
 
     public class TestDomainService : ITestDomainService

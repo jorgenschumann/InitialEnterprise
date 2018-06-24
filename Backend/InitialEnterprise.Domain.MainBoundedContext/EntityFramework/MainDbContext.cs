@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations;

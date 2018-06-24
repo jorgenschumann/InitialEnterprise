@@ -4,7 +4,6 @@ using InitialEnterprise.Infrastructure.CQRS.Events;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Event;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Command

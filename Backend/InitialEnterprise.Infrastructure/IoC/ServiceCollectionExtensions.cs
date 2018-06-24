@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,7 +14,7 @@ namespace InitialEnterprise.Infrastructure.IoC
         {
             var typeList = types.ToList();
             typeList.Add(typeof(IDispatcher));
-            
+
             services.Scan(s => s
                 .FromAssemblies(ListDirectoryAssemblies())
                 .AddClasses()
@@ -25,20 +24,15 @@ namespace InitialEnterprise.Infrastructure.IoC
 
             return services;
         }
-      
+
         private static Assembly[] ListDirectoryAssemblies()
         {
-            var appAssemblies = new List<Assembly>();
-            var assemblyFiles =
+            return
                 Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory
-                    , "InitialEnterprise.*.dll").Select(Path.GetFileNameWithoutExtension).ToList();
-
-            foreach (var assemblyFile in assemblyFiles)
-            {
-                appAssemblies.Add(Assembly.Load(new AssemblyName(assemblyFile)));
-            }
-
-            return appAssemblies.ToArray();
+                    , "InitialEnterprise.*.dll")
+                    .Select(Path.GetFileNameWithoutExtension)
+                    .Select(assemblyFile => Assembly.Load(new AssemblyName(assemblyFile)))
+                    .ToArray();
         }
     }
 }

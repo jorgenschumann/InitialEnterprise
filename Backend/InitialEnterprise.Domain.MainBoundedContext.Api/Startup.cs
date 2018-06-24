@@ -10,8 +10,6 @@ using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterpriseTests.DataSeeding;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +23,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
-    
 
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
@@ -38,7 +35,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureServiceCollection();
-            
+
             var mvcBuilder = services.AddMvc();
             ConfigureJsonSerializer(mvcBuilder);
 
@@ -50,16 +47,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }).AddControllersAsServices();
 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
-            
+
             ConfigureEntityFrameworkContext(services);
         }
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
-           ConfigureLogger(loggerFactory);
+            ConfigureLogger(loggerFactory);
 
             ConfigureAutoMapper();
-          
+
             if (hostingEnvironment.IsDevelopment())
             {
                 applicationBuilder.UseDeveloperExceptionPage();
@@ -91,7 +88,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.UseSqlServer(connectionString);
             });
-          
         }
 
         public void ConfigureTestDatabase(IServiceCollection services)
@@ -120,7 +116,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 return context;
             });
         }
-        
+
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment("Test"))
@@ -133,7 +129,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
         }
 
-        
         private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
         {
             mvcBuilder.AddJsonOptions(options =>

@@ -25,9 +25,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
         public IEnumerable<DomainEventDto> Events { get; set; }
     }
 
-    public class DomainEventDto 
+    public class DomainEventDto
     {
-        public Guid Id { get; set; } 
+        public Guid Id { get; set; }
         public Guid AggregateRootId { get; set; }
         public Guid CommandId { get; set; }
         public Int64 Version { get; set; }

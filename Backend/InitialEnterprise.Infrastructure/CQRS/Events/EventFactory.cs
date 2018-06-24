@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
