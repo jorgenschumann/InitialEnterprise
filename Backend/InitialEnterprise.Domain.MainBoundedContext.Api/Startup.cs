@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SimpleInjector;
@@ -37,12 +38,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public IConfiguration Configuration { get; }
 
-        public virtual void Configure(IApplicationBuilder applicationBuilder)
+        public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
+           ConfigureLogger(loggerFactory);
+
             RegisterMvcControllersInContainer(applicationBuilder, container);
 
             ConfigureAutoMapper();
-
+          
             if (hostingEnvironment.IsDevelopment())
             {
                 applicationBuilder.UseDeveloperExceptionPage();
@@ -142,7 +145,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             }).AddControllersAsServices();
-
+            
             RegisterControllerActivators(services, container);
 
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
@@ -199,6 +202,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 cfg.CreateMap<Currency, CurrencyDto>();
                 cfg.CreateMap<IDomainEvent, DomainEventDto>();
             });
+        }
+
+        private void ConfigureLogger(ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
+using InitialEnterprise.Infrastructure.Api.Attributes;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [ValidateModel]
         public async Task<CurrencyDto> Get(Guid id)
         {
+            var i = 0;
+            var k = 1 / i;
+
             return await this.currencyApplication.Query(id);
         }
 

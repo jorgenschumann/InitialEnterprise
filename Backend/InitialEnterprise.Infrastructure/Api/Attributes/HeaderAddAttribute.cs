@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace InitialEnterprise.Infrastructure.Api.Filter
+namespace InitialEnterprise.Infrastructure.Api.Attributes
 {
-    public class AddHeaderWithFactoryAttribute : Attribute, IFilterFactory
+    public class HeaderAddAttribute : Attribute, IFilterFactory
     {
         public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
         {
