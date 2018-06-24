@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleInjector;
+
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {
@@ -10,7 +10,7 @@ namespace InitialEnterprise.Infrastructure.CQRS
     {
         private readonly IServiceProvider serviceProvider;
 
-        public Resolver(Container serviceProvider)//, IHttpContextAccessor httpContextAccessor)
+        public Resolver(IServiceProvider serviceProvider)//, IHttpContextAccessor httpContextAccessor)
         {
             this.serviceProvider = serviceProvider;
         }

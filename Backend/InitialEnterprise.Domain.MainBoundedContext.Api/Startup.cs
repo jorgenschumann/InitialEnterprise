@@ -18,9 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using SimpleInjector;
-using SimpleInjector.Integration.AspNetCore.Mvc;
-using SimpleInjector.Lifestyles;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
@@ -28,7 +25,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        private Container container;
+    
 
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
@@ -38,11 +35,28 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public IConfiguration Configuration { get; }
 
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.ConfigureServiceCollection();
+            
+            var mvcBuilder = services.AddMvc();
+            ConfigureJsonSerializer(mvcBuilder);
+
+            services.AddCors();
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            }).AddControllersAsServices();
+
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
+            
+            ConfigureEntityFrameworkContext(services);
+        }
+
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
            ConfigureLogger(loggerFactory);
-
-            RegisterMvcControllersInContainer(applicationBuilder, container);
 
             ConfigureAutoMapper();
           
@@ -57,10 +71,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     c.AllowAnyOrigin();
                 });
             }
-
-            container.RegisterInstance(Configuration);
-
-            container.Verify();
 
             applicationBuilder.UseAuthentication();
 
@@ -81,10 +91,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.UseSqlServer(connectionString);
             });
-
-            container.Register(() => contextOptions, Lifestyle.Singleton);
-
-            container.Register(() => new MainDbContext(contextOptions), Lifestyle.Singleton);
+          
         }
 
         public void ConfigureTestDatabase(IServiceCollection services)
@@ -100,26 +107,20 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.UseSqlServer(connectionString);
             });
 
-            container.Register(() => contextOptions, Lifestyle.Singleton);
-
-            container.Register(() =>
+            services.AddSingleton<MainDbContext>(mainContext =>
             {
                 var context = new MainDbContext(contextOptions);
                 var currencySeed = SeedDataBuilder.BuildCurrencies();
-
                 foreach (var currency in currencySeed)
                 {
                     currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
                 }
-
                 context.Currencies.AddRange(currencySeed);
                 context.SaveChanges();
-
                 return context;
-
-            }, Lifestyle.Singleton);
+            });
         }
-
+        
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment("Test"))
@@ -132,28 +133,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            InitializeContainer();
-
-            var mvcBuilder = services.AddMvc();
-            ConfigureJsonSerializer(mvcBuilder);
-            
-            services.AddCors();
-
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            }).AddControllersAsServices();
-            
-            RegisterControllerActivators(services, container);
-
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
-
-            services.EnableSimpleInjectorCrossWiring(container);
-
-            ConfigureEntityFrameworkContext(services);
-        }
         
         private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
         {
@@ -163,24 +142,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-        }
-
-        private static void RegisterControllerActivators(IServiceCollection services, Container injectionContainer)
-        {
-            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(injectionContainer));
-            services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(injectionContainer));
-            services.UseSimpleInjectorAspNetRequestScoping(injectionContainer);
-        }
-
-        private void InitializeContainer()
-        {
-            this.container = new InjectionContainerBuilder(new AsyncScopedLifestyle()).Initialize();
-        }
-
-        private void RegisterMvcControllersInContainer(IApplicationBuilder applicationBuilder, Container injectionContainer)
-        {
-            injectionContainer.RegisterMvcControllers(applicationBuilder);
-            injectionContainer.RegisterMvcViewComponents(applicationBuilder);
         }
 
         protected virtual void ConfigureAuth(IApplicationBuilder app)
