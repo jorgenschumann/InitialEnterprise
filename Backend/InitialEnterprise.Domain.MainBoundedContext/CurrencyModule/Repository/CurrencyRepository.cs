@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
-    public class CurrencyRepository : ICurrencyRepository, IInjectable
+    public class CurrencyRepository : ICurrencyRepository
     {
-        public IUnitOfWork UnitOfWork => mainDbContext as IUnitOfWork;
-
         private readonly MainDbContext mainDbContext;
 
         public CurrencyRepository(MainDbContext context)
         {
-            this.mainDbContext = context;
+            mainDbContext = context;
         }
+
+        public IUnitOfWork UnitOfWork => mainDbContext;
 
         public async Task<Currency> Query(Guid currencyId)
         {

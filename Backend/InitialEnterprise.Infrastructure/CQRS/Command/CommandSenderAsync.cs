@@ -4,18 +4,17 @@ using InitialEnterprise.Infrastructure.CQRS.Events;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Event;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
-    public class CommandSenderAsync : ICommandSenderAsync, IInjectable
+    public class CommandSenderAsync : ICommandSenderAsync
     {
-        private readonly IResolver resolver;
-        private readonly IEventPublisherAsync eventPublisherAsync;
-        private readonly IEventFactory eventFactory;
-        private readonly IEventStore eventStore;
         private readonly ICommandStore commandStore;
+        private readonly IEventFactory eventFactory;
+        private readonly IEventPublisherAsync eventPublisherAsync;
+        private readonly IEventStore eventStore;
+        private readonly IResolver resolver;
 
         public CommandSenderAsync(
             IResolver resolver,
@@ -63,7 +62,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             {
                 @event.CommandId = command.Id;
                 var concreteEvent = eventFactory.CreateConcreteEvent(@event);
-                await eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
+                await eventStore.SaveEventAsync<TAggregate>((IDomainEvent) concreteEvent);
             }
         }
 
@@ -105,7 +104,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             {
                 @event.CommandId = command.Id;
                 var concreteEvent = eventFactory.CreateConcreteEvent(@event);
-                await eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
+                await eventStore.SaveEventAsync<TAggregate>((IDomainEvent) concreteEvent);
                 await eventPublisherAsync.PublishAsync(concreteEvent);
             }
         }

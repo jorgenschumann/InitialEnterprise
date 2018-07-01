@@ -1,9 +1,8 @@
 ﻿using InitialEnterprise.Infrastructure.DDD.Command;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class CreateCurrencyCommand : DomainCommand, IInjectable
+    public class CreateCurrencyCommand : DomainCommand
     {
         public string Name { get; set; }
 
@@ -11,6 +10,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 
         public decimal Rate { get; set; }
 
-        public bool IsValid => true;
+        public bool IsValid => false;
     }
 }

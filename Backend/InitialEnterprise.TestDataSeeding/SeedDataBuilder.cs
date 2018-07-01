@@ -12,19 +12,16 @@ namespace InitialEnterpriseTests.DataSeeding
         {
             return new List<TEntity>().Seed(count);
         }
-        
-        public static List<Currency> BuildCurrencies(int count=100)
+
+        public static List<Currency> BuildCurrencies(int count = 100)
         {
             var currencies = BuildEntities<Currency>(count).ToList();
-            
+
             foreach (var currency in currencies)
             {
                 var events = BuildEntities<DomainEvent>(10).ToList();
 
-                foreach (var @event in events)
-                {
-                    @event.AggregateRootId = currency.Id;
-                }
+                foreach (var @event in events) @event.AggregateRootId = currency.Id;
                 currency.ApplyEvents(events);
             }
 

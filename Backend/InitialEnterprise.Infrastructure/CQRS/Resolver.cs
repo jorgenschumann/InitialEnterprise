@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleInjector;
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {
-    public class Resolver : IResolver, IInjectable
+    public class Resolver : IResolver
     {
         private readonly IServiceProvider serviceProvider;
 
-        public Resolver(Container serviceProvider)//, IHttpContextAccessor httpContextAccessor)
+        public Resolver(IServiceProvider serviceProvider) //, IHttpContextAccessor httpContextAccessor)
         {
             this.serviceProvider = serviceProvider;
         }

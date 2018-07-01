@@ -1,30 +1,14 @@
+using System;
 using InitialEnterprise.Infrastructure.CQRS.Command;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Repository;
-using SimpleInjector.Lifestyles;
-using Xunit;
 
 namespace InitialEnterprise.Infrastructure.Tests.IoC
 {
     public class ContainerBuilderTests
     {
-        [Fact]
-        public void Should_Initialize_Container_By_Scanning()
-        {
-            //arr
-            var containerBuilder = new InjectionContainerBuilder(new AsyncScopedLifestyle());
-
-            //act
-            var container = containerBuilder.Initialize();
-            var service = container.GetInstance<ITestDomainService>() as TestDomainService;
-
-            //assert
-            Assert.NotNull(service);
-            Assert.NotNull(service.testRepository);
-        }
     }
 
-    public class TestDomainService : ITestDomainService, IInjectable
+    public class TestDomainService : ITestDomainService
     {
         public ITestRepository testRepository;
 
@@ -38,7 +22,7 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
     {
     }
 
-    public class TestRepository : ITestRepository, IInjectable
+    public class TestRepository : ITestRepository
     {
         private IUnitOfWork unitOfWork;
 
@@ -54,11 +38,11 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
 
     public class TestCommand : ICommand
     {
-        public bool IsValid => throw new System.NotImplementedException();
+        public bool IsValid => throw new NotImplementedException();
 
         public object Validate()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

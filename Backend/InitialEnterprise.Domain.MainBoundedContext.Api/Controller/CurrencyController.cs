@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
-using InitialEnterprise.Infrastructure.Api.Filter;
+using InitialEnterprise.Infrastructure.Api.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
@@ -20,14 +20,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [ValidateModel]
         public async Task<CurrencyDto> Get(Guid id)
         {
-            return await this.currencyApplication.Query(id);
+            return await currencyApplication.Query(id);
         }
 
         [HttpPost]
         [ValidateModel]
-        public async Task Post([FromBody]CurrencyDto value)
+        public async Task Post([FromBody] CurrencyDto value)
         {
-            await this.currencyApplication.Insert(value);
+            await currencyApplication.Insert(value);
         }
     }
 }

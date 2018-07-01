@@ -5,7 +5,7 @@ namespace InitialEnterprise.Infrastructure.Api.Filter
 {
     public class InternalServerErrorObjectResult : ObjectResult
     {
-        public InternalServerErrorObjectResult(object error): base(error)
+        public InternalServerErrorObjectResult(object error) : base(error)
         {
             StatusCode = StatusCodes.Status500InternalServerError;
         }

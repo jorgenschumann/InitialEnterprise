@@ -8,9 +8,9 @@ namespace InitialEnterprise.Infrastructure.DDD.Event
         Guid Id { get; set; }
         Guid AggregateRootId { get; set; }
         Guid CommandId { get; set; }
-        Int64 Version { get; set; }
+        long Version { get; set; }
         Guid UserId { get; set; }
-        String  Source { get; set; }
+        string Source { get; set; }
         DateTime TimeStamp { get; set; }
     }
 }

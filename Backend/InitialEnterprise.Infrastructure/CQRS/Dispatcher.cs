@@ -4,17 +4,17 @@ using InitialEnterprise.Infrastructure.CQRS.Events;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Infrastructure.CQRS
 {
-    public class Dispatcher : IDispatcher, IInjectable
+    public class Dispatcher : IDispatcher
     {
         private readonly ICommandSenderAsync commandSenderAsync;
         private readonly IEventPublisherAsync eventPublisherAsync;
         private readonly IQueryProcessorAsync queryProcessorAsync;
 
-        public Dispatcher(ICommandSenderAsync commandSenderAsync, IEventPublisherAsync eventPublisherAsync, IQueryProcessorAsync queryProcessorAsync)
+        public Dispatcher(ICommandSenderAsync commandSenderAsync, IEventPublisherAsync eventPublisherAsync,
+            IQueryProcessorAsync queryProcessorAsync)
         {
             this.commandSenderAsync = commandSenderAsync;
             this.eventPublisherAsync = eventPublisherAsync;
@@ -40,8 +40,8 @@ namespace InitialEnterprise.Infrastructure.CQRS
         }
 
         public async Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command)
-              where TCommand : IDomainCommand
-              where TAggregate : IAggregateRoot
+            where TCommand : IDomainCommand
+            where TAggregate : IAggregateRoot
         {
             await commandSenderAsync.SendAndPublishAsync<TCommand, TAggregate>(command);
         }

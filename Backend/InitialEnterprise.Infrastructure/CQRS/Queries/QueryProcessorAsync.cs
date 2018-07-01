@@ -1,11 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Queries
 {
-    public class QueryProcessorAsync : IQueryProcessorAsync, IInjectable
+    public class QueryProcessorAsync : IQueryProcessorAsync
     {
         private readonly IResolver _resolver;
 

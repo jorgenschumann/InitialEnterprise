@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
-using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events
 {
-    public class EventPublisherAsync : IEventPublisherAsync, IInjectable
+    public class EventPublisherAsync : IEventPublisherAsync
     {
         private readonly IResolver _resolver;
 
@@ -19,10 +18,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
 
             var handlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 
-            foreach (var handler in handlers)
-            {
-                await handler.HandleAsync(@event);
-            }
+            foreach (var handler in handlers) await handler.HandleAsync(@event);
         }
     }
 }

@@ -10,16 +10,12 @@ using InitialEnterprise.Infrastructure.IoC;
 using InitialEnterpriseTests.DataSeeding;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using SimpleInjector;
-using SimpleInjector.Integration.AspNetCore.Mvc;
-using SimpleInjector.Lifestyles;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
@@ -27,19 +23,38 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        private Container container;
 
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
             this.hostingEnvironment = hostingEnvironment;
         }
 
         public IConfiguration Configuration { get; }
 
-        public virtual void Configure(IApplicationBuilder applicationBuilder)
+        public void ConfigureServices(IServiceCollection services)
         {
-            RegisterMvcControllersInContainer(applicationBuilder, container);
+            services.ConfigureServiceCollection();
+
+            var mvcBuilder = services.AddMvc();
+            ConfigureJsonSerializer(mvcBuilder);
+
+            services.AddCors();
+
+            services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
+                .AddControllersAsServices();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info {Title = "InitialEnterprise API V1", Version = "v1"});
+            });
+
+            ConfigureEntityFrameworkContext(services);
+        }
+
+        public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
+        {
+            ConfigureLogger(loggerFactory);
 
             ConfigureAutoMapper();
 
@@ -54,10 +69,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     c.AllowAnyOrigin();
                 });
             }
-
-            container.RegisterInstance(Configuration);
-
-            container.Verify();
 
             applicationBuilder.UseAuthentication();
 
@@ -74,14 +85,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 .UseSqlServer(connectionString)
                 .Options;
 
-            services.AddDbContext<MainDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
-
-            container.Register(() => contextOptions, Lifestyle.Singleton);
-
-            container.Register(() => new MainDbContext(contextOptions), Lifestyle.Singleton);
+            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
         }
 
         public void ConfigureTestDatabase(IServiceCollection services)
@@ -92,66 +96,28 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 .UseInMemoryDatabase(connectionString)
                 .Options;
 
-            services.AddDbContext<MainDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
 
-            container.Register(() => contextOptions, Lifestyle.Singleton);
-
-            container.Register(() =>
+            services.AddSingleton(mainContext =>
             {
                 var context = new MainDbContext(contextOptions);
-                var currencySeed = SeedDataBuilder.BuildCurrencies();
-
-                foreach (var currency in currencySeed)
-                {
-                    currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
-                }
-
-                context.Currencies.AddRange(currencySeed);
-                context.SaveChanges();
-
+                //var currencySeed = SeedDataBuilder.BuildCurrencies();
+                //foreach (var currency in currencySeed)
+                //    currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
+                //context.Currencies.AddRange(currencySeed);
+                //context.SaveChanges();
                 return context;
-
-            }, Lifestyle.Singleton);
+            });
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment("Test"))
-            {
                 ConfigureTestDatabase(services);
-            }
             else
-            {
                 ConfigureDatabase(services);
-            }
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            InitializeContainer();
-
-            var mvcBuilder = services.AddMvc();
-            ConfigureJsonSerializer(mvcBuilder);
-            
-            services.AddCors();
-
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            }).AddControllersAsServices();
-
-            RegisterControllerActivators(services, container);
-
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
-
-            services.EnableSimpleInjectorCrossWiring(container);
-
-            ConfigureEntityFrameworkContext(services);
-        }
-        
         private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
         {
             mvcBuilder.AddJsonOptions(options =>
@@ -162,30 +128,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             });
         }
 
-        private static void RegisterControllerActivators(IServiceCollection services, Container injectionContainer)
-        {
-            services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(injectionContainer));
-            services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(injectionContainer));
-            services.UseSimpleInjectorAspNetRequestScoping(injectionContainer);
-        }
-
-        private void InitializeContainer()
-        {
-            this.container = new InjectionContainerBuilder(new AsyncScopedLifestyle()).Initialize();
-        }
-
-        private void RegisterMvcControllersInContainer(IApplicationBuilder applicationBuilder, Container injectionContainer)
-        {
-            injectionContainer.RegisterMvcControllers(applicationBuilder);
-            injectionContainer.RegisterMvcViewComponents(applicationBuilder);
-        }
-
         protected virtual void ConfigureAuth(IApplicationBuilder app)
         {
-            if (Configuration.GetValue<bool>("UseLoadTest"))
-            {
-                app.UseMiddleware<AuthenticationByPassMiddleware>();
-            }
+            if (Configuration.GetValue<bool>("UseLoadTest")) app.UseMiddleware<AuthenticationByPassMiddleware>();
 
             app.UseAuthentication();
         }
@@ -199,6 +144,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 cfg.CreateMap<Currency, CurrencyDto>();
                 cfg.CreateMap<IDomainEvent, DomainEventDto>();
             });
+        }
+
+        private void ConfigureLogger(ILoggerFactory loggerFactory)
+        {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
         }
     }
 }

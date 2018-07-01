@@ -20,7 +20,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHand
         {
             var currency = new Currency(command);
 
-            return await this.currencyRepository.Insert(currency);
+            return await currencyRepository.Insert(currency);
         }
     }
 }

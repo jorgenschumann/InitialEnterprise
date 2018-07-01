@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations;
@@ -7,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 {
-    public class MainDbContext : DbContext, IMainDbContext//, IInjectable
+    public class MainDbContext : DbContext, IMainDbContext
     {
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
@@ -17,7 +16,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         public async Task SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await base.SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
