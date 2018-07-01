@@ -13,7 +13,8 @@ namespace InitialEnterprise.Infrastructure.CQRS
         private readonly IEventPublisherAsync eventPublisherAsync;
         private readonly IQueryProcessorAsync queryProcessorAsync;
 
-        public Dispatcher(ICommandSenderAsync commandSenderAsync, IEventPublisherAsync eventPublisherAsync, IQueryProcessorAsync queryProcessorAsync)
+        public Dispatcher(ICommandSenderAsync commandSenderAsync, IEventPublisherAsync eventPublisherAsync,
+            IQueryProcessorAsync queryProcessorAsync)
         {
             this.commandSenderAsync = commandSenderAsync;
             this.eventPublisherAsync = eventPublisherAsync;
@@ -39,8 +40,8 @@ namespace InitialEnterprise.Infrastructure.CQRS
         }
 
         public async Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command)
-              where TCommand : IDomainCommand
-              where TAggregate : IAggregateRoot
+            where TCommand : IDomainCommand
+            where TAggregate : IAggregateRoot
         {
             await commandSenderAsync.SendAndPublishAsync<TCommand, TAggregate>(command);
         }

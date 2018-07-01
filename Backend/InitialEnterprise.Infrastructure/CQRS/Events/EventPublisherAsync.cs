@@ -18,10 +18,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Events
 
             var handlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 
-            foreach (var handler in handlers)
-            {
-                await handler.HandleAsync(@event);
-            }
+            foreach (var handler in handlers) await handler.HandleAsync(@event);
         }
     }
 }

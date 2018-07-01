@@ -12,13 +12,15 @@ namespace InitialEnterprise.Infrastructure.CQRS
         Task SendAsync<TCommand>(TCommand command) where TCommand : ICommand;
 
         Task SendAsync<TCommand, TAggregate>(TCommand command) where TCommand :
-            IDomainCommand where TAggregate : IAggregateRoot;
+            IDomainCommand
+            where TAggregate : IAggregateRoot;
 
         Task SendAndPublishAsync<TCommand>(TCommand command) where TCommand :
             ICommand;
 
         Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command) where TCommand :
-            IDomainCommand where TAggregate : IAggregateRoot;
+            IDomainCommand
+            where TAggregate : IAggregateRoot;
 
         Task PublishAsync<TEvent>(TEvent @event) where TEvent :
             IEvent;

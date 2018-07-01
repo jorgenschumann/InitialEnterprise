@@ -8,14 +8,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
     public class CurrencyRepository : ICurrencyRepository
     {
-        public IUnitOfWork UnitOfWork => mainDbContext as IUnitOfWork;
-
         private readonly MainDbContext mainDbContext;
 
         public CurrencyRepository(MainDbContext context)
         {
-            this.mainDbContext = context;
+            mainDbContext = context;
         }
+
+        public IUnitOfWork UnitOfWork => mainDbContext;
 
         public async Task<Currency> Query(Guid currencyId)
         {

@@ -10,6 +10,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 
         public decimal Rate { get; set; }
 
-        public bool IsValid => true;
+        public bool IsValid => false;
     }
 }

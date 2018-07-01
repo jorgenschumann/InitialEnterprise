@@ -2,26 +2,19 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using InitialEnterprise.Infrastructure.CQRS;
-using InitialEnterprise.Infrastructure.DDD.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace InitialEnterprise.Infrastructure.IoC
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigureServiceCollection(this IServiceCollection services, params Type[] types)
+        public static IServiceCollection ConfigureServiceCollection(this IServiceCollection services)
         {
-            var typeList = types.ToList();
-            typeList.Add(typeof(IDispatcher));
-
             services.Scan(s => s
                 .FromAssemblies(ListDirectoryAssemblies())
                 .AddClasses()
                 .AsImplementedInterfaces());
-
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-
+      
             return services;
         }
 
@@ -29,10 +22,25 @@ namespace InitialEnterprise.Infrastructure.IoC
         {
             return
                 Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory
-                    , "InitialEnterprise.*.dll")
+                        , "InitialEnterprise.*.dll")
                     .Select(Path.GetFileNameWithoutExtension)
                     .Select(assemblyFile => Assembly.Load(new AssemblyName(assemblyFile)))
                     .ToArray();
+        }
+
+        public static ServiceDescriptor GetDescriptor<T>(this IServiceCollection services)
+        {
+            return services.GetDescriptors<T>().Single();
+        }
+
+        public static ServiceDescriptor[] GetDescriptors<T>(this IServiceCollection services)
+        {
+            return services.GetDescriptors(typeof(T));
+        }
+
+        public static ServiceDescriptor[] GetDescriptors(this IServiceCollection services, Type serviceType)
+        {
+            return services.Where(x => x.ServiceType == serviceType).ToArray();
         }
     }
 }

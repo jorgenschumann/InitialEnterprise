@@ -30,9 +30,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
         public Guid Id { get; set; }
         public Guid AggregateRootId { get; set; }
         public Guid CommandId { get; set; }
-        public Int64 Version { get; set; }
+        public long Version { get; set; }
         public Guid UserId { get; set; }
-        public String Source { get; set; }
+        public string Source { get; set; }
         public DateTime TimeStamp { get; set; }
     }
 }

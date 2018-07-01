@@ -1,3 +1,4 @@
+using System;
 using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.Repository;
 
@@ -37,11 +38,11 @@ namespace InitialEnterprise.Infrastructure.Tests.IoC
 
     public class TestCommand : ICommand
     {
-        public bool IsValid => throw new System.NotImplementedException();
+        public bool IsValid => throw new NotImplementedException();
 
         public object Validate()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

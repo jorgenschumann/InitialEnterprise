@@ -26,7 +26,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
             this.hostingEnvironment = hostingEnvironment;
         }
 
@@ -41,12 +41,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             services.AddCors();
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            }).AddControllersAsServices();
+            services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
+                .AddControllersAsServices();
 
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "InitialEnterprise API V1", Version = "v1" }); });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info {Title = "InitialEnterprise API V1", Version = "v1"});
+            });
 
             ConfigureEntityFrameworkContext(services);
         }
@@ -84,10 +85,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 .UseSqlServer(connectionString)
                 .Options;
 
-            services.AddDbContext<MainDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
         }
 
         public void ConfigureTestDatabase(IServiceCollection services)
@@ -98,21 +96,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 .UseInMemoryDatabase(connectionString)
                 .Options;
 
-            services.AddDbContext<MainDbContext>(options =>
-            {
-                options.UseSqlServer(connectionString);
-            });
+            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
 
-            services.AddSingleton<MainDbContext>(mainContext =>
+            services.AddSingleton(mainContext =>
             {
                 var context = new MainDbContext(contextOptions);
-                var currencySeed = SeedDataBuilder.BuildCurrencies();
-                foreach (var currency in currencySeed)
-                {
-                    currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
-                }
-                context.Currencies.AddRange(currencySeed);
-                context.SaveChanges();
+                //var currencySeed = SeedDataBuilder.BuildCurrencies();
+                //foreach (var currency in currencySeed)
+                //    currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
+                //context.Currencies.AddRange(currencySeed);
+                //context.SaveChanges();
                 return context;
             });
         }
@@ -120,13 +113,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment("Test"))
-            {
                 ConfigureTestDatabase(services);
-            }
             else
-            {
                 ConfigureDatabase(services);
-            }
         }
 
         private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
@@ -141,10 +130,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         protected virtual void ConfigureAuth(IApplicationBuilder app)
         {
-            if (Configuration.GetValue<bool>("UseLoadTest"))
-            {
-                app.UseMiddleware<AuthenticationByPassMiddleware>();
-            }
+            if (Configuration.GetValue<bool>("UseLoadTest")) app.UseMiddleware<AuthenticationByPassMiddleware>();
 
             app.UseAuthentication();
         }

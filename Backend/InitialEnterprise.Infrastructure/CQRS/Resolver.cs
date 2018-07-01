@@ -8,7 +8,7 @@ namespace InitialEnterprise.Infrastructure.CQRS
     {
         private readonly IServiceProvider serviceProvider;
 
-        public Resolver(IServiceProvider serviceProvider)//, IHttpContextAccessor httpContextAccessor)
+        public Resolver(IServiceProvider serviceProvider) //, IHttpContextAccessor httpContextAccessor)
         {
             this.serviceProvider = serviceProvider;
         }

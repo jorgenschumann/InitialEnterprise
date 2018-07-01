@@ -3,6 +3,7 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
+using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandler
 {

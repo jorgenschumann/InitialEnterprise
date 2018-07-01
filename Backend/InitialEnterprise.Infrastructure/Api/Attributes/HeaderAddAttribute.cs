@@ -10,6 +10,8 @@ namespace InitialEnterprise.Infrastructure.Api.Attributes
             return new InternalAddHeaderFilter();
         }
 
+        public bool IsReusable => false;
+
         private class InternalAddHeaderFilter : IResultFilter
         {
             public void OnResultExecuting(ResultExecutingContext context)
@@ -19,14 +21,6 @@ namespace InitialEnterprise.Infrastructure.Api.Attributes
 
             public void OnResultExecuted(ResultExecutedContext context)
             {
-            }
-        }
-
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
             }
         }
     }
