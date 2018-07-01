@@ -42,7 +42,6 @@
     <Folder Include="ModuleTemplate\Repository\" />
     <Folder Include="ModuleTemplate\ValidationHandler\" />
     <Folder Include="PersonModule\CommandHandler\" />
-    <Folder Include="PersonModule\Commands\" />
     <Folder Include="PersonModule\Events\" />
     <Folder Include="PersonModule\Queries\" />
     <Folder Include="PersonModule\QueryHandler\" />

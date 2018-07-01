@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Net.Mail;
 using System.Text;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
 using InitialEnterprise.Infrastructure.DDD.Domain;
+using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
@@ -16,28 +20,34 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
             PersonPhone = new HashSet<PersonPhone>();
         }
 
-        public string PersonType { get; private set; }
+        public Person(CreatePersonCommand command)
+        {
+            if (command.IsValid)
+            {
+                this.CopyPropertiesFrom(command);
+            }
+        }
 
-        public bool NameStyle { get; private set; }
+        public string PersonType { get;  }
 
-        public string Title { get; private set; }
-        
-        public string FirstName { get; private set; }
-        
-        public string MiddleName { get; private set; }
-        
-        public string LastName { get; private set; }
-        
-        public string Suffix { get; private set; }
+        public bool NameStyle { get; }
 
-        public int EmailPromotion { get; private set; }
+        public string Title { get;}
 
-        public DateTime ModifiedDate { get; private set; }
-        
+        public string FirstName { get;  }
+
+        public string MiddleName { get;  }
+
+        public string LastName { get;  }
+
+        public string Suffix { get;  }
+
+        public int EmailPromotion { get; }
+
         public virtual ICollection<EmailAddress> EmailAddress { get; private set; }
-        
+
         public virtual ICollection<PersonCreditCard> PersonCreditCard { get; private set; }
 
-        public virtual ICollection<PersonPhone> PersonPhone { get; private  set; }
+        public virtual ICollection<PersonPhone> PersonPhone { get; private set; }
     }
 }

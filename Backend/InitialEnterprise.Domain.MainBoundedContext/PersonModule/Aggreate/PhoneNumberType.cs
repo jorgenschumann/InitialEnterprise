@@ -10,12 +10,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         {
             PersonPhone = new HashSet<PersonPhone>();
         }
-
-        public int PhoneNumberTypeID { get; private set; }
-        
-        public string Name { get; private set; }
-
-        public DateTime ModifiedDate { get; private set; }
+       
+        public string Name { get; }
         
         public virtual ICollection<PersonPhone> PersonPhone { get; private set; }
     }

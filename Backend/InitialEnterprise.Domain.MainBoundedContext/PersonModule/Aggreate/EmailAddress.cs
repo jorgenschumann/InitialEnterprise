@@ -1,21 +1,20 @@
 ﻿using System;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
+using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
+using InitialEnterprise.Infrastructure.Utils;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
     public class EmailAddress: Entity
     {
-        private EmailAddress()
+        public EmailAddress(CreateMailAddressCommand command)
         {
+           this.CopyPropertiesFrom(command);
         }
 
-        public int EmailAddressID { get; private set; }
-        
-        public string EmailAddress1 { get; private set; }
-
-        public DateTime ModifiedDate { get; private set; }
-
-        public virtual Person Person { get; private set; }
-        
+        public string MailAddress { get; }
+      
+        public virtual Person Person { get;  }
     }
 }

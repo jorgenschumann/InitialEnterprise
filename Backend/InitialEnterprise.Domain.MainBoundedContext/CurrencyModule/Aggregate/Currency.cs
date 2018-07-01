@@ -27,17 +27,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         public string IsoCode { get; private set; }
 
         public decimal Rate { get; private set; }
-
-        public void Update(UpdateCurrencyIsoCodeCommand command)
-        {
-            if (command.IsValid)
-            {
-                IsoCode = command.IsoCode;
-
-                AddEvent(new CurrencyIsoCodeUpdated {AggregateRootId = Id, IsoCode = command.IsoCode});
-            }
-        }
-
+        
         public void Update(UpdateCurrencyRateCommand command)
         {
             if (command.IsValid)

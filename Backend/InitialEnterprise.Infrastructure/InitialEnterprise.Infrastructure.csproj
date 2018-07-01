@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="CQRS\Events\" />
     <Folder Include="CQRS\Queries\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <ItemGroup>

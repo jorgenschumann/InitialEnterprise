@@ -9,14 +9,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         {
         }
 
-        public string PhoneNumber { get; private set; }
+        public string PhoneNumber { get;  }
         
-        public int PhoneNumberTypeID { get; private set; }
+        public DateTime ModifiedDate { get;  }
 
-        public DateTime ModifiedDate { get; private set; }
+        public virtual Person Person { get;  }
 
-        public virtual Person Person { get; private set; }
+        public Guid PhoneNumberTypeID { get; }
 
-        public virtual PhoneNumberType PhoneNumberType { get; private set; }
+        public virtual PhoneNumberType PhoneNumberType { get;  }
     }
 }

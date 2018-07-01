@@ -13,7 +13,10 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 
         protected AggregateRoot(Guid id)
         {
-            if (id == Guid.Empty) id = Guid.NewGuid();
+            if (id == Guid.Empty)
+            {
+                id = Guid.NewGuid();
+            }
             Id = id;
         }
 
