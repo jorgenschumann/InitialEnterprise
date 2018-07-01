@@ -15,3 +15,5 @@ https://martinfowler.com/
 
 https://enterprisecraftsmanship.com/
 
+https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPattern
+
