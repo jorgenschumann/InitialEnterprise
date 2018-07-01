@@ -32,4 +32,22 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModuleTemplate\Aggreate\" />
+    <Folder Include="ModuleTemplate\CommandHandler\" />
+    <Folder Include="ModuleTemplate\Commands\" />
+    <Folder Include="ModuleTemplate\Events\" />
+    <Folder Include="ModuleTemplate\Queries\" />
+    <Folder Include="ModuleTemplate\QueryHandler\" />
+    <Folder Include="ModuleTemplate\Repository\" />
+    <Folder Include="ModuleTemplate\ValidationHandler\" />
+    <Folder Include="PersonModule\CommandHandler\" />
+    <Folder Include="PersonModule\Commands\" />
+    <Folder Include="PersonModule\Events\" />
+    <Folder Include="PersonModule\Queries\" />
+    <Folder Include="PersonModule\QueryHandler\" />
+    <Folder Include="PersonModule\Repository\" />
+    <Folder Include="PersonModule\ValidationHandler\" />
+  </ItemGroup>
+
 </Project>
