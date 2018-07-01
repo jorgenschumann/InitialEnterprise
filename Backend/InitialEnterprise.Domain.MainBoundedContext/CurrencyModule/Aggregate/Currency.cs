@@ -6,11 +6,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
     public class Currency : AggregateRoot
     {
-        public string Name { get; private set; }
-
-        public string IsoCode { get; private set; }
-
-        public decimal Rate { get; private set; }
+        public Currency()
+        {
+        }
 
         public Currency(CreateCurrencyCommand command)
         {
@@ -20,9 +18,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
                 IsoCode = command.IsoCode;
                 Rate = command.Rate;
 
-                AddEvent(new CurrencyCreated { AggregateRootId = Id , Name = command.Name, UserId =  command.UserId});
+                AddEvent(new CurrencyCreated {AggregateRootId = Id, Name = command.Name, UserId = command.UserId});
             }
         }
+
+        public string Name { get; }
+
+        public string IsoCode { get; private set; }
+
+        public decimal Rate { get; private set; }
 
         public void Update(UpdateCurrencyIsoCodeCommand command)
         {
@@ -30,7 +34,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             {
                 IsoCode = command.IsoCode;
 
-                AddEvent(new CurrencyIsoCodeUpdated { AggregateRootId = Id, IsoCode = command.IsoCode });
+                AddEvent(new CurrencyIsoCodeUpdated {AggregateRootId = Id, IsoCode = command.IsoCode});
             }
         }
 
@@ -40,7 +44,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             {
                 Rate = command.Rate;
 
-                AddEvent(new CurrencyRateUpdated { AggregateRootId = Id , Rate = command.Rate});
+                AddEvent(new CurrencyRateUpdated {AggregateRootId = Id, Rate = command.Rate});
             }
         }
 
@@ -50,7 +54,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             {
                 Rate = command.Rate;
 
-                AddEvent(new CurrencyUpdated() { AggregateRootId = Id, Name =  command.Name});
+                AddEvent(new CurrencyUpdated {AggregateRootId = Id, Name = command.Name});
             }
         }
 

@@ -3,7 +3,7 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Handler
+namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHandler
 {
     public class UpdateCurrencyCommandHandler : ICommandHandlerWithAggregateAsync<UpdateCurrencyCommand>
     {

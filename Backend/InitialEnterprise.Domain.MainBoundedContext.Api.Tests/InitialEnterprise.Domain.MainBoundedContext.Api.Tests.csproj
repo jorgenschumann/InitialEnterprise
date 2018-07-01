@@ -6,9 +6,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="5.0.1" />
-    <PackageReference Include="MediatR.SimpleInjector" Version="4.1.0" />
+  <ItemGroup>   
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.HostFiltering" Version="2.1.0" />
@@ -23,8 +21,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
-    <PackageReference Include="SimpleInjector" Version="4.3.0" />
-    <PackageReference Include="SimpleInjector.Integration.AspNetCore.Mvc.Core" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
@@ -33,7 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext.Api\InitialEnterprise.Domain.MainBoundedContext.Api.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.Testfixture\InitialEnterprise.Testfixture.csproj" />
   </ItemGroup>
 
   <ItemGroup>

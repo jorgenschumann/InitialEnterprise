@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             //Act
 
             //Assert
-            Assert.Throws<MissingMethodException>(()=> { Activator.CreateInstance(typeof(Currency)); });           
+            Assert.Throws<MissingMethodException>(() => { Activator.CreateInstance(typeof(Currency)); });
         }
 
         [Fact]
@@ -28,6 +28,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
                 IsoCode = "GBP",
                 Rate = 1
             };
+
             //Act
             var activatedCurrency = Activator.CreateInstance(typeof(Currency), createCommand);
 

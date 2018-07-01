@@ -1,9 +1,8 @@
 ﻿using InitialEnterprise.Infrastructure.DDD.Command;
-using InitialEnterprise.Infrastructure.IoC;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class UpdateCurrencyCommand : DomainCommand, IInjectable
+    public class UpdateCurrencyCommand : DomainCommand
     {
         public string Name { get; set; }
 

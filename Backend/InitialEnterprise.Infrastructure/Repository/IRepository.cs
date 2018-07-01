@@ -2,8 +2,8 @@
 
 namespace InitialEnterprise.Infrastructure.Repository
 {
-    public interface IRepository<T> where T : AggregateRoot 
+    public interface IRepository<T> where T : AggregateRoot
     {
         IUnitOfWork UnitOfWork { get; }
-    }  
+    }
 }

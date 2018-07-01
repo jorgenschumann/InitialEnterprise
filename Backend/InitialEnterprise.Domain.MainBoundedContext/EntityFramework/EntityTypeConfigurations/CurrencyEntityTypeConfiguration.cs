@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations
 {
-    public  class CurrencyEntityTypeConfiguration : IEntityTypeConfiguration<Currency>
+    public class CurrencyEntityTypeConfiguration : IEntityTypeConfiguration<Currency>
     {
         public void Configure(EntityTypeBuilder<Currency> builder)
         {

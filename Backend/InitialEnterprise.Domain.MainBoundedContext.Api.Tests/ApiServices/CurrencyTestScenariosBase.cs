@@ -14,16 +14,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             }
         }
 
-        public static class Put
-        {
-
-        }
-
         public static class Post
         {
             public static string Currency = $"{ApiUrlBase}/";
         }
-
-       
     }
 }

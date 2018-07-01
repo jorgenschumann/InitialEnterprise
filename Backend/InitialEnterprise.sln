@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests", "InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests\InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests.csproj", "{6EA8F7F1-93BA-43E0-8AA4-658E58048E47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Testfixture", "InitialEnterprise.Testfixture\InitialEnterprise.Testfixture.csproj", "{0F9D5D46-D753-4522-BA3C-395D471786AE}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainBoundedContext", "MainBoundedContext", "{4C019300-11DA-40BF-A87E-8F69FC50CBDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymentBoundedContext", "PaymentBoundedContext", "{618FA93F-FF55-46D1-AC9B-811F8F859122}"
@@ -37,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TDDInfrastructure", "TDDInfrastructure", "{FEED2EF5-618E-491D-9768-153C7718913D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.TestDataSeeding", "InitialEnterprise.TestDataSeeding\InitialEnterprise.TestDataSeeding.csproj", "{4B2BCD38-874D-4C88-9DEC-E78473565E08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterpriseTests.DataSeeding", "InitialEnterprise.TestDataSeeding\InitialEnterpriseTests.DataSeeding.csproj", "{4B2BCD38-874D-4C88-9DEC-E78473565E08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,10 +91,6 @@ Global
 		{6EA8F7F1-93BA-43E0-8AA4-658E58048E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA8F7F1-93BA-43E0-8AA4-658E58048E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA8F7F1-93BA-43E0-8AA4-658E58048E47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F9D5D46-D753-4522-BA3C-395D471786AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F9D5D46-D753-4522-BA3C-395D471786AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F9D5D46-D753-4522-BA3C-395D471786AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F9D5D46-D753-4522-BA3C-395D471786AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B2BCD38-874D-4C88-9DEC-E78473565E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B2BCD38-874D-4C88-9DEC-E78473565E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B2BCD38-874D-4C88-9DEC-E78473565E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -118,7 +112,6 @@ Global
 		{B3F403D5-546F-47F5-B552-69B0A4A6935D} = {618FA93F-FF55-46D1-AC9B-811F8F859122}
 		{6CE0D2CD-1BD4-44D1-9232-A46CADFB1AB7} = {4C019300-11DA-40BF-A87E-8F69FC50CBDF}
 		{6EA8F7F1-93BA-43E0-8AA4-658E58048E47} = {618FA93F-FF55-46D1-AC9B-811F8F859122}
-		{0F9D5D46-D753-4522-BA3C-395D471786AE} = {FEED2EF5-618E-491D-9768-153C7718913D}
 		{4B2BCD38-874D-4C88-9DEC-E78473565E08} = {FEED2EF5-618E-491D-9768-153C7718913D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

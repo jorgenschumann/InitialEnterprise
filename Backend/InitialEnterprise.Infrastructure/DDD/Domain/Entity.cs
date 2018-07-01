@@ -4,8 +4,6 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
     public abstract class Entity : IEntity
     {
-        public Guid Id { get; protected set; }
-
         protected Entity()
         {
             Id = Guid.Empty;
@@ -17,6 +15,8 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
                 id = Guid.NewGuid();
 
             Id = id;
-        }        
+        }
+
+        public Guid Id { get; protected set; }
     }
 }
