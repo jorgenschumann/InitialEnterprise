@@ -27,10 +27,10 @@ namespace InitialEnterprise.Infrastructure.CQRS
             await commandSenderAsync.SendAsync(command);
         }
 
-        public async Task SendAsync<TCommand, TAggregate>(TCommand command)
+        public async Task<ICommandHandlerAnswer> SendAsync<TCommand, TAggregate>(TCommand command)
             where TCommand : IDomainCommand where TAggregate : IAggregateRoot
         {
-            await commandSenderAsync.SendAsync<TCommand, TAggregate>(command);
+           return await commandSenderAsync.SendAsync<TCommand, TAggregate>(command);
         }
 
         public async Task SendAndPublishAsync<TCommand>(TCommand command)
@@ -56,6 +56,13 @@ namespace InitialEnterprise.Infrastructure.CQRS
             where TQuery : IQuery
         {
             return await queryProcessorAsync.ProcessAsync<TQuery, TResult>(query);
+        }
+
+        public async Task<TResult> SendAndReturnAsync<TCommand, TResult>(TCommand command)
+            where TCommand : IDomainCommand
+            where TResult : class
+        {
+            return await commandSenderAsync.SendAndReturnAsync<TCommand, TResult>(command);
         }
     }
 }

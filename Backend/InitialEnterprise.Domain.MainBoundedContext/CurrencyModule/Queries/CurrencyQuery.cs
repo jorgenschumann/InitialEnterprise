@@ -1,5 +1,5 @@
-﻿using System;
-using InitialEnterprise.Infrastructure.CQRS.Queries;
+﻿using InitialEnterprise.Infrastructure.CQRS.Queries;
+using System;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries
 {

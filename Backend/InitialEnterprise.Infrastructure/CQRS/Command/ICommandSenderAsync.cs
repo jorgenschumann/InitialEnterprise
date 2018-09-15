@@ -8,8 +8,13 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
     {
         Task SendAsync<TCommand>(TCommand command) where TCommand : ICommand;
 
-        Task SendAsync<TCommand, TAggregate>(TCommand command)
-            where TCommand : IDomainCommand where TAggregate : IAggregateRoot;
+        Task<ICommandHandlerAnswer> SendAsync<TCommand, TAggregate>(TCommand command)
+            where TCommand : IDomainCommand 
+            where TAggregate : IAggregateRoot;
+
+        Task<TResult> SendAndReturnAsync<TCommand, TResult>(TCommand command)
+           where TCommand : IDomainCommand
+           where TResult : class;
 
         Task SendAndPublishAsync<TCommand>(TCommand command) where TCommand : ICommand;
 

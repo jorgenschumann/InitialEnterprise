@@ -22,7 +22,7 @@ namespace InitialEnterprise.Infrastructure.IoC
         {
             return
                 Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory
-                        , "InitialEnterprise.*.dll")
+                    , "InitialEnterprise.*.dll")
                     .Select(Path.GetFileNameWithoutExtension)
                     .Select(assemblyFile => Assembly.Load(new AssemblyName(assemblyFile)))
                     .ToArray();

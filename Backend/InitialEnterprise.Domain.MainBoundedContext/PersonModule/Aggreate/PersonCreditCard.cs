@@ -1,5 +1,4 @@
-﻿using System;
-using InitialEnterprise.Infrastructure.DDD.Domain;
+﻿using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {

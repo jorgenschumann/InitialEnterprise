@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
-    public class CurrencyTestScenariosBase : TestScenariosBase
+    partial class CurrencyTestScenario
     {
-        private const string ApiUrlBase = "api/currency";
+        public const string ApiUrlBase = "api/currency";
 
         public static class Get
         {
@@ -15,6 +18,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         }
 
         public static class Post
+        {
+            public static string Currency = $"{ApiUrlBase}/";
+
+            public static string Query = $"{ApiUrlBase}";
+        }
+
+        public static class Put
         {
             public static string Currency = $"{ApiUrlBase}/";
         }

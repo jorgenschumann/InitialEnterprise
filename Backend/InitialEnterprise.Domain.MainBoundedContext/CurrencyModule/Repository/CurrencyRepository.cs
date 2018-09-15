@@ -1,8 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
@@ -17,16 +19,28 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 
         public IUnitOfWork UnitOfWork => mainDbContext;
 
+        public Currency Udate(Currency currency)
+        {
+            var addedCurrency = mainDbContext.Currency.Update(currency);
+
+            return addedCurrency.Entity;
+        }
+
         public async Task<Currency> Query(Guid currencyId)
         {
-            return await mainDbContext.Currencies.FindAsync(currencyId);
+            return await mainDbContext.Currency.FindAsync(currencyId);
         }
 
         public async Task<Currency> Insert(Currency currency)
         {
-            var addedCurrency = await mainDbContext.Currencies.AddAsync(currency);
+            var addedCurrency = await mainDbContext.Currency.AddAsync(currency);
 
             return addedCurrency.Entity;
+        }
+
+        public async Task<IEnumerable<Currency>> Query()
+        {
+            return await mainDbContext.Currency.ToListAsync();
         }
     }
 }

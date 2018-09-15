@@ -4,7 +4,6 @@ using System.Text;
 
 namespace InitialEnterprise.Infrastructure.Utils
 {
-
     [AttributeUsage(AttributeTargets.Property)]
     public class MatchParentAttribute : Attribute
     {
@@ -14,29 +13,24 @@ namespace InitialEnterprise.Infrastructure.Utils
             ParentPropertyName = parentPropertyName;
         }
     }
-
-    //public class PersonMatch
-    //{
-    //    [MatchParent("Name")]
-    //    public string NameMatch { get; set; }
-    //    [MatchParent("Lastname")]
-    //    public string LastnameMatch { get; set; }
-    //}
-
+    
+    /// <summary>
+    /// https://www.pluralsight.com/guides/property-copying-between-two-objects-using-reflection
+    /// </summary>
     public static class ObjectExtensions
     {
         public static void CopyPropertiesFrom(this object self, object parent)
         {
-            var fromProperties = parent.GetType().GetProperties();
-            var toProperties = self.GetType().GetProperties();
+            var sourceProperties = parent.GetType().GetProperties();
+            var targetProperties = self.GetType().GetProperties();
 
-            foreach (var fromProperty in fromProperties)
+            foreach (var sourceProperty in sourceProperties)
             {
-                foreach (var toProperty in toProperties)
+                foreach (var targetProperty in targetProperties)
                 {
-                    if (fromProperty.Name == toProperty.Name && fromProperty.PropertyType == toProperty.PropertyType)
+                    if (sourceProperty.Name == targetProperty.Name && sourceProperty.PropertyType == targetProperty.PropertyType)
                     {
-                        toProperty.SetValue(self, fromProperty.GetValue(parent));
+                        targetProperty.SetValue(self, sourceProperty.GetValue(parent));
                         break;
                     }
                 }

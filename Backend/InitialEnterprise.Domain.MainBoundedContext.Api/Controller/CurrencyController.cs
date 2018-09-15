@@ -1,11 +1,40 @@
-﻿using System;
-using System.Threading.Tasks;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
+﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
 using InitialEnterprise.Infrastructure.Api.Attributes;
+using InitialEnterprise.Infrastructure.CQRS.Queries;
+using InitialEnterprise.Infrastructure.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
+    public static class ClaimDefinitions
+    {
+        const string READ = "Read";
+        const string WRITE = "Write";
+
+        public const string CurrencyRead = READ;
+        public const string CurrencyWrite = WRITE;
+
+        public const string UserRead = READ;
+        public const string UserWrite = WRITE;
+    }
+
+    public class ClaimRequirement : IAuthorizationRequirement
+    {
+        public ClaimRequirement(string claimName, string claimValue)
+        {
+            ClaimName = claimName;
+            ClaimValue = claimValue;
+        }
+
+        public string ClaimName { get; set; }
+        public string ClaimValue { get; set; }
+    }
+
+    //[Authorize]
     [Route("api/[controller]")]
     public class CurrencyController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -16,18 +45,35 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             this.currencyApplication = currencyApplication;
         }
 
+        [HttpPost("query")]
+        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]
+        public async Task<IEnumerable<CurrencyDto>> Query([FromBody]IQuery query)
+        {
+            return await currencyApplication.Query(query);
+        }
+
         [HttpGet("{id}")]
-        [ValidateModel]
+        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]
         public async Task<CurrencyDto> Get(Guid id)
         {
-            return await currencyApplication.Query(id);
+            var currencyDto = await currencyApplication.Query(id);
+            return currencyDto;
         }
 
         [HttpPost]
-        [ValidateModel]
-        public async Task Post([FromBody] CurrencyDto value)
+        //[Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
+        public async Task<IActionResult> Post([FromBody] CurrencyDto value)
         {
-            await currencyApplication.Insert(value);
+            var result = await currencyApplication.Insert(value);
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+        }
+
+        [HttpPut]
+        //[Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
+        public async Task<IActionResult> Put([FromBody] CurrencyDto value)
+        {
+            var result = await currencyApplication.Update(value);
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
     }
 }

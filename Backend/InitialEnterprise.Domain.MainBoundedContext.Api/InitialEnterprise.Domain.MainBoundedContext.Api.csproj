@@ -15,15 +15,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DeepEqual" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="Scrutor" Version="2.2.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.DataSeeding\InitialEnterprise.DataSeeding.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.TestDataSeeding\InitialEnterpriseTests.DataSeeding.csproj" />
   </ItemGroup>
 
 </Project>

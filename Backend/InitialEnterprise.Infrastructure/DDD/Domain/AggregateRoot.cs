@@ -1,34 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using InitialEnterprise.Infrastructure.DDD.Event;
+using Newtonsoft.Json;
 
 namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
-    public abstract class AggregateRoot : IAggregateRoot
+    public class AggregateRoot : IAggregateRoot
     {
+
         protected AggregateRoot()
         {
             Id = Guid.Empty;
         }
 
-        protected AggregateRoot(Guid id)
+        protected AggregateRoot(Guid id , Guid userId)
         {
-            if (id == Guid.Empty)
-            {
-                id = Guid.NewGuid();
-            }
-            Id = id;
+            Id = id == Guid.Empty ? Guid.NewGuid() : id;           
+
+            UserId = userId == Guid.Empty ? Guid.NewGuid() : userId;           
         }
 
+        [JsonProperty]
         public Guid Id { get; protected set; }
 
         public IList<IDomainEvent> Events { get; set; } = new List<IDomainEvent>();
 
+        [JsonProperty]
+        public Guid UserId { get; protected set; }
+
         public void ApplyEvents(IEnumerable<IDomainEvent> events)
         {
             foreach (var @event in events)
+            {
                 Events.Add(@event);
-            //this.AsDynamic().Apply(@event);//TODO:ReflectionMagic
+                //this.AsDynamic().Apply(@event);//TODO:ReflectionMagic
+            }
         }
 
         protected void AddEvent(IDomainEvent @event)

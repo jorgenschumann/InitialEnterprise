@@ -1,0 +1,527 @@
+﻿[
+  {
+    "Id": "2AFC4032-33D3-4D47-8BF8-324B1C56A428",
+    "IsoCode": "AED",
+    "Name": "Emirati Dirham"
+  },
+  {
+    "Id":  "3F54F093-0A7E-4E68-8A9B-867F0BA671A2",
+    "IsoCode": "AFA",
+    "Name": "Afghani"
+  },
+  {
+    "Id": "5EF19410-7048-49E4-9FC0-952FFB39E1E3",
+    "IsoCode": "ALL",
+    "Name": "Lek"
+  },
+  {
+    "Id": "408C9431-7D4B-420D-830F-B49B19CFFA1F",
+    "IsoCode": "AMD",
+    "Name": "Armenian Dram"
+  },
+  {
+    "Id": "EC0AE097-2714-4EB5-B798-6B679F99FBB4",
+    "IsoCode": "ANG",
+    "Name": "Netherlands Antillian Guilder"
+  },
+  {
+    "Id": "AAE482E7-D6A0-4016-9B8F-D2B17C9DB6EC",
+    "IsoCode": "AOA",
+    "Name": "Kwanza"
+  },
+  {
+    "Id": "1A25C189-58BF-478A-9194-1B825772B1E6",
+    "IsoCode": "ARS",
+    "Name": "Argentine Peso"
+  },
+  {
+    "Id": "756F7762-C183-4D8A-83EB-E6A4BA3B08BB",
+    "IsoCode": "ATS",
+    "Name": "Shilling"
+  },
+  {
+    "Id": "A14B66E1-E692-454A-A9AD-F87E4C9A50AD",
+    "IsoCode": "AUD",
+    "Name": "Australian Dollar"
+  },
+  {
+    "Id": "9DB1976F-FE7F-4BB4-A9DB-9271785819AE",
+    "IsoCode": "AWG",
+    "Name": "Aruban Guilder"
+  },
+  {
+    "Id":  "5B0C2B53-DCF9-4E66-9511-B7AE20BFC466",
+    "IsoCode": "AZM",
+    "Name": "Azerbaijanian Manat"
+},
+  {
+    "Id":  "F5105246-E1ED-4E9C-89C0-C65932D46CB9",
+    "IsoCode": "BBD",
+    "Name": "Barbados Dollar"
+},
+  {
+    "Id":  "1EB7A046-C4B4-4DE2-9C5E-D79953504CC6",
+    "IsoCode": "BDT",
+    "Name": "Taka"
+},
+  {
+    "Id":  "CE471C61-F871-47BC-A8C2-D8962EF3A1D7",
+    "IsoCode": "BEF",
+    "Name": "Belgian Franc"
+},
+  {
+    "Id":  "7D7092A6-4FF7-48D0-83E3-76E9F84591FC",
+    "IsoCode": "BGN",
+    "Name": "Bulgarian Lev"
+},
+  {
+    "Id":  "FEC001D2-9542-49CA-A6DC-7800AEB2CFF5",
+    "IsoCode": "BHD",
+    "Name": "Bahraini Dinar"
+},
+  {
+    "Id":  "C4B8762A-AA89-4507-8234-DA198444BC0D",
+    "IsoCode": "BND",
+    "Name": "Brunei Dollar"
+},
+  {
+    "Id":  "073183B3-0258-499E-94FA-C03AB640E943",
+    "IsoCode": "BOB",
+    "Name": "Boliviano"
+},
+  {
+    "Id":  "255B394D-7449-4320-9069-705AEBB7A61C",
+    "IsoCode": "BRL",
+    "Name": "Brazilian Real"
+},
+  {
+    "Id":  "FEEFD141-21E1-45C4-BBC2-8AE94DC0D50A",
+    "IsoCode": "BSD",
+    "Name": "Bahamian Dollar"
+},
+  {
+    "Id":  "A63BF196-60A7-48B7-AC22-344E8291A0CB",
+    "IsoCode": "BTN",
+    "Name": "Ngultrum"
+},
+  {
+    "Id":  "0D799A09-D77A-4D55-B578-3F2BE0B57B45",
+    "IsoCode": "CAD",
+    "Name": "Canadian Dollar"
+},
+  {
+    "Id":  "520E9D25-399F-4F4D-8A2F-CF281FCEFCC3",
+    "IsoCode": "CHF",
+    "Name": "Swiss Franc"
+},
+  {
+    "Id":  "F687013F-018E-40D9-96E1-9709CE6EFE2C",
+    "IsoCode": "CLP",
+    "Name": "Chilean Peso"
+},
+  {
+    "Id":  "0386A802-1A48-4BE6-8A14-10737B8722EA",
+    "IsoCode": "CNY",
+    "Name": "Yuan Renminbi"
+},
+  {
+    "Id":  "B3B62DAB-A912-4836-8E8E-C833AABD8A72",
+    "IsoCode": "COP",
+    "Name": "Colombian Peso"
+},
+  {
+    "Id":  "16371EBB-1F41-4249-B25E-0E72FE90EFAF",
+    "IsoCode": "CRC",
+    "Name": "Costa Rican Colon"
+},
+  {
+    "Id":  "93C51418-348B-424D-8DDE-67B2AD7F463A",
+    "IsoCode": "CYP",
+    "Name": "Cyprus Pound"
+},
+  {
+    "Id":  "634CFCE3-2B14-4FC7-A5FD-EEE462F222F1",
+    "IsoCode": "CZK",
+    "Name": "Czech Koruna"
+},
+  {
+    "Id":  "716A5488-17FB-4B1E-B4C9-18DDCDC405E0",
+    "IsoCode": "DEM",
+    "Name": "Deutsche Mark"
+},
+  {
+    "Id":  "E05D181C-420F-4C88-A87D-64BCD47CC2BC",
+    "IsoCode": "DKK",
+    "Name": "Danish Krone"
+},
+  {
+    "Id":  "31D78505-876E-4F85-8E00-6D773A9C9403",
+    "IsoCode": "DOP",
+    "Name": "Dominican Peso"
+},
+  {
+    "Id":  "B00654D3-49A5-442C-93C0-D0B022301AA4",
+    "IsoCode": "DZD",
+    "Name": "Algerian Dinar"
+},
+  {
+    "Id":  "4D9C49EB-494D-4745-BB62-EEAA597BAC39",
+    "IsoCode": "EEK",
+    "Name": "Kroon"
+},
+  {
+    "Id":  "35890C25-8CD7-4C15-9AF5-ED38E0C9DFFF",
+    "IsoCode": "EGP",
+    "Name": "Egyptian Pound"
+},
+  {
+    "Id":  "363B0C3A-EC25-445F-89AF-748CADCDB8DD",
+    "IsoCode": "ESP",
+    "Name": "Spanish Peseta"
+},
+  {
+    "Id":  "F689DB90-4C93-4F42-A410-3A42F16B48AD",
+    "IsoCode": "EUR",
+    "Name": "EURO"
+},
+  {
+    "Id":  "FB4E5172-3E28-4F8D-8A3E-930981DE2ED2",
+    "IsoCode": "FIM",
+    "Name": "Markka"
+},
+  {
+    "Id":  "15804096-3EA9-4B40-B39F-69AB3454A63E",
+    "IsoCode": "FJD",
+    "Name": "Fiji Dollar"
+},
+  {
+    "Id":  "A751C431-B6CB-4FC5-A933-0E1C361FE494",
+    "IsoCode": "FRF",
+    "Name": "French Franc"
+},
+  {
+    "Id":  "407B412E-0D86-4270-AD30-3F125958EE0B",
+    "IsoCode": "GBP",
+    "Name": "United Kingdom Pound"
+},
+  {
+    "Id":  "3D3B5033-9F94-4FCE-9A5B-6B74E164BB2A",
+    "IsoCode": "GHC",
+    "Name": "Cedi"
+},
+  {
+    "Id":  "DB14C083-27AD-4DFC-A588-D5C89E7851E4",
+    "IsoCode": "GRD",
+    "Name": "Drachma"
+},
+  {
+    "Id":  "33F986DE-C53A-4E26-B9AF-5ED3678E16D0",
+    "IsoCode": "GTQ",
+    "Name": "Quetzal"
+},
+  {
+    "Id":  "0B7F553E-4CAF-4FA4-A3A6-5228D6558F32",
+    "IsoCode": "HKD",
+    "Name": "Hong Kong Dollar"
+},
+  {
+    "Id":  "FA91164B-C317-493C-A1D2-F745621AE26E",
+    "IsoCode": "HRK",
+    "Name": "Croatian Kuna"
+},
+  {
+    "Id":  "552F6328-6E6D-4E83-9AA9-CD2F2A934A3F",
+    "IsoCode": "HUF",
+    "Name": "Forint"
+},
+  {
+    "Id":  "0F936EC4-A7DE-4234-8144-B85EE0FACBB7",
+    "IsoCode": "IDR",
+    "Name": "Rupiah"
+},
+  {
+    "Id":  "8FAD2A95-2EA9-4696-9977-94D0AB42E063",
+    "IsoCode": "IEP",
+    "Name": "Irish Pound"
+},
+  {
+    "Id":  "AA7C635E-2DFA-4DD1-8053-72A6CF36FF7A",
+    "IsoCode": "ILS",
+    "Name": "New Israeli Shekel"
+},
+  {
+    "Id":  "84E2322A-6B36-4D6A-969B-9D5CAA12DB4E",
+    "IsoCode": "INR",
+    "Name": "Indian Rupee"
+},
+  {
+    "Id":  "A1078720-DBF1-40EF-99AB-6600ADB140AF",
+    "IsoCode": "ISK",
+    "Name": "Iceland Krona"
+},
+  {
+    "Id":  "D961DBB2-5A6A-40CF-A709-344EC07208B4",
+    "IsoCode": "ITL",
+    "Name": "Italian Lira"
+},
+  {
+    "Id":  "0FF57526-E5E1-4A25-8941-6AEE292A4C8E",
+    "IsoCode": "JMD",
+    "Name": "Jamaican Dollar"
+},
+  {
+    "Id":  "AFF83F07-CF38-449C-9937-DC2A26D42663",
+    "IsoCode": "JOD",
+    "Name": "Jordanian Dinar"
+},
+  {
+    "Id":  "1DFA03A1-2682-478A-83B7-80136051666D",
+    "IsoCode": "JPY",
+    "Name": "Yen"
+},
+  {
+    "Id":  "CF8A9810-46F0-4AA2-8A4A-15F24E343903",
+    "IsoCode": "KES",
+    "Name": "Kenyan Shilling"
+},
+  {
+    "Id":  "27C82844-3AF5-49F7-9688-182E20E3F44E",
+    "IsoCode": "KRW",
+    "Name": "Won"
+},
+  {
+    "Id":  "0A132C5A-0BF9-4672-9FA5-79E3C725490B",
+    "IsoCode": "KWD",
+    "Name": "Kuwaiti Dinar"
+},
+  {
+    "Id":  "1F959673-0035-43DD-BE66-2E8C9DDB3CD4",
+    "IsoCode": "LBP",
+    "Name": "Lebanese Pound"
+},
+  {
+    "Id":  "11AFC669-0713-4C3B-B4DC-6E9E05CF975C",
+    "IsoCode": "LKR",
+    "Name": "Sri Lankan Rupee"
+},
+  {
+    "Id":  "A55A4603-E0E2-4864-9AAB-B8135D7637B0",
+    "IsoCode": "LTL",
+    "Name": "Lithuanian Litas"
+},
+  {
+    "Id":  "3334920B-62AA-475D-B334-07BFEB48C73E",
+    "IsoCode": "LVL",
+    "Name": "Latvian Lats"
+},
+  {
+    "Id":  "37D27B55-1875-49DD-BB8C-68CF089D23D7",
+    "IsoCode": "MAD",
+    "Name": "Moroccan Dirham"
+},
+  {
+    "Id":  "B37FB98F-306C-4908-9D99-F9F59D3525F7",
+    "IsoCode": "MTL",
+    "Name": "Maltese Lira"
+},
+  {
+    "Id":  "5B4EC7C1-072B-47CD-A980-D27BE24789F3",
+    "IsoCode": "MUR",
+    "Name": "Mauritius Rupee"
+},
+  {
+    "Id":  "081D5F35-D284-493F-B65C-3EA2A909C18F",
+    "IsoCode": "MVR",
+    "Name": "Rufiyaa"
+},
+  {
+    "Id":  "1D8E1CF2-AE1E-458E-9F35-303D4482B9A8",
+    "IsoCode": "MXN",
+    "Name": "Mexican Peso"
+},
+  {
+    "Id":  "15B38FA4-72A4-45EC-9BD9-F4A3B1771B70",
+    "IsoCode": "MYR",
+    "Name": "Malaysian Ringgit"
+},
+  {
+    "Id":  "9965B3C5-5C80-4F17-BD18-8301DF93911F",
+    "IsoCode": "NAD",
+    "Name": "Namibia Dollar"
+},
+  {
+    "Id":  "0D42246D-7E73-4480-B6D4-4F1221B91A89",
+    "IsoCode": "NGN",
+    "Name": "Naira"
+},
+  {
+    "Id":  "F0E5A47F-DB1B-41AC-AEDA-B168AAC6C7C4",
+    "IsoCode": "NLG",
+    "Name": "Netherlands Guilder"
+},
+  {
+    "Id":  "74943B1F-A9F5-460C-8F24-AD5855F732BF",
+    "IsoCode": "NOK",
+    "Name": "Norwegian Krone"
+},
+  {
+    "Id":  "D834D2D7-7CDF-4A0F-B1E2-BEE19E853B72",
+    "IsoCode": "NPR",
+    "Name": "Nepalese Rupee"
+},
+  {
+    "Id":  "1AFBC66D-8C88-44EC-9C29-E426A9C73479",
+    "IsoCode": "NZD",
+    "Name": "New Zealand Dollar"
+},
+  {
+    "Id":  "26B93C9E-4007-4EBA-811C-757355441C02",
+    "IsoCode": "OMR",
+    "Name": "Omani Rial"
+},
+  {
+    "Id":  "9B412A94-748F-465D-8CB3-901163C5F46D",
+    "IsoCode": "PAB",
+    "Name": "Balboa"
+},
+  {
+    "Id":  "45D166A9-E423-40B6-83D7-F4821EDAA46C",
+    "IsoCode": "PEN",
+    "Name": "Nuevo Sol"
+},
+  {
+    "Id":  "EB56D892-B2EB-444A-A9E5-236F6A1E9443",
+    "IsoCode": "PHP",
+    "Name": "Philippine Peso"
+},
+  {
+    "Id":  "BC7DB0D1-461A-40A1-AB55-A6197C337702",
+    "IsoCode": "PKR",
+    "Name": "Pakistan Rupee"
+},
+  {
+    "Id":  "481F1F8B-040D-4704-B24E-A7C2B8A15F3C",
+    "IsoCode": "PLN",
+    "Name": "Zloty"
+},
+  {
+    "Id":  "9EBEC20F-A170-46E5-98E9-74245F20C861",
+    "IsoCode": "PLZ",
+    "Name": "Polish Zloty(old)"
+},
+  {
+    "Id":  "859FB013-1D5D-402C-8581-266961FC0507",
+    "IsoCode": "PTE",
+    "Name": "Portuguese Escudo"
+},
+  {
+    "Id":  "322755F4-8D0A-459E-82B6-BA4A1C0793A4",
+    "IsoCode": "PYG",
+    "Name": "Guarani"
+},
+  {
+    "Id":  "DCC7259F-D50F-4E22-9C56-225B85B21E51",
+    "IsoCode": "ROL",
+    "Name": "Leu"
+},
+  {
+    "Id":  "CC84A060-68B1-408A-8015-5CBE4A01152D",
+    "IsoCode": "RUB",
+    "Name": "Russian Ruble"
+},
+  {
+    "Id":  "0F8D0F93-963C-4CDE-9FF3-98850BD3603C",
+    "IsoCode": "RUR",
+    "Name": "Russian Ruble(old)"
+},
+  {
+    "Id":  "E2366D1C-7172-41E6-9A69-38D7F8A6DFBA",
+    "IsoCode": "SAR",
+    "Name": "Saudi Riyal"
+},
+  {
+    "Id":  "05F3D3FC-ACC7-475C-A9F2-CA82C8EE26A5",
+    "IsoCode": "SEK",
+    "Name": "Swedish Krona"
+},
+  {
+    "Id":  "A2ADAD24-84A1-4CD1-A97E-100F4EAFB89F",
+    "IsoCode": "SGD",
+    "Name": "Singapore Dollar"
+},
+  {
+    "Id":  "28A7BAC9-3077-441D-84AD-6BB4C9333923",
+    "IsoCode": "SIT",
+    "Name": "Tolar"
+},
+  {
+    "Id":  "43A32F28-3D6D-404C-B1EF-F6A8D910A081",
+    "IsoCode": "SKK",
+    "Name": "Slovak Koruna"
+},
+  {
+    "Id":  "7658471F-8A8C-4EB2-A1CD-7D7ED92AD5D9",
+    "IsoCode": "SVC",
+    "Name": "El Salvador Colon"
+},
+  {
+    "Id":  "03859612-BFB1-4CA9-9D45-0FD961A57D1A",
+    "IsoCode": "THB",
+    "Name": "Baht"
+},
+  {
+    "Id":  "A19B9ECC-3A11-4429-B073-776200B3215C",
+    "IsoCode": "TND",
+    "Name": "Tunisian Dinar"
+},
+  {
+    "Id":  "3AB28D35-D43D-48F9-ACCF-D342FF5A2617",
+    "IsoCode": "TRL",
+    "Name": "Turkish Lira"
+},
+  {
+    "Id":  "19A2E8BB-C2EA-40E9-A643-CDF535A3F02C",
+    "IsoCode": "TTD",
+    "Name": "Trinidad and Tobago Dollar"
+},
+  {
+    "Id":  "12353342-4DF3-466F-8D94-5A3B0120E945",
+    "IsoCode": "TWD",
+    "Name": "New Taiwan Dollar"
+},
+  {
+    "Id":  "B25CBB62-CEEC-49D7-874E-FA38A2B082DA",
+    "IsoCode": "USD",
+    "Name": "US Dollar"
+},
+  {
+    "Id":  "8B47E5CC-36BF-4C27-9EF6-380745813B16",
+    "IsoCode": "UYU",
+    "Name": "Uruguayan Peso"
+},
+  {
+    "Id":  "0E72B6EA-144D-4A75-9A63-9EDD91BC1FFD",
+    "IsoCode": "VEB",
+    "Name": "Bolivar"
+},
+  {
+    "Id":  "2427B038-3CD8-46A7-B237-FF60F3394F82",
+    "IsoCode": "VND",
+    "Name": "Dong"
+},
+  {
+    "Id":  "47617A2A-7CFD-441C-B4A8-38AF66E2A498",
+    "IsoCode": "XOF",
+    "Name": "CFA Franc BCEAO"
+},
+  {
+    "Id":  "FCAC9327-28BD-4299-A842-89C7732E424F",
+    "IsoCode": "ZAR",
+    "Name": "Rand"
+},
+  {
+    "Id":  "7683F9CD-B501-4F4E-90AE-E206FC29D244",
+    "IsoCode": "ZWD",
+    "Name": "Zimbabwe Dollar"
+  }
+]
