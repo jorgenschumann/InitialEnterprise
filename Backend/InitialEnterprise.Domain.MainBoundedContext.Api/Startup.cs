@@ -1,15 +1,12 @@
-﻿using AutoMapper;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
+﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Controller;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
-using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.IoC;
-using InitialEnterpriseTests.DataSeeding;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,17 +43,34 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {Title = "InitialEnterprise API V1", Version = "v1"});
+                c.SwaggerDoc(ApplicationDefinitions.SwaggerVersion, new Info
+                {
+                    Title = ApplicationDefinitions.SwaggerTitle, Version = ApplicationDefinitions.SwaggerVersion
+                });
             });
-
             ConfigureEntityFrameworkContext(services);
+
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-2.1
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+               .AddEntityFrameworkStores<MainDbContext>()
+               .AddDefaultTokenProviders();
+
+            services.Configure<PasswordHasherOptions>(options =>
+                options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3
+            );
+
+            //Todo: make it more generic
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Read")));
+                options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Write")));
+            });
         }
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
             ConfigureLogger(loggerFactory);
-
-            ConfigureAutoMapper();
 
             if (hostingEnvironment.IsDevelopment())
             {
@@ -79,40 +93,43 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public void ConfigureDatabase(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("InitialEnterprise");
+            var connectionString = Configuration.GetConnectionString(
+                ApplicationConfigKeys.InitialEnterpriseConnectionString);
 
             var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
                 .UseSqlServer(connectionString)
                 .Options;
 
-            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
+            services.AddDbContext<MainDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
         }
+
 
         public void ConfigureTestDatabase(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("InitialEnterpriseInMemory");
+            var connectionString = Configuration.GetConnectionString(
+                ApplicationConfigKeys.InitialEnterpriseInMemoryConnectionString);
 
             var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
                 .UseInMemoryDatabase(connectionString)
-                .Options;
-
-            services.AddDbContext<MainDbContext>(options => { options.UseSqlServer(connectionString); });
-
+                .Options;       
+            
             services.AddSingleton(mainContext =>
             {
                 var context = new MainDbContext(contextOptions);
-                //var currencySeed = SeedDataBuilder.BuildCurrencies();
-                //foreach (var currency in currencySeed)
-                //    currency.ApplyEvents(SeedDataBuilder.BuildEntities<DomainEvent>(10));
-                //context.Currencies.AddRange(currencySeed);
-                //context.SaveChanges();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                context.EnsureTestdataSeeding();
                 return context;
             });
+                 
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
-            if (hostingEnvironment.IsEnvironment("Test"))
+            if (hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
                 ConfigureTestDatabase(services);
             else
                 ConfigureDatabase(services);
@@ -130,25 +147,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         protected virtual void ConfigureAuth(IApplicationBuilder app)
         {
-            if (Configuration.GetValue<bool>("UseLoadTest")) app.UseMiddleware<AuthenticationByPassMiddleware>();
+            if (Configuration.GetValue<bool>(ApplicationConfigKeys.UseLoadTest)) app.UseMiddleware<AuthenticationByPassMiddleware>();
 
             app.UseAuthentication();
         }
 
-        private void ConfigureAutoMapper()
-        {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMissingTypeMaps = true;
-                cfg.CreateMap<CurrencyDto, CreateCurrencyCommand>();
-                cfg.CreateMap<Currency, CurrencyDto>();
-                cfg.CreateMap<IDomainEvent, DomainEventDto>();
-            });
-        }
-
         private void ConfigureLogger(ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection(ApplictionConfigSections.Logging));
             loggerFactory.AddDebug();
         }
     }

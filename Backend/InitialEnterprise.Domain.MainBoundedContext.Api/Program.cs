@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore;
+﻿using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+using InitialEnterpriseTests.DataSeeding;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
@@ -17,3 +20,4 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         }
     }
 }
+

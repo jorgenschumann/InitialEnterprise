@@ -4,6 +4,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Events
 {
     public class CurrencyUpdated : DomainEvent
     {
-        public string Name { get; set; }
+        public string CommandJson { get; set; }
     }
 }

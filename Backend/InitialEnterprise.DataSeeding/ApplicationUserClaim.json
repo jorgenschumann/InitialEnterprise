@@ -1,0 +1,28 @@
+﻿[
+  {
+    "Id": "1",
+    "ClaimType": "Currency",
+    "ClaimValue": "Read",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "2",
+    "ClaimType": "Currency",
+    "ClaimValue": "Write",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+
+  {
+    "Id": "3",
+    "ClaimType": "User",
+    "ClaimValue": "Read",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "4",
+    "ClaimType": "User",
+    "ClaimValue": "Write",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  }
+]
+ 

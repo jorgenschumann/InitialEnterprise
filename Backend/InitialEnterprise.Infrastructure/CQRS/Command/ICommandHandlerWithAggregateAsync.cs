@@ -4,8 +4,13 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
-    public interface ICommandHandlerWithAggregateAsync<TCommand> where TCommand : IDomainCommand
+    public interface ICommandHandlerWithResultAsync<TCommand> where TCommand : IDomainCommand
     {
-        Task<IAggregateRoot> HandleAsync(TCommand command);
+        Task<ICommandHandlerAnswer> HandleAsync(TCommand command);
+    }
+
+    public interface ICommandHandlerWithResultAsync<TCommand,TResult> where TCommand : IDomainCommand
+    {
+        Task<TResult> HandleAsync(TCommand command);
     }
 }

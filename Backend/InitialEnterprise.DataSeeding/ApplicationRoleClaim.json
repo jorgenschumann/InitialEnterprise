@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Id": "1",
+    "ClaimType": "User",
+    "RoleId": "3BE52A41-780C-4007-AD42-3B60F3869CA2",
+    "ClaimValue": "Read"
+  },
+  {
+    "Id": "2",
+    "ClaimType": "User",
+    "RoleId": "3BE52A41-780C-4007-AD42-3B60F3869CA2",
+    "ClaimValue": "Write"
+  },
+  {
+    "Id": "3",
+    "ClaimType": "Currency",
+    "RoleId": "E428C039-D065-418C-B3BA-68719492E852",
+    "ClaimValue": "Read"
+  },
+  {
+    "Id": "4",
+    "ClaimType": "Currency",
+    "RoleId": "23EEA437-C347-4A34-B108-0F1AA7A1E4B6",
+    "ClaimValue": "Write"
+  }
+]

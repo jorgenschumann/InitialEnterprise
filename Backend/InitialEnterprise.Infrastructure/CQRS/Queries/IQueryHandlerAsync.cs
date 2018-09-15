@@ -6,4 +6,9 @@ namespace InitialEnterprise.Infrastructure.CQRS.Queries
     {
         Task<TResult> RetrieveAsync(TQuery query);
     }
+
+    public interface IQueryHandlerAsync<TResult> 
+    {
+        Task<TResult> RetrieveAsync();
+    }
 }

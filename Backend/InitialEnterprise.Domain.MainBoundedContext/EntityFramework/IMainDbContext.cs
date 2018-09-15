@@ -6,6 +6,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 {
     public interface IMainDbContext : IUnitOfWork
     {
-        DbSet<Currency> Currencies { get; set; }
+        DbSet<Currency> Currency { get; set; }
+        DbSet<CurrencyRate> CurrencyRate { get; set; }
+    }
+
+    public interface IIdentityDbContext : IUnitOfWork
+    {
     }
 }

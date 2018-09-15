@@ -2,9 +2,8 @@
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class UpdateCurrencyRateCommand : DomainCommand
-    {
-        public decimal Rate { get; set; }
+    public class CurrencyUpdateRateCommand : DomainCommand
+    {     
 
         public bool IsValid => true;
     }

@@ -21,7 +21,10 @@ namespace InitialEnterpriseTests.DataSeeding
             {
                 var events = BuildEntities<DomainEvent>(10).ToList();
 
-                foreach (var @event in events) @event.AggregateRootId = currency.Id;
+                foreach (var @event in events)
+                {
+                    @event.AggregateRootId = currency.Id;
+                }
                 currency.ApplyEvents(events);
             }
 

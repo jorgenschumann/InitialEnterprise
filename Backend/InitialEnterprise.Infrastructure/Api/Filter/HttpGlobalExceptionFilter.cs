@@ -24,14 +24,16 @@ namespace InitialEnterprise.Infrastructure.Api.Filter
 
             var jsonErrorResponse = new JsonErrorResponse
             {
-                Messages = new[] {"error occur"}
+                Messages = new[]{ "error occur" }
             };
 
-            if (env.IsDevelopment()) jsonErrorResponse.DeveloperMessage = context.Exception;
+            if (env.IsDevelopment())
+            {
+                jsonErrorResponse.DeveloperMessage = context.Exception;
+            }
 
             context.Result = new InternalServerErrorObjectResult(jsonErrorResponse);
             context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-
             context.ExceptionHandled = true;
         }
 

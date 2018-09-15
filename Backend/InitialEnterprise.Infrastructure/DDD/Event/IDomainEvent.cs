@@ -1,8 +1,11 @@
 ﻿using System;
 using InitialEnterprise.Infrastructure.CQRS.Events;
+using InitialEnterprise.Infrastructure.DDD.Domain;
+using Newtonsoft.Json;
 
 namespace InitialEnterprise.Infrastructure.DDD.Event
 {
+   
     public interface IDomainEvent : IEvent
     {
         Guid Id { get; set; }

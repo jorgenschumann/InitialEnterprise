@@ -2,10 +2,12 @@
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
-    public class UpdateCurrencyIsoCodeCommand : DomainCommand
+    public class CurrencyCreateCommand : DomainCommand
     {
+        public string Name { get; set; }
+
         public string IsoCode { get; set; }
 
-        public bool IsValid => true;
+        public decimal Rate { get; set; }
     }
 }

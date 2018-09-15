@@ -1,12 +1,13 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
+using InitialEnterprise.Infrastructure.DDD.Command;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class CreateCurrencyCommandValidationHandler : AbstractValidator<CreateCurrencyCommand>
+    public class CreateCurrencyCommandValidationHandler : CommandValidator<CurrencyCreateCommand>
     {
-        public override ValidationResult Validate(ValidationContext<CreateCurrencyCommand> context)
+        public override ValidationResult Validate(ValidationContext<CurrencyCreateCommand> context)
         {
             ValidateName();
             ValidateIsoCode();
@@ -16,10 +17,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
         protected void ValidateName()
         {
             RuleFor(c => c.Name)
-                .NotEmpty()
-                .WithMessage("Name")
-                .Length(4, 100)
-                .WithMessage("Name must have....");
+                .NotEmpty().WithMessage("Name")
+                .Length(4, 100).WithMessage("Name must have....");
         }
 
         protected void ValidateIsoCode()
@@ -27,6 +26,18 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
             RuleFor(c => c.IsoCode)
                 .NotEmpty().WithMessage("IsoCode")
                 .Length(3, 3).WithMessage("IsoCode must have....");
+        }
+    }
+
+    public abstract class CommandValidator<TCommand> : AbstractValidator<TCommand> where TCommand : DomainCommand
+    {
+        public override ValidationResult Validate(ValidationContext<TCommand> context)
+        {
+            var validationResult = base.Validate(context);
+            {
+                context.InstanceToValidate.IsValid = validationResult.IsValid;
+            }
+            return validationResult;
         }
     }
 }

@@ -5,16 +5,16 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 
 namespace InitialEnterprise.Infrastructure.DDD.Decorators
 {
-    public class ValidationCommandHandlerDecorator<TCommand> :ICommandHandlerWithAggregateAsync<TCommand> where TCommand : IDomainCommand
+    public class ValidationCommandHandlerDecorator<TCommand> :ICommandHandlerWithResultAsync<TCommand> where TCommand : IDomainCommand
     {
-        private readonly ICommandHandlerWithAggregateAsync<TCommand> decoratee;
+        private readonly ICommandHandlerWithResultAsync<TCommand> decoratee;
 
-        public ValidationCommandHandlerDecorator(ICommandHandlerWithAggregateAsync<TCommand> decoratedHandler)
+        public ValidationCommandHandlerDecorator(ICommandHandlerWithResultAsync<TCommand> decoratedHandler)
         {
             decoratee = decoratedHandler;
         }
 
-        public async Task<IAggregateRoot> HandleAsync(TCommand command)
+        public async Task<ICommandHandlerAnswer> HandleAsync(TCommand command)
         {
             return await decoratee.HandleAsync(command);
         }

@@ -7,13 +7,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
     public class CurrencyEntityTypeConfiguration : IEntityTypeConfiguration<Currency>
     {
         public void Configure(EntityTypeBuilder<Currency> builder)
-        {
-            builder.HasKey(o => o.Id);
+        {            
             builder.Property(o => o.Id);
             builder.Property(o => o.Name);
             builder.Property(o => o.IsoCode);
-            builder.Property(o => o.Rate);
 
+            builder.HasKey(o => o.Id);
+            builder.Ignore(o => o.UserId);
             builder.Ignore(b => b.Events);
         }
     }

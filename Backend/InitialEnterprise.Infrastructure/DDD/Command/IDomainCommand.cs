@@ -10,5 +10,6 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
         Guid UserId { get; set; }
         string Source { get; set; }
         DateTime TimeStamp { get; set; }
+        bool IsValid { get; set; }
     }
 }

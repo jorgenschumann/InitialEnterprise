@@ -18,7 +18,9 @@ namespace InitialEnterprise.Infrastructure.DDD.Repository
         public async Task SaveAsync(T aggregate)
         {
             foreach (var @event in aggregate.Events)
+            {
                 await _eventStore.SaveEventAsync<T>(@event);
+            }
         }
 
         public async Task<T> GetByIdAsync(Guid id)
@@ -26,7 +28,9 @@ namespace InitialEnterprise.Infrastructure.DDD.Repository
             var events = await _eventStore.GetEventsAsync(id);
             var domainEvents = events as DomainEvent[] ?? events.ToArray();
             if (!domainEvents.Any())
+            {
                 return default(T);
+            }
 
             var aggregate = Activator.CreateInstance<T>();
             aggregate.ApplyEvents(domainEvents);
