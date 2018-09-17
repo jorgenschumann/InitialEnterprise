@@ -90,9 +90,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
                     new ClaimRequirement("Currency", "Write")));
 
-            });
-
-            // ConfigureAuthService(services);
+            });       
         }
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
