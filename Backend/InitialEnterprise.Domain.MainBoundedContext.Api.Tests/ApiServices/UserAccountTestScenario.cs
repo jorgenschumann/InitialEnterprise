@@ -28,8 +28,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
-            {
-                response = await server.CreateClient().PostAsync(Post.SignIn, SerializeContentString(model));
+            {                                
+                response = await server.CreateAuthClient()
+                    .PostAsync(Post.SignIn, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
@@ -53,7 +54,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateClient().PostAsync(Post.Register, SerializeContentString(model));
+                response = await server.CreateAuthClient()
+                    .PostAsync(Post.Register, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
@@ -77,7 +79,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateClient().PutAsync(Put.Update, SerializeContentString(model));
+                response = await server.CreateAuthClient()
+                    .PutAsync(Put.Update, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
@@ -95,7 +98,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateClient().GetAsync(Get.UserBy(requestedUserId.Id));
+                response = await server.CreateAuthClient()
+                    .GetAsync(Get.UserBy(requestedUserId.Id));
 
                 response.EnsureSuccessStatusCode();
             }
@@ -113,7 +117,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateClient().PostAsync(Post.Query,SerializeContentString(query));
+                response = await server.CreateAuthClient()
+                    .PostAsync(Post.Query,SerializeContentString(query));
 
                 response.EnsureSuccessStatusCode();
             }

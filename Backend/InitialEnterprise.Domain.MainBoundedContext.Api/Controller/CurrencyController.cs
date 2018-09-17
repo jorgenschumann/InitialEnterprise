@@ -20,21 +20,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         public const string UserRead = READ;
         public const string UserWrite = WRITE;
-    }
+    }  
 
-    public class ClaimRequirement : IAuthorizationRequirement
-    {
-        public ClaimRequirement(string claimName, string claimValue)
-        {
-            ClaimName = claimName;
-            ClaimValue = claimValue;
-        }
-
-        public string ClaimName { get; set; }
-        public string ClaimValue { get; set; }
-    }
-
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public class CurrencyController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -46,14 +34,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost("query")]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyRead)]
         public async Task<IEnumerable<CurrencyDto>> Query([FromBody]IQuery query)
         {
             return await currencyApplication.Query(query);
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyRead)]    
         public async Task<CurrencyDto> Get(Guid id)
         {
             var currencyDto = await currencyApplication.Query(id);
@@ -61,7 +49,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
         public async Task<IActionResult> Post([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Insert(value);
@@ -69,7 +57,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPut]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
         public async Task<IActionResult> Put([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Update(value);

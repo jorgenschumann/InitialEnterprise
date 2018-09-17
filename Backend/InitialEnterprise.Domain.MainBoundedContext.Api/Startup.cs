@@ -4,6 +4,8 @@ using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using InitialEnterprise.Infrastructure.Api.Middlewares;
 using InitialEnterprise.Infrastructure.IoC;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,11 +22,18 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
+        private IHostingEnvironment env;
+
 
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
             this.hostingEnvironment = hostingEnvironment;
+        }
+
+        public Startup(IHostingEnvironment env)
+        {
+            this.env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -34,9 +43,17 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             services.ConfigureServiceCollection();
 
             var mvcBuilder = services.AddMvc();
+
             ConfigureJsonSerializer(mvcBuilder);
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
 
             services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
                 .AddControllersAsServices();
@@ -45,13 +62,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 c.SwaggerDoc(ApplicationDefinitions.SwaggerVersion, new Info
                 {
-                    Title = ApplicationDefinitions.SwaggerTitle, Version = ApplicationDefinitions.SwaggerVersion
+                    Title = ApplicationDefinitions.SwaggerTitle,
+                    Version = ApplicationDefinitions.SwaggerVersion
                 });
             });
+
             ConfigureEntityFrameworkContext(services);
 
             //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-2.1
-
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                .AddEntityFrameworkStores<MainDbContext>()
                .AddDefaultTokenProviders();
@@ -60,12 +78,21 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3
             );
 
+            // ASP.NET Authorization Polices
+            services.AddSingleton<IAuthorizationHandler, ClaimsAuthorizationHandler>();
+            
             //Todo: make it more generic
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Read")));
-                options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Write")));
+                options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Currency", "Read")));
+
+                options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Currency", "Write")));
+
             });
+
+            // ConfigureAuthService(services);
         }
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
@@ -84,11 +111,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 });
             }
 
+            applicationBuilder.UseMiddleware<AuthenticatedTestRequestMiddleware>();
+
             applicationBuilder.UseAuthentication();
 
             applicationBuilder.UseMvc();
 
             applicationBuilder.UseSwagger();
+
         }
 
         public void ConfigureDatabase(IServiceCollection services)
@@ -106,7 +136,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             });
         }
 
-
         public void ConfigureTestDatabase(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString(
@@ -114,8 +143,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
                 .UseInMemoryDatabase(connectionString)
-                .Options;       
-            
+                .Options;
+
             services.AddSingleton(mainContext =>
             {
                 var context = new MainDbContext(contextOptions);
@@ -124,15 +153,19 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.EnsureTestdataSeeding();
                 return context;
             });
-                 
+
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
             if (hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
+            {
                 ConfigureTestDatabase(services);
+            }
             else
+            {
                 ConfigureDatabase(services);
+            }
         }
 
         private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
@@ -143,13 +176,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-        }
-
-        protected virtual void ConfigureAuth(IApplicationBuilder app)
-        {
-            if (Configuration.GetValue<bool>(ApplicationConfigKeys.UseLoadTest)) app.UseMiddleware<AuthenticationByPassMiddleware>();
-
-            app.UseAuthentication();
         }
 
         private void ConfigureLogger(ILoggerFactory loggerFactory)
