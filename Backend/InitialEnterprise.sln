@@ -36,9 +36,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TDDInfrastructure", "TDDInfrastructure", "{FEED2EF5-618E-491D-9768-153C7718913D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{6450F971-E9A8-4C74-8C10-78CB125A725F}"
-	ProjectSection(SolutionItems) = preProject
-		InitialEnterprise.Domain.MainBoundedContext.Api\ClaimsAuthorizationHandler.cs = InitialEnterprise.Domain.MainBoundedContext.Api\ClaimsAuthorizationHandler.cs
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.DataSeeding", "InitialEnterprise.DataSeeding\InitialEnterprise.DataSeeding.csproj", "{A64BBD59-7DD0-4BF0-8C5A-AE7A77C51396}"
 EndProject

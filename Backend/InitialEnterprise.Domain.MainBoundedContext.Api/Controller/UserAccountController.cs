@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public class UserAccountController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -25,7 +25,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [HttpPost]
         [Route("signin")]
         [AllowAnonymous]              
-        public async Task<IActionResult> SignIn([FromBody] SignInDto model)
+        public async Task<IActionResult> SignIn([FromBody] UserLoginDto model)
         {
             var result = await userAccountApplication.SignIn(model);
 

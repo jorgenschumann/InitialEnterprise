@@ -23,8 +23,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     {
         private readonly IHostingEnvironment hostingEnvironment;
         private IHostingEnvironment env;
-
-
+        
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
@@ -151,7 +150,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.EnsureTestdataSeeding();
                 return context;
             });
-
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)

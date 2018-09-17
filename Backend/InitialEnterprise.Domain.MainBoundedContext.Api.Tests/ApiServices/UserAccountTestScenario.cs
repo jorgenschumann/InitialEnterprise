@@ -19,7 +19,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         [Test]
         public async Task Should_SignIn_status_code_ok()//(string email, string password, bool assertIsTrue)
         {    
-            var model = new SignInDto
+            var model = new UserLoginDto
             {
                 Email = "User1@test.de",
                 Password = "#Az1234567890!",
