@@ -85,10 +85,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
                     new ClaimRequirement("Currency", "Read")));
-
                 options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
                     new ClaimRequirement("Currency", "Write")));
 
+                options.AddPolicy(ClaimDefinitions.PersonRead, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Person", "Read")));
+                options.AddPolicy(ClaimDefinitions.PersonWrite, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Person", "Write")));
             });       
         }
 

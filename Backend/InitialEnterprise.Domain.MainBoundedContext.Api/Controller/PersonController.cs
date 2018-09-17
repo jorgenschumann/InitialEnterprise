@@ -19,6 +19,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
                
         [HttpPost]
+        [Authorize(Policy = ClaimDefinitions.PersonRead)]
         public async Task<IActionResult> Query([System.Web.Http.FromBody]PersonQuery query)
         {
             var result = (await personApplication.Query(query));
@@ -27,7 +28,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = ClaimDefinitions.UserWrite)]        
+        [Authorize(Policy = ClaimDefinitions.PersonRead)]        
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await personApplication.Query(id);
@@ -35,8 +36,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             return Ok(result);
         }
 
-        [HttpPost] 
-        [AllowAnonymous]
+        [HttpPost]
+        [Authorize(Policy = ClaimDefinitions.PersonWrite)]
         public async Task<IActionResult> Post([FromBody] PersonDto model)
         {
             var result = await personApplication.Insert(model);
@@ -46,7 +47,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
 
         [HttpPut]
-        [Authorize(Policy = ClaimDefinitions.UserWrite)] 
+        [Authorize(Policy = ClaimDefinitions.PersonWrite)] 
         public async Task<IActionResult> Put([FromBody] PersonDto model)
         {
             var result = await personApplication.Update(model);

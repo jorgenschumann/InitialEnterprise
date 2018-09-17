@@ -20,6 +20,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         public const string UserRead = READ;
         public const string UserWrite = WRITE;
+
+        public const string PersonRead = READ;
+        public const string PersonWrite = WRITE;
     }  
 
     [Authorize]
