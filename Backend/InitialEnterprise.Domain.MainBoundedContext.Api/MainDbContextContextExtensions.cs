@@ -1,5 +1,6 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterpriseTests.DataSeeding;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             context.Currency.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Currency>());
             context.SaveChanges();
 
+            context.Person.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Person>());
+            context.SaveChanges();
+
             context.CurrencyRate.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<CurrencyRate>());
             context.SaveChanges();
 
@@ -55,12 +59,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             context.RoleClaims.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationRoleClaim>());
             context.SaveChanges();
 
-            //context.UserClaims.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserClaim>());
-            //context.SaveChanges();
+            context.UserClaims.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserClaim>());
+            context.SaveChanges();
 
             //context.UserRoles.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserRole>());
             //context.SaveChanges();
-
 
         }
     }

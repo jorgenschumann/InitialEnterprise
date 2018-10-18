@@ -3,6 +3,7 @@ using SeedPacket.Extensions;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using System.Reflection;
 
 namespace InitialEnterpriseTests.DataSeeding
 {
@@ -27,7 +28,9 @@ namespace InitialEnterpriseTests.DataSeeding
 
         private static TType Load<TType>(string typeName)
         {
-            var fileContent = File.ReadAllText(typeName);
+            var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            var fileContent = File.ReadAllText( $"{directory}\\{typeName}");
 
             return JsonConvert.DeserializeObject<TType>(fileContent);
         }

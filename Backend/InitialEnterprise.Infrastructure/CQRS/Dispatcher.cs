@@ -63,6 +63,6 @@ namespace InitialEnterprise.Infrastructure.CQRS
             where TResult : class
         {
             return await commandSenderAsync.SendAndReturnAsync<TCommand, TResult>(command);
-        }
+        }     
     }
 }

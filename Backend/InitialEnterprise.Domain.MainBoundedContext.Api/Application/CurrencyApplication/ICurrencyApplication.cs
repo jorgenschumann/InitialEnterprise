@@ -9,6 +9,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 {
     public interface ICurrencyApplication
     {
+        Task<IEnumerable<CurrencyDto>> Query();
+
         Task<CurrencyDto> Query(Guid id);
 
         Task<IEnumerable<CurrencyDto>> Query(IQuery model);

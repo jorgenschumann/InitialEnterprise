@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
@@ -23,5 +25,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+
+    public class UserSignInResultDto
+    {
+        public SignInResult SignInResult { get; set; }
+        public UserDto User { get; set; }
+        public String Token { get; set; }
     }
 }

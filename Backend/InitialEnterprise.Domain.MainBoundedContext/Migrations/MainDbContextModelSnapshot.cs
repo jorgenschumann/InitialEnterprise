@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -28,18 +28,64 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<decimal>("Rate");
+                    b.HasKey("Id");
 
-                    b.Property<Guid>("UserId");
+                    b.ToTable("Currency");
+                });
+
+            modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate.CurrencyRate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AverageRate");
+
+                    b.Property<Guid?>("CurrencyId");
+
+                    b.Property<string>("CurrencyRateDate");
+
+                    b.Property<string>("EndOfDayRate");
+
+                    b.Property<string>("FromCurrencyCode");
+
+                    b.Property<string>("ToCurrencyCode");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currencies");
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("CurrencyRate");
+                });
+
+            modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate.Person", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EmailPromotion");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("MiddleName");
+
+                    b.Property<bool>("NameStyle");
+
+                    b.Property<string>("PersonType");
+
+                    b.Property<string>("Suffix");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate.ApplicationRole", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -71,8 +117,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -83,7 +128,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
             modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -142,8 +187,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -160,8 +204,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -172,9 +215,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
             modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate.ApplicationUserRole", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -185,7 +228,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
 
             modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate.ApplicationUserToken", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -196,6 +239,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate.CurrencyRate", b =>
+                {
+                    b.HasOne("InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate.Currency")
+                        .WithMany("Rates")
+                        .HasForeignKey("CurrencyId");
                 });
 
             modelBuilder.Entity("InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate.ApplicationRoleClaim", b =>

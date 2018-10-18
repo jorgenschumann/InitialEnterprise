@@ -9,6 +9,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
 {
     public interface IPersonApplication
     {
+        Task<IEnumerable<PersonDto>> Query();
+
         Task<PersonDto> Query(Guid id);
 
         Task<IEnumerable<PersonDto>> Query(IQuery model);

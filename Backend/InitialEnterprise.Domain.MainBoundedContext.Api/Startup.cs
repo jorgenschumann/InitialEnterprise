@@ -8,17 +8,58 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
+
+    public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
+    {
+        private readonly IOptions<JwtAuthentication> _jwtAuthentication;
+
+        public ConfigureJwtBearerOptions(IOptions<JwtAuthentication> jwtAuthentication)
+        {
+            _jwtAuthentication = jwtAuthentication ?? throw new ArgumentNullException(nameof(jwtAuthentication));
+        }
+
+        public void PostConfigure(string name, JwtBearerOptions options)
+        {
+            var jwtAuthentication = _jwtAuthentication.Value;
+
+            options.ClaimsIssuer = jwtAuthentication.ValidIssuer;
+            options.IncludeErrorDetails = true;
+            options.RequireHttpsMetadata = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateActor = true,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtAuthentication.ValidIssuer,
+                ValidAudience = jwtAuthentication.ValidAudience,
+                IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey,
+                NameClaimType = ClaimTypes.NameIdentifier
+            };
+        }
+    }
+
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
@@ -41,21 +82,42 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         {
             services.ConfigureServiceCollection();
 
-            var mvcBuilder = services.AddMvc();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["JwtAuthentication:ValidIssuer"],
+                        ValidAudience = Configuration["JwtAuthentication:ValidAudience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["JwtAuthentication:SecurityKey"]))
+                    };
+                });
 
-            ConfigureJsonSerializer(mvcBuilder);
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("TrainedStaffOnly",
+                    policy => policy.RequireClaim("CompletedBasicTraining"));
+            });
+                  
+            services.AddMvc(options => {
+            options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            }).AddControllersAsServices();
 
+          
+      
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
+                    corsBuilder => corsBuilder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
-            });
-
-            services.AddMvc(options => { options.Filters.Add(typeof(HttpGlobalExceptionFilter)); })
-                .AddControllersAsServices();
+            });       
 
             services.AddSwaggerGen(c =>
             {
@@ -67,33 +129,39 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             });
 
             ConfigureEntityFrameworkContext(services);
-
-            //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-2.1
+           
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                .AddEntityFrameworkStores<MainDbContext>()
-               .AddDefaultTokenProviders();
+               .AddDefaultTokenProviders();      
 
-            services.Configure<PasswordHasherOptions>(options =>
-                options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3
-            );
+            //services.Configure<JwtAuthentication>(Configuration.GetSection("JwtAuthentication"));
 
-            // ASP.NET Authorization Polices
-            services.AddSingleton<IAuthorizationHandler, ClaimsAuthorizationHandler>();
-            
-            //Todo: make it more generic
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Currency", "Read")));
-                options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Currency", "Write")));
+            //services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>,ConfigureJwtBearerOptions>();                      
 
-                options.AddPolicy(ClaimDefinitions.PersonRead, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Person", "Read")));
-                options.AddPolicy(ClaimDefinitions.PersonWrite, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Person", "Write")));
-            });       
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //services.AddSingleton<IAuthorizationHandler, ClaimsAuthorizationHandler>();
+
+            ////Todo: make it more generic
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
+            //        new ClaimRequirement("Currency", "Read")));
+            //    options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
+            //        new ClaimRequirement("Currency", "Write")));
+
+            //    options.AddPolicy(ClaimDefinitions.PersonRead, policy => policy.Requirements.Add(
+            //        new ClaimRequirement("Person", "Read")));
+
+            //    options.AddPolicy(ClaimDefinitions.PersonWrite, policy => policy.Requirements.Add(
+            //        new ClaimRequirement("Person", "Write")));
+
+            //    options.AddPolicy(ClaimDefinitions.PersonCreate, policy => policy.Requirements.Add(
+            //        new ClaimRequirement("Person", "Create")));
+            //});        
         }
+
+    
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
@@ -111,12 +179,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 });
             }
 
-            applicationBuilder.UseMiddleware<AuthenticatedTestRequestMiddleware>();
-
+            //applicationBuilder.UseMiddleware<AuthenticatedTestRequestMiddleware>();
+            
             applicationBuilder.UseAuthentication();
-
             applicationBuilder.UseMvc();
-
+            applicationBuilder.UseStaticFiles();
             applicationBuilder.UseSwagger();
 
         }
@@ -163,7 +230,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
             else
             {
-                ConfigureDatabase(services);
+                ConfigureTestDatabase(services);//ConfigureDatabase(services);
             }
         }
 

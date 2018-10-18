@@ -3,7 +3,6 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.Utils;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
@@ -19,11 +18,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 
     public class Person : AggregateRoot
     {
+        [JsonConstructor]
         private Person()
         {
-            EmailAddress = new HashSet<EmailAddress>();
-            PersonCreditCard = new HashSet<PersonCreditCard>();
-            PersonPhone = new HashSet<PersonPhone>();
+            //EmailAddress = new HashSet<EmailAddress>();
+            //PersonCreditCard = new HashSet<PersonCreditCard>();
+            //PersonPhone = new HashSet<PersonPhone>();
         }
 
         public Person(CreatePersonCommand command)
@@ -58,26 +58,34 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
             return this;
         }
 
-        public string PersonType { get; }
+        [JsonProperty]
+        public string PersonType { get; private set; }
 
-        public bool NameStyle { get; }
+        [JsonProperty]
+        public bool NameStyle { get; private set; }
 
-        public string Title { get; }
+        [JsonProperty]
+        public string Title { get; private set; }
 
-        public string FirstName { get; }
+        [JsonProperty]
+        public string FirstName { get; private set; }
 
-        public string MiddleName { get; }
+        [JsonProperty]
+        public string MiddleName { get; private set; }
 
-        public string LastName { get; }
+        [JsonProperty]
+        public string LastName { get; private set; }
 
-        public string Suffix { get; }
+        [JsonProperty]
+        public string Suffix { get; private set; }
 
-        public int EmailPromotion { get; }
+        [JsonProperty]
+        public int EmailPromotion { get; private set; }
 
-        public virtual ICollection<EmailAddress> EmailAddress { get; private set; }
+        //public virtual ICollection<EmailAddress> EmailAddress { get; private set; }
 
-        public virtual ICollection<PersonCreditCard> PersonCreditCard { get; private set; }
+        //public virtual ICollection<PersonCreditCard> PersonCreditCard { get; private set; }
 
-        public virtual ICollection<PersonPhone> PersonPhone { get; private set; }
+        //public virtual ICollection<PersonPhone> PersonPhone { get; private set; }
     }
 }

@@ -42,6 +42,9 @@
     <None Update="CurrencyRate.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Person.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties ApplicationUserClaim_1json__JSONSchema="[" /></VisualStudio></ProjectExtensions>

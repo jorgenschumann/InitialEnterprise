@@ -13,7 +13,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
 {
     public interface IUserAccountApplication
     {
-        Task<SignInResult> SignIn(UserLoginDto model);
+        Task<UserSignInResult> SignIn(UserLoginDto model);
       
         Task<IdentityResult> Register(UserRegisterDto model);
 
@@ -34,10 +34,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
             this.dispatcher = dispatcher;
         }
 
-        public async Task<SignInResult> SignIn(UserLoginDto model)
+        public async Task<UserSignInResult> SignIn(UserLoginDto model)
         {
             var command = Mapper.Map(model).ToANew<SignInCommand>();
-            return await dispatcher.SendAndReturnAsync<SignInCommand, SignInResult>(command);            
+            return  await dispatcher.SendAndReturnAsync<SignInCommand, UserSignInResult>(command);         
         }
      
         public async Task<IdentityResult> Register(UserRegisterDto model)
