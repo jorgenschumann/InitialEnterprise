@@ -6,5 +6,4 @@ export class Endpoints {
     public static UserAccountSignin = '/useraccount/signin/';
     public static UserAccountRegister = '/useraccount/register/';
     public static Person = Endpoints.Api + '/person/';
-
 }

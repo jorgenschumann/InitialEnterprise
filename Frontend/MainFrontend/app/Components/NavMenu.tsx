@@ -22,6 +22,11 @@ export class NavigationMenu extends React.Component<{}, {}> {
                                 <span className='glyphicon glyphicon-home'></span> Home
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to={'/CurrencyMain'} activeClassName='active'>
+                                <span className='glyphicon glyphicon-th-list'></span> Currencies
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
             </div>
