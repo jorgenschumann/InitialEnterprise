@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "target": "es6",
+      "jsx": "react",
+      "skipDefaultLibCheck": true,
+      "strict": true,
+      "types": [ "webpack-env" ],
+      "noImplicitAny": false,
+      "experimentalDecorators": true,
+      "allowJs": false,
+      "strictNullChecks": true
+    },
+    "exclude": [
+      "bin",
+      "node_modules"
+    ]
+  }
