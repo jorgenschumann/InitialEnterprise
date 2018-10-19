@@ -35,24 +35,8 @@ export class CurrencyForm extends React.Component<CurrencyFormProps, Partial<Cur
    public render() {
         return (
             <div className='static-modal' >
-                <Modal
-                    show={this.props.showCurrencyForm}
-                    container={this}
-                    aria-labelledby='contained-modal-title'>
-                    <Modal.Header closeButton>
-                        <Modal.Title id='contained-modal-title'>
-                            Contained Modal
-            </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Elit est explicabo ipsum eaque dolorem blanditiis doloribus sed id
-                        ipsam, beatae, rem fuga id earum? Inventore et facilis obcaecati.
-          </Modal.Body>
-                    <Modal.Footer>
-                        <Button>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-        </div >);
+             <p>currency</p>
+            </div >);
     }
 
    private buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {
