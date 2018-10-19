@@ -1,20 +1,24 @@
-﻿using InitialEnterprise.Infrastructure.DDD.Domain;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using InitialEnterprise.Infrastructure.DDD.Event;
 using System;
+using Newtonsoft.Json;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
 {      
-
     public class ApplicationUser : IdentityUser<Guid> 
     {
+        [JsonIgnore]
         public virtual ICollection<ApplicationUserClaim> Claims { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ApplicationUserLogin> Logins { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ApplicationUserToken> Tokens { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
-        
+
+        public string Token { get; set; }
+
         public ApplicationUser()
         {
            

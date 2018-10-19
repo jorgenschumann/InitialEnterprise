@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using InitialEnterprise.Infrastructure.Api.Middlewares;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -7,12 +9,11 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using Xunit;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
-   
+
     public abstract class TestScenariosBase
     {
         protected const string directory = "ApiServices";
@@ -38,7 +39,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             }
 
             return new TestServer(webHostBuilder);
-        }
+        }     
 
         public StringContent SerializeContentString(object model)
         {
@@ -51,5 +52,5 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var contentString = model.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<TModel>(contentString);
         }
-    }
+    } 
 }

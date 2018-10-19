@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Shared;
-using InitialEnterprise.Infrastructure.Application;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
@@ -10,26 +9,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 {
     public interface ICurrencyApplication
     {
+        Task<IEnumerable<CurrencyDto>> Query();
+
         Task<CurrencyDto> Query(Guid id);
 
-        Task<IEnumerable<CurrencyDto>> Query(IQuery query);
+        Task<IEnumerable<CurrencyDto>> Query(IQuery model);
 
-        Task<CommandHandlerAnswerDto<CurrencyDto>> Insert(CurrencyDto currencyDto);
+        Task<CommandHandlerAnswerDto<CurrencyDto>> Insert(CurrencyDto model);
 
-        Task<ICommandHandlerAnswer> Update(CurrencyDto currencyDto);
-    }
-
-    public class CurrencyDto : DataTransferObject
-    {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string IsoCode { get; set; }
-
-        public string Rate { get; set; }
-
-        public IEnumerable<DomainEventDto> Events { get; set; }
+        Task<ICommandHandlerAnswer> Update(CurrencyDto model);
     }
 
     public class DomainEventDto

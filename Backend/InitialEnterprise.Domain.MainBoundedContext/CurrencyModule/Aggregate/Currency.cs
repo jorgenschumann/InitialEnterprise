@@ -3,6 +3,7 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Events;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.Utils;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
@@ -32,7 +33,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         public string Name { get; private set; }
 
         [JsonProperty]
-        public string IsoCode { get; private set; }               
+        public string IsoCode { get; private set; }
+
+        [JsonProperty]
+        public virtual ICollection<CurrencyRate> Rates { get; private set; }
 
         public Currency Update(CurrencyUpdateCommand command)
         {

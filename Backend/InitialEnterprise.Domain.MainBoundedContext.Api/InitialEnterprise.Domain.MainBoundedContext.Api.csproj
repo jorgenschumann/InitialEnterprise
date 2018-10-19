@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="DeepEqual" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="Scrutor" Version="2.2.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />
@@ -27,5 +28,7 @@
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

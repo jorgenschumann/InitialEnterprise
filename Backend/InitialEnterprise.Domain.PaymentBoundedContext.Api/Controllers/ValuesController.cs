@@ -9,9 +9,12 @@ namespace InitialEnterprise.Domain.PaymentBoundedContext.Api.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Currency>> Get()
         {
-            return new[] {"value1", "value2"};
+            return new[] {
+                new Currency { Name="foo1", Value="bar1"},
+                new Currency { Name="foo2", Value="bar2"}
+            };
         }
 
         // GET api/values/5
@@ -38,5 +41,11 @@ namespace InitialEnterprise.Domain.PaymentBoundedContext.Api.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public class Currency
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

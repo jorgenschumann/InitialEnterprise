@@ -1,7 +1,10 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Queries;
 using InitialEnterprise.Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
@@ -17,19 +20,28 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
 
         public IUnitOfWork UnitOfWork => mainDbContext;
 
-        public Task<Person> Insert(Person person)
+        public async Task<Person> Insert(Person person)
         {
-            throw new NotImplementedException();
+            var added = await mainDbContext.Person.AddAsync(person);
+
+            return added.Entity;
         }
 
-        public Task<Person> Query(Guid personId)
+        public async Task<Person> Query(Guid personId)
         {
-            throw new NotImplementedException();
+            return await mainDbContext.Person.FindAsync(personId);
         }
 
-        public Task<Person> Update(Person person)
+        public async Task<IEnumerable<Person>> Query(PersonQuery query)
         {
-            throw new NotImplementedException();
+            return await mainDbContext.Person.ToListAsync();
+        }
+
+        public async Task<Person> Update(Person person)
+        {
+            var updated = mainDbContext.Person.Update(person);
+
+            return updated.Entity;
         }
     }
 }

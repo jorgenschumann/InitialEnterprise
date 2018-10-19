@@ -12,7 +12,7 @@ namespace InitialEnterprise.Domain.PaymentBoundedContext.Api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
+            return WebHost.CreateDefaultBuilder(args)             
                 .UseStartup<Startup>();
         }
     }

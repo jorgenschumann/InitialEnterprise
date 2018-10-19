@@ -1,35 +1,41 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Queries;
-using InitialEnterprise.Infrastructure.Api.Attributes;
-using InitialEnterprise.Infrastructure.CQRS.Queries;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
-{
-    //[Authorize]
+{       
+        
     [Route("api/[controller]")]
-    public class UserAccountController : Microsoft.AspNetCore.Mvc.Controller
+    public class UserAccountController : BaseController
     {
         private readonly IUserAccountApplication userAccountApplication;
+        readonly IOptions<JwtAuthentication> jwtAuthentication;
 
-        public UserAccountController(IUserAccountApplication userAccountApplication)
-        {
+        public UserAccountController(
+            IOptions<JwtAuthentication> jwtAuthentication,
+            IUserAccountApplication userAccountApplication, 
+            IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        {       
             this.userAccountApplication = userAccountApplication;
+            this.jwtAuthentication = jwtAuthentication;
         }
 
         [HttpPost]
         [Route("signin")]
         [AllowAnonymous]              
-        public async Task<IActionResult> SignIn([FromBody] SignInDto model)
-        {
-            var result = await userAccountApplication.SignIn(model);
+        public async Task<IActionResult> SignIn([FromBody] UserLoginDto model)
+        { 
+            var result = await userAccountApplication.SignIn(model) as UserSignInResult;        
 
-            return Ok(result);
+            return Ok(result);           
         }
         
         [HttpPost]        

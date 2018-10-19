@@ -1,5 +1,6 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         public DbSet<CurrencyRate> CurrencyRate { get; set; }
 
+        public DbSet<Person> Person { get; set; }
+
         public async Task SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await SaveChangesAsync();
@@ -32,6 +35,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
             builder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
 
             builder.ApplyConfiguration(new CurrencyRateEntityTypeConfiguration());
+
+            builder.ApplyConfiguration(new PersonEntityTypeConfiguration());
 
             base.OnModelCreating(builder);
 

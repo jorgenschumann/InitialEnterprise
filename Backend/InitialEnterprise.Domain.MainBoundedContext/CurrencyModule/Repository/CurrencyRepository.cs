@@ -1,4 +1,5 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
             return addedCurrency.Entity;
         }
 
-        public async Task<IEnumerable<Currency>> Query()
+        public async Task<IEnumerable<Currency>> Query(CurrencyQuery query)
         {
             return await mainDbContext.Currency.ToListAsync();
         }

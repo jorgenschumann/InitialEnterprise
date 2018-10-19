@@ -9,7 +9,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
 {
     public class QueryCurrencyHandlerAsync :
         IQueryHandlerAsync<CurrencyQuery, Currency>,
-        IQueryHandlerAsync<IEnumerable<Currency>>
+        IQueryHandlerAsync<CurrencyQuery,IEnumerable<Currency>>
     {
         private readonly ICurrencyRepository currencyRepository;
 
@@ -23,9 +23,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
             return await currencyRepository.Query(query.Id);
         }
 
-        public async Task<IEnumerable<Currency>> RetrieveAsync()
+        async Task<IEnumerable<Currency>> IQueryHandlerAsync<CurrencyQuery, IEnumerable<Currency>>.RetrieveAsync(CurrencyQuery query)
         {
-            return await currencyRepository.Query();
+            return await currencyRepository.Query(query);
         }
     }
 }
