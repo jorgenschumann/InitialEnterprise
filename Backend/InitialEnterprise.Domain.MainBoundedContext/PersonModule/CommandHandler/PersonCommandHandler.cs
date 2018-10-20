@@ -15,12 +15,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
     {
         private readonly IPersonRepository personRepository;
         private readonly IValidator<CreatePersonCommand> createValidationHandler;
-        private readonly IValidator<CreatePersonCommand> updateValidationHandler;
+        private readonly IValidator<UpdatePersonCommand> updateValidationHandler;
 
         public PersonCommandHandler(
             IPersonRepository personRepository,
             IValidator<CreatePersonCommand> createValidationHandler,
-            IValidator<CreatePersonCommand> updateValidationHandler)
+            IValidator<UpdatePersonCommand> updateValidationHandler)
         {
             this.personRepository = personRepository;
             this.createValidationHandler = createValidationHandler;
@@ -40,11 +40,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
         {
             var answer = new CommandHandlerAnswer();
 
-            var person = await personRepository.Query(command.UserId);
+            var person = await personRepository.Query(command.Id);
             if (person.IsNotNull())
             {
-                answer.ValidationResult = this.updateValidationHandler.Validate(person);
-                answer.AggregateRoot = person.Update(command);
+                answer.ValidationResult = this.updateValidationHandler.Validate(command);
+
+                if (command.IsValid)
+                {
+                    answer.AggregateRoot = await personRepository.Update(person.Update(command));
+                }               
             }
             return answer;
         }

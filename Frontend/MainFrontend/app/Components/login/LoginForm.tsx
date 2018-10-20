@@ -24,7 +24,7 @@ export class LoginForm extends React.Component<RouteComponentProps<{}>, Partial<
     }
 
     public render() {
-        return ( <div>
+        return (<div>
                <p>login</p>
             </div>
         );

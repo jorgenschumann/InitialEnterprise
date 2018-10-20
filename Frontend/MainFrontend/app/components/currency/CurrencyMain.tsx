@@ -53,7 +53,8 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
     }
 
     public newCurrencyClick() {
-        // this.setState({showPersonForm: true, personFormPerson: null, personFormButtonType: 'add'});
+        const currency = {} as Currency;
+        this.setState({showCurrencyForm: true, currencyForm: currency, currencyFormButtonType: 'add'});
     }
 
     public personFormCancelClick() {

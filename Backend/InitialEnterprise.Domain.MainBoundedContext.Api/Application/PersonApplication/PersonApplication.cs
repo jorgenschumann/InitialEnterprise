@@ -1,6 +1,7 @@
 ﻿using AgileObjects.AgileMapper;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Shared;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Queries;
 using InitialEnterprise.Infrastructure.CQRS;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
@@ -42,9 +43,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
             return Mapper.Map(people).ToANew<IEnumerable<PersonDto>>();
         }
 
-        public Task<ICommandHandlerAnswer> Update(PersonDto model)
+        public async Task<ICommandHandlerAnswer> Update(PersonDto model)
         {
-            throw new NotImplementedException();
+            var command = Mapper.Map(model).ToANew<UpdatePersonCommand>();
+            return await dispatcher.SendAsync<UpdatePersonCommand, Person>(command);
         }
     }
 }

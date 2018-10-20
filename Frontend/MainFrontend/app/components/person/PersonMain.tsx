@@ -20,8 +20,8 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
 
         this.state = { people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add' };
 
-        this.deleteClick = this.deleteClick.bind(this);
-        this.editClick = this.editClick.bind(this);
+        this.deletePersonClick = this.deletePersonClick.bind(this);
+        this.editPersonClick = this.editPersonClick.bind(this);
         this.formButtonClick = this.formButtonClick.bind(this);
         this.newPersonClick = this.newPersonClick.bind(this);
         this.personFormCancelClick = this.personFormCancelClick.bind(this);
@@ -31,12 +31,12 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         this.loadPeople();
     }
 
-    public async deleteClick(person: Person) {
+    public async deletePersonClick(person: Person) {
         await axios.delete(`${Endpoints.Person}${person.id}`);
         await this.loadPeople();
     }
 
-    public editClick(person: Person) {
+    public editPersonClick(person: Person) {
         this.setState({showPersonForm: true, personFormPerson: person, personFormButtonType: 'edit'});
     }
 
@@ -47,13 +47,14 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         this.setState({showPersonForm: false});
     }
 
-    public  async loadPeople() {
+    public async loadPeople() {
         const people = await axios.get(Endpoints.Person, { headers: { Authorization: localStorage.getItem('token') } });
         this.setState({ people: people.data });
     }
 
     public newPersonClick() {
-        // this.setState({ showPersonForm: true, personFormPerson: null, personFormButtonType: 'add' });
+        const person = {} as Person;
+        this.setState({ showPersonForm: true, personFormPerson: person, personFormButtonType: 'add' });
     }
 
     public personFormCancelClick() {
@@ -76,8 +77,8 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
                     buttonClick={this.formButtonClick}
                     cancelClick={this.personFormCancelClick} />}
                 <PersonTable people={this.state.people}
-                    deleteClick={this.deleteClick}
-                    editClick={this.editClick} />
+                    deleteClick={this.deletePersonClick}
+                    editClick={this.editPersonClick} />
             </div>);
     }
 }
