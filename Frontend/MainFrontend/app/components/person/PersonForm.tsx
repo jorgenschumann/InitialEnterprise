@@ -24,8 +24,8 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
        return (
         <div className='static-modal'>
         <Modal.Dialog>
-          <Modal.Header>
-            <Modal.Title>Person</Modal.Title>
+            <Modal.Header closeButton onClick={this.props.cancelClick}>
+                <Modal.Title>Person</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <form>
@@ -35,7 +35,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
                     onChange={this.onTextChange}
                     type='text'
                     value={this.state.person.firstName} />
-                <br />
+                <br/>
                <ControlLabel>Lastname</ControlLabel>
                 <input
                     name='lastName'

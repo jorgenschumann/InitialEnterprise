@@ -58,4 +58,22 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    
+    .modal-header {
+        background-color: whitesmoke;
+    }
+    .modal-body {
+        background-color: white;
+    }
+    .modal-footer {
+        background-color: whitesmoke;
+    }
+
+   .dropdown-menu{
+        max-width: 100px;
+    }
+
+    th[data-role='actions'] {
+        width: 30px;
+    }
 }

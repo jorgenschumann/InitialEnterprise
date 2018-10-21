@@ -12,7 +12,7 @@ const PersonRow = (props: PersonInterface & EditDeleteButtonClicks) => {
                     onClick={() => props.editClick(props.person)}><i className='material-icons'>open_in_browser</i>
                 </button>
                 <button className='btn btn-default'
-                        onClick={() => props.deleteClick(props.person)}><i className='material-icons'>delete_sweep</i>
+                    onClick={() => props.deleteClick(props.person)}><i className='material-icons'>delete</i>
                 </button>
                 </ButtonGroup>
             </ButtonToolbar>

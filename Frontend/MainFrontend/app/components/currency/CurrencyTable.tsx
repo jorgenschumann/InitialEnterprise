@@ -6,9 +6,8 @@ const CurrencyTable = (props: CurrenciesInterface & EditDeleteButtonClicks) => {
     return (
         <table className='table table-hover table-striped table-bordered'>
             <thead>
-                <tr>
-                    <th>Actions</th>
-                    <th>Id</th>
+                <tr>                   
+                    <th data-role='actions'>Actions</th>  
                     <th>First Name</th>
                     <th>Last Name</th>                    
                 </tr>

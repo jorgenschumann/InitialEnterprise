@@ -1,12 +1,11 @@
 import axios from 'axios';
 import * as React from 'react';
 import { Button, ButtonGroup, ButtonToolbar, Modal } from 'react-bootstrap';
-import { BootstrapTable, CellEdit, Options, SelectRow, TableHeaderColumn } from 'react-bootstrap-table';
-import { Endpoints } from '../Endpoints';
-import { CurrenciesInterface, Currency, CurrencyFormButtonType } from './types';
 import { RouteComponentProps } from 'react-router';
-import { CurrencyTable } from './CurrencyTable';
+import { Endpoints } from '../Endpoints';
 import { CurrencyForm } from './CurrencyForm';
+import { CurrencyTable } from './CurrencyTable';
+import { CurrenciesInterface, Currency, CurrencyFormButtonType } from './types';
 
 // tslint:disable-next-line:interface-name
 interface MainState {
@@ -24,7 +23,7 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
         this.edit = this.edit.bind(this);
         this.transfer = this.transfer.bind(this);
         this.create = this.create.bind(this);
-        this.cancel = this.cancel.bind(this);     
+        this.cancel = this.cancel.bind(this);
     }
 
     public async componentDidMount() {

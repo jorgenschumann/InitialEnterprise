@@ -1,18 +1,17 @@
 var webpack = require('webpack');
 var path = require('path');
 var WebpackNotifierPlugin = require('webpack-notifier');
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = { 
-    devtool: 'source-map',
+module.exports = {
+    devtool: 'source-map', 
 
-    entry: [      
-        'react-hot-loader/patch',  
+    entry: [
+        'react-hot-loader/patch',
         './app/index.tsx'
     ],
 
-    // https://webpack.js.org/configuration/output/
-    output: {     
+    output: {
         filename: 'bundle.js'
     },
 
@@ -24,12 +23,12 @@ module.exports = {
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './app/index.ejs')
         }),
+
        new WebpackNotifierPlugin({ alwaysNotify: true })
     ],
 
-    // https://webpack.js.org/configuration/resolve/#resolve
     resolve: {
-        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js'],
+        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
     },
      module: {
         loaders: [
@@ -40,22 +39,20 @@ module.exports = {
                     'awesome-typescript-loader'
                 ],
                 exclude: path.resolve(__dirname, 'node_modules'),
-                include: path.resolve(__dirname, 'app'),
+                include: path.resolve(__dirname, 'app')
             },
             {
                 enforce: 'pre',
                 test: /\.js$/,
                 loader: 'source-map-loader'
-            },
+            }
         ]
     },
-
     devServer: {
         hot: true
     },
-
     externals: {
         'rxjs/Rx': 'Rx',
         'jquery': '$'
-    },
+    }
 };

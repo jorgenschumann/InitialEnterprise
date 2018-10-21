@@ -8,9 +8,10 @@ import { Login } from './types';
 
 
 // tslint:disable-next-line:interface-name
-interface LoginFormInterface {
+interface LoginFormInterface
+{
     show: boolean;
-    login?: Login;
+    login?: Login; 
 }
 
 export class LoginForm extends React.Component<RouteComponentProps<{}>, Partial<LoginFormInterface>> {

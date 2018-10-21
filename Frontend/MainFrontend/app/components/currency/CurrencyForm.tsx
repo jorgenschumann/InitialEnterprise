@@ -28,12 +28,12 @@ export class CurrencyForm extends React.Component<CurrencyFormProps, Partial<Cur
    // tslint:disable-next-line:member-ordering
    public componentWillReceiveProps(props: CurrencyFormProps) {
        this.setState({ currency: props.currency ? { ...props.currency } : { id: '', name: '', isoCode: '', rates: [] } });
-    }
+   }
 
    public render() {
        return (<div className='static-modal'>
            <Modal.Dialog>
-               <Modal.Header>
+               <Modal.Header closeButton onClick={this.props.cancelClick}>
                    <Modal.Title>Currency</Modal.Title>
                </Modal.Header>
                <Modal.Body>

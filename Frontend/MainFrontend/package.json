@@ -1,11 +1,13 @@
 {
-  "name": "react-class",
+  "name": "reactive-class",
   "version": "0.0.1",
-  "description": "A reactive programming",
+  "description": "A reactive programming class",
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/jchapuis/reactive.git"
   },
-  "author": "Jorgen Schumann <jorgen@hotmail.de>",
+  "author": "Jonas Chapuis <jonas.chapuis@nexthink.com> (http://github.com/jchapuis)",
+  "homepage": "https://gihub.com/jchapuis/reactive",
   "license": "Apache-2.0",
   "//": "scripts are available with `npm` command, e.g. `npm start`",
   "scripts": {
@@ -34,7 +36,7 @@
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5",
     "webpack-notifier": "^1.5.0",
-    "expose-loader": "^0.7.3",
+    "expose-loader":"^0.7.3",
     "html-webpack-plugin": "^2.28.0"
   }
 }
