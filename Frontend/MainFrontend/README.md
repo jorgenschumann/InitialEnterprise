@@ -1,5 +1,5 @@
-# Visual Studio Code - Typescript - React - Redux-Observable Boilerplate
-Boilerplate for hot-reload react-redux-observable Typescript experience in Visual Studio Code
+# Visual Studio Code - Typescript - React 
+
 
 ## Setup guide
 1. Install node.js and npm package manager: https://nodejs.org/en/, or e.g. `sudo apt-get nodejs`, `sudo apt-get install npm`, `sudo apt-get install nodejs-legacy` (this latter one installs a symlink for `node` command to `nodejs`)
@@ -21,18 +21,3 @@ Boilerplate for hot-reload react-redux-observable Typescript experience in Visua
 - `.vscode/settings.json`: settings for visual studio code and extensions
 - `.vscode/tasks.json`: configuration of visual studio code tasks, will delegate to npm commands and e.g. support parsing console output from webpack to find out about errors  
 
-## Shortcuts
-- CRTL+SHIFT+B: Build (runs `npm run build`)
-- F5: Run application and open chrome window (note that due to a vscode bug when stopping the debug session the server does not shut down, and you need to 'terminate running task')
-- CTRL+SHIFT+T: Terminate running task (need to be customized, not built-in)
-
-## Links
- - Webpack guidebook: https://survivejs.com/webpack/.
- - Simple boilerplate from which this was inspired: https://github.com/Glavin001/react-hot-ts
-- Another interesting guide (which involves Babel - we don't use it):
-http://blog.tomduncalf.com/posts/setting-up-typescript-and-react/
-
-## Credits
-- The project boilerplate is mostly inspired from https://github.com/Glavin001/react-hot-ts
-- Other boilerplates worth mentionning:
-https://github.com/skolmer/react-hot-boilerplate-vscode and https://github.com/tomduncalf/typescript-react-template
