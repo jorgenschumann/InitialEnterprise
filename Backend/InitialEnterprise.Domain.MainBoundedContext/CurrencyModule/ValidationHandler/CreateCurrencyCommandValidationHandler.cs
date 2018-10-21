@@ -5,7 +5,7 @@ using InitialEnterprise.Infrastructure.DDD.Command;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class CreateCurrencyCommandValidationHandler : CommandValidator<CurrencyCreateCommand>
+    public class CreatePersonCommandValidationHandler : CommandValidator<CurrencyCreateCommand>
     {
         public override ValidationResult Validate(ValidationContext<CurrencyCreateCommand> context)
         {
@@ -26,18 +26,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
             RuleFor(c => c.IsoCode)
                 .NotEmpty().WithMessage("IsoCode")
                 .Length(3, 3).WithMessage("IsoCode must have....");
-        }
-    }
-
-    public abstract class CommandValidator<TCommand> : AbstractValidator<TCommand> where TCommand : DomainCommand
-    {
-        public override ValidationResult Validate(ValidationContext<TCommand> context)
-        {
-            var validationResult = base.Validate(context);
-            {
-                context.InstanceToValidate.IsValid = validationResult.IsValid;
-            }
-            return validationResult;
         }
     }
 }

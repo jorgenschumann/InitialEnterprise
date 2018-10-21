@@ -3,9 +3,7 @@
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands
 {
     public abstract class BasePersonCommand : DomainCommand
-    {
-        public bool IsValid => false;
-
+    {       
         public string PersonType { get; set; }
 
         public bool NameStyle { get; set; }

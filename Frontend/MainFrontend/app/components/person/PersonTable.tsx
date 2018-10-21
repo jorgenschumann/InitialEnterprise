@@ -7,10 +7,9 @@ const PersonTable = (props: PeopleInterface & EditDeleteButtonClicks) => {
         <table className='table table-hover table-striped table-bordered'>
             <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Actions</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>

@@ -80,6 +80,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = services.AddMvcCore();
+
+          
             services.ConfigureServiceCollection();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -128,6 +131,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 });
             });
 
+
+            ConfigureJsonSerializer(builder);
+
+
             ConfigureEntityFrameworkContext(services);
            
             services.AddIdentity<ApplicationUser, ApplicationRole>()
@@ -167,6 +174,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         {
             ConfigureLogger(loggerFactory);
 
+         
             if (hostingEnvironment.IsDevelopment())
             {
                 applicationBuilder.UseDeveloperExceptionPage();
@@ -234,13 +242,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
         }
 
-        private static void ConfigureJsonSerializer(IMvcBuilder mvcBuilder)
+        private static void ConfigureJsonSerializer(IMvcCoreBuilder mvcBuilder)
         {
             mvcBuilder.AddJsonOptions(options =>
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
         }
 

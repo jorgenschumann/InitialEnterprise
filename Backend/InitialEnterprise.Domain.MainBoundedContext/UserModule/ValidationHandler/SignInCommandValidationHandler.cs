@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.ValidationHandler
 {

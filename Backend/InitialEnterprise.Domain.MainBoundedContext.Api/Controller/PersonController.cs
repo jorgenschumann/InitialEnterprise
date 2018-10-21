@@ -23,6 +23,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
                
         [HttpPost]
+        [AllowAnonymous]
         //[Authorize(Policy = ClaimDefinitions.PersonRead)]
         public async Task<IActionResult> Query([System.Web.Http.FromBody]PersonQuery query)
         {
@@ -42,6 +43,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         //[Authorize(Policy = ClaimDefinitions.PersonRead)]        
         public async Task<IActionResult> Get(Guid id)
         {
@@ -51,6 +53,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
+        [AllowAnonymous]
         //[Authorize(Policy = ClaimDefinitions.PersonWrite)]
         public async Task<IActionResult> Post([FromBody] PersonDto model)
         {
@@ -61,6 +64,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
 
         [HttpPut]
+        [AllowAnonymous]
         //[Authorize(Policy = ClaimDefinitions.PersonWrite)] 
         public async Task<IActionResult> Put([FromBody] PersonDto model)
         {

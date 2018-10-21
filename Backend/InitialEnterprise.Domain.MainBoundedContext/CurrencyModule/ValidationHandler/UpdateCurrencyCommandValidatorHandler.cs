@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
+using InitialEnterprise.Infrastructure.DDD.Command;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class UpdateCurrencyCommandValidatorHandler : AbstractValidator<CurrencyUpdateCommand>
+    public class UpdateCurrencyCommandValidatorHandler : CommandValidator<CurrencyUpdateCommand>
     {
         public override ValidationResult Validate(ValidationContext<CurrencyUpdateCommand> context)
         {

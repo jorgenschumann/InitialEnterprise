@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, ControlLabel, Modal } from 'react-bootstrap';
 import {
     Currency as CurrencyEntity,
     CurrencyFormButtonType,
@@ -9,8 +9,6 @@ import {
 
 // tslint:disable-next-line:interface-name
 interface CurrencyFormProps {
-    // tslint:disable-next-line:ban-types
-    showCurrencyForm: Boolean;
     currency?: CurrencyEntity;
     buttonClick: (Currency: CurrencyEntity) => void;
     buttonType: CurrencyFormButtonType;
@@ -23,20 +21,53 @@ export class CurrencyForm extends React.Component<CurrencyFormProps, Partial<Cur
         this.onTextChange = this.onTextChange.bind(this);
         this.buttonClick = this.buttonClick.bind(this);
         this.state = {
-             currency: props.currency ? { ...props.currency } : { Id: '', Name: '', IsoCode: '', Rates: [] }
+             currency: props.currency ? { ...props.currency } : { id: '', name: '', isoCode: '', rates: [] }
         };
     }
 
    // tslint:disable-next-line:member-ordering
    public componentWillReceiveProps(props: CurrencyFormProps) {
-        this.setState({ currency: props.currency ? { ...props.currency } : { Id: '', Name: '', IsoCode: '', Rates: [] } });
-    }
+       this.setState({ currency: props.currency ? { ...props.currency } : { id: '', name: '', isoCode: '', rates: [] } });
+   }
 
    public render() {
-        return (
-            <div className='static-modal' >
-             <p>currency</p>
-            </div >);
+       return (<div className='static-modal'>
+           <Modal.Dialog>
+               <Modal.Header closeButton onClick={this.props.cancelClick}>
+                   <Modal.Title>Currency</Modal.Title>
+               </Modal.Header>
+               <Modal.Body>
+                   <form>
+                       <ControlLabel>Name</ControlLabel>
+                       <input className='form-control'
+                           name='firstName'
+                           onChange={this.onTextChange}
+                           type='text'
+                           value={this.state.currency.name} />
+                       <br/>
+                       <ControlLabel>IsoCode</ControlLabel>
+                       <input
+                           name='lastName'
+                           onChange={this.onTextChange}
+                           className='form-control'
+                           type='text'
+                           value={this.state.currency.isoCode} />
+                   </form>
+               </Modal.Body>
+               <Modal.Footer>
+                   <button type='button'
+                       className={this.props.buttonType === 'edit' ? 'btn btn-default btn-sm' : 'btn btn-default btn-sm'}
+                       onClick={this.buttonClick}>
+                       <i className='material-icons'>save</i>
+                   </button>
+                   <button type='button'
+                       className='btn btn-default btn-sm'
+                       onClick={this.props.cancelClick}>
+                       <i className='material-icons'>reply</i>
+                   </button>
+               </Modal.Footer>
+           </Modal.Dialog>
+       </div>);
     }
 
    private buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {

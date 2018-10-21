@@ -6,17 +6,16 @@ const CurrencyTable = (props: CurrenciesInterface & EditDeleteButtonClicks) => {
     return (
         <table className='table table-hover table-striped table-bordered'>
             <thead>
-                <tr>
-                    <th>Id</th>
+                <tr>                   
+                    <th data-role='actions'>Actions</th>  
                     <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Actions</th>
+                    <th>Last Name</th>                    
                 </tr>
             </thead>
             <tbody>
                 {props.currencies && props.currencies.map(currency =>
                     <CurrencyRow currency={currency}
-                        key={currency.Id}
+                        key={currency.id}
                         deleteClick={props.deleteClick}
                         editClick={props.editClick} />)}
             </tbody>

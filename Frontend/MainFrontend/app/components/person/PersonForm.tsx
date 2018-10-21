@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button, ControlLabel, Modal } from 'react-bootstrap';
 import { Person as PersonEntity, PersonFormButtonType, PersonInterface} from './types';
 
 // tslint:disable-next-line:interface-name
@@ -19,14 +20,55 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
         };
     }
 
-    public buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {
-        evt.preventDefault();
-        // this.props.buttonClick(this.state.person);
+   public render() {
+       return (
+        <div className='static-modal'>
+        <Modal.Dialog>
+            <Modal.Header closeButton onClick={this.props.cancelClick}>
+                <Modal.Title>Person</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <form>
+          <ControlLabel>FirstName</ControlLabel>
+                <input className='form-control'
+                    name='firstName'
+                    onChange={this.onTextChange}
+                    type='text'
+                    value={this.state.person.firstName} />
+                <br/>
+               <ControlLabel>Lastname</ControlLabel>
+                <input
+                    name='lastName'
+                    onChange={this.onTextChange}
+                    className='form-control'
+                    type='text'
+                    value={this.state.person.lastName} />
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <button type='button'
+                className={this.props.buttonType === 'edit' ? 'btn btn-default btn-sm' : 'btn btn-default btn-sm'}
+                onClick={this.buttonClick}>
+                <i className='material-icons'>save</i>
+            </button>
+            <button type='button'
+                className='btn btn-default btn-sm'
+                onClick={this.props.cancelClick}>
+                 <i className='material-icons'>reply</i>
+            </button>
+          </Modal.Footer>
+        </Modal.Dialog>
+      </div>);
     }
 
-    // componentWillReceiveProps(props: PersonFormProps) {
-    //    this.setState({person: props.person ? {...props.person} : {id: 0, firstName: '', lastName: ''}});
-    // }
+    public buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {
+        evt.preventDefault();
+        this.props.buttonClick(this.state.person);
+    }
+
+    public componentWillReceiveProps(props: PersonFormProps) {
+        this.setState({ person : props.person ? {...props.person} : {id: '', firstName: '', lastName: ''}});
+    }
 
     public onTextChange(e: any) {
         const person: any = this.state.person;

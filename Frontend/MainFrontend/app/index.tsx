@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { BrowserRouter } from 'react-router-dom';
-import App from './containers/App';
 import * as RoutesModule from './routes';
 const routes = RoutesModule.routes;
 
@@ -17,10 +16,9 @@ ReactDOM.render(
 );
 
 
-// Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./containers/App', () => {
-    const NextApp = require<RequireImport>('./containers/App').default;
+  module.hot.accept('./', () => {
+    const NextApp = require<RequireImport>('./').default;
     ReactDOM.render(
       <AppContainer>
         <NextApp />
