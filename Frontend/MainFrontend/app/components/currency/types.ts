@@ -27,14 +27,14 @@ export interface CurrencyRate {
 
 // tslint:disable-next-line:interface-name
 export interface Currency {
-    Id: string;
-    Name: string;
-    IsoCode: string;
-    Rates: CurrencyRate[] | undefined;
+    id: string;
+    name: string;
+    isoCode: string;
+    rates: CurrencyRate[] | undefined;
 }
 
 export function isCurrency(currency: Currency): currency is Currency {
     const arg = (currency as Currency);
-    return arg.Name !== undefined
-        && arg.IsoCode !== undefined;
+    return arg.name !== undefined
+        && arg.isoCode !== undefined;
 }

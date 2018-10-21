@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, ControlLabel, Modal } from 'react-bootstrap';
 import { Person as PersonEntity, PersonFormButtonType, PersonInterface} from './types';
 
 // tslint:disable-next-line:interface-name
@@ -29,11 +29,14 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
           </Modal.Header>
           <Modal.Body>
           <form>
+          <ControlLabel>FirstName</ControlLabel>
                 <input className='form-control'
                     name='firstName'
                     onChange={this.onTextChange}
                     type='text'
                     value={this.state.person.firstName} />
+                <br />
+               <ControlLabel>Lastname</ControlLabel>
                 <input
                     name='lastName'
                     onChange={this.onTextChange}
@@ -44,13 +47,14 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
           </Modal.Body>
           <Modal.Footer>
             <button type='button'
-                className={this.props.buttonType === 'edit' ? 'btn btn-success' : 'btn btn-primary'}
-                onClick={this.buttonClick}>{this.props.buttonType === 'edit' ? 'Update' : 'Add'}
+                className={this.props.buttonType === 'edit' ? 'btn btn-default btn-sm' : 'btn btn-default btn-sm'}
+                onClick={this.buttonClick}>
+                <i className='material-icons'>save</i>
             </button>
             <button type='button'
-                className='btn btn-danger'
+                className='btn btn-default btn-sm'
                 onClick={this.props.cancelClick}>
-                Cancel
+                 <i className='material-icons'>reply</i>
             </button>
           </Modal.Footer>
         </Modal.Dialog>
