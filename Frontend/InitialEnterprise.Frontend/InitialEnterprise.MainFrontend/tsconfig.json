@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "types": [ "webpack-env" ],
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "allowJs": false,
+    "strictNullChecks": true,
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.promise" // Default libraries for building in ES5, plus the additional promise library required by RxJs
+    ]
+  },
+  "exclude": [
+    "bin",
+    "node_modules"
+  ]
+
+}
