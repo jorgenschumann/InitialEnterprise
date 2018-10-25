@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Endpoints } from '../Endpoints';
@@ -21,15 +21,54 @@ export class RegisterForm extends React.Component<RouteComponentProps<{}>, Parti
         this.onTextChange = this.onTextChange.bind(this);
         this.register = this.register.bind(this);
     }
-
+       
     public render() {
-        const { show } = this.state;
         return (
-            <div className='static-modal'></div>);
+
+            <div>
+                <div className='static-modal'>
+                    <Modal.Dialog>
+                        <Modal.Header closeButton onClick={() => this.closeDialog()}>
+                            <Modal.Title id='contained-modal-title'>
+                                Register
+                        </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form >
+                                <FormGroup>
+                                    <ControlLabel>Username</ControlLabel>
+                                    <FormControl type='text' placeholder="Username" className='form-control' name='UserName' onChange={this.onTextChange} />
+                                </FormGroup> 
+                                <FormGroup>
+                                    <ControlLabel>Email</ControlLabel>
+                                    <FormControl type='text' placeholder="Email" className='form-control' name='Email' onChange={this.onTextChange} />
+                                </FormGroup>   
+                                <FormGroup>
+                                    <ControlLabel>Password</ControlLabel>
+                                    <FormControl type='password' placeholder="Password" className='form-control' name='Password' onChange={this.onTextChange} />
+                                </FormGroup> 
+                                <FormGroup>
+                                    <ControlLabel>ConfirmPassword</ControlLabel>
+                                    <FormControl type='password' placeholder="Confirm Password" className='form-control' name='ConfirmPassword' onChange={this.onTextChange} />
+                                </FormGroup> 
+                            </form>
+                        </Modal.Body>
+                        <Modal.Footer>                            
+                            <button type='submit' className='btn btn-default' onClick={() => this.register()}>Register</button>
+                            <button className='btn btn-default' onClick={() => this.closeDialog()}>Cancel</button>
+                        </Modal.Footer>
+                    </Modal.Dialog>
+                </div>
+            </div>
+           )
     }
 
     private register = () => {
         alert(JSON.stringify(this.state));
+    }
+
+    private closeDialog() {
+        this.setState({ show: false });
     }
 
     private onTextChange(e: any) {

@@ -29,7 +29,6 @@
     <None Remove="ClientApp\components\currency\types.ts" />
     <None Remove="ClientApp\components\FetchEmployee.tsx" />
     <None Remove="ClientApp\components\login\types.ts" />
-    <None Remove="ClientApp\components\Notifier.tsx" />
     <None Remove="ClientApp\components\person\types.ts" />
     <None Remove="ClientApp\components\register\types.ts" />
     <None Remove="ClientApp\guid.ts" />
@@ -40,7 +39,6 @@
     <TypeScriptCompile Include="ClientApp\components\AlertComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\currency\types.ts" />
     <TypeScriptCompile Include="ClientApp\components\login\types.ts" />
-    <TypeScriptCompile Include="ClientApp\components\Notifier.tsx" />
     <TypeScriptCompile Include="ClientApp\components\person\types.ts" />
     <TypeScriptCompile Include="ClientApp\components\register\types.ts" />
     <TypeScriptCompile Include="ClientApp\framework\Guid.ts" />
