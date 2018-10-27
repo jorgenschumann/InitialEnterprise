@@ -23,6 +23,12 @@ export interface Person {
     lastName: string;
 }
 
+export interface MailAdresses {
+    id: string;
+    personId: string;
+    mailAdress: string;
+}
+
 export function isPerson(person: Person): person is Person {
     const arg = (person as Person);
     return arg.firstName !== undefined

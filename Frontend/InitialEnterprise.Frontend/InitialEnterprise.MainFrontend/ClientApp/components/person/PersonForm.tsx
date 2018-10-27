@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {  ControlLabel, Modal } from 'react-bootstrap';
-import { Person as PersonEntity, PersonFormButtonType, PersonInterface} from './types';
+import { Person as PersonEntity, MailAdresses, PersonFormButtonType, PersonInterface, Person} from './types';
+
 
 // tslint:disable-next-line:interface-name
 interface PersonFormProps {
@@ -19,7 +20,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
             person: props.person ? { ...props.person } : { id: '', firstName: '', lastName: '' }
         };
     }
-
+       
    public render() {
        return (
         <div className='static-modal'>
@@ -33,7 +34,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
                 <input className='form-control'
                     name='firstName'
                     onChange={this.onTextChange}
-                    type='text'
+                               type='text'
                                value={this.state.person!.firstName} />
                 <br/>
                <ControlLabel>Lastname</ControlLabel>
@@ -41,9 +42,10 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
                     name='lastName'
                     onChange={this.onTextChange}
                     className='form-control'
-                    type='text'
+                               type='text'
                                value={this.state.person!.lastName} />
-            </form>
+              </form>
+
           </Modal.Body>
           <Modal.Footer>
             <button type='button'
@@ -59,7 +61,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
           </Modal.Footer>
         </Modal.Dialog>
       </div>);
-    }
+   }
 
     public buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {
         evt.preventDefault();
@@ -67,7 +69,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
     }
 
     public componentWillReceiveProps(props: PersonFormProps) {
-        this.setState({ person : props.person ? {...props.person} : {id: '', firstName: '', lastName: ''}});
+        this.setState({ person: props.person ? { ...props.person } : { id: '', firstName: '', lastName: ''}});
     }
 
     public onTextChange(e: any) {

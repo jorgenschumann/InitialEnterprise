@@ -3,6 +3,7 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.Utils;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
@@ -21,7 +22,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         [JsonConstructor]
         private Person()
         {
-            //EmailAddress = new HashSet<EmailAddress>();
+            EmailAddresses = new HashSet<EmailAddress>();
             //PersonCreditCard = new HashSet<PersonCreditCard>();
             //PersonPhone = new HashSet<PersonPhone>();
         }
@@ -82,7 +83,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         [JsonProperty]
         public int EmailPromotion { get; private set; }
 
-        //public virtual ICollection<EmailAddress> EmailAddress { get; private set; }
+        [JsonProperty]
+        public ICollection<EmailAddress> EmailAddresses { get; private set; }
 
         //public virtual ICollection<PersonCreditCard> PersonCreditCard { get; private set; }
 
