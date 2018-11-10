@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
-{       
-        
+{
+
+    [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UserAccountController : BaseController
     {
         private readonly IUserAccountApplication userAccountApplication;
@@ -38,7 +38,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             return Ok(result);           
         }
         
-        [HttpPost]        
+        [HttpPost]
+        //[Authorize(Policy = ClaimDefinitions.CurrencyQuery)]  
         public async Task<IActionResult> Query([FromBody]UserQuery query)
         {
             var result =(await userAccountApplication.QueryAsync(query));
@@ -57,7 +58,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         [HttpPost]
         [Route("register")]
-        [AllowAnonymous]             
+        //[AllowAnonymous]             
         public async Task<IActionResult> Post([FromBody] UserRegisterDto model)
         {
             var result = await userAccountApplication.Register(model);       
@@ -67,7 +68,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
 
         [HttpPut]
-        //[Authorize(Policy = ClaimDefinitions.UserWrite)] 
+        //[Authorize(Policy = ClaimDefinitions.UserWrite)]   
         public async Task<IActionResult> Put([FromBody] UserDto model)
         {
             var result = await userAccountApplication.Update(model);

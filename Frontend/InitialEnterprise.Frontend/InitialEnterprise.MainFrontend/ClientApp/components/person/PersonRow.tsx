@@ -17,8 +17,8 @@ const PersonRow = (props: PersonInterface & EditDeleteButtonClicks) => {
                 </ButtonGroup>
             </ButtonToolbar>
         </td>
-        <td>{props.person.firstName}</td>
-        <td>{props.person.lastName}</td>
+        <td>{props.person.FirstName}</td>
+        <td>{props.person.LastName}</td>
     </tr>;
 };
 

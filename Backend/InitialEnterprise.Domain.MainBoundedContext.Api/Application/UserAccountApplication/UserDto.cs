@@ -1,30 +1,37 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
     public class UserDto
     {
-        [Required]
-        [Display(Name = "Username")]
+        public Guid Id { get; set; }
+
         public string Username { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        
+        public string EmailConfirmed { get; set; }
+               
+        public string PhoneNumber { get; set; }
+              
+        public string PhoneNumberConfirmed { get; set; }
+               
         public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+               
         public string ConfirmPassword { get; set; }
+        
+        public IEnumerable<ApplicationUserClaimDto> Claims { get; set; }    
+    }
+
+    public class ApplicationUserClaimDto
+    {       
+        public virtual int Id { get; set; }
+          
+        public virtual string ClaimType { get; set; }
+      
+        public virtual string ClaimValue { get; set; }
     }
 
 

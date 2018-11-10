@@ -17,8 +17,8 @@ const CurrencyRow = (props: CurrencyInterface & EditDeleteButtonClicks) => {
                 </Dropdown.Menu>
             </Dropdown> 
         </td>
-        <td>{props.currency.name}</td>
-        <td>{props.currency.isoCode}</td>
+        <td>{props.currency.Name}</td>
+        <td>{props.currency.IsoCode}</td>
     </tr>;
 };
 

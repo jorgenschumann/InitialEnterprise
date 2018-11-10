@@ -18,19 +18,19 @@ export interface EditDeleteButtonClicks {
 
 // tslint:disable-next-line:interface-name
 export interface Person {
-    id: string;
-    firstName: string;
-    lastName: string;
+    Id: string;
+    FirstName: string;
+    LastName: string;
 }
 
 export interface MailAdresses {
-    id: string;
-    personId: string;
-    mailAdress: string;
+    Id: string;
+    PersonId: string;
+    MailAdress: string;
 }
 
 export function isPerson(person: Person): person is Person {
     const arg = (person as Person);
-    return arg.firstName !== undefined
-        && arg.firstName !== undefined;
+    return arg.FirstName !== undefined
+        && arg.FirstName !== undefined;
 }

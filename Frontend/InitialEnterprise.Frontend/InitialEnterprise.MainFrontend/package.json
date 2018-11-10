@@ -40,13 +40,14 @@
     "source-map-loader": "^0.1.6",
     "style-loader": "0.18.2",
     "ts-node": "^2.0.0",
-    "typescript": "2.4.1",
+    "typescript": "^2.4.1",
     "url-loader": "0.5.9",
     "webpack": "2.5.1",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "2.18.2"
   },
   "dependencies": {
+    "jwt-decode": "^2.2.0",
     "react": "https://registry.npmjs.org/react/-/react-15.6.1.tgz",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-table": "^4.3.1",

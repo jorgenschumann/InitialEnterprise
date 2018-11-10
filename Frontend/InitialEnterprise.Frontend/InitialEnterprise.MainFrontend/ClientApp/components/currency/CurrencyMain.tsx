@@ -6,6 +6,7 @@ import { Endpoints } from '../Endpoints';
 import { CurrencyForm } from './CurrencyForm';
 import { CurrencyTable } from './CurrencyTable';
 import { CurrenciesInterface, Currency, CurrencyFormButtonType } from './types';
+import { Http } from '../Http';
 
 // tslint:disable-next-line:interface-name
 interface MainState {
@@ -25,41 +26,6 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
         this.create = this.create.bind(this);
         this.cancel = this.cancel.bind(this);
     }
-
-    public async componentDidMount() {
-        this.load();
-    }
-
-    public async delete(currency: Currency) {
-        await axios.delete(`${Endpoints.Currency}${currency.id}`);
-        await this.load();
-    }
-
-    public edit(currency: Currency) {
-        this.setState({ showCurrencyForm: true, currencyForm: currency, currencyFormButtonType: 'edit' });
-    }
-
-    public async transfer(currency: Currency) {
-        const func = this.state.currencyFormButtonType === 'edit' ? axios.put : axios.post;
-        await func(Endpoints.Currency, currency);
-        await this.load();
-        this.setState({ showCurrencyForm: false });
-    }
-
-    public async load() {
-        const currencies = await axios.get(Endpoints.Currency);
-        this.setState({ currencies: currencies.data });
-    }
-
-    public create() {
-        const currency = {} as Currency;
-        this.setState({ showCurrencyForm: true, currencyForm: currency, currencyFormButtonType: 'add'});
-    }
-
-    public cancel() {
-        this.setState({ showCurrencyForm: false });
-    }
-
 
     public render() {
 
@@ -82,5 +48,39 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
                     deleteClick={this.delete}
                     editClick={this.edit} />
             </div>);
+    }
+
+    public async componentDidMount() {
+        this.load();
+    }
+
+    public async delete(currency: Currency) {
+        await Http.delete(`${Endpoints.Currency}${currency.Id}`);
+        await this.load();
+    }
+
+    public edit(currency: Currency) {
+        this.setState({ showCurrencyForm: true, currencyForm: currency, currencyFormButtonType: 'edit' });
+    }
+
+    public async transfer(currency: Currency) {
+        const func = this.state.currencyFormButtonType === 'edit' ? axios.put : axios.post;
+        await func(Endpoints.Currency, currency);
+        await this.load();
+        this.setState({ showCurrencyForm: false });
+    }
+
+    public async load() {       
+        const currencies = await Http.get(Endpoints.Currency);
+        this.setState({ currencies: currencies.data });
+    }
+
+    public create() {
+        const currency = {} as Currency;
+        this.setState({ showCurrencyForm: true, currencyForm: currency, currencyFormButtonType: 'add'});
+    }
+
+    public cancel() {
+        this.setState({ showCurrencyForm: false });
     }
 }

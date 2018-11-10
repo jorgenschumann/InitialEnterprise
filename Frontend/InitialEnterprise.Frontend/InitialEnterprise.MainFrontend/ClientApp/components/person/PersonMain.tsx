@@ -7,6 +7,7 @@ import { PersonForm } from './PersonForm';
 import { PersonTable } from './PersonTable';
 import { PeopleInterface, Person, PersonFormButtonType } from './types';
 import { AlertComponent } from '../AlertComponent';
+import { Http } from '../Http';
 
 // tslint:disable-next-line:interface-name
 interface MainState {
@@ -29,12 +30,36 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         this.cancel = this.cancel.bind(this);
     }
 
+    public render() {
+        return (
+            <div className='container'>
+                <h1>People</h1>
+                <ButtonToolbar>
+                    <ButtonGroup bsSize='small'>
+                        <button className='btn btn-default' onClick={this.load}><i className='material-icons'>autorenew</i></button>
+                        <button className='btn btn-default' onClick={this.create}><i className='material-icons'>person_add</i></button>
+                    </ButtonGroup>
+                </ButtonToolbar>
+                <br />
+                {this.state.showPersonForm && <PersonForm
+                    person={this.state.personFormPerson}
+                    buttonType={this.state.personFormButtonType}
+                    buttonClick={this.save}
+                    cancelClick={this.cancel} />}
+
+                <PersonTable people={this.state.people}
+                    deleteClick={this.delete}
+                    editClick={this.edit} />
+                {this.state.showMessage && <AlertComponent message={'testmessage'} />}
+            </div>);
+    }
+
     public async componentDidMount() {
         this.load();
     }
 
     public async delete(person: Person) {
-        await axios.delete(`${Endpoints.Person}${person.id}`);
+        await Http.delete(`${Endpoints.Person}${person.Id}`);
         await this.load();
     }
 
@@ -50,8 +75,9 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         this.setState({ showMessage: true });
     }
 
+
     public async load() {
-        const people = await axios.get(Endpoints.Person, { headers: { Authorization: localStorage.getItem('token') } });
+        const people = await Http.get(Endpoints.Person);      
         this.setState({ people: people.data });
     }
 
@@ -64,27 +90,5 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         this.setState({showPersonForm: false});
     }
 
-    public render() {
-        return (
-            <div className='container'>              
-                <h1>People</h1>
-                <ButtonToolbar>
-                    <ButtonGroup bsSize='small'>
-                    <button className='btn btn-default' onClick={this.load}><i className='material-icons'>autorenew</i></button>
-                    <button className='btn btn-default' onClick={this.create}><i className='material-icons'>person_add</i></button>
-                    </ButtonGroup>
-                </ButtonToolbar>
-                <br />                
-                {this.state.showMessage && <AlertComponent message={'foo'} />}
-                {this.state.showPersonForm && <PersonForm
-                    person={this.state.personFormPerson}
-                    buttonType={this.state.personFormButtonType}
-                    buttonClick={this.save}
-                    cancelClick={this.cancel} />}
-               
-                <PersonTable people={this.state.people}
-                    deleteClick={this.delete}
-                    editClick={this.edit} />                
-            </div>);
-    }
+  
 }

@@ -54,7 +54,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                 var result = await signInManager.PasswordSignInAsync(user, command.Password, command.Remember, true);
 
                 if (result.Succeeded)
-                {
+                {                      
                     return new UserSignInResult
                     {
                         User = user,

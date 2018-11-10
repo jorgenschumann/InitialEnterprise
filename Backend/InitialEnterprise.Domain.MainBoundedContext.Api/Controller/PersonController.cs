@@ -23,8 +23,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
                
         [HttpPost]
-        [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.PersonRead)]
+        [Authorize(Policy = ClaimDefinitions.PersonRead)]
         public async Task<IActionResult> Query([System.Web.Http.FromBody]PersonQuery query)
         {
             var result = await personApplication.Query(query);
@@ -34,8 +33,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
                        
 
         [HttpGet]
-        [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.PersonRead)]
+        [Authorize(Policy = ClaimDefinitions.PersonRead)]
         public async Task<IActionResult> Get()
         {
             var result = await personApplication.Query();
@@ -43,8 +41,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.PersonRead)]        
+        [Authorize(Policy = ClaimDefinitions.PersonRead)]        
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await personApplication.Query(id);
@@ -53,8 +50,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.PersonWrite)]
+        [Authorize(Policy = ClaimDefinitions.PersonWrite)]
         public async Task<IActionResult> Post([FromBody] PersonDto model)
         {
             var result = await personApplication.Insert(model);
@@ -64,8 +60,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
 
         [HttpPut]
-        [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.PersonWrite)] 
+        [Authorize(Policy = ClaimDefinitions.PersonWrite)] 
         public async Task<IActionResult> Put([FromBody] PersonDto model)
         {
             var result = await personApplication.Update(model);

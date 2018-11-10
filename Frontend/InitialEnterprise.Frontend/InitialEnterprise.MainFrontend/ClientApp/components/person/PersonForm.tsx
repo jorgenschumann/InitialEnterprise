@@ -17,7 +17,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
         this.onTextChange = this.onTextChange.bind(this);
         this.buttonClick = this.buttonClick.bind(this);
         this.state = {
-            person: props.person ? { ...props.person } : { id: '', firstName: '', lastName: '' }
+            person: props.person ? { ...props.person } : { Id: '', FirstName: '', LastName: '' }
         };
     }
        
@@ -35,7 +35,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
                     name='firstName'
                     onChange={this.onTextChange}
                                type='text'
-                               value={this.state.person!.firstName} />
+                               value={this.state.person!.FirstName} />
                 <br/>
                <ControlLabel>Lastname</ControlLabel>
                 <input
@@ -43,7 +43,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
                     onChange={this.onTextChange}
                     className='form-control'
                                type='text'
-                               value={this.state.person!.lastName} />
+                               value={this.state.person!.LastName} />
               </form>
 
           </Modal.Body>
@@ -69,7 +69,7 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
     }
 
     public componentWillReceiveProps(props: PersonFormProps) {
-        this.setState({ person: props.person ? { ...props.person } : { id: '', firstName: '', lastName: ''}});
+        this.setState({ person: props.person ? { ...props.person } : { Id: '', FirstName: '', LastName: ''}});
     }
 
     public onTextChange(e: any) {
