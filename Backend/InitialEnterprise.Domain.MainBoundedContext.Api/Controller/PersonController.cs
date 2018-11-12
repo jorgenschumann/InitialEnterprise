@@ -24,11 +24,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
                
         [HttpPost]
         [Authorize(Policy = ClaimDefinitions.PersonRead)]
+        [Route("query")]
         public async Task<IActionResult> Query([System.Web.Http.FromBody]PersonQuery query)
         {
             var result = await personApplication.Query(query);
-
-            return Ok(result);
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
                        
 
@@ -45,8 +45,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await personApplication.Query(id);
-
-            return Ok(result);
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 
         [HttpPost]
@@ -54,8 +53,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Post([FromBody] PersonDto model)
         {
             var result = await personApplication.Insert(model);
-
-            return Ok(result);
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
 
 
@@ -64,8 +62,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Put([FromBody] PersonDto model)
         {
             var result = await personApplication.Update(model);
-
-            return Ok(result);
+            return Ok(result);// result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
     }
 }

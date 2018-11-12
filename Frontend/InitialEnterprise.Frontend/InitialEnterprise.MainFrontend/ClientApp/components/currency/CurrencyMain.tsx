@@ -22,7 +22,7 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
 
         this.delete = this.delete.bind(this);
         this.edit = this.edit.bind(this);
-        this.transfer = this.transfer.bind(this);
+        this.save = this.save.bind(this);
         this.create = this.create.bind(this);
         this.cancel = this.cancel.bind(this);
     }
@@ -42,7 +42,7 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
                 {this.state.showCurrencyForm && <CurrencyForm
                     currency={this.state.currencyForm}
                     buttonType={this.state.currencyFormButtonType}
-                    buttonClick={this.transfer}
+                    buttonClick={this.save}
                     cancelClick={this.cancel} />}
                 <CurrencyTable currencies={this.state.currencies!}
                     deleteClick={this.delete}
@@ -63,16 +63,18 @@ export class CurrencyMain extends React.Component<RouteComponentProps<{}>, Parti
         this.setState({ showCurrencyForm: true, currencyForm: currency, currencyFormButtonType: 'edit' });
     }
 
-    public async transfer(currency: Currency) {
-        const func = this.state.currencyFormButtonType === 'edit' ? axios.put : axios.post;
-        await func(Endpoints.Currency, currency);
-        await this.load();
-        this.setState({ showCurrencyForm: false });
+    public async save(currency: Currency) {
+        const func = this.state.currencyFormButtonType === 'edit' ? Http.put : Http.post;
+        await func(Endpoints.Currency, currency).then((response) => {
+            this.setState({ showCurrencyForm: false });
+            alert(JSON.stringify(response.data));
+        });      
     }
 
     public async load() {       
-        const currencies = await Http.get(Endpoints.Currency);
-        this.setState({ currencies: currencies.data });
+        await Http.get(Endpoints.Currency).then((response) => {
+            this.setState({ currencies: response.data });
+        });      
     }
 
     public create() {

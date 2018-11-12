@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication
-{
+{  
     public class PersonDto: DataTransferObject
     {
         public Guid Id { get; set; }

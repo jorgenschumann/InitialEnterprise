@@ -50,23 +50,24 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
             if (command.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(command.Email);
-                var claims = await userManager.GetClaimsAsync(user);
-                var result = await signInManager.PasswordSignInAsync(user, command.Password, command.Remember, true);
+                if (user != null)
+                {
+                    var claims = await userManager.GetClaimsAsync(user);
+                    var result = await signInManager.PasswordSignInAsync(user, command.Password, command.Remember, true);
 
-                if (result.Succeeded)
-                {                      
-                    return new UserSignInResult
+                    if (result.Succeeded)
                     {
-                        User = user,
-                        Token = tokenBuilder.CreateToken(user),
-                        SignInResult = result                    
-                    };
-                }              
+                        return new UserSignInResult
+                        {
+                            User = user,
+                            Token = tokenBuilder.CreateToken(user),
+                            SignInResult = result
+                        };
+                    }
+                }                          
             }
             return userSignInResult;
         }
-
-
 
         public async Task<IdentityResult> HandleAsync(UserRegisterCommand command)
         {

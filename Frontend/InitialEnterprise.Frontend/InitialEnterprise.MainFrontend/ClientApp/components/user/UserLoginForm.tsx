@@ -1,5 +1,4 @@
 import * as React from 'react';
-import axios, { AxiosResponse } from 'axios';
 import { Button, Modal,FormGroup ,InputGroup , FormControl, ControlLabel} from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router';
 import { Link, Redirect } from 'react-router-dom';
@@ -23,13 +22,14 @@ export class UserLoginForm extends React.Component<RouteComponentProps<{}>, Part
 
         this.onTextChange = this.onTextChange.bind(this);
         this.signinUser = this.signinUser.bind(this);
+   
     }
 
     public render() {
         return (
             <div>
                 {this.state.shouldRedirect ?
-                    <Redirect to="/home" push /> :
+                    <Redirect to="/" push /> :
                     <div className='static-modal'>
                         <Modal.Dialog>
                             <Modal.Header closeButton onClick={() => this.closeDialog}>
@@ -71,10 +71,12 @@ export class UserLoginForm extends React.Component<RouteComponentProps<{}>, Part
 
     private async signinUser() {
         const login: any = this.state.login;
-        const loginResult = await Http.post(Endpoints.UserAccountSignin, login); 
-        localStorage.setItem('token', loginResult.data.Token);   
-        this.setState({ login: login, shouldRedirect: Http.isAuthenticated() });    
-   
+        await Http.post(Endpoints.UserAccountSignin, login).then((response) => {            
+            localStorage.setItem('token', response.data.Token);
+            this.setState({ login: login, shouldRedirect: Http.isAuthenticated() });            
+        }).catch((response) => {
+            alert(JSON.stringify(response.data));
+        });    
     }
 
     private closeDialog() {

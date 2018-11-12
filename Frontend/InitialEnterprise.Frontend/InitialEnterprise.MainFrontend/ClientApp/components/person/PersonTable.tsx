@@ -15,7 +15,7 @@ const PersonTable = (props: PeopleInterface & EditDeleteButtonClicks) => {
             <tbody>
                 {props.people && props.people.map(person =>
                     <PersonRow person={person}
-                        key={person.Id}
+                        key={person.Id}                        
                         deleteClick={props.deleteClick}
                         editClick={props.editClick} />)}
             </tbody>

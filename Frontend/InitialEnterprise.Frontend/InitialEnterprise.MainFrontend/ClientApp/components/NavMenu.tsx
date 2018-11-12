@@ -21,7 +21,7 @@ export class NavigationMenu extends React.Component<{}, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand' to={'/UserForm'}>Main BoundedContext</Link>              
+                    <NavLink className='navbar-brand' to={'/UserForm'}>My Account</NavLink>              
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>

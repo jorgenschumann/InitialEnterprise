@@ -64,10 +64,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [Authorize(Policy = ClaimDefinitions.CurrencyRead)]    
         public async Task<IActionResult> Get(Guid id)
         {
-            var currencyDto = await currencyApplication.Query(id);
-            var list = new List<CurrencyDto>();
-            list.Add(currencyDto);
-            return list.IsNotNull() ? (IActionResult)Ok(list) : NotFound();
+            var result = await currencyApplication.Query(id);        
+       
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 
         [HttpPost]
@@ -75,7 +74,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Post([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Insert(value);
-            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
 
         [HttpPut]
@@ -83,7 +82,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Put([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Update(value);
-            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
     }
 }

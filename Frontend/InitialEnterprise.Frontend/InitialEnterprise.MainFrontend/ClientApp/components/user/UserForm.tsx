@@ -34,6 +34,7 @@ export class UserForm extends React.Component<RouteComponentProps<{}>, Partial<U
 
         this.onTextChange = this.onTextChange.bind(this);
         this.save = this.save.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
     }
 
     public render() {
@@ -41,14 +42,13 @@ export class UserForm extends React.Component<RouteComponentProps<{}>, Partial<U
             <div>
                 <div className='static-modal'>
                     <Modal.Dialog>
-                        <Modal.Header closeButton onClick={() => this.closeDialog()}>
+                        <Modal.Header closeButton onClick={this.closeDialog()}>
                             <Modal.Title id='contained-modal-title'>
                                 User:{this.state.user!.Id}
                         </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <form >
-                              
+                            <form >                              
                                 <FormGroup>
                                     <ControlLabel>Username</ControlLabel>
                                     <FormControl type='text' placeholder="Username" className='form-control' name='UserName'
@@ -99,14 +99,17 @@ export class UserForm extends React.Component<RouteComponentProps<{}>, Partial<U
     }
     
     public async read(id: string) {
-        const response = await Http.get(`${Endpoints.UserAccount}${id}`);
-        this.setState({ user: response.data });  
+        await Http.get(`${Endpoints.UserAccount}${id}`).then((response) => {
+            this.setState({ user: response.data });  
+        });       
     }
 
     private async save() {
         const user: any = this.state.user;
-        const result = await Http.put(Endpoints.UserAccount, user);
-        this.setState({ user });
+        await Http.put(Endpoints.UserAccount, user).then((response) => {
+           this.setState({ user: response.data });  
+            alert(JSON.stringify(response.data));
+        });      
     }
 
     private closeDialog() {

@@ -72,7 +72,7 @@ export class CurrencyForm extends React.Component<CurrencyFormProps, Partial<Cur
 
    private buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {
         evt.preventDefault();
-        // this.props.buttonClick(this.state.currency);
+        this.props.buttonClick(this.state.currency!);
     }
 
    private  onTextChange(e: any) {

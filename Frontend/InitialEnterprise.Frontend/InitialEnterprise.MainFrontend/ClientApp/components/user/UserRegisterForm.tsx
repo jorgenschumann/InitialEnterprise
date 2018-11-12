@@ -67,8 +67,10 @@ export class UserRegisterForm extends React.Component<RouteComponentProps<{}>, P
     
     private async register() {
         const register: any = this.state.register;
-        const result = await Http.post(Endpoints.UserAccountRegister, register);      
-        this.setState({ register });
+        await Http.post(Endpoints.UserAccountRegister, register).then((response) => {
+            this.setState({ register: response.data });
+            alert(JSON.stringify(response.data));
+        });         
     }
 
     private closeDialog() {

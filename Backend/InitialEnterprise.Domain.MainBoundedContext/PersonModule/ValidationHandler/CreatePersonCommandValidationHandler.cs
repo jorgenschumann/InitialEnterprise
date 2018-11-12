@@ -18,14 +18,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.ValidationHan
         {
             RuleFor(c => c.FirstName)
                 .NotEmpty().WithMessage("FirstName")
-                .Length(4, 100).WithMessage("FirstName must have....");
+                .Length(1, 100).WithMessage("FirstName must have....");
         }
 
         protected void ValidateLastnameCode()
         {
             RuleFor(c => c.LastName)
                 .NotEmpty().WithMessage("LastName")
-                   .Length(4, 100).WithMessage("LastName must have....");
+                   .Length(1, 100).WithMessage("LastName must have....");
         }
     }
    

@@ -5,23 +5,23 @@ import { RouteComponentProps } from 'react-router';
 import { Endpoints } from '../Endpoints';
 import { PersonForm } from './PersonForm';
 import { PersonTable } from './PersonTable';
-import { PeopleInterface, Person, PersonFormButtonType } from './types';
+import { PeopleInterface, Person, PersonFormButtonType, ValidationResult, Model } from './types';
 import { AlertComponent } from '../AlertComponent';
 import { Http } from '../Http';
 
-// tslint:disable-next-line:interface-name
 interface MainState {
-    showMessage: boolean;
+    showAlert: boolean;
     showPersonForm: boolean;
-    personFormPerson?: Person;
+    personFormModel?: Person;
     personFormButtonType: PersonFormButtonType;
+    alert: string ;
 }
 
 export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial<MainState & PeopleInterface>> {
     constructor() {
         super();
 
-        this.state = { people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add' };
+        this.state = { people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add', alert: '' };
 
         this.delete = this.delete.bind(this);
         this.edit = this.edit.bind(this);
@@ -42,15 +42,16 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
                 </ButtonToolbar>
                 <br />
                 {this.state.showPersonForm && <PersonForm
-                    person={this.state.personFormPerson}
+                    person={this.state.personFormModel}
                     buttonType={this.state.personFormButtonType}
                     buttonClick={this.save}
                     cancelClick={this.cancel} />}
 
                 <PersonTable people={this.state.people}
                     deleteClick={this.delete}
-                    editClick={this.edit} />
-                {this.state.showMessage && <AlertComponent message={'testmessage'} />}
+                    editClick={this.edit} />              
+                {this.state.showAlert && <AlertComponent
+                    message={this.state.alert} style={'success'} />}
             </div>);
     }
 
@@ -63,27 +64,31 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         await this.load();
     }
 
-    public edit(person: Person) {       
-        this.setState({showPersonForm: true, personFormPerson: person, personFormButtonType: 'edit'});
+    public edit(person: Person) {    
+        const model = {} as Model<Person>; 
+        model.Entity = person;
+        this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit'});
     }
 
     public async save(person: Person) {
-        const func = this.state.personFormButtonType === 'edit' ? axios.put : axios.post;
-        await func(Endpoints.Person, person);
-        await this.load();
-        this.setState({ showPersonForm: false });
-        this.setState({ showMessage: true });
+        const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;    
+        await func(Endpoints.Person, person).then((response) => {   
+            const model = response.data as Model<Person>;     
+            this.setState({ showPersonForm: false, personFormModel: person });
+        });      
     }
 
-
     public async load() {
-        const people = await Http.get(Endpoints.Person);      
-        this.setState({ people: people.data });
+      await Http.get(Endpoints.Person).then((response) => {
+            this.setState({ people: response.data });
+        });            
     }
 
     public create() {
         const person = {} as Person;
-        this.setState({ showPersonForm: true, personFormPerson: person, personFormButtonType: 'add' });
+        const model = {} as Model<Person>; 
+        model.Entity = person;
+        this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'add' });
     }
 
     public cancel() {

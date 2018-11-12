@@ -1,22 +1,26 @@
-﻿export type PersonFormButtonType = 'edit' | 'add' | undefined;
+﻿import { PersonEntity } from "../test/PersonEntity";
 
-// tslint:disable-next-line:interface-name
+export type PersonFormButtonType = 'edit' | 'add' | undefined;
+
+
+export interface Model<TEntity> {
+    Entity: TEntity;
+    ValidationResult: ValidationResult;
+}
+
 export interface PeopleInterface {
     people: Person[] | undefined;
 }
 
-// tslint:disable-next-line:interface-name
-export interface PersonInterface {
-    person: Person ;
+export interface PersonFormState {
+    person: Person;  
 }
 
-// tslint:disable-next-line:interface-name
 export interface EditDeleteButtonClicks {
     deleteClick: (person: Person) => void;
     editClick: (person: Person) => void;
 }
 
-// tslint:disable-next-line:interface-name
 export interface Person {
     Id: string;
     FirstName: string;
@@ -29,8 +33,14 @@ export interface MailAdresses {
     MailAdress: string;
 }
 
-export function isPerson(person: Person): person is Person {
-    const arg = (person as Person);
-    return arg.FirstName !== undefined
-        && arg.FirstName !== undefined;
+export interface ValidationResult {
+    IsValid: boolean;
+    Errors: ValidationFailure[];    
 }
+
+export interface ValidationFailure { 
+     PropertyName: string;
+     ErrorMessage: string;
+     ErrorCode: string;
+}
+

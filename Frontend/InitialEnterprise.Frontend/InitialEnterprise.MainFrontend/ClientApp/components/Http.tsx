@@ -26,12 +26,12 @@ export class Http {
         return Http.axiosWrapper().get(url, config);
     }
 
-    public static put(url, config?: AxiosRequestConfig): AxiosPromise{
-        return Http.axiosWrapper().put(url, config);
+    public static put(url, data,config?: AxiosRequestConfig): AxiosPromise{
+        return Http.axiosWrapper().put(url, data,config);
     }
 
-    public static post(url, config?: AxiosRequestConfig): AxiosPromise {
-        return Http.axiosWrapper().post(url, config);
+    public static post(url,data, config?: AxiosRequestConfig): AxiosPromise {
+        return Http.axiosWrapper().post(url,data, config);
     }
 
     public static delete(url, config?: AxiosRequestConfig): AxiosPromise {

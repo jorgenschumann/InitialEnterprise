@@ -1,9 +1,7 @@
 import * as React from 'react';
-import {  ControlLabel, Modal } from 'react-bootstrap';
-import { Person as PersonEntity, MailAdresses, PersonFormButtonType, PersonInterface, Person} from './types';
+import { ControlLabel, Modal, AlertComponent, FormGroup} from 'react-bootstrap';
+import { Person as PersonEntity, MailAdresses, PersonFormButtonType, Person, ValidationResult, Model,  PersonFormState} from './types';
 
-
-// tslint:disable-next-line:interface-name
 interface PersonFormProps {
     person?: PersonEntity;
     buttonClick: (person: PersonEntity) => void;
@@ -11,41 +9,34 @@ interface PersonFormProps {
     cancelClick: () => void;
 }
 
-export class PersonForm extends React.Component<PersonFormProps, Partial<PersonInterface>> {
+export class PersonForm extends React.Component<PersonFormProps , Partial<PersonFormState>> {
     constructor(props: PersonFormProps) {
         super(props);
+        this.state = { person: props.person ? { ...props.person } : { Id: '', FirstName: '', LastName: '' }};  
         this.onTextChange = this.onTextChange.bind(this);
-        this.buttonClick = this.buttonClick.bind(this);
-        this.state = {
-            person: props.person ? { ...props.person } : { Id: '', FirstName: '', LastName: '' }
-        };
+        this.buttonClick = this.buttonClick.bind(this);      
     }
        
    public render() {
-       return (
-        <div className='static-modal'>
+       return (<div className='static-modal'>
         <Modal.Dialog>
             <Modal.Header closeButton onClick={this.props.cancelClick}>
                 <Modal.Title>Person</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <form>
-          <ControlLabel>FirstName</ControlLabel>
-                <input className='form-control'
-                    name='firstName'
-                    onChange={this.onTextChange}
-                               type='text'
-                               value={this.state.person!.FirstName} />
-                <br/>
-               <ControlLabel>Lastname</ControlLabel>
-                <input
-                    name='lastName'
-                    onChange={this.onTextChange}
-                    className='form-control'
-                               type='text'
-                               value={this.state.person!.LastName} />
+                   <form>
+                       <FormGroup>
+                        <ControlLabel>FirstName</ControlLabel>
+                        <input type='text' onChange={this.onTextChange} value={this.state.person!.FirstName}
+                               name='FirstName' className='form-control' />
+                       </FormGroup>                         
+                       <br />
+                       <FormGroup>
+                           <ControlLabel>Lastname</ControlLabel>
+                           <input type='text' value={this.state.person!.LastName} onChange={this.onTextChange}
+                               name='LastName' className='form-control' />
+                       </FormGroup>                         
               </form>
-
           </Modal.Body>
           <Modal.Footer>
             <button type='button'
@@ -58,8 +49,9 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonI
                 onClick={this.props.cancelClick}>
                  <i className='material-icons'>reply</i>
             </button>
-          </Modal.Footer>
-        </Modal.Dialog>
+               </Modal.Footer>
+        
+        </Modal.Dialog>              
       </div>);
    }
 
