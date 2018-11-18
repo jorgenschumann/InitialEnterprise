@@ -1,4 +1,5 @@
 ﻿import { PersonEntity } from "../test/PersonEntity";
+import { List } from 'linqts';
 
 export type PersonFormButtonType = 'edit' | 'add' | undefined;
 
@@ -13,7 +14,8 @@ export interface PeopleInterface {
 }
 
 export interface PersonFormState {
-    person: Person;  
+    person: Person;   
+    validationResult: ValidationResult;
 }
 
 export interface EditDeleteButtonClicks {
@@ -35,12 +37,12 @@ export interface MailAdresses {
 
 export interface ValidationResult {
     IsValid: boolean;
-    Errors: ValidationFailure[];    
+    Errors: ValidationFailure[];       
 }
 
 export interface ValidationFailure { 
-     PropertyName: string;
-     ErrorMessage: string;
-     ErrorCode: string;
+    PropertyName: string;
+    ErrorMessage: string;
+    ErrorCode: string;
 }
 

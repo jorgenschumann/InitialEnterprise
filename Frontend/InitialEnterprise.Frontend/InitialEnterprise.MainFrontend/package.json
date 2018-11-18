@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "jwt-decode": "^2.2.0",
+    "linqts": "^1.12.2",
     "react": "https://registry.npmjs.org/react/-/react-15.6.1.tgz",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-table": "^4.3.1",

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PersonRow } from './PersonRow';
-import { EditDeleteButtonClicks, PeopleInterface} from './types';
+import { EditDeleteButtonClicks, PeopleInterface, ValidationResult} from './types';
 
 const PersonTable = (props: PeopleInterface & EditDeleteButtonClicks) => {
     return (
@@ -15,6 +15,7 @@ const PersonTable = (props: PeopleInterface & EditDeleteButtonClicks) => {
             <tbody>
                 {props.people && props.people.map(person =>
                     <PersonRow person={person}
+                        validationResult={{} as ValidationResult}
                         key={person.Id}                        
                         deleteClick={props.deleteClick}
                         editClick={props.editClick} />)}

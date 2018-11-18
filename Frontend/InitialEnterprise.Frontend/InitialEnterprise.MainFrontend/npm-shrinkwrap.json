@@ -3711,6 +3711,11 @@
         "invert-kv": "^1.0.0"
       }
     },
+    "linqts": {
+      "version": "1.12.2",
+      "resolved": "https://registry.npmjs.org/linqts/-/linqts-1.12.2.tgz",
+      "integrity": "sha512-jGFvo2cbe8cpXNZ5XAYo/An8Tim999MVsukymEcq8ILIplaiPu63tzYWdBr1NIkVFYdB+CKT392Qg5FRgdJvJg=="
+    },
     "load-json-file": {
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/load-json-file/-/load-json-file-1.1.0.tgz",

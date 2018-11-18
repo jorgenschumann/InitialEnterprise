@@ -2,6 +2,7 @@
 using FluentValidation.Results;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
 using InitialEnterprise.Infrastructure.DDD.Command;
+using InitialEnterprise.Infrastructure.DDD.Validation;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
@@ -17,14 +18,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
         protected void ValidateFirstName()
         {
             RuleFor(c => c.FirstName)
-                .NotEmpty().WithMessage("FirstName")
+                .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
                 .Length(1, 100).WithMessage("FirstName must have....");
         }
 
         protected void ValidateLastnameCode()
         {
             RuleFor(c => c.LastName)
-                .NotEmpty().WithMessage("LastName")
+                .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
                    .Length(1, 100).WithMessage("LastName must have....");
         }
     }

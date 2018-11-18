@@ -14,14 +14,20 @@ interface MainState {
     showPersonForm: boolean;
     personFormModel?: Person;
     personFormButtonType: PersonFormButtonType;
-    alert: string ;
+    alert: string;
+    validationResult?: ValidationResult ;
 }
 
 export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial<MainState & PeopleInterface>> {
     constructor() {
         super();
 
-        this.state = { people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add', alert: '' };
+        const validationResult = {} as ValidationResult;
+        validationResult.IsValid = true;
+        
+
+        this.state = {
+           people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add', alert: '', validationResult: validationResult};
 
         this.delete = this.delete.bind(this);
         this.edit = this.edit.bind(this);
@@ -42,7 +48,8 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
                 </ButtonToolbar>
                 <br />
                 {this.state.showPersonForm && <PersonForm
-                    person={this.state.personFormModel}
+                    person={this.state.personFormModel} 
+                    validationResult={this.state.validationResult}
                     buttonType={this.state.personFormButtonType}
                     buttonClick={this.save}
                     cancelClick={this.cancel} />}
@@ -66,15 +73,17 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
 
     public edit(person: Person) {    
         const model = {} as Model<Person>; 
-        model.Entity = person;
-        this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit'});
+        const validationResult = {} as ValidationResult;
+        validationResult.IsValid = true;
+        model.Entity = person;  
+        this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult});
     }
 
     public async save(person: Person) {
         const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;    
         await func(Endpoints.Person, person).then((response) => {   
-            const model = response.data as Model<Person>;     
-            this.setState({ showPersonForm: false, personFormModel: person });
+            const model = response.data as Model<Person>;         
+            this.setState({ showPersonForm: !model.ValidationResult.IsValid, personFormModel: person, validationResult: model.ValidationResult });
         });      
     }
 
