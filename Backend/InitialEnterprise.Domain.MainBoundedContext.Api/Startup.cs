@@ -2,16 +2,12 @@
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Infrastructure.Api.Filter;
-using InitialEnterprise.Infrastructure.Api.Middlewares;
 using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,45 +17,10 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
-{
-
-    public class ConfigureJwtBearerOptions : IPostConfigureOptions<JwtBearerOptions>
-    {
-        private readonly IOptions<JwtAuthentication> _jwtAuthentication;
-
-        public ConfigureJwtBearerOptions(IOptions<JwtAuthentication> jwtAuthentication)
-        {
-            _jwtAuthentication = jwtAuthentication ?? throw new ArgumentNullException(nameof(jwtAuthentication));
-        }
-
-        public void PostConfigure(string name, JwtBearerOptions options)
-        {
-            var jwtAuthentication = _jwtAuthentication.Value;
-
-            options.ClaimsIssuer = jwtAuthentication.ValidIssuer;
-            options.IncludeErrorDetails = true;
-            options.RequireHttpsMetadata = true;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateActor = true,
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtAuthentication.ValidIssuer,
-                ValidAudience = jwtAuthentication.ValidAudience,
-                IssuerSigningKey = jwtAuthentication.SymmetricSecurityKey,
-                NameClaimType = ClaimTypes.NameIdentifier
-            };
-        }
-    }
-
+{    
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
@@ -80,39 +41,19 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtAuthenticationSettings = Configuration.GetSection("JwtAuthentication");
+            services.Configure<JwtAuthentication>(jwtAuthenticationSettings);
+
             var builder = services.AddMvcCore();
 
-          
-            services.ConfigureServiceCollection();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["JwtAuthentication:ValidIssuer"],
-                        ValidAudience = Configuration["JwtAuthentication:ValidAudience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(Configuration["JwtAuthentication:SecurityKey"]))
-                    };
-                });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("TrainedStaffOnly",
-                    policy => policy.RequireClaim("CompletedBasicTraining"));
-            });
-                  
+            services.ConfigureServiceCollection();                      
+            
             services.AddMvc(options => {
-            options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            }).AddControllersAsServices();
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            }).AddControllersAsServices();                      
 
-          
-      
+            var jwtAuthentication = jwtAuthenticationSettings.Get<JwtAuthentication>();           
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -120,7 +61,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
-            });       
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -131,50 +72,64 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 });
             });
 
-
             ConfigureJsonSerializer(builder);
-
-
+            
             ConfigureEntityFrameworkContext(services);
-           
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-               .AddEntityFrameworkStores<MainDbContext>()
-               .AddDefaultTokenProviders();      
 
-            //services.Configure<JwtAuthentication>(Configuration.GetSection("JwtAuthentication"));
+            services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
+             {
+                 option.Password.RequireDigit = false;
+                 option.Password.RequiredLength = 6;
+                 option.Password.RequireNonAlphanumeric = false;
+                 option.Password.RequireUppercase = false;
+                 option.Password.RequireLowercase = false;
+             }
+             ).AddEntityFrameworkStores<MainDbContext>().AddDefaultTokenProviders();
 
-            //services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>,ConfigureJwtBearerOptions>();                      
+                services.AddAuthentication(option =>
+                {
+                    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = jwtAuthentication.ValidAudience,
+                        ValidIssuer = jwtAuthentication.ValidIssuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthentication.SecurityKey))
+                    };
+                });
+                      
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                  
+            //Todo: make it more generic
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Currency", "Read")));
+                options.AddPolicy(ClaimDefinitions.CurrencyQuery, policy => policy.Requirements.Add(
+                   new ClaimRequirement("Currency", "List")));
+                options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Currency", "Write")));
 
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            //services.AddSingleton<IAuthorizationHandler, ClaimsAuthorizationHandler>();
-
-            ////Todo: make it more generic
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
-            //        new ClaimRequirement("Currency", "Read")));
-            //    options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
-            //        new ClaimRequirement("Currency", "Write")));
-
-            //    options.AddPolicy(ClaimDefinitions.PersonRead, policy => policy.Requirements.Add(
-            //        new ClaimRequirement("Person", "Read")));
-
-            //    options.AddPolicy(ClaimDefinitions.PersonWrite, policy => policy.Requirements.Add(
-            //        new ClaimRequirement("Person", "Write")));
-
-            //    options.AddPolicy(ClaimDefinitions.PersonCreate, policy => policy.Requirements.Add(
-            //        new ClaimRequirement("Person", "Create")));
-            //});        
-        }
-
-    
+                options.AddPolicy(ClaimDefinitions.PersonRead, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Person", "Read")));
+                options.AddPolicy(ClaimDefinitions.PersonWrite, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Person", "Write")));
+                options.AddPolicy(ClaimDefinitions.PersonCreate, policy => policy.Requirements.Add(
+                    new ClaimRequirement("Person", "Create")));
+            });
+        }    
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
-            ConfigureLogger(loggerFactory);
+            ConfigureLogger(loggerFactory);            
 
-         
             if (hostingEnvironment.IsDevelopment())
             {
                 applicationBuilder.UseDeveloperExceptionPage();
@@ -184,12 +139,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     c.AllowAnyHeader();
                     c.AllowAnyMethod();
                     c.AllowAnyOrigin();
+                    c.AllowCredentials();
                 });
             }
-
-            //applicationBuilder.UseMiddleware<AuthenticatedTestRequestMiddleware>();
-            
+          
+            applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseAuthentication();
+
             applicationBuilder.UseMvc();
             applicationBuilder.UseStaticFiles();
             applicationBuilder.UseSwagger();
@@ -198,8 +154,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public void ConfigureDatabase(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString(
-                ApplicationConfigKeys.InitialEnterpriseConnectionString);
+            var connectionString = Configuration.GetConnectionString(ApplicationConfigKeys.InitialEnterpriseConnectionString);
 
             var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
                 .UseSqlServer(connectionString)
@@ -248,7 +203,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
         }
 

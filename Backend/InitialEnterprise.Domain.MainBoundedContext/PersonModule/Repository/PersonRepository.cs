@@ -28,8 +28,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
         }
 
         public async Task<Person> Query(Guid personId)
-        {
-            return await mainDbContext.Person.FindAsync(personId);
+        {       
+            return await mainDbContext
+                .Person
+                .Include(p => p.EmailAddresses)
+                .SingleOrDefaultAsync(p=>p.Id ==personId);
         }
 
         public async Task<IEnumerable<Person>> Query(PersonQuery query)

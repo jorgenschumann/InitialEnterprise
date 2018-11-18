@@ -25,22 +25,31 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         public DbSet<Person> Person { get; set; }
 
+        public DbSet<EmailAddress> EmailAddress { get; set; }
+
         public async Task SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await SaveChangesAsync();
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
+             modelBuilder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
 
-            builder.ApplyConfiguration(new CurrencyRateEntityTypeConfiguration());
+             modelBuilder.ApplyConfiguration(new CurrencyRateEntityTypeConfiguration());
 
-            builder.ApplyConfiguration(new PersonEntityTypeConfiguration());
+             modelBuilder.ApplyConfiguration(new PersonEntityTypeConfiguration());
 
-            base.OnModelCreating(builder);
+            modelBuilder.ApplyConfiguration(new EmailAddressEntityTypeConfiguration());
 
-            builder.Entity<ApplicationUser>(b =>
+            base.OnModelCreating( modelBuilder);
+
+             modelBuilder.Entity<EmailAddress>()
+                .HasOne(p => p.Person)
+                .WithMany(e => e.EmailAddresses)
+                .HasForeignKey(e=>e.PersonId);
+
+             modelBuilder.Entity<ApplicationUser>(b =>
             {
                 // Each User can have many UserClaims
                 b.HasMany(e => e.Claims)
@@ -67,7 +76,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
                     .IsRequired();
             });
 
-            builder.Entity<ApplicationRole>(b =>
+             modelBuilder.Entity<ApplicationRole>(b =>
             {
                 // Each Role can have many entries in the UserRole join table
                 b.HasMany(e => e.UserRoles)

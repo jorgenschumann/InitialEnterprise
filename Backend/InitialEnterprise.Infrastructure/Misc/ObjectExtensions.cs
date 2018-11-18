@@ -79,5 +79,10 @@ namespace InitialEnterprise.Infrastructure.Utils
         {
             return @object != null;
         }
+
+        public static string ToStringLower(this Object @object)
+        {
+            return @object.ToString().ToLower();
+        }
     }
 }

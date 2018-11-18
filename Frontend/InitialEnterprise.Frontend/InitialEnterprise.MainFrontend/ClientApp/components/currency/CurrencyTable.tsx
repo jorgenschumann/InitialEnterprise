@@ -15,7 +15,7 @@ const CurrencyTable = (props: CurrenciesInterface & EditDeleteButtonClicks) => {
             <tbody>
                 {props.currencies && props.currencies.map(currency =>
                     <CurrencyRow currency={currency}
-                        key={currency.id}
+                        key={currency.Id}
                         deleteClick={props.deleteClick}
                         editClick={props.editClick} />)}
             </tbody>

@@ -5,9 +5,11 @@ export interface AlertState {
     show: boolean;
 }
 
-interface AlertProps {
-    message: String;
+export interface AlertProps {
+    message: String |undefined;
+    style: String | undefined; // "success", "warning", "danger", "info"
 }
+
 
 export class AlertComponent extends React.Component<AlertProps, Partial<AlertState>> {
     constructor(props, context) {
@@ -30,16 +32,9 @@ export class AlertComponent extends React.Component<AlertProps, Partial<AlertSta
     }
 
     public render() {
-        if (this.state.show) {
-            return (
-                <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-                    <h4>You got an error!</h4>            
-                    <p>                      
-                        <Button onClick={this.handleDismiss}>Hide Alert</Button>
-                    </p>
-                </Alert>
-            );
-        }
-        return <Button onClick={this.handleShow}>Show Alert</Button>;
-    }
+       return  this.state.show ?            
+           <Alert bsStyle={this.props.style} className="alert-bottom" onDismiss={this.handleDismiss}>
+               <h4>{this.props.message}</h4>    
+            </Alert> :<div></div>            
+        }       
 }

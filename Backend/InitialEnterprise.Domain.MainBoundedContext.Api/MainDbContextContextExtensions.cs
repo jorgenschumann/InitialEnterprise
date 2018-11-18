@@ -47,6 +47,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             context.Person.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Person>());
             context.SaveChanges();
 
+            var emailAddresses = SeedDataBuilder.BuildTypeCollectionFromFile<EmailAddress>();
+            context.EmailAddress.AddRange(emailAddresses);
+            context.SaveChanges();
+
             context.CurrencyRate.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<CurrencyRate>());
             context.SaveChanges();
 

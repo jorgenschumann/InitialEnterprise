@@ -1,7 +1,16 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { Http } from './Http';
+
+interface NavigationMenuState {
+    showNavigation: boolean;
+}
 
 export class NavigationMenu extends React.Component<{}, {}> {
+    constructor() {
+        super();
+        this.state = { showNavigation: false };
+    }
     public render() {
         return <div className='main-nav'>
             <div className='navbar navbar-inverse'>
@@ -12,10 +21,21 @@ export class NavigationMenu extends React.Component<{}, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand' to={'/'}>Main BoundedContext</Link>
+                    <NavLink className='navbar-brand' to={'/UserForm'}>My Account</NavLink>              
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>
+                    <ul className='nav navbar-nav'>                      
+                        <li>
+                            <NavLink to={'/UserLoginForm'} activeClassName='active'>
+                                <span className='glyphicon glyphicon-th-list'></span> Login
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>           
+                {
+                    Http.isAuthenticated() ?
+                    <div className='navbar-collapse collapse'>
                     <ul className='nav navbar-nav'>
                         <li>
                             <NavLink to={'/'} exact activeClassName='active'>
@@ -32,13 +52,10 @@ export class NavigationMenu extends React.Component<{}, {}> {
                                 <span className='glyphicon glyphicon-th-list'></span> People
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to={'/LoginForm'} activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span> Login
-                            </NavLink>
-                        </li>
                     </ul>
-                </div>
+                    </div> :
+                        <div></div>
+                }        
             </div>
         </div>;
     }

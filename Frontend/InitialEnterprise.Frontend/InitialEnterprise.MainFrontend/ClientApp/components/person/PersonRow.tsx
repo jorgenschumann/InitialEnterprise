@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
-import {EditDeleteButtonClicks, PersonInterface} from './types';
+import {EditDeleteButtonClicks, PersonFormState} from './types';
 
-const PersonRow = (props: PersonInterface & EditDeleteButtonClicks) => {
+const PersonRow = (props: PersonFormState & EditDeleteButtonClicks) => {
 
     return <tr>
           <td>
@@ -17,8 +17,8 @@ const PersonRow = (props: PersonInterface & EditDeleteButtonClicks) => {
                 </ButtonGroup>
             </ButtonToolbar>
         </td>
-        <td>{props.person.firstName}</td>
-        <td>{props.person.lastName}</td>
+        <td>{props.person.FirstName}</td>
+        <td>{props.person.LastName}</td>
     </tr>;
 };
 

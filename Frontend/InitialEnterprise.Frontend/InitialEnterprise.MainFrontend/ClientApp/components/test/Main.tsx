@@ -6,6 +6,7 @@ import { PersonForm } from './PersonForm';
 import { PersonFormButtonType, PeopleInterface } from './types';
 import { Endpoints } from "../Endpoints";
 import { Button, Modal } from 'react-bootstrap';
+import { RouteComponentProps } from "react-router";
 
 interface MainState {
     showPersonForm: boolean;
@@ -13,7 +14,7 @@ interface MainState {
     personFormButtonType: PersonFormButtonType
 }
 
-export class Main extends React.Component<undefined, Partial<MainState & PeopleInterface>> {
+export class Main extends React.Component<RouteComponentProps<{}>, Partial<MainState & PeopleInterface>> {
     constructor(){
         super();
         this.state = {

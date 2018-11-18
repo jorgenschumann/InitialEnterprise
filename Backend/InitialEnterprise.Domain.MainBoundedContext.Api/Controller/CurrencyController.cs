@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
-using InitialEnterprise.Infrastructure.Api.Attributes;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
@@ -17,9 +15,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
     {
         const string READ = "Read";
         const string WRITE = "Write";
+        const string QUERY = "Query";
         const string CREATE = "Create";
 
         public const string CurrencyRead = READ;
+        public const string CurrencyQuery = QUERY;
         public const string CurrencyWrite = WRITE;
 
         public const string UserRead = READ;
@@ -27,12 +27,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         public const string PersonRead = READ;      
         public const string PersonWrite = WRITE;
-
         public const string PersonCreate = CREATE;
     }
-
     
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+    [Authorize]
     [Route("api/[controller]")]
     public class CurrencyController : BaseController
     {
@@ -45,9 +44,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             this.currencyApplication = currencyApplication;   
         }
 
-        [HttpPost("query")]
-        // [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]
+        [HttpPost("query")]       
+        [Authorize(Policy = ClaimDefinitions.CurrencyRead)]
         public async Task<IActionResult> Query([FromBody]IQuery query)
         {
             var result = await currencyApplication.Query(query) ;
@@ -55,8 +53,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyQuery)]
         public async Task<IActionResult> Get()
         {
             var result = await currencyApplication.Query();
@@ -64,30 +61,28 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        // [AllowAnonymous]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyRead)]    
+        [Authorize(Policy = ClaimDefinitions.CurrencyRead)]    
         public async Task<IActionResult> Get(Guid id)
         {
-            var currencyDto = await currencyApplication.Query(id);
-            var list = new List<CurrencyDto>();
-            list.Add(currencyDto);
-            return list.IsNotNull() ? (IActionResult)Ok(list) : NotFound();
+            var result = await currencyApplication.Query(id);        
+       
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 
         [HttpPost]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
         public async Task<IActionResult> Post([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Insert(value);
-            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
 
         [HttpPut]
-        //[Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
+        [Authorize(Policy = ClaimDefinitions.CurrencyWrite)]
         public async Task<IActionResult> Put([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Update(value);
-            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
     }
 }

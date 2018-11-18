@@ -1,4 +1,6 @@
-﻿export type CurrencyFormButtonType = 'edit' | 'add' | undefined;
+﻿import { Guid } from "../../framework/Guid";
+
+export type CurrencyFormButtonType = 'edit' | 'add' | undefined;
 
 // tslint:disable-next-line:interface-name
 export interface CurrenciesInterface {
@@ -18,23 +20,23 @@ export interface EditDeleteButtonClicks {
 
 // tslint:disable-next-line:interface-name
 export interface CurrencyRate {
-    currencyRateDate: string;
-    endOfDayRate: string;
-    averageRate: string;
-    toCurrencyCode: string;
-    fromCurrencyCode: string;
+    CurrencyRateDate: string;
+    EndOfDayRate: string;
+    AverageRate: string;
+    ToCurrencyCode: string;
+    FromCurrencyCode: string;
 }
 
 // tslint:disable-next-line:interface-name
 export interface Currency {
-    id: string;
-    name: string;
-    isoCode: string;
-    rates: CurrencyRate[] | undefined;
+    Id: string;
+    Name: string;
+    IsoCode: string;
+    Rates: CurrencyRate[] | undefined;
 }
 
 export function isCurrency(currency: Currency): currency is Currency {
     const arg = (currency as Currency);
-    return arg.name !== undefined
-        && arg.isoCode !== undefined;
+    return arg.Name !== undefined
+        && arg.IsoCode !== undefined;
 }
