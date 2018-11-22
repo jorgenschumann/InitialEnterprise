@@ -53,7 +53,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Post([FromBody] PersonDto model)
         {
             var result = await personApplication.Insert(model);
-            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
+            return Ok(result);// return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
 
 

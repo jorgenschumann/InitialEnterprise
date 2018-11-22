@@ -21,9 +21,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
             this.dispatcher = dispatcher;
         }
 
-        public Task<CommandHandlerAnswerDto<PersonDto>> Insert(PersonDto model)
+        public async Task<ICommandHandlerAnswer> Insert(PersonDto model)
         {
-            throw new NotImplementedException();
+            var command = Mapper.Map(model).ToANew<CreatePersonCommand>();
+            return await dispatcher.SendAsync<CreatePersonCommand, Person>(command);
         }
 
         public Task<PersonDto> Query(Guid id)
