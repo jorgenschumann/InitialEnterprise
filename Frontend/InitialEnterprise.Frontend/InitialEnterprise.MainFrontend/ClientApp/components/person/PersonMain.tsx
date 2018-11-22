@@ -1,13 +1,13 @@
-import axios from 'axios';
 import * as React from 'react';
-import { Button, ButtonGroup, ButtonToolbar, ReactTable } from 'react-bootstrap';
+import {  ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router';
 import { Endpoints } from '../Endpoints';
 import { PersonForm } from './PersonForm';
 import { PersonTable } from './PersonTable';
-import { PeopleInterface, Person, PersonFormButtonType, ValidationResult, Model } from './types';
+import { PeopleInterface, Person, PersonFormButtonType } from './types';
 import { AlertComponent } from '../AlertComponent';
 import { Http } from '../Http';
+import { ValidationResult, Model } from '../types';
 
 interface MainState {
     showAlert: boolean;

@@ -29,6 +29,7 @@
     <None Remove="ClientApp\components\currency\types.ts" />
     <None Remove="ClientApp\components\FetchEmployee.tsx" />
     <None Remove="ClientApp\components\Http.tsx" />
+    <None Remove="ClientApp\components\mail\types.ts" />
     <None Remove="ClientApp\components\person\types.ts" />
     <None Remove="ClientApp\guid.ts" />
   </ItemGroup>
@@ -38,6 +39,7 @@
     <TypeScriptCompile Include="ClientApp\components\AlertComponent.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Http.tsx" />
     <TypeScriptCompile Include="ClientApp\components\currency\types.ts" />
+    <TypeScriptCompile Include="ClientApp\components\mail\types.ts" />
     <TypeScriptCompile Include="ClientApp\components\person\types.ts" />
     <TypeScriptCompile Include="ClientApp\components\user\types.ts" />
     <TypeScriptCompile Include="ClientApp\framework\Guid.ts" />

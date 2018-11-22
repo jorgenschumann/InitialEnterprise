@@ -11,3 +11,19 @@ export class DomainEventDto implements DataTransferObject {
     public Source: string = '';
     public TimeStamp: Date | undefined;
 }
+
+export interface Model<TEntity> {
+    Entity: TEntity;
+    ValidationResult: ValidationResult;
+}
+
+export interface ValidationResult {
+    IsValid: boolean;
+    Errors: ValidationFailure[];
+}
+
+export interface ValidationFailure {
+    PropertyName: string;
+    ErrorMessage: string;
+    ErrorCode: string;
+}

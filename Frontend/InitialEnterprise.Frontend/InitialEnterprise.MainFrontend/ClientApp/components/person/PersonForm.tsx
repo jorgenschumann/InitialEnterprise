@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { ControlLabel, Modal, Dropdown, HelpBlock, ButtonToolbar, DropdownButton, FormGroup, Glyphicon, MenuItem } from 'react-bootstrap';
 import { Form, FormControl, Col, Button } from 'react-bootstrap';
-import { Person as PersonEntity, EmailAddress, PersonFormButtonType, Person, ValidationResult, PersonFormState, ValidationFailure } from './types';
+import { Person as PersonEntity, EmailAddress, PersonFormButtonType, Person,  PersonFormState} from './types';
 import { isValidElement } from 'react';
-import { List, Enumerable } from 'linqts';
+import { ValidationResult } from '../types';
+import { EmailAddressTable } from '../mail/EmailAddressTable';
 
 interface PersonFormProps {
     person?: PersonEntity;
@@ -55,24 +56,13 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonF
                                 name='LastName' className='form-control' />
                             <HelpBlock>{this.getValidationMessage('LastName')}</HelpBlock>
                         </FormGroup>
-                    </form>
-                    <table className='table table-hover table-striped table-bordered'>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Mail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.person!.EmailAddresses.map(mail =>
-                                <tr>
-                                    <td>                                      
-                                    </td>
-                                    <td>{mail.MailAddress}</td>
-                                </tr>)
-                            }
-                        </tbody>
-                    </table>
+                    </form>      
+                    
+                    <EmailAddressTable
+                        EmailAddresses={this.state.person!.EmailAddresses}
+                        DeleteClick={this.deleteMail}
+                        EditClick={this.editMail} />  
+                    
                 </Modal.Body>
                 <Modal.Footer>
                     <button type='button'
@@ -89,6 +79,21 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonF
             </Modal.Dialog>
         </div>);
     }
+
+
+    public async deleteMail(mail: EmailAddress) {
+        alert('deleteMail');
+        //await Http.delete(`${Endpoints.Person}${person.Id}`);
+        //await this.load();
+    }
+
+    public editMail(mail: EmailAddress) {
+        alert('editMail');
+        //const validationResult = {} as ValidationResult;
+        //validationResult.IsValid = true;
+        //this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult });
+    }
+
 
     public buttonClick(evt: React.MouseEvent<HTMLButtonElement>) {
         evt.preventDefault();

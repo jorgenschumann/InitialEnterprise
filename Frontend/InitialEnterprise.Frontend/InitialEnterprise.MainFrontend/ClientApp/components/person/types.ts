@@ -1,12 +1,8 @@
 ﻿import { PersonEntity } from "../test/PersonEntity";
+import { ValidationResult } from "../types";
 
 export type PersonFormButtonType = 'edit' | 'add' | undefined;
 
-
-export interface Model<TEntity> {
-    Entity: TEntity;
-    ValidationResult: ValidationResult;
-}
 
 export interface PeopleInterface {
     people: Person[] | undefined;
@@ -41,14 +37,5 @@ export interface EmailAddress {
     MailAddress: string;
 }
 
-export interface ValidationResult {
-    IsValid: boolean;
-    Errors: ValidationFailure[];       
-}
 
-export interface ValidationFailure { 
-    PropertyName: string;
-    ErrorMessage: string;
-    ErrorCode: string;
-}
 

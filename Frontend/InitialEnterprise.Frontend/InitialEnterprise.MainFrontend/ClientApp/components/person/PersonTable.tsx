@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { PersonRow } from './PersonRow';
-import { EditDeleteButtonClicks, PeopleInterface, ValidationResult} from './types';
+import { EditDeleteButtonClicks, PeopleInterface} from './types';
+import { ValidationResult } from '../types';
 
 const PersonTable = (props: PeopleInterface & EditDeleteButtonClicks) => {
     return (
