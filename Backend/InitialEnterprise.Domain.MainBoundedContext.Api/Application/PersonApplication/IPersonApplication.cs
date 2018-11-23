@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
 
         Task<IEnumerable<PersonDto>> Query(IQuery model);
 
-        Task<CommandHandlerAnswerDto<PersonDto>> Insert(PersonDto model);
+        Task<ICommandHandlerAnswer> Insert(PersonDto model);
 
         Task<ICommandHandlerAnswer> Update(PersonDto model);
 

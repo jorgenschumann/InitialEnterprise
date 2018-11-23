@@ -1,13 +1,8 @@
 ﻿import { PersonEntity } from "../test/PersonEntity";
-import { List } from 'linqts';
+import { ValidationResult } from "../types";
 
 export type PersonFormButtonType = 'edit' | 'add' | undefined;
 
-
-export interface Model<TEntity> {
-    Entity: TEntity;
-    ValidationResult: ValidationResult;
-}
 
 export interface PeopleInterface {
     people: Person[] | undefined;
@@ -23,26 +18,24 @@ export interface EditDeleteButtonClicks {
     editClick: (person: Person) => void;
 }
 
-export interface Person {
+export interface Person {   
     Id: string;
+    Title: string;
     FirstName: string;
     LastName: string;
+    PersonType: string;
+    //NameStyle: boolean;
+    //MiddleName: string;
+    //Suffix: string;
+    //EmailPromotion: number;
+    EmailAddresses: EmailAddress[]
 }
 
-export interface MailAdresses {
+export interface EmailAddress {
     Id: string;
     PersonId: string;
-    MailAdress: string;
+    MailAddress: string;
 }
 
-export interface ValidationResult {
-    IsValid: boolean;
-    Errors: ValidationFailure[];       
-}
 
-export interface ValidationFailure { 
-    PropertyName: string;
-    ErrorMessage: string;
-    ErrorCode: string;
-}
 

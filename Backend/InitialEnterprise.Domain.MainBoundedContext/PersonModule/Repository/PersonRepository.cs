@@ -22,8 +22,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
 
         public async Task<Person> Insert(Person person)
         {
-            var added = await mainDbContext.Person.AddAsync(person);
-
+            var added = await mainDbContext.Person.AddAsync(person);           
             return added.Entity;
         }
 
@@ -37,13 +36,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
 
         public async Task<IEnumerable<Person>> Query(PersonQuery query)
         {
-            return await mainDbContext.Person.ToListAsync();
+            return await mainDbContext
+                .Person
+                .Include(x => x.EmailAddresses)
+                .ToListAsync();
         }
 
         public async Task<Person> Update(Person person)
         {
-            var updated = mainDbContext.Person.Update(person);
-
+            var updated = mainDbContext.Person.Update(person);      
             return updated.Entity;
         }
     }

@@ -20,12 +20,12 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
-{    
+{
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
         private IHostingEnvironment env;
-        
+
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
@@ -46,13 +46,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             var builder = services.AddMvcCore();
 
-            services.ConfigureServiceCollection();                      
-            
-            services.AddMvc(options => {
-                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            }).AddControllersAsServices();                      
+            services.ConfigureServiceCollection();
 
-            var jwtAuthentication = jwtAuthenticationSettings.Get<JwtAuthentication>();           
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            }).AddControllersAsServices();
+
+            var jwtAuthentication = jwtAuthenticationSettings.Get<JwtAuthentication>();
 
             services.AddCors(options =>
             {
@@ -73,7 +74,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             });
 
             ConfigureJsonSerializer(builder);
-            
+
             ConfigureEntityFrameworkContext(services);
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
@@ -86,27 +87,27 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
              }
              ).AddEntityFrameworkStores<MainDbContext>().AddDefaultTokenProviders();
 
-                services.AddAuthentication(option =>
+            services.AddAuthentication(option =>
+            {
+                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                }).AddJwtBearer(options =>
-                {
-                    options.SaveToken = true;
-                    options.RequireHttpsMetadata = true;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidAudience = jwtAuthentication.ValidAudience,
-                        ValidIssuer = jwtAuthentication.ValidIssuer,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthentication.SecurityKey))
-                    };
-                });
-                      
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = jwtAuthentication.ValidAudience,
+                    ValidIssuer = jwtAuthentication.ValidIssuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthentication.SecurityKey))
+                };
+            });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-                  
+
             //Todo: make it more generic
             services.AddAuthorization(options =>
             {
@@ -124,11 +125,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.AddPolicy(ClaimDefinitions.PersonCreate, policy => policy.Requirements.Add(
                     new ClaimRequirement("Person", "Create")));
             });
-        }    
+        }
 
         public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
         {
-            ConfigureLogger(loggerFactory);            
+            ConfigureLogger(loggerFactory);
 
             if (hostingEnvironment.IsDevelopment())
             {
@@ -142,7 +143,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     c.AllowCredentials();
                 });
             }
-          
+
             applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseAuthentication();
 
@@ -154,7 +155,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
         public void ConfigureDatabase(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString(ApplicationConfigKeys.InitialEnterpriseConnectionString);
+            var connectionString = Configuration.GetConnectionString(
+                ApplicationConfigKeys.InitialEnterpriseConnectionString);
 
             var contextOptions = new DbContextOptionsBuilder<MainDbContext>()
                 .UseSqlServer(connectionString)
@@ -183,6 +185,18 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.EnsureTestdataSeeding();
                 return context;
             });
+
+            //services.AddDbContext<MainDbContext>(options =>
+            //{
+            //    options.UseSqlServer(connectionString);
+            //});
+
+            //var mainDbContext = services.BuildServiceProvider().GetService<MainDbContext>();
+            //{
+            //    mainDbContext.Database.EnsureDeleted();
+            //    mainDbContext.Database.EnsureCreated();
+            //    mainDbContext.EnsureTestdataSeeding();
+            //}
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)

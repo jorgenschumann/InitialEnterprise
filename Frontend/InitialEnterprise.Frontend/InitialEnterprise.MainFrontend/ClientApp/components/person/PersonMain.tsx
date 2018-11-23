@@ -1,13 +1,13 @@
-import axios from 'axios';
 import * as React from 'react';
-import { Button, ButtonGroup, ButtonToolbar, ReactTable } from 'react-bootstrap';
+import {  ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router';
 import { Endpoints } from '../Endpoints';
 import { PersonForm } from './PersonForm';
 import { PersonTable } from './PersonTable';
-import { PeopleInterface, Person, PersonFormButtonType, ValidationResult, Model } from './types';
+import { PeopleInterface, Person, PersonFormButtonType } from './types';
 import { AlertComponent } from '../AlertComponent';
 import { Http } from '../Http';
+import { ValidationResult, Model } from '../types';
 
 interface MainState {
     showAlert: boolean;
@@ -71,19 +71,18 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         await this.load();
     }
 
-    public edit(person: Person) {    
-        const model = {} as Model<Person>; 
+    public edit(person: Person) {           
         const validationResult = {} as ValidationResult;
-        validationResult.IsValid = true;
-        model.Entity = person;  
+        validationResult.IsValid = true;       
         this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult});
     }
 
     public async save(person: Person) {
         const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;    
         await func(Endpoints.Person, person).then((response) => {   
-            const model = response.data as Model<Person>;         
+            const model = response.data as Model<Person>;     
             this.setState({ showPersonForm: !model.ValidationResult.IsValid, personFormModel: person, validationResult: model.ValidationResult });
+            this.load();
         });      
     }
 
@@ -94,9 +93,7 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
     }
 
     public create() {
-        const person = {} as Person;
-        const model = {} as Model<Person>; 
-        model.Entity = person;
+        const person = {} as Person;   
         this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'add' });
     }
 

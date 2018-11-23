@@ -28,12 +28,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
         }
 
         public async Task<ICommandHandlerAnswer> HandleAsync(CreatePersonCommand command)
-        {
-            return new CommandHandlerAnswer
+        {            
+            var answer = new CommandHandlerAnswer
             {
                 ValidationResult = this.createValidationHandler.Validate(command),
                 AggregateRoot = await personRepository.Insert(new Person(command))
             };
+
+            await personRepository.UnitOfWork.SaveChangesAsync();
+
+            return answer;
         }
 
         public async Task<ICommandHandlerAnswer> HandleAsync(UpdatePersonCommand command)
@@ -47,7 +51,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
 
                 if (command.IsValid)
                 {
-                    answer.AggregateRoot = await personRepository.Update(person.Update(command));
+                    answer.AggregateRoot = await personRepository.Update(person.Update(command));                
                 }               
             }
             return answer;
