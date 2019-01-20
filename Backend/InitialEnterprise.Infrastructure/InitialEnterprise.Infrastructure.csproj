@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Api\Handler\" />
+    <Folder Include="Api\Middlewares\" />
     <Folder Include="CQRS\Events\" />
     <Folder Include="CQRS\Queries\" />
   </ItemGroup>

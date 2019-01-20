@@ -10,7 +10,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
     public class Currency : AggregateRoot
     {
         [JsonConstructor]
-        public Currency()
+        private Currency()
         {
         }
 
@@ -41,7 +41,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         public Currency Update(CurrencyUpdateCommand command)
         {
             if (command.IsValid)
-            {               
+            {
                 AddEvent(new CurrencyUpdated { AggregateRootId = Id, CommandJson = JsonConvert.SerializeObject(command) });
             }
 

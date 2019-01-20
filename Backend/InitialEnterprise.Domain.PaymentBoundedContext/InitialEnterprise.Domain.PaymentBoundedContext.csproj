@@ -8,4 +8,17 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PaymentModule\CommandHandler\" />
+    <Folder Include="PaymentModule\Commands\" />
+    <Folder Include="PaymentModule\Events\" />
+    <Folder Include="PaymentModule\QueryHandler\" />
+    <Folder Include="PaymentModule\Repository\" />
+    <Folder Include="PaymentModule\ValidationHandler\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

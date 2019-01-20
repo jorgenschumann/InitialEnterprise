@@ -5,6 +5,8 @@ import { Person as PersonEntity, EmailAddress, PersonFormButtonType, Person,  Pe
 import { isValidElement } from 'react';
 import { ValidationResult } from '../types';
 import { EmailAddressTable } from '../mail/EmailAddressTable';
+import { Endpoints } from '../Endpoints';
+import { Http } from '../Http';
 
 interface PersonFormProps {
     person?: PersonEntity;
@@ -81,16 +83,15 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonF
     }
 
 
-    public async deleteMail(mail: EmailAddress) {
-        alert('deleteMail');
-        //await Http.delete(`${Endpoints.Person}${person.Id}`);
+    public async deleteMail(mail: EmailAddress) {  
+        await Http.delete(`${Endpoints.Person}${mail.PersonId}/${mail.Id}`);
         //await this.load();
     }
 
-    public editMail(mail: EmailAddress) {
-        alert('editMail');
-        //const validationResult = {} as ValidationResult;
-        //validationResult.IsValid = true;
+    public editMail(mail: EmailAddress) {      
+        const validationResult = {} as ValidationResult;
+        validationResult.IsValid = true;
+        alert(mail.MailAddress);
         //this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult });
     }
 

@@ -14,7 +14,7 @@ namespace InitialEnterprise.Infrastructure.IoC
                 .FromAssemblies(ListDirectoryAssemblies())
                 .AddClasses()
                 .AsImplementedInterfaces());
-      
+
             return services;
         }
 

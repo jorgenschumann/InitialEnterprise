@@ -76,11 +76,12 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         validationResult.IsValid = true;       
         this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult});
     }
-
-    public async save(person: Person) {
-        const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;    
+    
+    public async save(person: Person) {        
+        const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;            
         await func(Endpoints.Person, person).then((response) => {   
             const model = response.data as Model<Person>;     
+            alert(JSON.stringify(model));
             this.setState({ showPersonForm: !model.ValidationResult.IsValid, personFormModel: person, validationResult: model.ValidationResult });
             this.load();
         });      
@@ -99,7 +100,5 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
 
     public cancel() {
         this.setState({showPersonForm: false});
-    }
-
-  
+    }  
 }

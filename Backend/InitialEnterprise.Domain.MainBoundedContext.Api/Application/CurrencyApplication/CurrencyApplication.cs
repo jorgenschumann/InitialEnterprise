@@ -43,7 +43,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 
         public async Task<IEnumerable<CurrencyDto>> Query()
         {
-            var currenyQuery =  new CurrencyQuery();
+            var currenyQuery = new CurrencyQuery();
             var currencies = await dispatcher.GetResultAsync<CurrencyQuery, IEnumerable<CurrencyModule.Aggregate.Currency>>(currenyQuery);
             return Mapper.Map(currencies).ToANew<IEnumerable<CurrencyDto>>();
         }

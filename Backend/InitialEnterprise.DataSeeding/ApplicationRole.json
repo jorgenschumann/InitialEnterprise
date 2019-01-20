@@ -1,17 +1,20 @@
 ﻿[
   {
-    "Id": "B8F68FB9-D00A-4D87-8E30-0021686DABDD",
-    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76",
-    "RoleId": "3BE52A41-780C-4007-AD42-3B60F3869CA2"
+    "Id": "3BE52A41-780C-4007-AD42-3B60F3869CA2",
+    "Name": "Admin",
+    "NormalizedName": "ADMIN",
+    "ConcurrencyStamp": "0021686DABDD"
   },
   {
-    "Id": "2BCCE825-DB0B-4416-B54F-CB3C574AE967",
-    "UserId": "F6A80A0C-AF58-4607-BE36-0147532C3921",
-    "RoleId": "E428C039-D065-418C-B3BA-68719492E852"
+    "Id": "E428C039-D065-418C-B3BA-68719492E852",
+    "Name": "User",
+    "NormalizedName": "USER",
+    "ConcurrencyStamp": "3B60F3869CA2"
   },
   {
-    "Id": "2799BC71-B9B6-410A-B7DC-9D5F584706D0",
-    "UserId": "59C07EE4-E5B5-45E7-A0EA-99F2207768B5",
-    "RoleId": "23EEA437-C347-4A34-B108-0F1AA7A1E4B6"
+    "Id": "23EEA437-C347-4A34-B108-0F1AA7A1E4B6",
+    "Name": "Guest",
+    "NormalizedName": "Guest",
+    "ConcurrencyStamp": "0F1AA7A1E4B6"
   }
 ]
