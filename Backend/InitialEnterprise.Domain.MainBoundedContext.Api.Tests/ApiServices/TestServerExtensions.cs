@@ -1,17 +1,28 @@
-﻿using Microsoft.AspNetCore.TestHost;
+﻿using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
+using InitialEnterprise.Infrastructure.Api.Auth;
+using InitialEnterprise.Infrastructure.IoC;
+using InitialEnterpriseTests.DataSeeding;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
     public static class TestServerExtensions
     {
-        public static HttpClient CreateAuthClient(this TestServer server)
+        public static HttpClient CreateClient(this TestServer server)
         {
-            var client = server.CreateClient();
-            client.DefaultRequestHeaders.Add(
-                "X-Integration-Testing",
-                "Integration-Testing-Value");
+            return server.CreateClient();
+        }
 
+        public static HttpClient CreateAuthenticatedClient(this TestServer server)
+        {
+            var tokenBuilder = server.Host.GetService<IJwtSecurityTokenBuilder>();
+            var token = tokenBuilder.CreateToken(SeedDataBuilder.BuildType<ApplicationUser>());
+            var client = server.CreateClient();
+            {
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+            }
             return client;
         }
     }

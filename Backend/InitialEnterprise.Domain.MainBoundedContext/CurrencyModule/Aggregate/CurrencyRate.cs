@@ -1,15 +1,12 @@
 ﻿using InitialEnterprise.Infrastructure.DDD.Domain;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
     public class CurrencyRate : AggregateRoot
     {
         [JsonConstructor]
-        public CurrencyRate()
+        private CurrencyRate()
         {
         }
 

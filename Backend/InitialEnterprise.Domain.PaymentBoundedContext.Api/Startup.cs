@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace InitialEnterprise.Domain.PaymentBoundedContext.Api
 {
@@ -19,6 +20,18 @@ namespace InitialEnterprise.Domain.PaymentBoundedContext.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSwaggerGen(options =>
+            {
+                options.DescribeAllEnumsAsStrings();
+                options.SwaggerDoc("v1", new Info
+                {
+                    Title = "Payment API",
+                    Version = "v1",
+                    Description = "The Location Microservice HTTP API.",
+                    TermsOfService = "Terms Of Service"
+                });
+            });
 
             services.AddCors();
         }
@@ -38,5 +51,4 @@ namespace InitialEnterprise.Domain.PaymentBoundedContext.Api
             app.UseMvc();
         }
     }
-
 }

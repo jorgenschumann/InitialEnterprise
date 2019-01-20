@@ -5,11 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\PaymentApplication\IPaymentApplication.cs" />
+    <Compile Remove="Application\PaymentApplication\PaymentApplication.cs" />
+    <Compile Remove="Application\PaymentApplication\PaymentDto.cs" />
+    <Compile Remove="Controllers\PaymentsController.cs" />
+    <Compile Remove="Controllers\SampleDataController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\PaymentApplication\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext.Api\InitialEnterprise.Domain.MainBoundedContext.Api.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Domain.PaymentBoundedContext\InitialEnterprise.Domain.PaymentBoundedContext.csproj" />
   </ItemGroup>
 
 </Project>

@@ -42,7 +42,7 @@ export class Http {
         return Http.axiosWrapper().patch(url, config);
     }
 
-    //https://codesandbox.io/s/vy3o1nk21l
+    // https://codesandbox.io/s/vy3o1nk21l
     // https://medium.freecodecamp.org/how-to-protect-your-routes-with-react-context-717670c4713a
 
     public static isAuthenticated () {       

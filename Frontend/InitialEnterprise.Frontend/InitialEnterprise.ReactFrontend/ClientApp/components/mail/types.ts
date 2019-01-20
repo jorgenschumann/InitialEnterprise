@@ -2,13 +2,14 @@
 
 export type MailFormButtonType = 'edit' | 'add' | undefined;
 
+
 export interface EmailAddresses {
     EmailAddresses: EmailAddress[] | undefined;
 }
 
-export interface EmailAddressFormState {
-    EmailAddress: EmailAddress;   
-    ValidationResult: ValidationResult;
+export interface EmailAddressFormState { 
+    emailAddress: EmailAddress;   
+    validationResult: ValidationResult;
 }
 
 export interface EmailButtonClicks {

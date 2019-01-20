@@ -1,6 +1,4 @@
-﻿using InitialEnterprise.Infrastructure.Api.Middlewares;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -9,27 +7,28 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
-
     public abstract class TestScenariosBase
     {
         protected const string directory = "ApiServices";
 
         protected Assert Assertion;
 
-        public TestScenariosBase()
+        protected TestScenariosBase()
         {
             Assertion = (Assert)Activator.CreateInstance(typeof(Assert), true);
         }
 
-        public TestServer CreateServer(string directory)
+        public TestServer CreateServer(string directory = null)
         {
+            var currentDirectory = Directory.GetCurrentDirectory() + $"\\{directory}";
             var webHostBuilder = WebHost.CreateDefaultBuilder();
             {
-                webHostBuilder.UseContentRoot(Directory.GetCurrentDirectory() + $"\\{directory}");
+                webHostBuilder.UseContentRoot(currentDirectory);
                 webHostBuilder.UseStartup<Startup>();
                 webHostBuilder.UseEnvironment("Test");
                 webHostBuilder.ConfigureAppConfiguration((builderContext, config) =>
@@ -37,9 +36,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                     config.AddJsonFile("appsettings.json");
                 });
             }
-
             return new TestServer(webHostBuilder);
-        }     
+        }
 
         public StringContent SerializeContentString(object model)
         {
@@ -52,5 +50,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var contentString = model.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<TModel>(contentString);
         }
-    } 
+
+        public async Task<TModel> DeserializeContentStringAsync<TModel>(HttpResponseMessage model)
+        {
+            var contentString = await model.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TModel>(contentString);
+        }
+    }
 }

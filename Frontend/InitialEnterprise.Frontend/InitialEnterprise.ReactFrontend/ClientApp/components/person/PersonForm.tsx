@@ -88,10 +88,10 @@ export class PersonForm extends React.Component<PersonFormProps, Partial<PersonF
         //await this.load();
     }
 
-    public editMail(mail: EmailAddress) {
-        alert('editMail');
-        //const validationResult = {} as ValidationResult;
-        //validationResult.IsValid = true;
+    public editMail(mail: EmailAddress) {      
+        const validationResult = {} as ValidationResult;
+        validationResult.IsValid = true;
+        alert(mail.MailAddress);
         //this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult });
     }
 

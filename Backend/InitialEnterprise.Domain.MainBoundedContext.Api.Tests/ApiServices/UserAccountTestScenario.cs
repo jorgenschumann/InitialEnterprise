@@ -15,10 +15,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
     [TestFixture]
     public partial class UserAccountTestScenario : TestScenariosBase
-    {        
+    {
         [Test]
-        public async Task Should_SignIn_status_code_ok()//(string email, string password, bool assertIsTrue)
-        {    
+        public async Task Should_signin_status_code_ok()
+        {
             var model = new UserLoginDto
             {
                 Email = "User1@test.de",
@@ -28,20 +28,20 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
-            {                                
-                response = await server.CreateAuthClient()
+            {
+                response = await server.CreateClient()
                     .PostAsync(Post.SignIn, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
             var siginResult = DeserializeContentString<JObject>(response);
             var succeeded = (Boolean)siginResult[nameof(SignInResult.Succeeded)];
-                       
-            Assert.IsTrue(succeeded);    
+
+            Assert.IsTrue(succeeded);
         }
 
         [Test]
-        public async Task Should_Register_status_code_ok()
+        public async Task Should_register_status_code_ok()
         {
             var model = new UserRegisterDto
             {
@@ -54,7 +54,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateAuthClient()
+                response = await server.CreateClient()
                     .PostAsync(Post.Register, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
@@ -66,7 +66,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         }
 
         [Test]
-        public async Task Should_Update_User_status_code_ok()
+        public async Task Should_update_user_status_code_ok()
         {
             var model = new UserDto
             {
@@ -79,7 +79,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateAuthClient()
+                response = await server.CreateAuthenticatedClient()
                     .PutAsync(Put.Update, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
@@ -91,40 +91,39 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         }
 
         [Test]
-        public async Task Should_Get_User_By_Given_Id_status_code_ok()
+        public async Task Should_get_user_by_given_id_status_code_ok()
         {
             var requestedUserId = SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUser>().First();
 
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateAuthClient()
+                response = await server.CreateAuthenticatedClient()
                     .GetAsync(Get.UserBy(requestedUserId.Id));
 
                 response.EnsureSuccessStatusCode();
             }
             var userResult = DeserializeContentString<JObject>(response);
-            
+
             Assert.IsNotNull(userResult);
         }
 
-
         [Test]
-        public async Task Should_Get_All_User_By_Given_Empty_Query_status_code_ok()
+        public async Task Should_get_all_users_by_given_empty_query_status_code_ok()
         {
-            var query = new UserQuery();   
+            var query = new UserQuery();
 
             HttpResponseMessage response;
             using (var server = CreateServer(directory))
             {
-                response = await server.CreateAuthClient()
-                    .PostAsync(Post.Query,SerializeContentString(query));
+                response = await server.CreateAuthenticatedClient()
+                    .PostAsync(Post.Query, SerializeContentString(query));
 
                 response.EnsureSuccessStatusCode();
             }
             var userResult = DeserializeContentString<IEnumerable<ApplicationUser>>(response);
 
-            Assert.IsNotNull(userResult);
+            Assert.IsTrue(userResult.Any());
         }
     }
 }

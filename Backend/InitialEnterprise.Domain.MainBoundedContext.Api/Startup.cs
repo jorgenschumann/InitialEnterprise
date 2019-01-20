@@ -1,6 +1,7 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Controller;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
+using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.Api.Filter;
 using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,11 +13,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
@@ -24,7 +25,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
     public class Startup
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        private IHostingEnvironment env;
 
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
@@ -32,28 +32,27 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment hostingEnvironment)
         {
-            this.env = env;
+            this.hostingEnvironment = hostingEnvironment;
+        }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var jwtAuthenticationSettings = Configuration.GetSection("JwtAuthentication");
-            services.Configure<JwtAuthentication>(jwtAuthenticationSettings);
-
             var builder = services.AddMvcCore();
-
             services.ConfigureServiceCollection();
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             }).AddControllersAsServices();
-
-            var jwtAuthentication = jwtAuthenticationSettings.Get<JwtAuthentication>();
 
             services.AddCors(options =>
             {
@@ -77,6 +76,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             ConfigureEntityFrameworkContext(services);
 
+            //todo: make a method ConfigureAuthService
             services.AddIdentity<ApplicationUser, ApplicationRole>(option =>
              {
                  option.Password.RequireDigit = false;
@@ -87,6 +87,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
              }
              ).AddEntityFrameworkStores<MainDbContext>().AddDefaultTokenProviders();
 
+            var jwtAuthenticationSettings = Configuration.GetSection("JwtAuthentication");
+            services.Configure<JwtAuthentication>(jwtAuthenticationSettings);
+            var jwtAuthentication = jwtAuthenticationSettings.Get<JwtAuthentication>();
+
             services.AddAuthentication(option =>
             {
                 option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -96,7 +100,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
@@ -111,31 +115,24 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             //Todo: make it more generic
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(ClaimDefinitions.CurrencyRead, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Currency", "Read")));
-                options.AddPolicy(ClaimDefinitions.CurrencyQuery, policy => policy.Requirements.Add(
-                   new ClaimRequirement("Currency", "List")));
-                options.AddPolicy(ClaimDefinitions.CurrencyWrite, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Currency", "Write")));
+                options.AddPolicy(CurrencyClaims.CurrencyRead, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Read")));
+                options.AddPolicy(CurrencyClaims.CurrencyQuery, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "List")));
+                options.AddPolicy(CurrencyClaims.CurrencyWrite, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Write")));
 
-                options.AddPolicy(ClaimDefinitions.PersonRead, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Person", "Read")));
-                options.AddPolicy(ClaimDefinitions.PersonWrite, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Person", "Write")));
-                options.AddPolicy(ClaimDefinitions.PersonCreate, policy => policy.Requirements.Add(
-                    new ClaimRequirement("Person", "Create")));
+                options.AddPolicy(PersonClaims.PersonRead, policy => policy.Requirements.Add(new ClaimRequirement("Person", "Read")));
+                options.AddPolicy(PersonClaims.PersonWrite, policy => policy.Requirements.Add(new ClaimRequirement("Person", "Write")));
+                options.AddPolicy(PersonClaims.PersonCreate, policy => policy.Requirements.Add(new ClaimRequirement("Person", "Create")));
             });
         }
 
-        public virtual void Configure(IApplicationBuilder applicationBuilder, ILoggerFactory loggerFactory)
+        public virtual void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             ConfigureLogger(loggerFactory);
 
             if (hostingEnvironment.IsDevelopment())
             {
-                applicationBuilder.UseDeveloperExceptionPage();
-
-                applicationBuilder.UseCors(c =>
+                app.UseDeveloperExceptionPage();
+                app.UseCors(c =>
                 {
                     c.AllowAnyHeader();
                     c.AllowAnyMethod();
@@ -144,13 +141,19 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 });
             }
 
-            applicationBuilder.UseHttpsRedirection();
-            applicationBuilder.UseAuthentication();
+            if (hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
+            {
+                var context = app.ApplicationServices.GetService<MainDbContext>();
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                context.EnsureTestdataSeeding();
+            }
 
-            applicationBuilder.UseMvc();
-            applicationBuilder.UseStaticFiles();
-            applicationBuilder.UseSwagger();
-
+            app.UseHttpsRedirection();
+            ConfigureAuth(app);
+            app.UseMvc();
+            app.UseStaticFiles();
+            app.UseSwagger();
         }
 
         public void ConfigureDatabase(IServiceCollection services)
@@ -177,26 +180,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 .UseInMemoryDatabase(connectionString)
                 .Options;
 
-            services.AddSingleton(mainContext =>
+            services.AddDbContext<MainDbContext>(options =>
             {
-                var context = new MainDbContext(contextOptions);
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-                context.EnsureTestdataSeeding();
-                return context;
+                options.UseInMemoryDatabase(connectionString);
             });
-
-            //services.AddDbContext<MainDbContext>(options =>
-            //{
-            //    options.UseSqlServer(connectionString);
-            //});
-
-            //var mainDbContext = services.BuildServiceProvider().GetService<MainDbContext>();
-            //{
-            //    mainDbContext.Database.EnsureDeleted();
-            //    mainDbContext.Database.EnsureCreated();
-            //    mainDbContext.EnsureTestdataSeeding();
-            //}
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
@@ -207,8 +194,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
             else
             {
-                ConfigureTestDatabase(services);//ConfigureDatabase(services);
+                ConfigureDatabase(services);
             }
+        }
+
+        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
         }
 
         private static void ConfigureJsonSerializer(IMvcCoreBuilder mvcBuilder)

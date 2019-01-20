@@ -8,7 +8,7 @@ using System.Reflection;
 namespace InitialEnterpriseTests.DataSeeding
 {
     public static class SeedDataBuilder
-    {   
+    {
         public static TType BuildType<TType>()
         {
             return BuildTypeCollectionFromFile<TType>().FirstOrDefault();
@@ -28,15 +28,17 @@ namespace InitialEnterpriseTests.DataSeeding
 
         private static TType Load<TType>(string typeName)
         {
-            var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var directory = System.Environment.CurrentDirectory;
 
-            var fileContent = File.ReadAllText( $"{directory}\\{typeName}");
+            //var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            var fileContent = File.ReadAllText($"{directory}\\{typeName}");
 
             return JsonConvert.DeserializeObject<TType>(fileContent);
         }
 
-        public static TType BuildTypeFromFile<TType>()
-        {        
+        public static TType FetchTypeFromFile<TType>()
+        {
             return BuildTypeCollection<TType>(1).FirstOrDefault();
         }
     }
