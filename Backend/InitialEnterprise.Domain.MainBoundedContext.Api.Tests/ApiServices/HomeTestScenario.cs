@@ -11,7 +11,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         public async Task Get_home_swagger_ok_status_code()
         {
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateClient()
                     .GetAsync(Get.Index());

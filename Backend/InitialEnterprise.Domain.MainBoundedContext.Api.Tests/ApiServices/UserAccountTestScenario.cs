@@ -27,7 +27,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateClient()
                     .PostAsync(Post.SignIn, SerializeContentString(model));
@@ -52,7 +52,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateClient()
                     .PostAsync(Post.Register, SerializeContentString(model));
@@ -77,7 +77,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .PutAsync(Put.Update, SerializeContentString(model));
@@ -96,7 +96,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var requestedUserId = SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUser>().First();
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .GetAsync(Get.UserBy(requestedUserId.Id));
@@ -114,7 +114,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var query = new UserQuery();
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .PostAsync(Post.Query, SerializeContentString(query));
