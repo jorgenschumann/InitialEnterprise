@@ -11,9 +11,7 @@ using System.Linq;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
-    //todo: move to a better place
-
-    public static class MainDbContextContextExtensions
+    public static class DbContextExtensions
     {
         public static void EnsureMigrationsApplied(this MainDbContext context)
         {
