@@ -150,7 +150,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }
 
             app.UseHttpsRedirection();
-            ConfigureAuth(app);
+            app.UseAuthentication();
             app.UseMvc();
             app.UseStaticFiles();
             app.UseSwagger();
@@ -184,23 +184,26 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.UseInMemoryDatabase(connectionString);
             });
+
+            //var context = services.BuildServiceProvider().GetService<MainDbContext>();
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+            //context.EnsureTestdataSeeding();
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
         {
-            if (hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
+            if (hostingEnvironment.IsDevelopment() ||
+                hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
             {
                 ConfigureTestDatabase(services);
             }
-            else
+
+            if (hostingEnvironment.IsProduction() ||
+                hostingEnvironment.IsStaging())
             {
                 ConfigureDatabase(services);
             }
-        }
-
-        protected virtual void ConfigureAuth(IApplicationBuilder app)
-        {
-            app.UseAuthentication();
         }
 
         private static void ConfigureJsonSerializer(IMvcCoreBuilder mvcBuilder)

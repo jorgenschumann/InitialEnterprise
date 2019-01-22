@@ -43,12 +43,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
                 Encoding.UTF8, "application/json");
         }
 
-        public TModel DeserializeContentString<TModel>(HttpResponseMessage model)
-        {
-            var contentString = model.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<TModel>(contentString);
-        }
-
         public async Task<TModel> DeserializeContentStringAsync<TModel>(HttpResponseMessage model)
         {
             var contentString = await model.Content.ReadAsStringAsync();

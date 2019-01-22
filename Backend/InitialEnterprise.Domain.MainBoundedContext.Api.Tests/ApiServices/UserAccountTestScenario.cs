@@ -34,7 +34,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
                 response.EnsureSuccessStatusCode();
             }
-            var siginResult = DeserializeContentString<JObject>(response);
+            var siginResult = await DeserializeContentStringAsync<JObject>(response);
             var succeeded = (Boolean)siginResult[nameof(SignInResult.Succeeded)];
 
             Assert.IsTrue(succeeded);
@@ -59,7 +59,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
                 response.EnsureSuccessStatusCode();
             }
-            var identityResult = DeserializeContentString<JObject>(response);
+            var identityResult = await DeserializeContentStringAsync<JObject>(response);
             var succeeded = (Boolean)identityResult[nameof(IdentityResult.Succeeded)];
 
             Assert.IsTrue(succeeded);
@@ -84,7 +84,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
                 response.EnsureSuccessStatusCode();
             }
-            var identityResult = DeserializeContentString<JObject>(response);
+            var identityResult = await DeserializeContentStringAsync<JObject>(response);
             var succeeded = (Boolean)identityResult[nameof(IdentityResult.Succeeded)];
 
             Assert.IsTrue(succeeded);
@@ -103,7 +103,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
                 response.EnsureSuccessStatusCode();
             }
-            var userResult = DeserializeContentString<JObject>(response);
+            var userResult = await DeserializeContentStringAsync<JObject>(response);
 
             Assert.IsNotNull(userResult);
         }
@@ -121,7 +121,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
                 response.EnsureSuccessStatusCode();
             }
-            var userResult = DeserializeContentString<IEnumerable<ApplicationUser>>(response);
+            var userResult = await DeserializeContentStringAsync<IEnumerable<ApplicationUser>>(response);
 
             Assert.IsTrue(userResult.Any());
         }

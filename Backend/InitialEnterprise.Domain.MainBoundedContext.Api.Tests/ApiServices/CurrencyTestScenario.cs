@@ -32,7 +32,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                 response.EnsureSuccessStatusCode();
             }
 
-            var currencyDto = DeserializeContentString<CurrencyDto>(response);
+            var currencyDto = await DeserializeContentStringAsync<CurrencyDto>(response);
 
             Assert.IsNotNull(currencyDto);
             Assert.True(currencyDto.IsDeepEqual(expectedCurrencyDto));
@@ -85,7 +85,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                .PostAsync(Post.Currency,
                    SerializeContentString(newCurrencyDto));
 
-            var answer = DeserializeContentString<CommandHandlerAnswer>(response);
+            var answer = await DeserializeContentStringAsync<CommandHandlerAnswer>(response);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
             Assert.IsNotNull(answer.ValidationResult);
             Assert.IsNotEmpty(answer.ValidationResult.Errors);

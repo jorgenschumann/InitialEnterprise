@@ -15,12 +15,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
          ICommandHandlerWithResultAsync<UserUpdateCommand, IdentityResult>
 
     {
-        readonly IValidator<SignInCommand> loginValidationHandler;
-        readonly IValidator<UserRegisterCommand> registerValidationHandler;
-        readonly IValidator<UserUpdateCommand> updateValidationHandler;
-        readonly SignInManager<ApplicationUser> signInManager;
-        readonly UserManager<ApplicationUser> userManager;
-        readonly IJwtSecurityTokenBuilder tokenBuilder;
+        private readonly IValidator<SignInCommand> loginValidationHandler;
+        private readonly IValidator<UserRegisterCommand> registerValidationHandler;
+        private readonly IValidator<UserUpdateCommand> updateValidationHandler;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IJwtSecurityTokenBuilder tokenBuilder;
 
         public UserAccountCommandHandler(
             IValidator<SignInCommand> loginValidationHandler,
@@ -64,7 +64,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                             SignInResult = result
                         };
                     }
-                }                          
+                }
             }
             return userSignInResult;
         }
@@ -80,7 +80,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
             if (command.IsValid)
             {
                 var user = new ApplicationUser(command);
-                identityResult = await userManager.CreateAsync(user);                
+                identityResult = await userManager.CreateAsync(user);
             }
             return identityResult;
         }
@@ -99,8 +99,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                 identityResult = await userManager.UpdateAsync(user);
             }
             return identityResult;
-        }        
+        }
     }
-
-   
 }
