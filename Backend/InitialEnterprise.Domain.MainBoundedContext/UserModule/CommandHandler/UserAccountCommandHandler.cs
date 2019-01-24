@@ -6,6 +6,10 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 using Microsoft.AspNetCore.Identity;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Infrastructure.Api.Auth;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 {
@@ -52,11 +56,18 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                 var user = await userManager.FindByEmailAsync(command.Email);
                 if (user != null)
                 {
-                    var claims = await userManager.GetClaimsAsync(user);
                     var result = await signInManager.PasswordSignInAsync(user, command.Password, command.Remember, true);
 
                     if (result.Succeeded)
                     {
+                        //todo: check how to include with linq and entity framework
+                        var claims = await userManager.GetClaimsAsync(user);
+                        user.Claims = new List<ApplicationUserClaim>();
+                        foreach (var claim in claims)
+                        {
+                            user.Claims.Add(new ApplicationUserClaim { ClaimType = claim.Type, ClaimValue = claim.Value });
+                        }
+
                         return new UserSignInResult
                         {
                             User = user,

@@ -184,11 +184,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.UseInMemoryDatabase(connectionString);
             });
-
-            //var context = services.BuildServiceProvider().GetService<MainDbContext>();
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
-            //context.EnsureTestdataSeeding();
         }
 
         private void ConfigureEntityFrameworkContext(IServiceCollection services)
