@@ -35,7 +35,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                 response.EnsureSuccessStatusCode();
             }
             var siginResult = await DeserializeContentStringAsync<JObject>(response);
-            var succeeded = (Boolean)siginResult[nameof(SignInResult.Succeeded)];
+            var succeeded = (Boolean)siginResult["SignInResult"]["Succeeded"];
 
             Assert.IsTrue(succeeded);
         }

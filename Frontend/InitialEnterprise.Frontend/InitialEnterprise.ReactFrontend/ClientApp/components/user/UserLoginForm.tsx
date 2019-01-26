@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Button, Modal,FormGroup ,InputGroup , FormControl, ControlLabel} from 'react-bootstrap';
+import { Button, Modal, FormGroup, InputGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router';
 import { Link, Redirect } from 'react-router-dom';
 import { Endpoints } from '../Endpoints';
 import { Login } from './types';
 import { Http } from '../Http';
-
 
 // tslint:disable-next-line:interface-name
 interface LoginFormInterface {
@@ -17,12 +16,11 @@ interface LoginFormInterface {
 export class UserLoginForm extends React.Component<RouteComponentProps<{}>, Partial<LoginFormInterface>> {
     constructor() {
         super();
-        
-        this.state = { login: { Email: '', Password: '' }, show: true, shouldRedirect : false };
+
+        this.state = { login: { Email: '', Password: '' }, show: true, shouldRedirect: false };
 
         this.onTextChange = this.onTextChange.bind(this);
         this.signinUser = this.signinUser.bind(this);
-   
     }
 
     public render() {
@@ -54,32 +52,34 @@ export class UserLoginForm extends React.Component<RouteComponentProps<{}>, Part
                             <Modal.Footer>
                                 <Link to='/UserRegisterForm' className='btn btn-link'>Register</Link>
                                 <button type='submit' className='btn btn-default' onClick={() => this.signinUser()}>Login</button>
-                                <button className='btn btn-default' onClick={() => this.closeDialog()}>Cancel</button>
+                                <button type='button' className='btn btn-default' onClick={() => this.closeDialog()}>Cancel</button>
                             </Modal.Footer>
                         </Modal.Dialog>
                     </div>
                 }
-           </div>                   
+            </div>
         );
     }
 
     private onTextChange(e: any) {
         const login: any = this.state.login;
         login[e.target.name] = e.target.value;
-        this.setState({  login });
+        this.setState({ login });
     }
 
     private async signinUser() {
         const login: any = this.state.login;
-        await Http.post(Endpoints.UserAccountSignin, login).then((response) => {            
+        await Http.post(Endpoints.UserAccountSignin, login).then((response) => {
             localStorage.setItem('token', response.data.Token);
-            this.setState({ login: login, shouldRedirect: Http.isAuthenticated() });            
+            this.setState({ login: login, shouldRedirect: Http.isAuthenticated() });
+            this.closeDialog();
         }).catch((response) => {
             alert(JSON.stringify(response.data));
-        });    
+        });
     }
 
     private closeDialog() {
+        alert("closeDialog");
         this.setState({ show: false });
     }
 }
