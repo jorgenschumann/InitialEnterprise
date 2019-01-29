@@ -6,6 +6,7 @@ Initial Enterprise Architecture for a .net core based business critical backend 
 * [SEEING] for InMemory Database & Testfixtures
 * [CQRS] Infrastructure with Dispatcher for Commands & Queries
 * [DDD] Infrastructure 
+* [JWTTOKENBUILDER] with JwtAuthentication & Claims 
 
 
 Recources
@@ -25,6 +26,7 @@ https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPatte
 [CQRS]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Infrastructure/CQRS>
 [DDD]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Infrastructure/DDD>
 [SEEING]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.DataSeeding>
+[JWTTOKENBUILDER]: <https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/UserModule/Services/JwtSecurityTokenBuilder.cs>
 
 
 
