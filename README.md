@@ -2,8 +2,10 @@
 Initial Enterprise Architecture for a .net core based business critical backend softwaresystem 
 
 ### Concepts
-* [IntegrationTesting] for RESTApi with TestServer
-
+* [IntegrationTDD] for RESTApi with TestServer
+* [SEEING] for InMemory Database & Testfixtures
+* [CQRS] Infrastructure with Dispatcher for Commands & Queries
+* [DDD] Infrastructure 
 
 
 Recources
@@ -19,4 +21,12 @@ https://enterprisecraftsmanship.com/
 https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPattern
 
 
- [IntegrationTesting]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Api.Tests/ApiService>
+[IntegrationTDD]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Api.Tests/ApiServices> 
+[CQRS]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Infrastructure/CQRS>
+[DDD]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Infrastructure/DDD>
+[SEEING]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.DataSeeding>
+
+
+
+
+
