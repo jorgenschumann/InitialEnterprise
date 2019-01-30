@@ -1,11 +1,9 @@
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
-using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.Misc;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
 {

@@ -13,8 +13,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 
         Task<Currency> Insert(Currency currency);
 
-        Currency Udate(Currency currency);
+        Currency Update(Currency currency);
 
-        Task<Currency> Query(Guid currencyId); 
+        Task<Currency> Query(Guid currencyId);
     }
 }

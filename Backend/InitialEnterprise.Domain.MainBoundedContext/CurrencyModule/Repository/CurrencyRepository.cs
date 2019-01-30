@@ -20,7 +20,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 
         public IUnitOfWork UnitOfWork => mainDbContext;
 
-        public Currency Udate(Currency currency)
+        public Currency Update(Currency currency)
         {
             var addedCurrency = mainDbContext.Currency.Update(currency);
 

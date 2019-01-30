@@ -52,7 +52,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHand
             if (command.IsValid)
             {
                 commandHandlerAnswer.AggregateRoot =
-                    currencyRepository.Udate(currency.Update(command));
+                    currencyRepository.Update(currency.Update(command));
             }
             return commandHandlerAnswer;
         }
