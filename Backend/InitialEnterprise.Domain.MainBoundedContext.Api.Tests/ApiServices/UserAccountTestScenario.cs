@@ -27,15 +27,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateClient()
                     .PostAsync(Post.SignIn, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
-            var siginResult = DeserializeContentString<JObject>(response);
-            var succeeded = (Boolean)siginResult[nameof(SignInResult.Succeeded)];
+            var siginResult = await DeserializeContentStringAsync<JObject>(response);
+            var succeeded = (Boolean)siginResult["SignInResult"]["Succeeded"];
 
             Assert.IsTrue(succeeded);
         }
@@ -52,14 +52,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateClient()
                     .PostAsync(Post.Register, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
-            var identityResult = DeserializeContentString<JObject>(response);
+            var identityResult = await DeserializeContentStringAsync<JObject>(response);
             var succeeded = (Boolean)identityResult[nameof(IdentityResult.Succeeded)];
 
             Assert.IsTrue(succeeded);
@@ -77,14 +77,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .PutAsync(Put.Update, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }
-            var identityResult = DeserializeContentString<JObject>(response);
+            var identityResult = await DeserializeContentStringAsync<JObject>(response);
             var succeeded = (Boolean)identityResult[nameof(IdentityResult.Succeeded)];
 
             Assert.IsTrue(succeeded);
@@ -96,14 +96,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var requestedUserId = SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUser>().First();
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .GetAsync(Get.UserBy(requestedUserId.Id));
 
                 response.EnsureSuccessStatusCode();
             }
-            var userResult = DeserializeContentString<JObject>(response);
+            var userResult = await DeserializeContentStringAsync<JObject>(response);
 
             Assert.IsNotNull(userResult);
         }
@@ -114,14 +114,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var query = new UserQuery();
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .PostAsync(Post.Query, SerializeContentString(query));
 
                 response.EnsureSuccessStatusCode();
             }
-            var userResult = DeserializeContentString<IEnumerable<ApplicationUser>>(response);
+            var userResult = await DeserializeContentStringAsync<IEnumerable<ApplicationUser>>(response);
 
             Assert.IsTrue(userResult.Any());
         }

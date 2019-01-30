@@ -3,29 +3,26 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Xunit;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
+namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests
 {
     public abstract class TestScenariosBase
     {
         protected const string directory = "ApiServices";
 
-        protected Assert Assertion;
-
-        protected TestScenariosBase()
-        {
-            Assertion = (Assert)Activator.CreateInstance(typeof(Assert), true);
-        }
-
         public TestServer CreateServer(string directory = null)
         {
             var currentDirectory = Directory.GetCurrentDirectory() + $"\\{directory}";
+
+            return TestServerCache.FromCache(currentDirectory, () => CreateServerInternal(currentDirectory));
+        }
+
+        private TestServer CreateServerInternal(string currentDirectory)
+        {
             var webHostBuilder = WebHost.CreateDefaultBuilder();
             {
                 webHostBuilder.UseContentRoot(currentDirectory);
@@ -36,6 +33,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                     config.AddJsonFile("appsettings.json");
                 });
             }
+
             return new TestServer(webHostBuilder);
         }
 
@@ -43,12 +41,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         {
             return new StringContent(JsonConvert.SerializeObject(model),
                 Encoding.UTF8, "application/json");
-        }
-
-        public TModel DeserializeContentString<TModel>(HttpResponseMessage model)
-        {
-            var contentString = model.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<TModel>(contentString);
         }
 
         public async Task<TModel> DeserializeContentStringAsync<TModel>(HttpResponseMessage model)

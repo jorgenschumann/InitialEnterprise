@@ -30,7 +30,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> SignIn([FromBody] UserLoginDto model)
         {
             var result = await userAccountApplication.SignIn(model) as UserSignInResult;
-            return result.SignInResult.Succeeded ? (IActionResult)Ok(result.SignInResult) : Unauthorized();
+            return result.SignInResult.Succeeded ? (IActionResult)Ok(result) : Unauthorized();
         }
 
         [HttpPost]

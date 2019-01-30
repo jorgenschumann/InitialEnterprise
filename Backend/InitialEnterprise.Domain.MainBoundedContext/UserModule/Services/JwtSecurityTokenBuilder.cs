@@ -13,14 +13,14 @@ using System.Text;
 
 public class JwtSecurityTokenBuilder : IJwtSecurityTokenBuilder
 {
-    readonly IOptions<JwtAuthentication> jwtAuthentication;
+    private readonly IOptions<JwtAuthentication> jwtAuthentication;
 
     public JwtSecurityTokenBuilder(IOptions<JwtAuthentication> jwtAuthentication)
     {
         this.jwtAuthentication = jwtAuthentication;
     }
-    
-    static IEnumerable<Claim> MergeUserClaimsWithDefaultClaims(ApplicationUser user)
+
+    private static IEnumerable<Claim> MergeUserClaimsWithDefaultClaims(ApplicationUser user)
     {
         var claims = new List<Claim>
             {
@@ -35,10 +35,8 @@ public class JwtSecurityTokenBuilder : IJwtSecurityTokenBuilder
     }
 
     public string CreateToken(ApplicationUser user)
-    {        
-      
+    {
         var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthentication.Value.SecurityKey));
-
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -63,8 +61,7 @@ public class JwtSecurityTokenBuilder : IJwtSecurityTokenBuilder
         {
             tokenDescriptor.Subject.AddClaims(user.UserRoles.Select(role => new Claim(ClaimTypes.Role, role.Role.Name)));
         }
-  
+
         return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
     }
 }
-

@@ -28,9 +28,7 @@ namespace InitialEnterpriseTests.DataSeeding
 
         private static TType Load<TType>(string typeName)
         {
-            var directory = System.Environment.CurrentDirectory;
-
-            //var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             var fileContent = File.ReadAllText($"{directory}\\{typeName}");
 

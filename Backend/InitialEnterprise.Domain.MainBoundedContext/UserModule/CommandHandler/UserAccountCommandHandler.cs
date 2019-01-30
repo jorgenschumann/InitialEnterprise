@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
+using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
+using InitialEnterprise.Infrastructure.Api.Auth;
 using InitialEnterprise.Infrastructure.CQRS.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using Microsoft.AspNetCore.Identity;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
-using InitialEnterprise.Infrastructure.Api.Auth;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 {
@@ -15,12 +16,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
          ICommandHandlerWithResultAsync<UserUpdateCommand, IdentityResult>
 
     {
-        readonly IValidator<SignInCommand> loginValidationHandler;
-        readonly IValidator<UserRegisterCommand> registerValidationHandler;
-        readonly IValidator<UserUpdateCommand> updateValidationHandler;
-        readonly SignInManager<ApplicationUser> signInManager;
-        readonly UserManager<ApplicationUser> userManager;
-        readonly IJwtSecurityTokenBuilder tokenBuilder;
+        private readonly IValidator<SignInCommand> loginValidationHandler;
+        private readonly IValidator<UserRegisterCommand> registerValidationHandler;
+        private readonly IValidator<UserUpdateCommand> updateValidationHandler;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IJwtSecurityTokenBuilder tokenBuilder;
 
         public UserAccountCommandHandler(
             IValidator<SignInCommand> loginValidationHandler,
@@ -52,11 +53,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                 var user = await userManager.FindByEmailAsync(command.Email);
                 if (user != null)
                 {
-                    var claims = await userManager.GetClaimsAsync(user);
                     var result = await signInManager.PasswordSignInAsync(user, command.Password, command.Remember, true);
 
                     if (result.Succeeded)
                     {
+                        await MergeClaims(user);
+
                         return new UserSignInResult
                         {
                             User = user,
@@ -64,9 +66,19 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                             SignInResult = result
                         };
                     }
-                }                          
+                }
             }
             return userSignInResult;
+        }
+
+        private async Task MergeClaims(ApplicationUser user)
+        {
+            var claims = await userManager.GetClaimsAsync(user);
+            user.Claims = new List<ApplicationUserClaim>();
+            foreach (var claim in claims)
+            {
+                user.Claims.Add(new ApplicationUserClaim { ClaimType = claim.Type, ClaimValue = claim.Value });
+            }
         }
 
         public async Task<IdentityResult> HandleAsync(UserRegisterCommand command)
@@ -80,7 +92,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
             if (command.IsValid)
             {
                 var user = new ApplicationUser(command);
-                identityResult = await userManager.CreateAsync(user);                
+                identityResult = await userManager.CreateAsync(user);
             }
             return identityResult;
         }
@@ -99,8 +111,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                 identityResult = await userManager.UpdateAsync(user);
             }
             return identityResult;
-        }        
+        }
     }
-
-   
 }

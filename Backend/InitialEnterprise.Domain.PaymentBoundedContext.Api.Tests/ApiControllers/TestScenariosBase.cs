@@ -8,20 +8,12 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace InitialEnterprise.Domain.PaymentBoundedContext.Api.Tests.ApiControllers
 {
     public abstract class TestScenariosBase
     {
         protected const string directory = "ApiControllers";
-
-        protected Assert Assertion;
-
-        protected TestScenariosBase()
-        {
-            Assertion = (Assert)Activator.CreateInstance(typeof(Assert), true);
-        }
 
         public TestServer CreateServer(string directory)
         {

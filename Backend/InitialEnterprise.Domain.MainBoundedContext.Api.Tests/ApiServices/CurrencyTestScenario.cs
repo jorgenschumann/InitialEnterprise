@@ -24,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             var expectedCurrencyDto = Mapper.Map(currency).ToANew<CurrencyDto>();
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
+            var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
                     .GetAsync(Get.GetCurrency(currency.Id));
@@ -32,7 +32,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                 response.EnsureSuccessStatusCode();
             }
 
-            var currencyDto = DeserializeContentString<CurrencyDto>(response);
+            var currencyDto = await DeserializeContentStringAsync<CurrencyDto>(response);
 
             Assert.IsNotNull(currencyDto);
             Assert.True(currencyDto.IsDeepEqual(expectedCurrencyDto));
@@ -51,13 +51,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
-            {
-                response = await server.CreateAuthenticatedClient()
-                    .PostAsync(Post.Currency, SerializeContentString(currencyDto));
+            var server = CreateServer(directory);
+            response = await server.CreateAuthenticatedClient()
+                .PostAsync(Post.Currency, SerializeContentString(currencyDto));
 
-                response.EnsureSuccessStatusCode();
-            }
+            response.EnsureSuccessStatusCode();
 
             var answer =
                 JsonConvert.DeserializeObject<CommandHandlerAnswerDto<CurrencyDto>>(
@@ -82,14 +80,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
             };
 
             HttpResponseMessage response;
-            using (var server = CreateServer(directory))
-            {
-                response = await server.CreateAuthenticatedClient()
-                   .PostAsync(Post.Currency,
-                       SerializeContentString(newCurrencyDto));
-            }
+            var server = CreateServer(directory);
+            response = await server.CreateAuthenticatedClient()
+               .PostAsync(Post.Currency,
+                   SerializeContentString(newCurrencyDto));
 
-            var answer = DeserializeContentString<CommandHandlerAnswer>(response);
+            var answer = await DeserializeContentStringAsync<CommandHandlerAnswer>(response);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
             Assert.IsNotNull(answer.ValidationResult);
             Assert.IsNotEmpty(answer.ValidationResult.Errors);

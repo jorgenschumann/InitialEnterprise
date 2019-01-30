@@ -5,15 +5,18 @@ using Newtonsoft.Json;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
-{      
-    public class ApplicationUser : IdentityUser<Guid> 
+{
+    public class ApplicationUser : IdentityUser<Guid>
     {
         [JsonIgnore]
         public virtual ICollection<ApplicationUserClaim> Claims { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<ApplicationUserLogin> Logins { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<ApplicationUserToken> Tokens { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
 
@@ -21,9 +24,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
 
         public ApplicationUser()
         {
-           
         }
-        
+
         public void Update(UserUpdateCommand command)
         {
             this.Email = command.Email;
@@ -46,7 +48,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
             this.Email = command.Email;
             this.NormalizedEmail = this.Email.ToUpper();
             this.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(this, command.Password);
-        }       
+        }
     }
 
     public class ApplicationRole : IdentityRole<Guid>

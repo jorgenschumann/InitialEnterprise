@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.Infrastructure.Tests", "InitialEnterprise.Domain.Infrastructure.Tests\InitialEnterprise.Domain.Infrastructure.Tests.csproj", "{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Infrastructure.Tests", "InitialEnterprise.Infrastructure.Tests\InitialEnterprise.Infrastructure.Tests.csproj", "{12A1E287-5F47-4E77-9F7B-4CFB2301249D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.MainBoundedContext.Tests", "InitialEnterprise.Domain.MainBoundedContext.Tests\InitialEnterprise.Domain.MainBoundedContext.Tests.csproj", "{7A50D607-3EB4-46B5-93C8-7BD08E527244}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.PaymentBoundedContext.Tests", "InitialEnterprise.Domain.PaymentBoundedContext.Tests\InitialEnterprise.Domain.PaymentBoundedContext.Tests.csproj", "{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5}"
@@ -37,25 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TDDInfrastructure", "TDDInf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.DataSeeding", "InitialEnterprise.DataSeeding\InitialEnterprise.DataSeeding.csproj", "{A64BBD59-7DD0-4BF0-8C5A-AE7A77C51396}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Frontend", "..\Frontend\", "{80826B07-71DE-4E3A-8EC9-795E8D751F50}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_55071"
-		Debug.AspNetCompiler.PhysicalPath = "..\Frontend\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55071\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_55071"
-		Release.AspNetCompiler.PhysicalPath = "..\Frontend\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55071\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "55071"
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedBoundedContext", "SharedBoundedContext", "{3898D570-5216-459E-9CA6-5BBB0898B437}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.SharedKernel", "InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj", "{47F33DFD-E6C9-4243-8A14-07574C311869}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Domain.SharedKernel.Tests", "InitialEnterprise.Domain.SharedKernel.Tests\InitialEnterprise.Domain.SharedKernel.Tests.csproj", "{62EC5E06-3F4D-46F8-A363-4A904147BB20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +63,6 @@ Global
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12A1E287-5F47-4E77-9F7B-4CFB2301249D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12A1E287-5F47-4E77-9F7B-4CFB2301249D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12A1E287-5F47-4E77-9F7B-4CFB2301249D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12A1E287-5F47-4E77-9F7B-4CFB2301249D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A50D607-3EB4-46B5-93C8-7BD08E527244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A50D607-3EB4-46B5-93C8-7BD08E527244}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A50D607-3EB4-46B5-93C8-7BD08E527244}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -115,10 +95,14 @@ Global
 		{A64BBD59-7DD0-4BF0-8C5A-AE7A77C51396}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A64BBD59-7DD0-4BF0-8C5A-AE7A77C51396}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A64BBD59-7DD0-4BF0-8C5A-AE7A77C51396}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80826B07-71DE-4E3A-8EC9-795E8D751F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80826B07-71DE-4E3A-8EC9-795E8D751F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80826B07-71DE-4E3A-8EC9-795E8D751F50}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{80826B07-71DE-4E3A-8EC9-795E8D751F50}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{47F33DFD-E6C9-4243-8A14-07574C311869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F33DFD-E6C9-4243-8A14-07574C311869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F33DFD-E6C9-4243-8A14-07574C311869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F33DFD-E6C9-4243-8A14-07574C311869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62EC5E06-3F4D-46F8-A363-4A904147BB20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62EC5E06-3F4D-46F8-A363-4A904147BB20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62EC5E06-3F4D-46F8-A363-4A904147BB20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62EC5E06-3F4D-46F8-A363-4A904147BB20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -128,7 +112,6 @@ Global
 		{1061EA73-B7DF-42E9-9A85-5A446D0FF4BF} = {4C019300-11DA-40BF-A87E-8F69FC50CBDF}
 		{52B16E7F-0512-4B0E-A767-7BF6590439B6} = {618FA93F-FF55-46D1-AC9B-811F8F859122}
 		{4CD4DF49-0896-44F2-B8DF-79E484FA49B9} = {DA8F761D-9568-4FBE-BCC6-1C3824BDFCAC}
-		{12A1E287-5F47-4E77-9F7B-4CFB2301249D} = {DA8F761D-9568-4FBE-BCC6-1C3824BDFCAC}
 		{7A50D607-3EB4-46B5-93C8-7BD08E527244} = {4C019300-11DA-40BF-A87E-8F69FC50CBDF}
 		{02E9272F-0CA7-4218-A1B5-E14C0F0B2EE5} = {618FA93F-FF55-46D1-AC9B-811F8F859122}
 		{F5222FC8-E5EF-45E8-B09D-4C166F7F1FDE} = {DA8F761D-9568-4FBE-BCC6-1C3824BDFCAC}
@@ -137,6 +120,8 @@ Global
 		{6CE0D2CD-1BD4-44D1-9232-A46CADFB1AB7} = {4C019300-11DA-40BF-A87E-8F69FC50CBDF}
 		{6EA8F7F1-93BA-43E0-8AA4-658E58048E47} = {618FA93F-FF55-46D1-AC9B-811F8F859122}
 		{A64BBD59-7DD0-4BF0-8C5A-AE7A77C51396} = {FEED2EF5-618E-491D-9768-153C7718913D}
+		{47F33DFD-E6C9-4243-8A14-07574C311869} = {3898D570-5216-459E-9CA6-5BBB0898B437}
+		{62EC5E06-3F4D-46F8-A363-4A904147BB20} = {3898D570-5216-459E-9CA6-5BBB0898B437}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C0DED3C-1764-4F07-9111-DBE42634690D}

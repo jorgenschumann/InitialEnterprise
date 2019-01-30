@@ -1,17 +1,15 @@
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
-using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.Misc;
+using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using Xunit;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
 {
     public class CurrencyAggTests
     {
-        [Fact(DisplayName = nameof(Check_ctor_is_private))]
+        [Test]
         public void Check_ctor_is_private()
         {
             //Arrange
@@ -32,7 +30,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             }
         }
 
-        [Fact(DisplayName = nameof(Should_create_entity_with_command_by_private_ctor))]
+        [Test]
         public void Should_create_entity_with_command_by_private_ctor()
         {
             //Arrange
