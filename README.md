@@ -6,9 +6,9 @@ Initial Enterprise Architecture for a .net core based business critical backend 
 * [SEEING] for InMemory Database & Testfixtures
 * [CQRS] Infrastructure with Dispatcher for Commands & Queries
 * [DDD] Infrastructure 
-* [QueryHandler]:to handle Queries
-* [CommandHandler]: to handle Commands CurrencyCommandHandler>
-* [ValidationHandler]:to validate Domain Commands
+* [QueryHandler] to handle Queries
+* [CommandHandler] to handle Commands CurrencyCommandHandler>
+* [ValidationHandler] to validate Domain Commands
 * [DDDApplication] Layer for the Domain orchestration, Command dispachting & mapping
 * [JWTTOKENBUILDER] with JwtAuthentication & Claims 
 * [CLEANREST]  
