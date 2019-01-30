@@ -4,7 +4,6 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHandler;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
-using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterpriseTests.DataSeeding;
 using Moq;
 using NUnit.Framework;

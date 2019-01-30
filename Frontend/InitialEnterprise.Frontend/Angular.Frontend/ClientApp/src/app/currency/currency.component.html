@@ -1,0 +1,24 @@
+<h1>Currencies</h1>
+
+<p>Currencies form Server</p>
+
+<p *ngIf="!forecasts"><em>Loading...</em></p>
+
+<table class='table' *ngIf="currencies">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Iso Code</th>
+      <th>Rates</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let currency of currencies">
+      <td>{{ forecast.id }}</td>
+      <td>{{ forecast.name }}</td>
+      <td>{{ forecast.isoCode }}</td>
+      <td>{{ forecast.rates }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "ReactCrudDemo\Frontend.csproj", "{21967196-8303-4E2D-BDBD-9A85DF74A5C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "React.Frontend", "InitialEnterprise.ReactFrontend\React.Frontend.csproj", "{997B9D8D-724C-4E01-8FAE-28D223CDD55C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Frontend", "InitialEnterprise.BlazorFrontend\Blazor.Frontend\Blazor.Frontend.csproj", "{39D954C1-B4FF-46A0-B8EE-9EBAD9B2EE26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Angular.Frontend", "Angular.Frontend\Angular.Frontend.csproj", "{9A5D547C-D3D9-48D5-AC73-3E053EDFF584}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{997B9D8D-724C-4E01-8FAE-28D223CDD55C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{997B9D8D-724C-4E01-8FAE-28D223CDD55C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{997B9D8D-724C-4E01-8FAE-28D223CDD55C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{997B9D8D-724C-4E01-8FAE-28D223CDD55C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D954C1-B4FF-46A0-B8EE-9EBAD9B2EE26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D954C1-B4FF-46A0-B8EE-9EBAD9B2EE26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D954C1-B4FF-46A0-B8EE-9EBAD9B2EE26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D954C1-B4FF-46A0-B8EE-9EBAD9B2EE26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A5D547C-D3D9-48D5-AC73-3E053EDFF584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A5D547C-D3D9-48D5-AC73-3E053EDFF584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A5D547C-D3D9-48D5-AC73-3E053EDFF584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A5D547C-D3D9-48D5-AC73-3E053EDFF584}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
