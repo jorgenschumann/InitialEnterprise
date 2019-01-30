@@ -3,6 +3,7 @@ Initial Enterprise Architecture for a .net core based business critical backend 
 
 ### Concepts
 * [IntegrationTDD] for RESTApi with TestServer
+* [UnitTest] with Mocking
 * [SEEING] for InMemory Database & Testfixtures
 * [CQRS] Infrastructure with Dispatcher for Commands & Queries
 * [DDD] Infrastructure 
@@ -37,7 +38,7 @@ https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPatte
 [QueryHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/CurrencyModule/QueryHandler/QueryCurrencyHandlerAsync.cs>
 [CommandHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/CurrencyModule/CommandHandler/CurrencyCommandHandler.cs>
 [ValidationHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/PersonModule/ValidationHandler/CreatePersonCommandValidationHandler.cs>
-
+[UnitTest]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Tests/CurrencyModule/CurrencyCommandHanderTests.cs>
 
 
 
