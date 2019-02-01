@@ -19,9 +19,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             var currency = SeedDataBuilder.BuildType<Currency>();
             var mockCurrencyQuery = new Mock<CurrencyQuery>();
             var mockCurrencyRepository = new Mock<ICurrencyRepository>();
-            mockCurrencyRepository.Setup(service => service.Query(It.IsAny<Guid>())).ReturnsAsync(currency);
-
             var currencyQueryHandler = new QueryCurrencyHandlerAsync(mockCurrencyRepository.Object);
+
+            mockCurrencyRepository.Setup(service => service.Query(It.IsAny<Guid>())).ReturnsAsync(currency);
 
             //Act
             var returnedCurrency = await currencyQueryHandler.RetrieveAsync(mockCurrencyQuery.Object);

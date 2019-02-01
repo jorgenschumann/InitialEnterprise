@@ -11,9 +11,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
 {
     public class CurrencyRepository : ICurrencyRepository
     {
-        private readonly MainDbContext mainDbContext;
+        private readonly IMainDbContext mainDbContext;
 
-        public CurrencyRepository(MainDbContext context)
+        public CurrencyRepository(IMainDbContext context)
         {
             mainDbContext = context;
         }

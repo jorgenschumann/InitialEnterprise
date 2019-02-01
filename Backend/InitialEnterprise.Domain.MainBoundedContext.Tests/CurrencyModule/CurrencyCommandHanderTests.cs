@@ -31,18 +31,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             var currencyCommandHandler = new CurrencyCommandHandler(
                 mockCurrencyRepository.Object, mockCreateValidationHandler.Object, mockUpdateValidationHandler.Object);
 
-            var command = new CurrencyCreateCommand
-            {
-                Id = Guid.NewGuid(),
-                IsoCode = "GBP",
-                Name = "British Pound",
-                Rate = 12,
-                TimeStamp = DateTime.Now,
-                UserId = Guid.NewGuid()
-            };
+            var createCommand = new CurrencyCreateCommand("British Pound", "GBP", 1, Guid.NewGuid());
 
             //Act
-            var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(command);
+            var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(createCommand);
 
             //Assert
             Assert.IsNotNull(commandHandlerAnswer);

@@ -5,7 +5,7 @@ using InitialEnterprise.Infrastructure.DDD.Command;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class CreatePersonCommandValidationHandler : CommandValidator<CurrencyCreateCommand>
+    public class CreateCurrencyCommandValidationHandler : CommandValidator<CurrencyCreateCommand>
     {
         public override ValidationResult Validate(ValidationContext<CurrencyCreateCommand> context)
         {
