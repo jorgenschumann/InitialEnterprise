@@ -28,7 +28,7 @@ import { CurrencyComponent } from './currency/currency.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'currency', component: CurrencyComponent },
+      { path: 'currency', component: CurrencyComponent }      
     ])
   ],
   providers: [],

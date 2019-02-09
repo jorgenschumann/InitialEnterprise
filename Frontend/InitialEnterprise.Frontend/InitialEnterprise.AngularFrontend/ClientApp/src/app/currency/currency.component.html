@@ -1,0 +1,35 @@
+<h1>Currencies</h1>
+
+<p>Currencies form Server</p>
+
+<p *ngIf="!forecasts"><em>Loading...</em></p>
+
+<table class='table' *ngIf="currencies">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Iso Code</th>
+      <th>Rates</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let currency of currencies">
+      <td>
+        <button class='btn btn-default btn-sm' (click)='edit(currency)'>
+          <i class='material-icons'>edit</i>
+        </button>
+        <button class='btn btn-default btn-sm'>
+          <i class='material-icons'>delete</i>
+        </button>    
+      </td>
+
+      <td>{{ currency.id }}</td>
+      <td>{{ currency.name }}</td>
+      <td>{{ currency.isoCode }}</td>
+      <td>{{ currency.rates }}</td>
+    </tr>
+  </tbody>
+</table>

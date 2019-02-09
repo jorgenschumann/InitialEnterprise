@@ -1,6 +1,7 @@
 ﻿@page "/currencies"
 @addTagHelper *, BlazorStrap
 @inherits Blazor.Frontend.Pages.Currency.CurrencyMainModel
+@using Blazor.Frontend.Modules.Currency
 
 <h1>Currencies</h1>
 
@@ -34,19 +35,3 @@ else
         </tbody>
     </table>
 }
-
-@functions {
-
- bool IsOpen { get; set; }
-
-    void onclick(UIMouseEventArgs e)
-    {
-        IsOpen = !IsOpen;
-        StateHasChanged();
-    }
-    protected override async Task OnInitAsync()
-    {
-        await Get();
-    }
-}
-

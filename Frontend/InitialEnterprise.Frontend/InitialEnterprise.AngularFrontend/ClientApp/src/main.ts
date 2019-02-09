@@ -5,11 +5,17 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 export function getBaseUrl() {
-  return 'http://localhost:63928/api'; //document.getElementsByTagName('base')[0].href;
+  return document.getElementsByTagName('base')[0].href;
 }
 
+export function getApiUrl() {
+  return 'http://localhost:63928/api';
+}
+
+
 const providers = [
-  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
+  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
+  { provide: 'API_URL', useFactory: getApiUrl, deps: [] }
 ];
 
 if (environment.production) {
