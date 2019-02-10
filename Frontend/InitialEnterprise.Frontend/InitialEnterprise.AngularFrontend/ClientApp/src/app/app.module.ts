@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CurrencyComponent } from './currency/currency.component';
+import { UserSigninComponent } from './user-signin/user-signin.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CurrencyComponent } from './currency/currency.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    CurrencyComponent
+    CurrencyComponent,
+    UserSigninComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,7 +30,8 @@ import { CurrencyComponent } from './currency/currency.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'currency', component: CurrencyComponent }      
+      { path: 'currency', component: CurrencyComponent } ,
+      { path: 'user-signin', component: UserSigninComponent }
     ])
   ],
   providers: [],

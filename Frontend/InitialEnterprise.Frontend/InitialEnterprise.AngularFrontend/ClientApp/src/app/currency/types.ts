@@ -1,11 +1,12 @@
-interface Currency {
+
+export interface Currency {
   id: string;
   name: string;
   isoCode: string;
   userId: string;
 }
 
-interface CurrencyRate {
+export interface CurrencyRate {
   currencyRateDate: string;
   endOfDayRate: string;
   averageRate: string;

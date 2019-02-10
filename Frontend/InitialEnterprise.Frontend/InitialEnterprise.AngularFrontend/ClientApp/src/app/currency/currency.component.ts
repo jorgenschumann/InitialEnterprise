@@ -1,5 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Currency } from './types';
 
 @Component({
   selector: 'app-currency',
