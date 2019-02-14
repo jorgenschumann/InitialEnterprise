@@ -1,9 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "ReactCrudDemo\Frontend.csproj", "{21967196-8303-4E2D-BDBD-9A85DF74A5C9}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InitialEnterprise.AngularFrontend", "InitialEnterprise.AngularFrontend\", "{D144E543-4DAA-4EC1-9A6B-35BE842BE259}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50451"
+		Debug.AspNetCompiler.PhysicalPath = "InitialEnterprise.AngularFrontend\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50451\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50451"
+		Release.AspNetCompiler.PhysicalPath = "InitialEnterprise.AngularFrontend\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50451\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50451"
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.BlazorFrontend", "InitialEnterprise.BlazorFrontend\Blazor.Frontend\InitialEnterprise.BlazorFrontend.csproj", "{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.ReactFrontend", "InitialEnterprise.ReactFrontend\InitialEnterprise.ReactFrontend.csproj", "{47BACA4C-AFA8-40BE-A800-F92EC9670767}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +33,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21967196-8303-4E2D-BDBD-9A85DF74A5C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

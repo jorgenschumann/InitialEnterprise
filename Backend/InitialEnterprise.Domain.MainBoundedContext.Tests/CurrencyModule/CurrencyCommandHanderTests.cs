@@ -4,7 +4,6 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHandler;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
-using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterpriseTests.DataSeeding;
 using Moq;
 using NUnit.Framework;
@@ -32,18 +31,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             var currencyCommandHandler = new CurrencyCommandHandler(
                 mockCurrencyRepository.Object, mockCreateValidationHandler.Object, mockUpdateValidationHandler.Object);
 
-            var command = new CurrencyCreateCommand
-            {
-                Id = Guid.NewGuid(),
-                IsoCode = "GBP",
-                Name = "British Pound",
-                Rate = 12,
-                TimeStamp = DateTime.Now,
-                UserId = Guid.NewGuid()
-            };
+            var createCommand = new CurrencyCreateCommand("British Pound", "GBP", 1, Guid.NewGuid());
 
             //Act
-            var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(command);
+            var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(createCommand);
 
             //Assert
             Assert.IsNotNull(commandHandlerAnswer);

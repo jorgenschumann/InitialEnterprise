@@ -7,7 +7,7 @@ using System;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
 {
-    public class CurrencyAggTests
+    public class CurrencyAggegateTests
     {
         [Test]
         public void Check_ctor_is_private()
@@ -34,12 +34,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
         public void Should_create_entity_with_command_by_private_ctor()
         {
             //Arrange
-            var createCommand = new CurrencyCreateCommand
-            {
-                Name = "British Pound",
-                IsoCode = "GBP",
-                Rate = 1
-            };
+            var createCommand = new CurrencyCreateCommand("British Pound", "GBP", 1, Guid.NewGuid());
 
             //Act
             var activatedCurrency = Activator.CreateInstance(typeof(Currency), createCommand);
