@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { NgbdDatepickerBasic } from './datepicker-basic';
@@ -16,6 +16,9 @@ import { Routes } from '@angular/router';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserSigninService } from './user-signin/user-signin.service';
 import { UserAuthenticationService } from './user-signin/user-authentication.service';
+import { ErrorInterceptor } from 'src/infrastructure/interceptor/error-interceptor';
+import { JwtInterceptor } from 'src/infrastructure/interceptor/jwt-interceptor';
+import { Routing } from './app-route.routing';
 
 @NgModule({
    imports: [
@@ -25,6 +28,7 @@ import { UserAuthenticationService } from './user-signin/user-authentication.ser
       HttpClientModule,
       NgbModule,
       ReactiveFormsModule,
+      Routing,
       RouterModule.forRoot([
         { path: '', component: HomeComponent, pathMatch: 'full' },
         { path: 'home', component: HomeComponent },
@@ -47,7 +51,9 @@ import { UserAuthenticationService } from './user-signin/user-authentication.ser
    ],
    providers: [
     UserSigninService,
-    UserAuthenticationService
+    UserAuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
    bootstrap: [
       AppComponent

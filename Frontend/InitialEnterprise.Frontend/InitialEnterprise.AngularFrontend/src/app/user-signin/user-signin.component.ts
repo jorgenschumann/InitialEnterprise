@@ -8,6 +8,7 @@ import { ValidationService } from 'src/infrastructure/validation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-user-signin',
   templateUrl: './user-signin.component.html',
@@ -64,10 +65,11 @@ export class UserSigninComponent implements OnInit {
                 },
                 error => {
                     this.error = error;
+                    alert(JSON.stringify(error));
                     this.loading = false;
                   });
-    }
-  }
+                }
+              }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

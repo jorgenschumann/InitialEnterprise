@@ -22,12 +22,10 @@ export class UserAuthenticationService {
     }
 
     login(login: Login): any {
-            // tslint:disable-next-line:no-debugger
-            debugger;
-      this.httpClient.post<UserSignInResultDto>(this.apiUrl + '/useraccount/signin/' , login)
+          // tslint:disable-next-line:no-debugger
+          debugger;
+          this.httpClient.post<UserSignInResultDto>(this.apiUrl + '/useraccount/signin/' , login)
             .pipe(map(user => {
-                  // tslint:disable-next-line:no-debugger
-                  debugger;
                 if (user && user.token) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     localStorage.setItem('Authorization', `Bearer ${user.token}`);
@@ -39,6 +37,7 @@ export class UserAuthenticationService {
 
     logout() {
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('Authorization');
         this.currentUserSubject.next(null);
     }
 }
