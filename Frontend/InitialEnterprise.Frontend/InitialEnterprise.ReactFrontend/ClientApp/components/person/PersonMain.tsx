@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  ButtonGroup, ButtonToolbar } from 'react-bootstrap';
+import { ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 import { RouteComponentProps } from 'react-router';
 import { Endpoints } from '../Endpoints';
 import { PersonForm } from './PersonForm';
@@ -15,7 +15,7 @@ interface MainState {
     personFormModel?: Person;
     personFormButtonType: PersonFormButtonType;
     alert: string;
-    validationResult?: ValidationResult ;
+    validationResult?: ValidationResult;
 }
 
 export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial<MainState & PeopleInterface>> {
@@ -24,10 +24,10 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
 
         const validationResult = {} as ValidationResult;
         validationResult.IsValid = true;
-        
 
         this.state = {
-           people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add', alert: '', validationResult: validationResult};
+            people: ([] as Person[]), showPersonForm: false, personFormButtonType: 'add', alert: '', validationResult: validationResult
+        };
 
         this.delete = this.delete.bind(this);
         this.edit = this.edit.bind(this);
@@ -48,7 +48,7 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
                 </ButtonToolbar>
                 <br />
                 {this.state.showPersonForm && <PersonForm
-                    person={this.state.personFormModel} 
+                    person={this.state.personFormModel}
                     validationResult={this.state.validationResult}
                     buttonType={this.state.personFormButtonType}
                     buttonClick={this.save}
@@ -56,7 +56,7 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
 
                 <PersonTable people={this.state.people}
                     deleteClick={this.delete}
-                    editClick={this.edit} />              
+                    editClick={this.edit} />
                 {this.state.showAlert && <AlertComponent
                     message={this.state.alert} style={'success'} />}
             </div>);
@@ -71,34 +71,34 @@ export class PersonMain extends React.Component<RouteComponentProps<{}>, Partial
         await this.load();
     }
 
-    public edit(person: Person) {           
+    public edit(person: Person) {
         const validationResult = {} as ValidationResult;
-        validationResult.IsValid = true;       
-        this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult});
+        validationResult.IsValid = true;
+        this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'edit', validationResult: validationResult });
     }
-    
-    public async save(person: Person) {        
-        const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;            
-        await func(Endpoints.Person, person).then((response) => {   
-            const model = response.data as Model<Person>;     
+
+    public async save(person: Person) {
+        const func = this.state.personFormButtonType === 'edit' ? Http.put : Http.post;
+        await func(Endpoints.Person, person).then((response) => {
+            const model = response.data as Model<Person>;
             alert(JSON.stringify(model));
             this.setState({ showPersonForm: !model.ValidationResult.IsValid, personFormModel: person, validationResult: model.ValidationResult });
             this.load();
-        });      
+        });
     }
 
     public async load() {
-      await Http.get(Endpoints.Person).then((response) => {
+        await Http.get(Endpoints.Person).then((response) => {
             this.setState({ people: response.data });
-        });            
+        });
     }
 
     public create() {
-        const person = {} as Person;   
+        const person = {} as Person;
         this.setState({ showPersonForm: true, personFormModel: person, personFormButtonType: 'add' });
     }
 
     public cancel() {
-        this.setState({showPersonForm: false});
-    }  
+        this.setState({ showPersonForm: false });
+    }
 }

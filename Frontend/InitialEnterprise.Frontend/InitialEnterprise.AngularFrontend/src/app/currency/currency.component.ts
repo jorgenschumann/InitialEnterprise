@@ -1,6 +1,7 @@
 import { Component, Inject, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Currency } from './types';
+import { provideForRootGuard } from '@angular/router/src/router_module';
 
 @Component({
   selector: 'app-currency',
@@ -10,14 +11,14 @@ import { Currency } from './types';
 export class CurrencyComponent {
   public currencies: Currency[];
 
-  constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
-    http.get<Currency[]>(apiUrl + '/currency/').subscribe(result => {
+  constructor(http: HttpClient) {
+    http.get<Currency[]>('http://localhost:63928/api/currency/').subscribe(result => {
       this.currencies = result;
     }, error => console.error(error));
   }
 
   public edit(currency: Currency) {
-    alert(JSON.stringify(currency));
+    alert('edit');
   }
 
   public open() {

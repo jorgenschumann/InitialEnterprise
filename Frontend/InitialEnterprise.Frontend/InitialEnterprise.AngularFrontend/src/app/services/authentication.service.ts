@@ -2,33 +2,28 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserSignInResultDto, Login } from './sigin-types';
+import { UserSignInResultDto } from '../models/user.types';
 
 
 @Injectable({ providedIn: 'root' })
-export class UserAuthenticationService {
-  private apiUrl: string;
+export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<UserSignInResultDto>;
     public currentUser: Observable<UserSignInResultDto>;
 
-    constructor(private httpClient: HttpClient, @Inject('API_URL') apiUrl: string) {
-      this.apiUrl = apiUrl;
-      this.currentUserSubject = new BehaviorSubject<UserSignInResultDto>(JSON.parse(localStorage.getItem('currentUser')));
-      this.currentUser = this.currentUserSubject.asObservable();
+    constructor(private http: HttpClient) {
+        this.currentUserSubject = new BehaviorSubject<UserSignInResultDto>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUser = this.currentUserSubject.asObservable();
     }
 
     public get currentUserValue(): UserSignInResultDto {
         return this.currentUserSubject.value;
     }
 
-    login(login: Login): any {
-          // tslint:disable-next-line:no-debugger
-          debugger;
-          this.httpClient.post<UserSignInResultDto>(this.apiUrl + '/useraccount/signin/' , login)
+    login(email: string, password: string) {
+        return this.http.post<UserSignInResultDto>('http://localhost:63928/api/useraccount/signin', { email, password })
             .pipe(map(user => {
                 if (user && user.token) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    localStorage.setItem('Authorization', `Bearer ${user.token}`);
                     this.currentUserSubject.next(user);
                 }
                 return user;
@@ -37,7 +32,6 @@ export class UserAuthenticationService {
 
     logout() {
         localStorage.removeItem('currentUser');
-        localStorage.removeItem('Authorization');
         this.currentUserSubject.next(null);
     }
 }
