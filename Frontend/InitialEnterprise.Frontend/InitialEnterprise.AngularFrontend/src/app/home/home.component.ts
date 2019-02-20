@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
-import { UserService } from '../services/user.service';
+import { UserService } from '../user/shared/user.service';
 import { UserDto } from '../models/user.types';
 
 

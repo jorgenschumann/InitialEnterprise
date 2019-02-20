@@ -1,3 +1,4 @@
+import { UserListComponent } from './user/user-list/user-list.component';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
@@ -17,6 +18,11 @@ const appRoutes: Routes = [
       component: CurrencyComponent,
       canActivate: [AuthGuard]
   },
+  {
+    path: 'userlist',
+    component: UserListComponent,
+    canActivate: [AuthGuard]
+},
     {
         path: 'admin',
         component: AdminComponent,

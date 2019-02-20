@@ -16,6 +16,7 @@ import { routing } from './app.routing';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { AdminComponent } from './admin/admin.component';
 import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
+import { UserListComponent } from './user/user-list/user-list.component';
 
 @NgModule({
    imports: [
@@ -36,7 +37,8 @@ import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
       FetchDataComponent,
       CurrencyComponent,
       UserLoginComponent,
-      AdminComponent
+      AdminComponent,
+      UserListComponent
    ],
    providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
