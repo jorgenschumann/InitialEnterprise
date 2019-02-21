@@ -34,6 +34,7 @@ export interface UserDto {
   phoneNumberConfirmed: string;
   password: string;
   confirmPassword: string;
+  role: Role;
   claims: ApplicationUserClaim[];
 }
 
@@ -48,4 +49,9 @@ export interface TokenDto {
   Sub: string;
   Exp: number;
   Iat: number;
+}
+
+export enum Role {
+  User = 'User',
+  Admin = 'Admin'
 }

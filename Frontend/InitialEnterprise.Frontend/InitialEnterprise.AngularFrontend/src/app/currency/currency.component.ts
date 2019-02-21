@@ -1,23 +1,31 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Currency } from './types';
+import { provideForRootGuard } from '@angular/router/src/router_module';
+import { CurrencyService } from './shared/currency.service';
 
 @Component({
   selector: 'app-currency',
   templateUrl: './currency.component.html'
 })
 
-export class CurrencyComponent {
+export class CurrencyComponent implements OnInit {
   public currencies: Currency[];
 
-  constructor(http: HttpClient, @Inject('API_URL') apiUrl: string) {
-    http.get<Currency[]>(apiUrl + '/currency/').subscribe(result => {
-      this.currencies = result;
-    }, error => console.error(error));
+  constructor(private api: CurrencyService) {
+  }
+
+  ngOnInit() {
+    this.api.list()
+      .subscribe(res => {
+        this.currencies = res;
+      }, err => {
+        console.log(err);
+      });
   }
 
   public edit(currency: Currency) {
-    alert(JSON.stringify(currency));
+    alert('edit');
   }
 
   public open() {

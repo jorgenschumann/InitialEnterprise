@@ -10,15 +10,13 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { CurrencyComponent } from './currency/currency.component';
-import { UserSigninComponent } from './user-signin/user-signin.component';
 import { Routes } from '@angular/router';
-import { UserRegisterComponent } from './user-register/user-register.component';
-import { UserSigninService } from './user-signin/user-signin.service';
-import { UserAuthenticationService } from './user-signin/user-authentication.service';
-import { ErrorInterceptor } from 'src/infrastructure/interceptor/error-interceptor';
-import { JwtInterceptor } from 'src/infrastructure/interceptor/jwt-interceptor';
-import { Routing } from './app-route.routing';
+import { CurrencyComponent } from './currency/currency.component';
+import { routing } from './app.routing';
+import { UserLoginComponent } from './user/user-login/user-login.component';
+import { AdminComponent } from './admin/admin.component';
+import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
+import { UserListComponent } from './user/user-list/user-list.component';
 
 @NgModule({
    imports: [
@@ -28,15 +26,7 @@ import { Routing } from './app-route.routing';
       HttpClientModule,
       NgbModule,
       ReactiveFormsModule,
-      Routing,
-      RouterModule.forRoot([
-        { path: '', component: HomeComponent, pathMatch: 'full' },
-        { path: 'home', component: HomeComponent },
-        { path: 'currency', component: CurrencyComponent },
-        { path: 'nav-menu', component: NavMenuComponent },
-        { path: 'user-signin', component: UserSigninComponent },
-        { path: 'user-register', component: UserRegisterComponent },
-      ])
+      routing
    ],
    declarations: [
       AppComponent,
@@ -46,12 +36,11 @@ import { Routing } from './app-route.routing';
       CounterComponent,
       FetchDataComponent,
       CurrencyComponent,
-      UserSigninComponent,
-      UserRegisterComponent
+      UserLoginComponent,
+      AdminComponent,
+      UserListComponent
    ],
    providers: [
-    UserSigninService,
-    UserAuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
