@@ -14,6 +14,9 @@ Initial Enterprise Architecture for a .net core based business critical backend 
 * [JWTTOKENBUILDER] with JwtAuthentication & Claims 
 * [CLEANREST]  
 
+### Concepts Frontend
+
+
 
 Recources
 
