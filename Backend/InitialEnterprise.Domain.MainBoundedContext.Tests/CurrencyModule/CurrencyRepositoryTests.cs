@@ -9,29 +9,23 @@ using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Moq.EntityFrameworkCore;
+using System.Collections.Generic;
+
 namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
 {
     public class CurrencyRepositoryTests
     {
-        //https://docs.microsoft.com/de-de/ef/ef6/fundamentals/testing/mocking
-
         [Test]
-        public async Task Should_return_currency_by_currencyid()
+        public async Task Should_return_all_currencies()
         {
             //Arrange
-            IQueryable<Currency> currencies = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>().AsQueryable();
+            IList<Currency> currencies = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>() as IList<Currency>;
             var mockCurrencyQuery = new Mock<CurrencyQuery>();
 
             var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
-            var mockDbContext = new Mock<IMainDbContext>();
-
-            var mockSet = new Mock<DbSet<Currency>>();
-            mockSet.As<IQueryable<Currency>>().Setup(m => m.Provider).Returns(currencies.Provider);
-            mockSet.As<IQueryable<Currency>>().Setup(m => m.Expression).Returns(currencies.Expression);
-            mockSet.As<IQueryable<Currency>>().Setup(m => m.ElementType).Returns(currencies.ElementType);
-            mockSet.As<IQueryable<Currency>>().Setup(m => m.GetEnumerator()).Returns(currencies.GetEnumerator());
-
-            mockDbContext.Setup(c => c.Currency).Returns(mockSet.Object);
+            var mockDbContext = new Mock<MainDbContext>(optionsBuilder.Options);
+            mockDbContext.Setup(x => x.Currency).ReturnsDbSet(currencies);
 
             ICurrencyRepository currencyRepository = new CurrencyRepository(mockDbContext.Object);
 
@@ -39,6 +33,27 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             var currencyQueryResult = await currencyRepository.Query(new CurrencyQuery());
 
             //Assert
+            Assert.AreEqual(currencies.Count(), currencyQueryResult.Count());
+        }
+
+        [Test]
+        public async Task Should_return_all_currency_by_currencyid()
+        {
+            //Arrange
+            IList<Currency> currencies = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>() as IList<Currency>;
+            var currencyQuery = currencies[0].Id;
+
+            var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
+            var mockDbContext = new Mock<MainDbContext>(optionsBuilder.Options);
+            mockDbContext.Setup(x => x.Currency).ReturnsDbSet(currencies);
+
+            ICurrencyRepository currencyRepository = new CurrencyRepository(mockDbContext.Object);
+
+            //Act
+            var currencyQueryResult = await currencyRepository.Query(currencyQuery);
+
+            //Assert
+            Assert.AreEqual(currencies[0], currencyQueryResult);
         }
     }
 }

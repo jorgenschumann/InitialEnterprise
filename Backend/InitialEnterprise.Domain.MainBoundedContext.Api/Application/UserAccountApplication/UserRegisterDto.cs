@@ -1,9 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
     public class UserRegisterDto
     {
+        [Required]
+        [Display(Name = "FirstName")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "LastName")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "DateOfBirth")]
+        public DateTime DateOfBirth { get; set; }
+
         [Required]
         [Display(Name = "Username")]
         public string Username { get; set; }

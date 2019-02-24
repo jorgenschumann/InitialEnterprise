@@ -17,6 +17,8 @@ import { UserLoginComponent } from './user/user-login/user-login.component';
 import { AdminComponent } from './admin/admin.component';
 import { JwtInterceptor, ErrorInterceptor } from './core/interceptor';
 import { UserListComponent } from './user/user-list/user-list.component';
+import { UserAvatarComponent } from './user/user-avatar/user-avatar.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
 
 @NgModule({
    imports: [
@@ -38,8 +40,14 @@ import { UserListComponent } from './user/user-list/user-list.component';
       CurrencyComponent,
       UserLoginComponent,
       AdminComponent,
-      UserListComponent
+      UserListComponent,
+      UserAvatarComponent,
+      UserDetailComponent
    ],
+   entryComponents: [
+     UserListComponent,
+     UserDetailComponent
+    ],
    providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

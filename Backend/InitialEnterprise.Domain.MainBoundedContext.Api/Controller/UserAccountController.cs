@@ -41,6 +41,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 
+        [HttpGet]
+        [Authorize(Policy = PersonClaims.PersonRead)]
+        public async Task<IActionResult> Get()
+        {
+            var result = await userAccountApplication.QueryAsync(new UserQuery());
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+        }
+
         [HttpGet("{id}")]
         [Authorize(Policy = PersonClaims.PersonRead)]
         public async Task<IActionResult> Get(Guid id)

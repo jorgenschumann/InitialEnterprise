@@ -22,12 +22,22 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
 
         public string Token { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
         public ApplicationUser()
         {
         }
 
         public void Update(UserUpdateCommand command)
         {
+            this.FirstName = command.FirstName;
+            this.LastName = command.LastName;
+            this.DateOfBirth = command.DateOfBirth;
+            this.UserName = command.UserName;
             this.Email = command.Email;
             this.NormalizedEmail = this.Email.ToUpper();
             this.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(this, command.Password);
@@ -36,6 +46,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
 
         public ApplicationUser(UserRegisterCommand command)
         {
+            this.FirstName = command.FirstName;
+            this.LastName = command.LastName;
+            this.DateOfBirth = command.DateOfBirth;
             this.UserName = command.UserName;
             this.Email = command.Email;
             this.NormalizedEmail = this.Email.ToUpper();

@@ -207,7 +207,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
         }
