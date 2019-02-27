@@ -4,12 +4,10 @@ import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../user/shared/user.service';
 import { UserDto } from '../models/user.types';
 
-
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
+  constructor() { }
 
-    constructor() {}
-
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 }

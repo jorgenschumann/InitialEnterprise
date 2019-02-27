@@ -8,8 +8,6 @@ import { NgbdDatepickerBasic } from './datepicker-basic';
 import { RouterModule } from '@angular/router';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { Routes } from '@angular/router';
 import { CurrencyComponent } from './currency/currency.component';
 import { routing } from './app.routing';
@@ -35,8 +33,6 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
       NgbdDatepickerBasic,
       NavMenuComponent,
       HomeComponent,
-      CounterComponent,
-      FetchDataComponent,
       CurrencyComponent,
       UserLoginComponent,
       AdminComponent,
