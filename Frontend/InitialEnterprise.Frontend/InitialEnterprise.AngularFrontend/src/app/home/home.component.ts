@@ -7,19 +7,9 @@ import { UserDto } from '../models/user.types';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
-    currentUser: UserDto;
-    userFromApi: UserDto;
 
-    constructor(
-        private userService: UserService,
-        private authenticationService: AuthenticationService
-    ) {
-        this.currentUser = this.authenticationService.currentUserValue.user;
-    }
+    constructor() {}
 
     ngOnInit() {
-        this.userService.get(this.currentUser.id).pipe(first()).subscribe(user => {
-            this.userFromApi = user;
-        });
     }
 }

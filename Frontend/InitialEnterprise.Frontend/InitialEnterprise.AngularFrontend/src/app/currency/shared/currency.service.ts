@@ -6,10 +6,6 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { BaseApiService } from 'src/app/services/base-api.service';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -32,7 +28,7 @@ export class CurrencyService extends BaseApiService {
   }
 
   post(currency): Observable<Currency> {
-    return this.http.post<Currency>(`${this.config.Endpoint}/currency`, currency, httpOptions).pipe(
+    return this.http.post<Currency>(`${this.config.Endpoint}/currency`, currency, this.httpOptions).pipe(
       tap((c: Currency) => console.log(`post currency w/ id=${currency.id}`)),
       catchError(this.handleError<Currency>('post'))
     );
@@ -40,7 +36,7 @@ export class CurrencyService extends BaseApiService {
 
   put(id: any, currency: any): Observable<any> {
     const url =  `${this.config.Endpoint}/currency/${id}`;
-    return this.http.put(url, currency, httpOptions).pipe(
+    return this.http.put(url, currency, this.httpOptions).pipe(
       tap(_ => console.log(`put Currency id=${id}`)),
       catchError(this.handleError<any>('put currency'))
     );
@@ -48,7 +44,7 @@ export class CurrencyService extends BaseApiService {
 
   delete(id): Observable<Currency> {
     const url =  `${this.config.Endpoint}/currency/${id}`;
-    return this.http.delete<Currency>(url, httpOptions).pipe(
+    return this.http.delete<Currency>(url, this.httpOptions).pipe(
       tap(_ => console.log(`deleted currency id=${id}`)),
       catchError(this.handleError<Currency>('delete'))
     );

@@ -35,7 +35,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                 response.EnsureSuccessStatusCode();
             }
             var siginResult = await DeserializeContentStringAsync<JObject>(response);
-            var succeeded = (Boolean)siginResult["SignInResult"]["Succeeded"];
+            var succeeded = (Boolean)siginResult["signInResult"]["succeeded"];
 
             Assert.IsTrue(succeeded);
         }
@@ -45,6 +45,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         {
             var model = new UserRegisterDto
             {
+                FirstName = "Jorgen",
+                LastName = "Schumann",
+                DateOfBirth = new DateTime(1968, 11, 30),
                 Email = "User1@test.de",
                 Password = "#Az1234567890!",
                 ConfirmPassword = "#Az1234567890!",
@@ -60,7 +63,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                 response.EnsureSuccessStatusCode();
             }
             var identityResult = await DeserializeContentStringAsync<JObject>(response);
-            var succeeded = (Boolean)identityResult[nameof(IdentityResult.Succeeded)];
+            var succeeded = (Boolean)identityResult["succeeded"];
 
             Assert.IsTrue(succeeded);
         }
@@ -68,8 +71,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         [Test]
         public async Task Should_update_user_status_code_ok()
         {
-            var model = new UserDto
+            var model = new UserRegisterDto
             {
+                FirstName = "Jorgen",
+                LastName = "Schumann",
+                DateOfBirth = new DateTime(1968, 11, 30),
                 Email = "User1@test.de",
                 Password = "#Az1234567890!",
                 ConfirmPassword = "#Az1234567890!",
@@ -85,7 +91,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                 response.EnsureSuccessStatusCode();
             }
             var identityResult = await DeserializeContentStringAsync<JObject>(response);
-            var succeeded = (Boolean)identityResult[nameof(IdentityResult.Succeeded)];
+            var succeeded = (Boolean)identityResult["succeeded"];
 
             Assert.IsTrue(succeeded);
         }

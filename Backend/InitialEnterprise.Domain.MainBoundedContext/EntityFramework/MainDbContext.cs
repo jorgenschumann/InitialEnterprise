@@ -15,11 +15,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
          ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
          ApplicationRoleClaim, ApplicationUserToken>, IMainDbContext
     {
+        public MainDbContext() : this(null)
+        {
+        }
+
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
         }
 
-        public DbSet<Currency> Currency { get; set; }
+        public virtual DbSet<Currency> Currency { get; set; }
 
         public DbSet<CurrencyRate> CurrencyRate { get; set; }
 
@@ -78,17 +82,17 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
             modelBuilder.Entity<ApplicationRole>(b =>
             {
-               // Each Role can have many entries in the UserRole join table
-               b.HasMany(e => e.UserRoles)
-                  .WithOne(e => e.Role)
-                  .HasForeignKey(ur => ur.RoleId)
-                  .IsRequired();
+                // Each Role can have many entries in the UserRole join table
+                b.HasMany(e => e.UserRoles)
+                   .WithOne(e => e.Role)
+                   .HasForeignKey(ur => ur.RoleId)
+                   .IsRequired();
 
-               // Each Role can have many associated RoleClaims
-               b.HasMany(e => e.RoleClaims)
-                  .WithOne(e => e.Role)
-                  .HasForeignKey(rc => rc.RoleId)
-                  .IsRequired();
+                // Each Role can have many associated RoleClaims
+                b.HasMany(e => e.RoleClaims)
+                   .WithOne(e => e.Role)
+                   .HasForeignKey(rc => rc.RoleId)
+                   .IsRequired();
             });
         }
     }

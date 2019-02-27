@@ -33,6 +33,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         [HttpGet]
         [Authorize(Policy = CurrencyClaims.CurrencyQuery)]
+        [Authorize(Policy = CurrencyClaims.CurrencyRead)]
         public async Task<IActionResult> Get()
         {
             var result = await currencyApplication.Query();

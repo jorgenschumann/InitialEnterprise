@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -10,7 +9,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [Route("api/[controller]")]
         public IActionResult Index()
         {
-            return Ok();
+            return Ok(nameof(HomeController));
         }
     }
 }

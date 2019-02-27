@@ -26,7 +26,10 @@ export interface ApplicationUserClaim {
 }
 
 export interface UserDto {
-  id: string;
+  id: any;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
   userName: string;
   email: string;
   emailConfirmed: string;
@@ -34,7 +37,7 @@ export interface UserDto {
   phoneNumberConfirmed: string;
   password: string;
   confirmPassword: string;
-  role: Role;
+  role: string;
   claims: ApplicationUserClaim[];
 }
 

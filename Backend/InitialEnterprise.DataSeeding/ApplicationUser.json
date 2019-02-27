@@ -1,4 +1,4 @@
-﻿//password: #Az1234567890! 
+﻿//password: #Az1234567890!
 [
   {
     "Claims": null,
@@ -19,7 +19,10 @@
     "TwoFactorEnabled": false,
     "LockoutEnd": null,
     "LockoutEnabled": false,
-    "AccessFailedCount": 1
+    "AccessFailedCount": 1,
+    "DateOfBirth": "1968/11/30",
+    "FirstName": "Jorgen",
+    "LastName": "Schumann"
   },
   {
     "Claims": null,
@@ -40,7 +43,10 @@
     "TwoFactorEnabled": true,
     "LockoutEnd": null,
     "LockoutEnabled": true,
-    "AccessFailedCount": 2
+    "AccessFailedCount": 2,
+    "DateOfBirth": "2009/05/27",
+    "FirstName": "Mika",
+    "LastName": "Schumann"
   },
   {
     "Claims": null,
@@ -61,6 +67,9 @@
     "TwoFactorEnabled": false,
     "LockoutEnd": null,
     "LockoutEnabled": false,
-    "AccessFailedCount": 3
+    "AccessFailedCount": 3,
+    "DateOfBirth": "2003/10/09",
+    "FirstName": "Nils",
+    "LastName": "Schumann"
   }
 ]

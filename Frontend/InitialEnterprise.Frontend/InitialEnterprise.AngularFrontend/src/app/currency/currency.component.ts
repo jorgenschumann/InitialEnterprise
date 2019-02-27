@@ -12,11 +12,11 @@ import { CurrencyService } from './shared/currency.service';
 export class CurrencyComponent implements OnInit {
   public currencies: Currency[];
 
-  constructor(private api: CurrencyService) {
+  constructor(private currencyService: CurrencyService) {
   }
 
   ngOnInit() {
-    this.api.list()
+    this.currencyService.list()
       .subscribe(res => {
         this.currencies = res;
       }, err => {

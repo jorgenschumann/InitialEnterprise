@@ -5,15 +5,14 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.ValidationHandler
 {
-    public class RegisterCommandValidationHandler : CommandValidator<UserRegisterCommand>
+    public class UpdateCommandValidationHandler : CommandValidator<UserUpdateCommand>
     {
-        public override ValidationResult Validate(ValidationContext<UserRegisterCommand> context)
+        public override ValidationResult Validate(ValidationContext<UserUpdateCommand> context)
         {
             ValidateFistName();
             ValidateLastName();
             ValidateDateOfBirth();
             ValidateEmail();
-            ValdidatePassword();
             return base.Validate(context);
         }
 
@@ -43,13 +42,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.ValidationHandl
             RuleFor(c => c.Email)
                 .NotEmpty().WithMessage(nameof(UserRegisterCommand.Email))
                 .EmailAddress().WithMessage("A valid email is required");
-        }
-
-        protected void ValdidatePassword()
-        {
-            RuleFor(c => c.Password)
-                .NotEmpty().WithMessage(nameof(UserRegisterCommand.Password))
-                .Password();
         }
     }
 }

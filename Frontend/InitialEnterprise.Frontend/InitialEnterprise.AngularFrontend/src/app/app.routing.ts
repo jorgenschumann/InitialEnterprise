@@ -8,34 +8,34 @@ import { CurrencyComponent } from './currency/currency.component';
 import { Role } from './models/user.types';
 
 const appRoutes: Routes = [
-    {
-        path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-      path: 'currency',
-      component: CurrencyComponent,
+  {
+      path: '',
+      component: HomeComponent,
       canActivate: [AuthGuard]
+  },
+  {
+    path: 'currency',
+    component: CurrencyComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'userlist',
     component: UserListComponent,
     canActivate: [AuthGuard]
-},
-    {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AuthGuard],
-        data: { roles: [Role.Admin] }
-    },
-    {
-        path: 'login',
-        component: UserLoginComponent
-    },
+  },
+  {
+      path: 'admin',
+      component: AdminComponent,
+      canActivate: [AuthGuard],
+      data: { roles: [Role.Admin] }
+  },
+  {
+      path: 'login',
+      component: UserLoginComponent
+  },
 
-    // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
