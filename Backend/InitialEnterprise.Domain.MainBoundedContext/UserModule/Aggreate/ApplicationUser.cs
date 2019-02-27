@@ -39,8 +39,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
             this.DateOfBirth = command.DateOfBirth;
             this.UserName = command.UserName;
             this.Email = command.Email;
+            this.PhoneNumber = command.PhoneNumber;
             this.NormalizedEmail = this.Email.ToUpper();
-            this.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(this, command.Password);
+            //this.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(this, command.Password);
             //todo: set other values
         }
 

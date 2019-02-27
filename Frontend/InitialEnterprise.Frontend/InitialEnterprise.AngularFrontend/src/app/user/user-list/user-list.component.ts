@@ -2,7 +2,7 @@ import { UserService } from './../shared/user.service';
 import { UserDto } from './../../models/user.types';
 import { Component, OnInit } from '@angular/core';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
-import {NgbModal,ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-list',
@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
   public edit(user: UserDto) {
     this.selectedUser = user;
 
-    const modalRef = this.modalService.open(UserDetailComponent);
+    const modalRef = this.modalService.open(UserDetailComponent, { size: 'lg' });
     modalRef.componentInstance.user = this.selectedUser;
     modalRef.result.then((result) => {
         this.closeResult = `Closed with: ${result}`;

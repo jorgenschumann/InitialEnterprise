@@ -18,5 +18,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
         public string Password { get; set; }
 
         public string ConfirmPassword { get; set; }
+
+        public string PhoneNumber { get; set; }
     }
 }

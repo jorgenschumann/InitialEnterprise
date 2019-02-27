@@ -21,8 +21,8 @@
     "LockoutEnabled": false,
     "AccessFailedCount": 1,
     "DateOfBirth": "1968/11/30",
-    "FistName": "Jorgen",
-    "LastName":  "Schumann"
+    "FirstName": "Jorgen",
+    "LastName": "Schumann"
   },
   {
     "Claims": null,
@@ -45,7 +45,7 @@
     "LockoutEnabled": true,
     "AccessFailedCount": 2,
     "DateOfBirth": "2009/05/27",
-    "FistName": "Mika",
+    "FirstName": "Mika",
     "LastName": "Schumann"
   },
   {
@@ -69,7 +69,7 @@
     "LockoutEnabled": false,
     "AccessFailedCount": 3,
     "DateOfBirth": "2003/10/09",
-    "FistName": "Nils",
+    "FirstName": "Nils",
     "LastName": "Schumann"
   }
 ]

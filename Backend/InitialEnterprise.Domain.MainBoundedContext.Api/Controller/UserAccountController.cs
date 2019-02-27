@@ -66,9 +66,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize(Policy = PersonClaims.PersonWrite)]
-        public async Task<IActionResult> Put([FromBody] UserDto model)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UserDto model)
         {
             var result = await userAccountApplication.Update(model);
             return Ok(result);

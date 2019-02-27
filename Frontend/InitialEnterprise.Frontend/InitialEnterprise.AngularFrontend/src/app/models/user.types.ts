@@ -26,18 +26,18 @@ export interface ApplicationUserClaim {
 }
 
 export interface UserDto {
-  id: string;
+  id: any;
   firstName: string;
   lastName: string;
+  dateOfBirth: Date;
   userName: string;
   email: string;
-  emailConfirmed: boolean;
+  emailConfirmed: string;
   phoneNumber: string;
-  phoneNumberConfirmed: boolean;
+  phoneNumberConfirmed: string;
   password: string;
-  dateOfBirth: Date;
   confirmPassword: string;
-  role: Role;
+  role: string;
   claims: ApplicationUserClaim[];
 }
 

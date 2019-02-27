@@ -26,17 +26,17 @@ export class UserService extends BaseApiService {
     );
   }
 
-  put(id: any, user: any): Observable<any> {
-    const url =  `${this.config.Endpoint}/useraccount/${id}`;
-    return this.http.put(url, user, this.httpOptions).pipe(
-      tap(_ => console.log(`put user id=${id}`)),
+  put(user: any): Observable<any> {
+    const url =  `${this.config.Endpoint}/useraccount/${user.id}`;
+    return this.http.put(url, user).pipe(
+      tap(_ => console.log(`put user id=${user.id}`)),
       catchError(this.handleError<any>('put user'))
     );
   }
 
-  post(currency): Observable<UserDto> {
-    return this.http.post<UserDto>(`${this.config.Endpoint}/useraccount`, currency, this.httpOptions).pipe(
-      tap((c: UserDto) => console.log(`post UserDto w/ id=${currency.id}`)),
+  post(user: UserDto): Observable<UserDto> {
+    return this.http.post<UserDto>(`${this.config.Endpoint}/useraccount`, user, this.httpOptions).pipe(
+      tap((c: UserDto) => console.log(`post UserDto w/ id=${user.id}`)),
       catchError(this.handleError<UserDto>('post'))
     );
   }
