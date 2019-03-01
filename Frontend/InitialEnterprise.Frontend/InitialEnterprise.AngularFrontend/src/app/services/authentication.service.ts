@@ -1,18 +1,22 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, config } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserSignInResultDto } from '../models/user.types';
+import { BaseApiService } from './base-api.service';
+import { Configuration } from './configuration';
 
 
 @Injectable({ providedIn: 'root' })
-export class AuthenticationService {
+export class AuthenticationService extends BaseApiService {
     private currentUserSubject: BehaviorSubject<UserSignInResultDto>;
     public currentUser: Observable<UserSignInResultDto>;
 
-    constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<UserSignInResultDto>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+    constructor(protected http: HttpClient,
+                configuration: Configuration) {
+      super(http, configuration);
+      this.currentUserSubject = new BehaviorSubject<UserSignInResultDto>(JSON.parse(localStorage.getItem('currentUser')));
+      this.currentUser = this.currentUserSubject.asObservable();
     }
 
     public get currentUserValue(): UserSignInResultDto {
@@ -20,10 +24,11 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<UserSignInResultDto>('http://localhost:63928/api/useraccount/signin', { email, password })
+      const url = `${this.config.Endpoint}/useraccount/signin`;
+      return this.http.post<UserSignInResultDto>(url, { email, password })
             .pipe(map(user => {
                 if (user && user.token) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem(this.config.localStorageUserKey, JSON.stringify(user));
                     this.currentUserSubject.next(user);
                 }
                 return user;
@@ -31,7 +36,7 @@ export class AuthenticationService {
     }
 
     logout() {
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem(this.config.localStorageUserKey);
         this.currentUserSubject.next(null);
     }
 }
