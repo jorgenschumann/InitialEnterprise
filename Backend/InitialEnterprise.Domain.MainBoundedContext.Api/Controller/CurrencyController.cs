@@ -56,9 +56,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize(Policy = CurrencyClaims.CurrencyWrite)]
-        public async Task<IActionResult> Put([FromBody] CurrencyDto value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Update(value);
             return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);

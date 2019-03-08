@@ -20,7 +20,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
             {
                 this.CopyPropertiesFrom(command);
 
-                AddEvent(new CurrencyCreated
+                base.AddEvent(new CurrencyCreated
                 {
                     AggregateRootId = Id,
                     CommandJson = JsonConvert.SerializeObject(command),
@@ -42,7 +42,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         {
             if (command.IsValid)
             {
-                AddEvent(new CurrencyUpdated { AggregateRootId = Id, CommandJson = JsonConvert.SerializeObject(command) });
+                this.Name = command.Name;
+                this.IsoCode = command.IsoCode;
+                base.AddEvent(new CurrencyUpdated { AggregateRootId = Id, CommandJson = JsonConvert.SerializeObject(command) });
             }
 
             return this;

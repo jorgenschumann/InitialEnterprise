@@ -21,9 +21,9 @@ export class UserAvatarComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.userService.get(this.currentUser.id).pipe(first()).subscribe(user => {
-        //     this.userFromApi = user;
-        // });
+        this.userService.get(this.currentUser.id).pipe(first()).subscribe(user => {
+            this.userFromApi = user;
+        });
     }
 
 }

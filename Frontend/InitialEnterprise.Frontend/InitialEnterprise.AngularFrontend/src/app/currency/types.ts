@@ -3,6 +3,7 @@ export interface Currency {
   id: string;
   name: string;
   isoCode: string;
+  rates: CurrencyRate[];
   userId: string;
 }
 

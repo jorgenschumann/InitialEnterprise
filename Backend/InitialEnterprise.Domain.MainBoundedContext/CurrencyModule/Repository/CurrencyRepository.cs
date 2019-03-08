@@ -24,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
         public Currency Update(Currency currency)
         {
             var addedCurrency = mainDbContext.Currency.Update(currency);
-
+            mainDbContext.SaveEntitiesAsync();
             return addedCurrency.Entity;
         }
 
@@ -36,7 +36,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository
         public async Task<Currency> Insert(Currency currency)
         {
             var addedCurrency = await mainDbContext.Currency.AddAsync(currency);
-
+            await mainDbContext.SaveEntitiesAsync();
             return addedCurrency.Entity;
         }
 

@@ -3,6 +3,7 @@ import { UserDto } from './../../models/user.types';
 import { Component, OnInit } from '@angular/core';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ArrayUtils } from 'src/app/core/arrayUtils';
 
 @Component({
   selector: 'app-user-list',
@@ -34,11 +35,20 @@ export class UserListComponent implements OnInit {
     const modalRef = this.modalService.open(UserDetailComponent, { size: 'lg' });
     modalRef.componentInstance.user = this.selectedUser;
     modalRef.result.then((result) => {
-        this.closeResult = `Closed with: ${result}`;
+      ArrayUtils.pushToArray(this.users, Object.assign(this.selectedUser, result));
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       });
     }
+
+//  pushToArray(array, object) {
+//       const index = array.findIndex((e) => e.id === object.id);
+//       if (index === -1) {
+//         array.push(object);
+//       } else {
+//         array[index] = object;
+//       }
+//   }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
