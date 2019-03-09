@@ -33,7 +33,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
             {
                 this.CopyPropertiesFrom(command);
 
-                AddEvent(new PersonCreated
+                base.AddEvent(new PersonCreated
                 {
                     AggregateRootId = Id,
                     CommandJson = JsonConvert.SerializeObject(command),
@@ -48,7 +48,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
             {
                 this.CopyPropertiesFrom(command);
 
-                AddEvent(new PersonUpdated
+                base.AddEvent(new PersonUpdated
                 {
                     AggregateRootId = Id,
                     CommandJson = JsonConvert.SerializeObject(command),

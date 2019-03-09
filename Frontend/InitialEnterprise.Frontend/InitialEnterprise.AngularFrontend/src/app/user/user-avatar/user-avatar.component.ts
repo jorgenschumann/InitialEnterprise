@@ -17,13 +17,17 @@ export class UserAvatarComponent implements OnInit {
         private userService: UserService,
         private authenticationService: AuthenticationService
     ) {
-        //this.currentUser = this.authenticationService.currentUserValue.user;
+      if (this.authenticationService.currentUserValue != null) {
+        this.currentUser = this.authenticationService.currentUserValue.user;
+      }
     }
 
     ngOnInit() {
-        // this.userService.get(this.currentUser.id).pipe(first()).subscribe(user => {
-        //     this.userFromApi = user;
-        // });
+        this.userService.get(this.currentUser.id)
+        .pipe(first())
+        .subscribe(user => {
+            this.userFromApi = user;
+        });
     }
 
 }

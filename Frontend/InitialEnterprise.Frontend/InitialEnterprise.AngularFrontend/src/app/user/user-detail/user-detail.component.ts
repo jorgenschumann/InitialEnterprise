@@ -18,6 +18,7 @@ export class UserDetailComponent implements OnInit {
   loading = false;
   submitted = false;
   error = '';
+
   constructor(public activeModal: NgbActiveModal,
               private formBuilder: FormBuilder,
               private userService: UserService) {}
@@ -38,7 +39,8 @@ export class UserDetailComponent implements OnInit {
       this.userService.put(this.userForm.value)
       .subscribe(
           data => {
-              this.activeModal.close('SaveClick');
+            this.user = Object.assign({}, this.userForm.value);
+            this.activeModal.close(this.user);
           },
           error => {
               this.error = error;
@@ -48,7 +50,7 @@ export class UserDetailComponent implements OnInit {
    }
 
    onCancel() {
-    this.activeModal.close('CancelClick');
+    this.activeModal.close(this.user);
    }
 
    get f() {

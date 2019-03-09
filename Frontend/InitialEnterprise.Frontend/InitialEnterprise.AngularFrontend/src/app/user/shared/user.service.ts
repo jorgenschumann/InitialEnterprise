@@ -41,10 +41,10 @@ export class UserService extends BaseApiService {
     );
   }
 
-  delete(id): Observable<UserDto> {
-    const url =  `${this.config.Endpoint}/UserDto/${id}`;
-    return this.http.delete<UserDto>(url, this.httpOptions).pipe(
-      tap(_ => console.log(`deleted UserDto id=${id}`)),
+  delete(user: UserDto): Observable<UserDto> {
+    const url = `${this.config.Endpoint}/useraccount/${user.id}`;
+    return this.http.delete<UserDto>(url).pipe(
+      tap(_ => console.log(`deleted UserDto id=${user.id}`)),
       catchError(this.handleError<UserDto>('delete'))
     );
   }

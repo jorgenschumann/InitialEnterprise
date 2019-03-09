@@ -34,10 +34,10 @@ export class CurrencyService extends BaseApiService {
     );
   }
 
-  put(id: any, currency: any): Observable<any> {
-    const url =  `${this.config.Endpoint}/currency/${id}`;
+  put( currency: Currency): Observable<Currency> {
+    const url =  `${this.config.Endpoint}/currency/${currency.id}`;
     return this.http.put(url, currency, this.httpOptions).pipe(
-      tap(_ => console.log(`put Currency id=${id}`)),
+      tap(_ => console.log(`put Currency id=${currency.id}`)),
       catchError(this.handleError<any>('put currency'))
     );
   }

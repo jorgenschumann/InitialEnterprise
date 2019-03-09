@@ -14,10 +14,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
     public interface IUserAccountApplication
     {
         Task<UserSignInResult> SignIn(UserLoginDto model);
-      
+
         Task<IdentityResult> Register(UserRegisterDto model);
 
         Task<IdentityResult> Update(UserDto model);
+
+        Task<IdentityResult> Delete(Guid id);
 
         Task<ApplicationUser> Query(Guid id);
 
@@ -37,9 +39,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         public async Task<UserSignInResult> SignIn(UserLoginDto model)
         {
             var command = Mapper.Map(model).ToANew<SignInCommand>();
-            return  await dispatcher.SendAndReturnAsync<SignInCommand, UserSignInResult>(command);         
+            return await dispatcher.SendAndReturnAsync<SignInCommand, UserSignInResult>(command);
         }
-     
+
         public async Task<IdentityResult> Register(UserRegisterDto model)
         {
             var command = Mapper.Map(model).ToANew<UserRegisterCommand>();
@@ -49,7 +51,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         public async Task<ApplicationUser> Query(Guid id)
         {
             var query = new UserQuery { Id = id };
-            return  await dispatcher.GetResultAsync<UserQuery,ApplicationUser>(query);
+            return await dispatcher.GetResultAsync<UserQuery, ApplicationUser>(query);
         }
 
         public async Task<IdentityResult> Update(UserDto model)
@@ -57,11 +59,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
             var command = Mapper.Map(model).ToANew<UserUpdateCommand>();
             return await dispatcher.SendAndReturnAsync<UserUpdateCommand, IdentityResult>(command);
         }
-             
+
         public async Task<IEnumerable<ApplicationUser>> QueryAsync(IQuery query)
         {
             var userQuery = query as UserQuery;
             return await dispatcher.GetResultAsync<UserQuery, IEnumerable<ApplicationUser>>(userQuery);
+        }
+
+        public Task<IdentityResult> Delete(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

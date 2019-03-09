@@ -10,67 +10,66 @@
 
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <div class="row">
-               <div class="col-md-4 mb-3">
-                  <label for="firstName">Firstname</label>
-                  <div class="input-group">
-                      <div class="form-group form-inline">
-                          <input type="text" formControlName="firstName" class="form-control ml-2" />
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="lastName">Lastname</label>
-                    <div class="input-group">
-                        <div class="form-group form-inline">
-                            <input class="form-control ml-2" type="text" formControlName="lastName"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8 mb-3">
-                  <label for="userName">Username</label>
-                    <div class="input-group">
-                        <div class="form-group form-inline">
-                            <input class="form-control ml-2" type="text" formControlName="userName"/>
-                        </div>
-                    </div>
-                 </div>
-             </div>
-             <div class="row">
-                <div class="col-md-8 mb-3">
-                    <label for="email">Email</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
-                      </div>
-                      <input type="text" class="form-control" formControlName="email" placeholder="email" >
-                    </div>
-                  </div>
-             </div>
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label for="phoneNumber">Phone</label>
-                    <div class="input-group">
-                        <div class="form-group form-inline">
-                            <input class="form-control ml-2" type="text" formControlName="phoneNumber"/>
-                        </div>
-                    </div>
-                 </div>
-                 <div class="col-md-4 mb-3">
-                  <div class="input-group">
-                      <label for="dateOfBirth">Date of Birth</label>
+
+            <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-2 col-md-6">
+                      <label for="firstName">Firstname</label>
                       <div class="input-group">
-                          <input class="form-control ml-2" placeholder="yyyy-mm-dd"
-                          name="dp" ngbDatepicker #d="ngbDatepicker">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                          <div class="form-group form-inline">
+                              <input type="text" formControlName="firstName" class="form-control ml-auto" />
                           </div>
-                        </div>
+                      </div>
                   </div>
-                 </div>
-             </div>
+                  <div class="col-md-6">
+                      <label for="lastName">Lastname</label>
+                      <div class="input-group">
+                          <div class="form-group form-inline">
+                              <input  type="text" formControlName="lastName" class="form-control ml-auto"/>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="userName">Username</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" formControlName="userName" placeholder="Username" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <label for="email">Email</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">@</span>
+                        </div>
+                        <input type="text" class="form-control" formControlName="email" placeholder="email" >
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label for="phoneNumber">Phone</label>
+                      <div class="input-group">
+                          <div class="form-group form-inline">
+                              <input class="form-control ml-2" type="text" formControlName="phoneNumber"/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <div class="input-group">
+                        <input class="form-control ml-2" placeholder="yyyy-mm-dd"
+                        name="dp" ngbDatepicker #d="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" (click)="onCancel()">Cancel</button>

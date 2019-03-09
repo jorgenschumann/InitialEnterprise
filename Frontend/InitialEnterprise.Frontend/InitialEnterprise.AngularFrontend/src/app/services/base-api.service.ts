@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Configuration } from './endpoints';
+import { Configuration } from './configuration';
 
 
 @Injectable({
@@ -15,7 +15,8 @@ export abstract class BaseApiService {
 
   protected config: Configuration;
 
-  constructor(protected http: HttpClient,   private configuration: Configuration) {
+  constructor(protected http: HttpClient,
+              configuration: Configuration) {
     this.config = configuration;
   }
 

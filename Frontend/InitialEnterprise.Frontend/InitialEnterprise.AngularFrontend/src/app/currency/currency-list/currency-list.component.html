@@ -5,10 +5,8 @@
     <thead>
       <tr>
         <th></th>
-        <th>Id</th>
         <th>Name</th>
         <th>Iso Code</th>
-        <th>Rates</th>
       </tr>
     </thead>
     <tbody>
@@ -17,15 +15,12 @@
           <button class='btn btn-default btn-sm' (click)='edit(currency)'>
             <i class='material-icons'>edit</i>
           </button>
-          <button class='btn btn-default btn-sm'>
+          <button class='btn btn-default btn-sm' (click)='delete(currency)'>
             <i class='material-icons'>delete</i>
           </button>
         </td>
-
-        <td>{{ currency.id }}</td>
         <td>{{ currency.name }}</td>
         <td>{{ currency.isoCode }}</td>
-        <td>{{ currency.rates }}</td>
       </tr>
     </tbody>
   </table>

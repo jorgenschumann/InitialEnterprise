@@ -4,8 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { AuthGuard } from './core/guards/auth.guard';
-import { CurrencyComponent } from './currency/currency.component';
 import { Role } from './models/user.types';
+import { CurrencyListComponent } from './currency/currency-list/currency-list.component';
 
 const appRoutes: Routes = [
   {
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'currency',
-    component: CurrencyComponent,
+    component: CurrencyListComponent,
     canActivate: [AuthGuard]
   },
   {
