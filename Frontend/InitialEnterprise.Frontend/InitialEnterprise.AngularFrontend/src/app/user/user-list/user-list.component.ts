@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ArrayUtils } from 'src/app/core/arrayUtils';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogModel } from 'src/app/shared/components/confirm-dialog/confirm-dialog-model';
+import { ConfirmDialogBuilder } from 'src/app/shared/components/confirm-dialog/confirm-dialog-builder';
 
 @Component({
   selector: 'app-user-list',
@@ -41,14 +44,17 @@ export class UserListComponent implements OnInit {
       });
     }
 
-//  pushToArray(array, object) {
-//       const index = array.findIndex((e) => e.id === object.id);
-//       if (index === -1) {
-//         array.push(object);
-//       } else {
-//         array[index] = object;
-//       }
-//   }
+    public delete(user: UserDto) {
+      const modal = ConfirmDialogBuilder.deleteConfirmBox(
+        this.modalService, 'Delete User', `Name: ${user.firstName} ${user.lastName}`);
+      modal.result.then((result) => {
+        if (result === 'confirm') {
+          this.userService.delete(user);
+          ArrayUtils.removeFromArray(this.users, user);
+        }
+    });
+  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

@@ -73,5 +73,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             var result = await userAccountApplication.Update(model);
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        [Authorize(Policy = PersonClaims.PersonWrite)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await userAccountApplication.Delete(id);
+            return Ok(result);
+        }
     }
 }

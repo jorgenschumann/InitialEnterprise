@@ -1,8 +1,6 @@
 import { CurrencyDetailComponent } from '../currency-detail/currency-detail.component';
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Currency } from '../types';
-import { provideForRootGuard } from '@angular/router/src/router_module';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayUtils } from '../../core/arrayUtils';
 import { CurrencyService } from '../shared/currency.service';
@@ -33,9 +31,9 @@ export class CurrencyListComponent implements OnInit {
 
   public edit(currency: Currency) {
     this.selectedCurrency = currency;
-    const modalRef = this.modalService.open(CurrencyDetailComponent, { size: 'lg' });
-    modalRef.componentInstance.currency = this.selectedCurrency;
-    modalRef.result.then((result) => {
+    const modal = this.modalService.open(CurrencyDetailComponent, { size: 'lg' });
+    modal.componentInstance.currency = this.selectedCurrency;
+    modal.result.then((result) => {
       ArrayUtils.pushToArray(this.currencies, Object.assign(this.selectedCurrency, result));
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -47,7 +45,14 @@ export class CurrencyListComponent implements OnInit {
   }
 
   public delete(currency: Currency) {
-      const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'lg' });
+      const modal = this.modalService.open(ConfirmDialogComponent, { size: 'sm' });
+      modal.result.then((result) => {
+        alert(result);
+        if (result === 'confirm') {
+          this.currencyService.delete(currency.id);
+          ArrayUtils.removeFromArray(this.currencies, currency);
+        }
+      });
   }
 }
 
