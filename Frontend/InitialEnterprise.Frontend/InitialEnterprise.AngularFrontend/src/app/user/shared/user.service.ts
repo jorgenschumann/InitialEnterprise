@@ -22,7 +22,7 @@ export class UserService extends BaseApiService {
     const url = `${this.config.Endpoint}/useraccount/${id}`;
     return this.http.get<UserDto>(url).pipe(
       tap(_ => console.log(`get user id=${id}`)),
-      catchError(this.handleError<UserDto>(`get id=${id}`))
+      catchError(this.handleError<UserDto>(`get user id=${id}`))
     );
   }
 
@@ -36,7 +36,7 @@ export class UserService extends BaseApiService {
 
   post(user: UserDto): Observable<UserDto> {
     return this.http.post<UserDto>(`${this.config.Endpoint}/useraccount`, user, this.httpOptions).pipe(
-      tap((c: UserDto) => console.log(`post UserDto w/ id=${user.id}`)),
+      tap((c: UserDto) => console.log(`post user w/ id=${user.id}`)),
       catchError(this.handleError<UserDto>('post'))
     );
   }
@@ -44,7 +44,7 @@ export class UserService extends BaseApiService {
   delete(user: UserDto): Observable<UserDto> {
     const url = `${this.config.Endpoint}/useraccount/${user.id}`;
     return this.http.delete<UserDto>(url).pipe(
-      tap(_ => console.log(`deleted UserDto id=${user.id}`)),
+      tap(_ => console.log(`deleted user id=${user.id}`)),
       catchError(this.handleError<UserDto>('delete'))
     );
   }

@@ -17,29 +17,32 @@
                     <label for="name">name</label>
                     <div class="input-group">
                         <div class="form-group form-inline">
-                            <input type="text" formControlName="name" class="form-control ml-auto" />
+                            <input type="text" formControlName="name" class="form-control ml-auto" [ngClass]="{ 'is-invalid': errors.name }" />
                         </div>
                     </div>
+                    <div *ngIf="errors.name"  class="alert alert-danger">
+                      {{ errors.name }}
+                    </div>
                 </div>
+
                 <div class="col-md-6">
                     <label for="lastName">isoCode</label>
                     <div class="input-group">
                         <div class="form-group form-inline">
-                            <input  type="text" formControlName="isoCode" class="form-control ml-auto"/>
+                            <input  type="text" formControlName="isoCode" class="form-control ml-auto" [ngClass]="{ 'is-invalid': errors.isoCode }"/>
                         </div>
+                    </div>
+                    <div *ngIf="errors.isoCode"  class="alert alert-danger">
+                      {{ errors.isoCode }}
                     </div>
                 </div>
               </div>
             </div>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="onCancel()">Cancel</button>
-          <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+          <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">Save</button>
       </div>
     </form>
   </div>
-
-<!-- <pre>Model: {{ currency | json }}</pre> -->
-
 </div>
-

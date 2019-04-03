@@ -1,3 +1,4 @@
+import { CamelCasePipe } from './core/pipes/camel-case.pipe';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,7 +43,8 @@ import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confi
       UserAvatarComponent,
       UserDetailComponent,
       CurrencyDetailComponent,
-      ConfirmDialogComponent
+      ConfirmDialogComponent,
+      CamelCasePipe
    ],
    entryComponents: [
      UserListComponent,
@@ -52,7 +54,7 @@ import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confi
     ],
    providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
    bootstrap: [
       AppComponent
