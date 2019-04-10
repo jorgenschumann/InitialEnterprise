@@ -18,6 +18,9 @@
                       <div class="input-group">
                           <div class="form-group form-inline">
                               <input type="text" formControlName="firstName" class="form-control ml-auto" />
+                              <div *ngIf="errors.firstName"  class="invalid-feedback">
+                                {{ errors.firstName }}
+                              </div>
                           </div>
                       </div>
                   </div>

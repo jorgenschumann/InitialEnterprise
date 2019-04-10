@@ -89,7 +89,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
             };
 
             var identityResult = new IdentityResult();
-            if (command.IsValid)
+            if (commandHandlerAnswer.ValidationResult.IsValid)
             {
                 var user = new ApplicationUser(command);
                 identityResult = await userManager.CreateAsync(user);
@@ -104,7 +104,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
                 ValidationResult = updateValidationHandler.Validate(command)
             };
             var identityResult = new IdentityResult();
-            if (command.IsValid)
+            if (commandHandlerAnswer.ValidationResult.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(command.Email);
                 user.Update(command);

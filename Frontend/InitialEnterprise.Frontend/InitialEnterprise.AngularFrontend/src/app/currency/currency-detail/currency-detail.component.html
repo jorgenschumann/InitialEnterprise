@@ -18,9 +18,6 @@
                     <div class="input-group">
                         <div class="form-group form-inline">
                             <input type="text" formControlName="name" class="form-control ml-auto" [ngClass]="{ 'is-invalid': errors.name }" />
-                            <div *ngIf="errors.name" class="invalid-feedback">
-                              {{ errors.name }}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -30,18 +27,21 @@
                     <div class="input-group">
                         <div class="form-group form-inline">
                             <input  type="text" formControlName="isoCode" class="form-control ml-auto" [ngClass]="{ 'is-invalid': errors.isoCode }"/>
-                            <div *ngIf="errors.isoCode"  class="invalid-feedback">
-                              {{ errors.isoCode }}
-                            </div>
                         </div>
                     </div>
                 </div>
               </div>
             </div>
+            <div *ngIf="errors.isoCode"  class="alert alert-danger" role="alert">
+              {{ errors.isoCode }}
+            </div>
+            <div *ngIf="errors.name" class="alert alert-danger" role="alert">
+              {{ errors.name }}
+           </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="onSubmit()">Save</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmit()"  [disabled]="form.invalid">Save</button>
       </div>
     </form>
   </div>

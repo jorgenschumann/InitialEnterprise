@@ -32,7 +32,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHand
                 ValidationResult = this.createValidationHandler.Validate(command)
             };
 
-            if (command.IsValid)
+            if (commandHandlerAnswer.ValidationResult.IsValid)
             {
                 commandHandlerAnswer.AggregateRoot =
                     await currencyRepository.Insert(new Currency(command));
@@ -49,7 +49,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHand
                 ValidationResult = this.updateValidationHandler.Validate(command)
             };
 
-            if (command.IsValid)
+            if (commandHandlerAnswer.ValidationResult.IsValid)
             {
                 commandHandlerAnswer.AggregateRoot =
                     currencyRepository.Update(currency.Update(command));

@@ -18,7 +18,6 @@ export class CurrencyDetailComponent implements OnInit {
   form: FormGroup;
   loading = false;
   submitted = false;
-  error = '';
   errors: { [key: string]: string } = {};
   validationResult: ValidationResult;
 
@@ -41,7 +40,6 @@ export class CurrencyDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid) {
       const currency: Currency =  Object.assign({}, this.form.value);
       this.currencyService.put(currency)
         .subscribe(
@@ -51,18 +49,14 @@ export class CurrencyDetailComponent implements OnInit {
             },
             error => {
                 this.validationResult = error.error.validationResult;
-                this.error = error;
                 this.updateErrorMessages();
             });
-      }
    }
 
    updateErrorMessages() {
     this.errors = {};
     for (const message of this.validationResult.errors) {
-      const formControl = this.camelCasePipe.transform(message.propertyName);
-      this.errors[formControl] = message.errorMessage;
-      const control = this.form.get(formControl);
+      this.errors[this.camelCasePipe.transform(message.propertyName)] = message.errorMessage;
     }
   }
 
