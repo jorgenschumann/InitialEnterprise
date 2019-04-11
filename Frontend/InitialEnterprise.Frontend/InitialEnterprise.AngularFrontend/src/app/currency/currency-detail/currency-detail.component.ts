@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyService } from '../shared/currency.service';
 import { CommandHandlerAnswer, ValidationResult } from 'src/app/models/CommandHandlerAnswer';
+import { ConfirmDialogModus } from 'src/app/shared/components/confirm-dialog/confirm-dialog-modus.enum';
 
 @Component({
   selector: 'app-currency-detail',
@@ -15,10 +16,13 @@ import { CommandHandlerAnswer, ValidationResult } from 'src/app/models/CommandHa
 @Injectable({ providedIn: 'root' })
 export class CurrencyDetailComponent implements OnInit {
   @Input() currency: Currency;
+  @Input() modus = ConfirmDialogModus;
   form: FormGroup;
   loading = false;
   submitted = false;
   errors: { [key: string]: string } = {};
+
+
   validationResult: ValidationResult;
 
   constructor(public activeModal: NgbActiveModal,
@@ -53,7 +57,7 @@ export class CurrencyDetailComponent implements OnInit {
             });
    }
 
-   updateErrorMessages() {
+  updateErrorMessages() {
     this.errors = {};
     for (const message of this.validationResult.errors) {
       this.errors[this.camelCasePipe.transform(message.propertyName)] = message.errorMessage;

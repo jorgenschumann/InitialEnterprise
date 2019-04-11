@@ -8,7 +8,6 @@ export	interface ValidationResult {
   errors: ValidationFailure[];
 }
 
-// errors: { [key: string]: string } = {};
 export interface ValidationFailure {
   propertyName: string;
   errorMessage: string;
