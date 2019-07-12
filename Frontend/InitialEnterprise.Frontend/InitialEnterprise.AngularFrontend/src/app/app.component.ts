@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from './services/authentication.service';
-import { UserSignInResultDto, Role } from './models/user.types';
+import { UserSignInResultDto, Role } from './shared/models/user.types';
+import { AuthenticationService } from './shared/services/authentication.service';
 
 // tslint:disable-next-line:component-selector
 @Component({ selector: 'my-app', templateUrl: 'app.component.html' })

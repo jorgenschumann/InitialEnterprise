@@ -14,10 +14,27 @@
   {
     "Id": "5",
     "ClaimType": "Currency",
-    "ClaimValue": "List",
+    "ClaimValue": "Query",
     "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
   },
-
+  {
+    "Id": "6",
+    "ClaimType": "Currency",
+    "ClaimValue": "Create",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "7",
+    "ClaimType": "Currency",
+    "ClaimValue": "Delete",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "8",
+    "ClaimType": "Claim",
+    "ClaimValue": "Query",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
   {
     "Id": "3",
     "ClaimType": "Person",

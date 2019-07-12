@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDto } from 'src/app/models/user.types';
-import { UserService } from '../shared/user.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { first } from 'rxjs/operators';
+import { UserDto } from 'src/app/shared/models/user.types';
+import { UserService } from 'src/app/shared/services/user.service';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-user-avatar',
@@ -18,16 +18,17 @@ export class UserAvatarComponent implements OnInit {
         private authenticationService: AuthenticationService
     ) {
       if (this.authenticationService.currentUserValue != null) {
-        this.currentUser = this.authenticationService.currentUserValue.user;
+        //this.currentUser = this.authenticationService.currentUserValue.user;
+        //this.currentUser.image = this.currentUser.image = 'data:image/png;base64,' + this.currentUser.image;
       }
     }
 
     ngOnInit() {
-        this.userService.get(this.currentUser.id)
-        .pipe(first())
-        .subscribe(user => {
-            this.userFromApi = user;
-        });
+        // this.userService.get(this.currentUser.id)
+        // .pipe(first())
+        // .subscribe(user => {
+        //     this.userFromApi = user;
+        // });
     }
 
 }

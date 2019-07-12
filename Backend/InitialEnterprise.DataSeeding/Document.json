@@ -1,0 +1,18 @@
+﻿[
+  {
+    "Id": "4A22AE5B-F5CE-43B7-BCD9-472FC0561F30",
+    "Description": "textfile",
+    "Extension": ".txt",
+    "Length": 15,
+    "Data": "68616c6c6f2077656c74",
+    "ContentType": "text/plain"
+  },
+  {
+    "Id": "24D2E6F3-E7E5-4A45-8B0C-CA3EDF8A2BE8",
+    "Description": "lorem",
+    "Extension": ".txt",
+    "Length": 39,
+    "Data": "4c6f72656d20697073756d20646f6c6f722073697420616d6574",
+    "ContentType": "text/plain"
+  }
+]

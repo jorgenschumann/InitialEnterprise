@@ -1,12 +1,10 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { UserDto } from 'src/app/models/user.types';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from './../shared/user.service';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
-import { ValidationResult } from 'src/app/models/CommandHandlerAnswer';
-import { CamelCasePipe } from 'src/app/core/pipes/camel-case.pipe';
-
+import { UserService } from 'src/app/shared/services/user.service';
+import { CamelCasePipe } from 'src/app/shared/pipes/camel-case.pipe';
+import { UserDto } from 'src/app/shared/models/user.types';
+import { ValidationResult } from 'src/app/shared/models/commandHandlerAnswer';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -15,17 +13,21 @@ import { CamelCasePipe } from 'src/app/core/pipes/camel-case.pipe';
 
 @Injectable({ providedIn: 'root' })
 export class UserDetailComponent implements OnInit {
+
+  constructor(public activeModal: NgbActiveModal,
+              private formBuilder: FormBuilder,
+              private userService: UserService,
+              private camelCasePipe: CamelCasePipe) {}
+
+   get f() {
+    return this.userForm.controls;
+  }
   @Input() user: UserDto;
   userForm: FormGroup;
   loading = false;
   submitted = false;
   errors: { [key: string]: string } = {};
   validationResult: ValidationResult;
-
-  constructor(public activeModal: NgbActiveModal,
-              private formBuilder: FormBuilder,
-              private userService: UserService,
-              private camelCasePipe: CamelCasePipe) {}
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
@@ -62,8 +64,4 @@ export class UserDetailComponent implements OnInit {
    onCancel() {
     this.activeModal.close(this.user);
    }
-
-   get f() {
-    return this.userForm.controls;
-  }
 }

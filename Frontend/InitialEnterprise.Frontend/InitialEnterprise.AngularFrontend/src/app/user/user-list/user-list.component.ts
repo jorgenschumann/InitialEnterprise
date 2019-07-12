@@ -1,11 +1,9 @@
-import { UserService } from './../shared/user.service';
-import { UserDto } from './../../models/user.types';
 import { Component, OnInit } from '@angular/core';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { ArrayUtils } from 'src/app/core/arrayUtils';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogModel } from 'src/app/shared/components/confirm-dialog/confirm-dialog-model';
+import {NgbModal, ModalDismissReasons, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import { UserDto } from 'src/app/shared/models/user.types';
+import { UserService } from 'src/app/shared/services/user.service';
+import { ArrayUtils } from 'src/app/shared/utils/arrayUtils';
 import { ConfirmDialogBuilder } from 'src/app/shared/components/confirm-dialog/confirm-dialog-builder';
 
 @Component({
@@ -21,7 +19,9 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    config: NgbModalConfig) {
+    }
 
   ngOnInit() {
     this.userService.list()
@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
   public edit(user: UserDto) {
     this.selectedUser = user;
 
-    const modalRef = this.modalService.open(UserDetailComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(UserDetailComponent);
     modalRef.componentInstance.user = this.selectedUser;
     modalRef.result.then((result) => {
       ArrayUtils.pushToArray(this.users, Object.assign(this.selectedUser, result));
@@ -55,7 +55,6 @@ export class UserListComponent implements OnInit {
     });
   }
 
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -65,7 +64,6 @@ export class UserListComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-
 }
 
 

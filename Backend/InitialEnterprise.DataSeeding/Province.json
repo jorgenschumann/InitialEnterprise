@@ -1,0 +1,42 @@
+﻿[
+  {
+    "Id": "6E1CC75D-AD41-4EFA-AF8F-4AEE0A494894",
+    "CountryId": "E01BAAE9-36AF-4A53-99DE-AF681E285781",
+    "Name": "Baden"
+  },
+  {
+    "Id": "02C5836E-CA29-4972-8F97-A78F844615E7",
+    "CountryId": "E01BAAE9-36AF-4A53-99DE-AF681E285781",
+    "Name": "NRW"
+  },
+  {
+    "Id": "6EA02B1E-4624-4358-93D4-7392EDA1BAD1",
+    "CountryId": "E01BAAE9-36AF-4A53-99DE-AF681E285781",
+    "Name": "Hessen"
+  },
+  {
+    "Id": "CCE12533-8478-4CDF-8368-D5D3D315CA5D",
+    "CountryId": "E01BAAE9-36AF-4A53-99DE-AF681E285781",
+    "Name": "Hamburg"
+  },
+  {
+    "Id": "91759DE0-28F3-4A31-9113-41C45BD20227",
+    "CountryId": "bb3ca4e3-1d12-4da9-89d5-818416348e48",
+    "Name": "New York"
+  },
+  {
+    "Id": "FA607C64-1C4C-4843-B4B7-C097B5FE8057",
+    "CountryId": "bb3ca4e3-1d12-4da9-89d5-818416348e48",
+    "Name": "Alambama"
+  },
+  {
+    "Id": "C9BE63F4-8337-4DD4-91DD-C64697FAA4C7",
+    "CountryId": "bb3ca4e3-1d12-4da9-89d5-818416348e48",
+    "Name": "Texas"
+  },
+  {
+    "Id": "49A2FBD0-B7B8-47CE-A045-978B27D96BBA",
+    "CountryId": "bb3ca4e3-1d12-4da9-89d5-818416348e48",
+    "Name": "Ohio"
+  }
+]

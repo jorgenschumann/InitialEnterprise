@@ -28,6 +28,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
 
         public string ConfirmPassword { get; set; }
 
+        public string Image { get; set; } 
+
         public IEnumerable<ApplicationUserClaimDto> Claims { get; set; }
     }
 

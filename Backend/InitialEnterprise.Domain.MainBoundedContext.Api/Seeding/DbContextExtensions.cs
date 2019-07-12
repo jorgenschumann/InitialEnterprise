@@ -1,4 +1,7 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+﻿using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
@@ -37,6 +40,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public static void EnsureTestdataSeeding(this MainDbContext context)
         {
             EnsureDataSeeded(context);
+
+            if (!context.Document.Any())
+            {
+                context.Document.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Document>());
+                context.SaveChanges();
+            }
 
             if (!context.Currency.Any())
             {
@@ -83,6 +92,18 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             if (!context.UserClaims.Any())
             {
                 context.UserClaims.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserClaim>());
+                context.SaveChanges();
+            }
+
+            if (!context.Country.Any())
+            {
+                context.Country.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Country>());
+                context.SaveChanges();
+            }
+
+            if (!context.Province.Any())
+            {
+                context.Province.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Province>());
                 context.SaveChanges();
             }
 

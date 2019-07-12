@@ -2,15 +2,16 @@
 <figure class="media user" bg-dark>
   <div class="media-left">
      <a href="/profile/111370/form">
-        <div class="image-overlay"></div>
-           <img class=".img-circle" src="https://www.freelancermap.de/profileimages/Jorgen-Schumann-111370-xl.jpg?t=1550769299">
+        <div class="image-overlay">
+        </div>
+        <!-- <img [src]=currentUser.image alt="profile picture" style="width:60px; height:60px;"> -->
       </a>
    </div>
    <div class="media-body">
-    <div *ngIf="userFromApi">
+    <div *ngIf="currentUser">
         <p></p>
         <p>Hallo</p>
-        <p>{{userFromApi.userName}}</p>
+        <!-- <p>{{currentUser.userName}}</p> -->
     </div>
   </div>
 </figure>

@@ -2,12 +2,12 @@ import { Currency } from './../types';
 import { CurrencyDetailComponent } from '../currency-detail/currency-detail.component';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { ArrayUtils } from '../../core/arrayUtils';
 import { CurrencyService } from '../shared/currency.service';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { Guid } from 'src/app/core/guid';
 import { CurrencyFactory } from '../shared/currency-factory';
 import { ConfirmDialogModus } from 'src/app/shared/components/confirm-dialog/confirm-dialog-modus.enum';
+import { ArrayUtils } from 'src/app/shared/utils/arrayUtils';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+
 
 @Component({
   selector: 'app-list-currency',

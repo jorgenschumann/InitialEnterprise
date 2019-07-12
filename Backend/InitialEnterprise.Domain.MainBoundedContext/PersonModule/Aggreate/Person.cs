@@ -1,64 +1,20 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
+﻿using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Events;
 using InitialEnterprise.Infrastructure.DDD.Domain;
-using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.Utils;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
-    public class PersonUpdated : DomainEvent
-    {
-        public string CommandJson { get; set; }
-    }
-
-    public class PersonCreated : DomainEvent
-    {
-        public string CommandJson { get; set; }
-    }
 
     public class Person : AggregateRoot
     {
-        [JsonConstructor]
-        private Person()
-        {
-            EmailAddresses = new HashSet<EmailAddress>();
-            //PersonCreditCard = new HashSet<PersonCreditCard>();
-            //PersonPhone = new HashSet<PersonPhone>();
-        }
-
-        public Person(CreatePersonCommand command)
-        {
-            if (command.IsValid)
-            {
-                this.CopyPropertiesFrom(command);
-
-                base.AddEvent(new PersonCreated
-                {
-                    AggregateRootId = Id,
-                    CommandJson = JsonConvert.SerializeObject(command),
-                    UserId = command.UserId
-                });
-            }
-        }
-
-        public Person Update(UpdatePersonCommand command)
-        {
-            if (command.IsValid)
-            {
-                this.CopyPropertiesFrom(command);
-
-                base.AddEvent(new PersonUpdated
-                {
-                    AggregateRootId = Id,
-                    CommandJson = JsonConvert.SerializeObject(command),
-                    UserId = command.UserId
-                });
-            }
-
-            return this;
-        }
-
         [JsonProperty]
         public string PersonType { get; private set; }
 
@@ -86,8 +42,145 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         [JsonProperty]
         public ICollection<EmailAddress> EmailAddresses { get; private set; }
 
-        //public virtual ICollection<PersonCreditCard> PersonCreditCard { get; private set; }
+        [JsonProperty]
+        public ICollection<PersonAddress> Addresses { get; private set; }
 
-        //public virtual ICollection<PersonPhone> PersonPhone { get; private set; }
+        [JsonProperty]
+        public virtual ICollection<CreditCard> CreditCards { get; private set; }
+
+        [JsonProperty]
+        public virtual ICollection<PersonPhone> PersonPhones { get; private set; }
+
+        [JsonConstructor]
+        private Person()
+        {
+            EmailAddresses = new HashSet<EmailAddress>();
+            CreditCards = new HashSet<CreditCard>();
+            PersonPhones = new HashSet<PersonPhone>();
+        }
+
+        public Person(PersonCreateCommand command)
+        {
+            this.CopyPropertiesFrom(command);
+
+            base.AddEvent(new PersonCreatedDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+        }
+
+        public Person Take(PersonUpdateCommand command)
+        {
+            this.CopyPropertiesFrom(command);
+
+            base.AddEvent(new PersonUpdatedDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(EmailAddressDeleteCommand command)
+        {
+            var mail = EmailAddresses.First(e => e.Id == command.MailAddressId);
+
+            this.EmailAddresses.Remove(mail);
+
+            base.AddEvent(new PersonEmailAddressDeletedDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(EmailAddressUpdateCommand command)
+        {
+            var mail = EmailAddresses.First(e => e.Id == command.Id);
+
+            mail.CopyPropertiesFrom(command);
+
+            base.AddEvent(new PersonEmailAddressUpdateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(EmailAddressCreateCommand command)
+        {
+            var mail = new EmailAddress(command);
+
+            this.EmailAddresses.Add(mail);
+
+            base.AddEvent(new PersonUpdatedDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(AddressDeleteCommand command)
+        {
+            var address = Addresses.First(e => e.Id == command.AddressId);
+
+            this.Addresses.Remove(address);
+
+            base.AddEvent(new PersonAddressDeletedDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(AddressUpdateCommand command)
+        {
+            var address = Addresses.First(e => e.Id == command.Id);
+
+            address.Take(command);
+
+            base.AddEvent(new PersonAddressUpdateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+
+        public Person Take(AddressCreateCommand command)
+        {
+            var address = new PersonAddress(command);
+
+            this.Addresses.Add(address);
+
+            base.AddEvent(new PersonAddressCreateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
     }
 }

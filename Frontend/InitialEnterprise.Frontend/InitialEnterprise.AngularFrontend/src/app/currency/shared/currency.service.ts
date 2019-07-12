@@ -3,8 +3,8 @@ import { Currency } from '../types';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-import { BaseApiService } from 'src/app/services/base-api.service';
-import { CommandHandlerAnswer } from 'src/app/models/CommandHandlerAnswer';
+import { BaseApiService } from 'src/app/shared/services/base-api.service';
+import { CommandHandlerAnswer } from 'src/app/shared/models/commandHandlerAnswer';
 
 
 @Injectable({
@@ -20,11 +20,11 @@ export class CurrencyService extends BaseApiService {
       );
   }
 
-  get(id: any): Observable<HttpResponse<CommandHandlerAnswer>> {
+  get(id: any): Observable<HttpResponse<CommandHandlerAnswer<Currency>>> {
     const url = `${this.config.Endpoint}/currency/${id}`;
-    return this.http.get<CommandHandlerAnswer>(url, { observe: 'response' }).pipe(
+    return this.http.get<CommandHandlerAnswer<Currency>>(url, { observe: 'response' }).pipe(
       tap(_ => console.log(`get currency id=${id}`)),
-     catchError(this.handleError<HttpResponse<CommandHandlerAnswer>>(`get id=${id}`))
+     catchError(this.handleError<HttpResponse<CommandHandlerAnswer<Currency>>>(`get id=${id}`))
     );
   }
 
@@ -35,13 +35,13 @@ export class CurrencyService extends BaseApiService {
     );
   }
 
-  put(currency: Currency): Observable<HttpResponse<CommandHandlerAnswer>> {
+  put(currency: Currency): Observable<HttpResponse<CommandHandlerAnswer<Currency>>> {
     const url =  `${this.config.Endpoint}/currency/${currency.id}`;
     return this.http
-      .put<HttpResponse<CommandHandlerAnswer>>(url, currency);
+      .put<HttpResponse<CommandHandlerAnswer<Currency>>>(url, currency);
   }
 
-  putty( currency: Currency): Observable<HttpResponse<CommandHandlerAnswer>> {
+  putty( currency: Currency): Observable<HttpResponse<CommandHandlerAnswer<Currency>>> {
     const url =  `${this.config.Endpoint}/currency/${currency.id}`;
     return this.http.put<Currency>(url, currency, { observe: 'response' }).pipe(
       tap(_ => console.log(`put Currency id=${currency.id}`)),

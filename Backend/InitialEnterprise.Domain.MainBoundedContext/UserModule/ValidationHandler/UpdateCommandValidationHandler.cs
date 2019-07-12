@@ -5,6 +5,7 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.ValidationHandler
 {
+
     public class UpdateCommandValidationHandler : CommandValidator<UserUpdateCommand>
     {
         public override ValidationResult Validate(ValidationContext<UserUpdateCommand> context)

@@ -1,5 +1,5 @@
-import { Guid } from 'src/app/core/guid';
 import { Currency } from './../types';
+import { Guid } from 'src/app/shared/utils/guid';
 export class CurrencyFactory {
   static empty(): Currency {
     const currency = {} as Currency;

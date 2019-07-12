@@ -47,7 +47,7 @@ public class JwtSecurityTokenBuilder : IJwtSecurityTokenBuilder
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Sid, user.Id.ToString())
             }),
-            Expires = DateTime.UtcNow.AddDays(1),
+            Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256),
             Issuer = jwtAuthentication.Value.ValidIssuer,
             Audience = jwtAuthentication.Value.ValidAudience

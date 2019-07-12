@@ -12,12 +12,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
 using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
@@ -115,13 +117,23 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             //Todo: make it more generic
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(CurrencyClaims.CurrencyRead, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Read")));
-                options.AddPolicy(CurrencyClaims.CurrencyQuery, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "List")));
-                options.AddPolicy(CurrencyClaims.CurrencyWrite, policy => policy.Requirements.Add(new ClaimRequirement("Currency", "Write")));
+                options.AddPolicy(CurrencyCreateClaim.PolicyName, policy => policy.Requirements.Add(new CurrencyCreateClaim().ClaimRequirement));
+                options.AddPolicy(CurrencyReadClaim.PolicyName, policy => policy.Requirements.Add(new CurrencyReadClaim().ClaimRequirement));
+                options.AddPolicy(CurrencyWriteClaim.PolicyName, policy => policy.Requirements.Add(new CurrencyWriteClaim().ClaimRequirement));
+                options.AddPolicy(CurrencyQueryClaim.PolicyName, policy => policy.Requirements.Add(new CurrencyQueryClaim().ClaimRequirement));
+                options.AddPolicy(CurrencyDeleteClaim.PolicyName, policy => policy.Requirements.Add(new CurrencyDeleteClaim().ClaimRequirement));
 
-                options.AddPolicy(PersonClaims.PersonRead, policy => policy.Requirements.Add(new ClaimRequirement("Person", "Read")));
-                options.AddPolicy(PersonClaims.PersonWrite, policy => policy.Requirements.Add(new ClaimRequirement("Person", "Write")));
-                options.AddPolicy(PersonClaims.PersonCreate, policy => policy.Requirements.Add(new ClaimRequirement("Person", "Create")));
+                options.AddPolicy(PersonReadClaim.PolicyName, policy => policy.Requirements.Add(new PersonReadClaim().ClaimRequirement));
+                options.AddPolicy(PersonWriteClaim.PolicyName, policy => policy.Requirements.Add(new PersonWriteClaim().ClaimRequirement));
+                options.AddPolicy(PersonCreateClaim.PolicyName, policy => policy.Requirements.Add(new PersonCreateClaim().ClaimRequirement));
+
+                options.AddPolicy(UserReadClaim.PolicyName, policy => policy.Requirements.Add(new UserReadClaim().ClaimRequirement));
+                options.AddPolicy(UserWriteClaim.PolicyName, policy => policy.Requirements.Add(new UserWriteClaim().ClaimRequirement));
+                options.AddPolicy(UserCreateClaim.PolicyName, policy => policy.Requirements.Add(new UserCreateClaim().ClaimRequirement));
+                options.AddPolicy(UserDeleteClaim.PolicyName, policy => policy.Requirements.Add(new UserDeleteClaim().ClaimRequirement));
+
+                options.AddPolicy(ClaimQuery.PolicyName, policy => policy.Requirements.Add(new ClaimQuery().ClaimRequirement));
+
             });
         }
 
@@ -139,7 +151,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     c.AllowAnyOrigin();
                     c.AllowCredentials();
                 });
-            }
+            }       
 
             if (hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
             {

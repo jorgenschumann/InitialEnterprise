@@ -1,5 +1,4 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Shared;
-using InitialEnterprise.Infrastructure.CQRS.Queries;
+﻿using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Collections.Generic;

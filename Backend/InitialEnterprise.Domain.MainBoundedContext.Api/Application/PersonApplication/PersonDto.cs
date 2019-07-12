@@ -7,23 +7,25 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
     public class PersonDto : DataTransferObject
     {
         public Guid Id { get; set; }
+
+        public string PersonType { get; set; }
+
+        public bool NameStyle { get; set; }
+
+        public string Title { get; set; }
+
         public string FirstName { get; set; }
+
+        public string MiddleName { get; set; }
+
         public string LastName { get; set; }
-        public string PersonType { get; }
-        public bool NameStyle { get; }
-        public string Title { get; }
-        public string MiddleName { get; }
-        public string Suffix { get; }
-        public int EmailPromotion { get; }
-        public virtual ICollection<EmailAddressDto> EmailAddresses { get; set; }
-    }
 
-    public class EmailAddressDto
-    {
-        public Guid Id { get; set; }
+        public string Suffix { get; set; }
 
-        public string MailAddress { get; set; }
+        public int EmailPromotion { get; set; }
 
-        public Guid PersonId { get; set; }
+        public ICollection<EmailAddressDto> EmailAddresses { get; set; }
+
+        public ICollection<PersonAddressDto> Addresses { get; set; }
     }
 }

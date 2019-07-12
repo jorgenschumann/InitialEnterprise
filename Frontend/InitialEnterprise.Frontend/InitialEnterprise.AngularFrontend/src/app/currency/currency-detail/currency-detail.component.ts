@@ -1,11 +1,12 @@
-import { CamelCasePipe } from './../../core/pipes/camel-case.pipe';
 import { Currency } from './../types';
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyService } from '../shared/currency.service';
-import { CommandHandlerAnswer, ValidationResult } from 'src/app/models/CommandHandlerAnswer';
 import { ConfirmDialogModus } from 'src/app/shared/components/confirm-dialog/confirm-dialog-modus.enum';
+import { CamelCasePipe } from 'src/app/shared/pipes/camel-case.pipe';
+import { ValidationResult } from 'src/app/shared/models/commandHandlerAnswer';
+
 
 @Component({
   selector: 'app-currency-detail',

@@ -3,7 +3,6 @@ using InitialEnterprise.Infrastructure.Api.Auth;
 using InitialEnterpriseTests.DataSeeding;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller

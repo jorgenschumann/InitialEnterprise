@@ -2,7 +2,7 @@
 <div class="sidebar-sticky" >
    <ul class="nav flex-column">
     <li class="nav-item" [routerLinkActive]='["link-active"]'>
-      <a class="nav-link" [routerLink]='["/currency"]'>
+      <a class="nav-link" [routerLink]='["/currencies"]'>
         Currency
       </a>
     </li>
@@ -11,11 +11,19 @@
   <!-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"> -->
     <ul class="nav flex-column">
       <li class="nav-item" [routerLinkActive]='["link-active"]'>
-        <a class="nav-link" [routerLink]='["/userlist"]'>
+        <a class="nav-link" [routerLink]='["/users"]'>
           User
         </a>
       </li>
     </ul>
-  <!-- </h6> -->
+    <hr>
+    <!-- </h6> -->
   <ul class="nav flex-column mb-2"></ul>
+  <ul class="nav flex-column">
+    <li class="nav-item" [routerLinkActive]='["link-active"]'>
+      <a class="nav-link" [routerLink]='["/persons"]'>
+        Person
+      </a>
+    </li>
+  </ul>
 </div>

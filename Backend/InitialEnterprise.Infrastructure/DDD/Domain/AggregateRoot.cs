@@ -7,7 +7,6 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
     public class AggregateRoot : IAggregateRoot
     {
-
         protected AggregateRoot()
         {
             Id = Guid.Empty;

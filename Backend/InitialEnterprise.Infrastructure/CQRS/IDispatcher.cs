@@ -13,7 +13,7 @@ namespace InitialEnterprise.Infrastructure.CQRS
 
         Task<ICommandHandlerAnswer> SendAsync<TCommand, TAggregate>(TCommand command)
             where TCommand : IDomainCommand
-            where TAggregate : IAggregateRoot;
+            where TAggregate : IAggregateRoot;               
 
         Task<TResult> SendAndReturnAsync<TCommand, TResult>(TCommand command)
             where TCommand : IDomainCommand

@@ -23,6 +23,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
 
         Task<ApplicationUser> Query(Guid id);
 
+        Task<ApplicationUser> UploadImage(Guid id, byte[] image);
+
         Task<IEnumerable<ApplicationUser>> QueryAsync(IQuery query);
     }
 
@@ -69,6 +71,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         public Task<IdentityResult> Delete(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ApplicationUser> UploadImage(Guid id, byte[] image)
+        {
+            var command = new UserUpdateImageCommand
+            {
+                Id = id,
+                Image = image
+            };
+            return await dispatcher.SendAndReturnAsync<UserUpdateImageCommand, ApplicationUser>(command);
         }
     }
 }

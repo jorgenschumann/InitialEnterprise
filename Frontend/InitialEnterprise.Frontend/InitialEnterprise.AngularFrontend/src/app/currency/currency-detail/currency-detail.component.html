@@ -37,10 +37,11 @@
            </div>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
-          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn btn-secondary" [disabled]="form.invalid">Save</button>
       </div>
     </form>
   </div>
 </div>
 
+<app-JsonModel [model]="currency"></app-JsonModel>

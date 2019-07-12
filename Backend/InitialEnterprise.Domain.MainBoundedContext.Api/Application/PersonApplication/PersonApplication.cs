@@ -23,18 +23,22 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
 
         public async Task<ICommandHandlerAnswer> Insert(PersonDto model)
         {
-            var command = Mapper.Map(model).ToANew<CreatePersonCommand>();
-            return await dispatcher.SendAsync<CreatePersonCommand, Person>(command);
+            var command = Mapper.Map(model).ToANew<PersonCreateCommand>();
+            return await dispatcher.SendAsync<PersonCreateCommand, Person>(command);
         }
 
-        public Task<PersonDto> Query(Guid id)
+        public async Task<PersonDto> Query(Guid id)
         {
-            throw new NotImplementedException();
+            var query = new PersonQuery { Id = id };
+            var person = await dispatcher.GetResultAsync<PersonQuery, Person>(query);
+
+            return Mapper.Map(person).ToANew<PersonDto>();
         }
 
-        public Task<IEnumerable<PersonDto>> Query(IQuery model)
-        {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<PersonDto>> Query(IQuery model)
+        {            
+            var people = await dispatcher.GetResultAsync<PersonQuery, IEnumerable<Person>>(model as PersonQuery);
+            return Mapper.Map(people).ToANew<IEnumerable<PersonDto>>();
         }
 
         public async Task<IEnumerable<PersonDto>> Query()
@@ -46,8 +50,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
 
         public async Task<ICommandHandlerAnswer> Update(PersonDto model)
         {
-            var command = Mapper.Map(model).ToANew<UpdatePersonCommand>();
-            return await dispatcher.SendAsync<UpdatePersonCommand, Person>(command);
+            var command = Mapper.Map(model).ToANew<PersonUpdateCommand>();           
+            return await dispatcher.SendAsync<PersonUpdateCommand, Person>(command);
         }
     }
 }

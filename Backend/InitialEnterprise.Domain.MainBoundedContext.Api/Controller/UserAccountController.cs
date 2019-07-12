@@ -2,11 +2,13 @@
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Queries;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
+using InitialEnterprise.Infrastructure.Misc;
 using InitialEnterprise.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
@@ -34,7 +36,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        [Authorize(Policy = PersonClaims.PersonRead)]
+        [Authorize(Policy = UserReadClaim.PolicyName)]
         public async Task<IActionResult> Query([FromBody]UserQuery query)
         {
             var result = await userAccountApplication.QueryAsync(query);
@@ -42,7 +44,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-        [Authorize(Policy = PersonClaims.PersonRead)]
+        [Authorize(Policy = UserQueryClaim.PolicyName)]
         public async Task<IActionResult> Get()
         {
             var result = await userAccountApplication.QueryAsync(new UserQuery());
@@ -50,7 +52,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = PersonClaims.PersonRead)]
+        [Authorize(Policy = UserReadClaim.PolicyName)]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await userAccountApplication.Query(id);
@@ -64,18 +66,26 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         {
             var result = await userAccountApplication.Register(model);
             return Ok(result);
-        }
+        }            
 
         [HttpPut("{id}")]
-        [Authorize(Policy = PersonClaims.PersonWrite)]
+        [Authorize(Policy = UserWriteClaim.PolicyName)]
         public async Task<IActionResult> Put(Guid id, [FromBody] UserDto model)
         {
             var result = await userAccountApplication.Update(model);
             return Ok(result);
         }
 
+        [HttpPost("uploadimage/{id}"), DisableRequestSizeLimit]
+        [AllowAnonymous]//[Authorize(Policy = UserWriteClaim.PolicyName)]
+        public async Task<IActionResult> UploadImage(Guid id)
+        {
+            var result = await userAccountApplication.UploadImage(id, Request.Form.Files[0].ToByteArray());
+            return result.IsNotNull() ? (IActionResult)Ok(result) : BadRequest();
+        }
+
         [HttpDelete("{id}")]
-        [Authorize(Policy = PersonClaims.PersonWrite)]
+        [Authorize(Policy = UserDeleteClaim.PolicyName)]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await userAccountApplication.Delete(id);
