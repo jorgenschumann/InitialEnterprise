@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public class PersonController : BaseController
     {
@@ -32,7 +32,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         [HttpPost]
         [Route("query")]
-        [Authorize(Policy = PersonReadClaim.PolicyName)]
+        //[Authorize(Policy = PersonReadClaim.PolicyName)]
         public async Task<IActionResult> Query([System.Web.Http.FromBody]PersonQuery query)
         {
             var result = await personApplication.Query(query);
@@ -40,7 +40,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-        [Authorize(Policy = PersonQueryClaim.PolicyName)]
+        //[Authorize(Policy = PersonQueryClaim.PolicyName)]
         public async Task<IActionResult> Get()
         {
             var result = await personApplication.Query();
@@ -48,7 +48,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = PersonReadClaim.PolicyName)]
+        //[Authorize(Policy = PersonReadClaim.PolicyName)]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await personApplication.Query(id);
@@ -56,7 +56,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> Post([FromBody] PersonDto dto)
         {
             var result = await personApplication.Insert(dto);
@@ -64,7 +64,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> Put(Guid id, [FromBody] PersonDto dto)
         {
             var result = await personApplication.Update(dto);
@@ -72,14 +72,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet("{personId}/emailaddresses/{mailAddressId}")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> GetMail(Guid personId, Guid mailAddressId)
         {
             var result = await emailAddressApplication.Delete(personId, mailAddressId);
@@ -87,7 +87,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpDelete("{personId}/emailaddresses/{mailAddressId}")]       
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> DeleteMail(Guid personId, Guid mailAddressId)
         {
            var result = await emailAddressApplication.Delete(personId, mailAddressId);
@@ -95,7 +95,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPut("{personId}/emailaddresses")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> PutMail(Guid personId, [FromBody] EmailAddressDto dto)
         {
             var result = await emailAddressApplication.Update(personId, dto);
@@ -103,7 +103,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost("{personId}/emailaddresses")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> PostMail(Guid personId, [FromBody] EmailAddressDto dto)
         {
             var result = await emailAddressApplication.Create(personId, dto);
@@ -111,7 +111,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{personId}/addresses/{addressId}")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> GetAddress(Guid personId, Guid addressId)
         {
             var result = await addressApplication.Query(personId, addressId);
@@ -119,7 +119,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPut("{personId}/addresses")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> PutAddress(Guid personId, [FromBody] PersonAddressDto dto)
         {
             var result = await addressApplication.Update(personId, dto);
@@ -127,7 +127,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost("{personId}/addresses")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> PostAddress(Guid personId, [FromBody] PersonAddressDto dto)
         {
             var result = await addressApplication.Create(personId, dto);
@@ -135,7 +135,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpDelete("{personId}/addresses/{addressId}")]
-        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        //[Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> DeleteAddress(Guid personId, Guid addressId)
         {
             var result = await addressApplication.Delete(personId, addressId);
