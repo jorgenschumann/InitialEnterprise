@@ -10,6 +10,7 @@ import { ValidationResult } from '../../models/commandHandlerAnswer';
 import { CountryService } from '../../services/country.service';
 import { CamelCasePipe } from '../../pipes/camel-case.pipe';
 import { Guid } from '../../utils/guid';
+import { ToastService } from '../../components/toasts/toast.service';
 
 @Component({
   selector: 'app-address-detail',
@@ -25,7 +26,8 @@ export class AddressDetailComponent implements OnInit  {
     private countryService: CountryService,
     private formBuilder: FormBuilder,
     private camelCasePipe: CamelCasePipe,
-    public location: Location
+    public location: Location,
+    public toastService: ToastService,
     ) {
       this.addressService.RootEntityEndpointFragment = 'person';
     }
@@ -83,6 +85,7 @@ export class AddressDetailComponent implements OnInit  {
     this.addressService.post(address).subscribe(
       (response: any) => {
         this.address = response.aggregateRoot.addresses.find((e) => e.id === address.id);
+        this.toastService.showSuccess('Address created');
         },
         error => {
             this.validationResult = error.error.validationResult;
@@ -94,6 +97,7 @@ export class AddressDetailComponent implements OnInit  {
     this.addressService.put(address).subscribe(
       (response: any) => {
         this.address = response.aggregateRoot.addresses.find((e) => e.id === address.id);
+        this.toastService.showSuccess('Address updated');
         },
         error => {
             this.validationResult = error.error.validationResult;

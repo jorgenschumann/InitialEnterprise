@@ -1,9 +1,7 @@
-import { stringify } from 'querystring';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgbPopover,  NgbModal, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
-import { debounceTime } from 'rxjs/operators';
+import {   NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { Person } from 'src/app/shared/models/person.types';
 import { MailAddress } from 'src/app/shared/models/mailaddress';
 import { ValidationResult } from 'src/app/shared/models/commandHandlerAnswer';
@@ -12,6 +10,7 @@ import { PersonService } from 'src/app/shared/services/person.service';
 import { CamelCasePipe } from 'src/app/shared/pipes/camel-case.pipe';
 import { Guid } from 'src/app/shared/utils/guid';
 import { ConfirmDialogBuilder } from 'src/app/shared/components/confirm-dialog/confirm-dialog-builder';
+import { ToastService } from 'src/app/shared/components/toasts/toast.service';
 
 @Component({
   selector: 'app-person-detail',
@@ -36,6 +35,7 @@ export class PersonDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private camelCasePipe: CamelCasePipe,
     private modalService: NgbModal,
+    public toastService: ToastService,
   ) {
       this.mailAddressService.RootEntityEndpointFragment = 'person';
   }
@@ -67,12 +67,12 @@ export class PersonDetailComponent implements OnInit {
   }
 
   onSubmit() {
-
     const person: Person =  Object.assign({}, this.form.value);
     this.personService.put(person)
       .subscribe(
         (response: any) => {
           this.person = response.aggregateRoot;
+          this.toastService.showSuccess('Person saved');
           },
           error => {
               this.validationResult = error.error.validationResult;

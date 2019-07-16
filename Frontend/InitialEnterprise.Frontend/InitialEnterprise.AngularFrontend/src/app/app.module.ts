@@ -29,6 +29,7 @@ import { CamelCasePipe } from './shared/pipes/camel-case.pipe';
 import { UploadComponent } from './shared/components/upload/upload.component';
 import { JsonModelComponent } from './shared/components/json-model/JsonModel.component';
 import { PopoverComponent } from './shared/components/popover/popover.component';
+import { ToastsComponent } from './shared/components/toasts/toasts.component';
 
 @NgModule({
    imports: [
@@ -64,6 +65,7 @@ import { PopoverComponent } from './shared/components/popover/popover.component'
       AddressDetailComponent,
       PaymentComponent,
       PopoverComponent,
+      ToastsComponent
    ],
    entryComponents: [
       UserListComponent,
