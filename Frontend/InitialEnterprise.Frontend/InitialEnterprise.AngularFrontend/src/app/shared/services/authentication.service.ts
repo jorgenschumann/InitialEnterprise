@@ -28,7 +28,6 @@ export class AuthenticationService extends BaseApiService {
       return this.http.post<UserSignInResultDto>(url, { email, password })
             .pipe(map(user => {
                 if (user && user.token) {
-                    //localStorage.setItem(this.config.localStorageUserKey, JSON.stringify(user.token));
                     this.currentUserSubject.next(user);
                 }
                 return user;

@@ -7,7 +7,7 @@ export function getBaseUrl() {
 }
 
 export function getApiUrl() {
-  return '';//return 'http://localhost:63928/api';
+  return '';//return 'http://localhost:55555/api';
 }
 
 const providers = [
