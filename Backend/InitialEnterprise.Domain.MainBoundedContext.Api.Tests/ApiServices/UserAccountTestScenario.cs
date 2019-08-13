@@ -69,24 +69,24 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         }
 
         [Test]
-        public async Task Should_update_user_status_code_ok()
+        public async Task Should_register_user_status_code_ok()
         {
             var model = new UserRegisterDto
             {
-                FirstName = "Jorgen",
-                LastName = "Schumann",
-                DateOfBirth = new DateTime(1968, 11, 30),
-                Email = "User1@test.de",
+                FirstName = "Neil",
+                LastName = "Armstrong",
+                DateOfBirth = new DateTime(1930, 08, 05),
+                Email = "Neil.Armstrong@test.de",
                 Password = "#Az1234567890!",
                 ConfirmPassword = "#Az1234567890!",
-                Username = "UpdatedName"
+                Username = "NArmstrong"
             };
 
             HttpResponseMessage response;
             var server = CreateServer(directory);
             {
                 response = await server.CreateAuthenticatedClient()
-                    .PutAsync(Put.Update, SerializeContentString(model));
+                    .PostAsync(Post.Register, SerializeContentString(model));
 
                 response.EnsureSuccessStatusCode();
             }

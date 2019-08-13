@@ -5,12 +5,7 @@ using System;
 namespace InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate
 {
     public class Province: Entity
-    {
-        [JsonConstructor]
-        public Province()
-        {
-        }
-
+    {       
         [JsonProperty]
         public Guid CountryId { get; private set; }
 
@@ -18,5 +13,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate
         public string Name { get; private set; }
 
         public virtual Country Country { get; private set; }
+
+        [JsonConstructor]
+        private Province()
+        {
+        }
+
     }
 }

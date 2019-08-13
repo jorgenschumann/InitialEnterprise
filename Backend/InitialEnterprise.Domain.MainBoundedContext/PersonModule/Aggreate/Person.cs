@@ -1,4 +1,5 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
@@ -12,7 +13,6 @@ using System.Linq;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
-
     public class Person : AggregateRoot
     {
         [JsonProperty]
@@ -40,10 +40,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         public int EmailPromotion { get; private set; }
 
         [JsonProperty]
-        public ICollection<EmailAddress> EmailAddresses { get; private set; }
+        public virtual ICollection<EmailAddress> EmailAddresses { get; private set; }
 
         [JsonProperty]
-        public ICollection<PersonAddress> Addresses { get; private set; }
+        public virtual ICollection<PersonAddress> Addresses { get; private set; }
 
         [JsonProperty]
         public virtual ICollection<CreditCard> CreditCards { get; private set; }

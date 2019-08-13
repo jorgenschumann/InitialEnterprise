@@ -1,3 +1,5 @@
+import { JwtInterceptor } from './shared/interceptor/jwt.interceptor';
+import { CreditCardListComponent } from './shared/creditcard/creditcard-list/creditcard-list.component';
 import { AddressListItemComponent } from './shared/address/address-list-item/address-list-item.component';
 import { AddressDetailComponent } from './shared/address/address-detail/address-detail.component';
 import { AddressListComponent } from './shared/address/address-list/address-list.component';
@@ -30,6 +32,8 @@ import { UploadComponent } from './shared/components/upload/upload.component';
 import { JsonModelComponent } from './shared/components/json-model/JsonModel.component';
 import { PopoverComponent } from './shared/components/popover/popover.component';
 import { ToastsComponent } from './shared/components/toasts/toasts.component';
+import { CreditCardListItemComponent } from './shared/creditcard/creditcard-list-item/creditcard-list-item.component';
+import { CreditCardDetailComponent } from './shared/creditcard/creditcard-detail/creditcard-detail.component';
 
 @NgModule({
    imports: [
@@ -41,6 +45,11 @@ import { ToastsComponent } from './shared/components/toasts/toasts.component';
       ReactiveFormsModule,
       routing
    ],
+   providers: [
+    {
+       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
+    }
+  ],
    declarations: [
       AppComponent,
       NgbdDatepickerBasic,
@@ -65,7 +74,10 @@ import { ToastsComponent } from './shared/components/toasts/toasts.component';
       AddressDetailComponent,
       PaymentComponent,
       PopoverComponent,
-      ToastsComponent
+      ToastsComponent,
+      CreditCardListComponent,
+      CreditCardListItemComponent,
+      CreditCardDetailComponent
    ],
    entryComponents: [
       UserListComponent,

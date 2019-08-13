@@ -11,12 +11,33 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
     [TestFixture]
     public partial class CurrencyTestScenario : TestScenariosBase
     {
+        [Test]
+        public async Task Get_all_currencies_response_ok_status_code()
+        {
+            var currencies = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>();
+       
+            HttpResponseMessage response;
+            var server = CreateServer(directory);
+            {
+                response = await server.CreateAuthenticatedClient()
+                    .GetAsync(Get.GetCurrencies());
+
+                response.EnsureSuccessStatusCode();
+            }
+
+            var returned = await DeserializeContentStringAsync<IEnumerable<CurrencyDto>>(response);
+
+            Assert.True(currencies.Count() == returned.Count());           
+        }
+
         [Test]
         public async Task Get_currency_response_ok_status_code()
         {

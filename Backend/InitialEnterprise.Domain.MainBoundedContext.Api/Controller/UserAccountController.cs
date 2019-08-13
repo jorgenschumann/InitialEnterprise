@@ -44,7 +44,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-        [Authorize(Policy = UserQueryClaim.PolicyName)]
+         [Authorize(Policy = UserQueryClaim.PolicyName)]
         public async Task<IActionResult> Get()
         {
             var result = await userAccountApplication.QueryAsync(new UserQuery());

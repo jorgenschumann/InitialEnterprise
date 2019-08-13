@@ -18,7 +18,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.QueryHandler
             this.addressRepository = addressRepository;
         }
 
-        public async Task<PersonAddress> RetrieveAsync(AddressQuery query)
+        public async Task<PersonAddress> Retrieve(AddressQuery query)
         {
             return await addressRepository.Query(query);
         }    

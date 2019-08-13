@@ -1,5 +1,6 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
@@ -18,6 +19,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
         DbSet<Person> Person { get; set; }
         DbSet<EmailAddress> EmailAddress { get; set; }
         DbSet<PersonAddress> PersonAddress { get; set; }
+        DbSet<CreditCard> CreditCard { get; set; }
         DbSet<Country> Country { get; set; }
         DbSet<Province> Province { get; set; }
     }

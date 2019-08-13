@@ -32,4 +32,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
                 .WithMessage("IsoCode must have 3 charakters");
         }
     }
+
+
 }

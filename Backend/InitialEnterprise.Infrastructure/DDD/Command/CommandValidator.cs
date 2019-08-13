@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using InitialEnterprise.Infrastructure.DDD.Command;
 
 namespace InitialEnterprise.Infrastructure.DDD.Command
 {

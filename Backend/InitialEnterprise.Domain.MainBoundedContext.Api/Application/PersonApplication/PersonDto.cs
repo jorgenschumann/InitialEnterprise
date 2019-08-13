@@ -1,4 +1,5 @@
-﻿using InitialEnterprise.Infrastructure.Application;
+﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.CreditCardApplication;
+using InitialEnterprise.Infrastructure.Application;
 using System;
 using System.Collections.Generic;
 
@@ -27,5 +28,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
         public ICollection<EmailAddressDto> EmailAddresses { get; set; }
 
         public ICollection<PersonAddressDto> Addresses { get; set; }
+
+        public ICollection<CreditCardDto> CreditCards { get; set; }
     }
 }

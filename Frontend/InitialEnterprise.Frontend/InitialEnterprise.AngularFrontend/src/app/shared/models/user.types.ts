@@ -45,15 +45,15 @@ export interface UserDto {
 export interface UserSignInResultDto {
   signInResult: any;
   user: UserDto;
-  token: TokenDto;
+  token: string;
 }
 
-export interface TokenDto {
-  Id: string;
-  Sub: string;
-  Exp: number;
-  Iat: number;
-}
+// export interface TokenDto {
+//   Id: string;
+//   Sub: string;
+//   Exp: number;
+//   Iat: number;
+// }
 
 export enum Role {
   User = 'User',

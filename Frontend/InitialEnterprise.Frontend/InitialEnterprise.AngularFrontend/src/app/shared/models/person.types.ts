@@ -1,5 +1,6 @@
 import { Address } from './address';
 import { MailAddress } from './mailaddress';
+import { CreditCard } from './creditcard';
 
 export class Person {
   id: string;
@@ -13,6 +14,7 @@ export class Person {
   emailPromotion: string;
   emailAddresses: MailAddress[];
   addresses: Address[];
+  creditcards: CreditCard[];
 }
 
 

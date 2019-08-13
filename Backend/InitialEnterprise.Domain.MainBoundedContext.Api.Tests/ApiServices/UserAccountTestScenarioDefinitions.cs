@@ -13,9 +13,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
         public static class Post
         {
-            public static string SignIn = $"{ApiUrlBase}/SignIn";
+            public static string SignIn = $"{ApiUrlBase}/signin";
 
-            public static string Register = $"{ApiUrlBase}/Register";
+            public static string Register = $"{ApiUrlBase}/register";
 
             public static string Query = $"{ApiUrlBase}";
         }

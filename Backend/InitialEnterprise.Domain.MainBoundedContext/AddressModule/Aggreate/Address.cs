@@ -28,7 +28,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate
         public bool IsPrimary { get; private set; }
 
         [JsonConstructor]
-        public Address()
+        private Address()
         {
         }
 

@@ -19,12 +19,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
             this.userManager = userManager;
         }
 
-        public async Task<ApplicationUser> RetrieveAsync(UserQuery query)
+        public async Task<ApplicationUser> Retrieve(UserQuery query)
         {
             return await userManager.Users.Where(u => u.Id == query.Id).ToAsyncEnumerable().First();
         }
 
-        async Task<IEnumerable<ApplicationUser>> IQueryHandlerAsync<UserQuery, IEnumerable<ApplicationUser>>.RetrieveAsync(UserQuery query)
+        async Task<IEnumerable<ApplicationUser>> IQueryHandlerAsync<UserQuery, IEnumerable<ApplicationUser>>.Retrieve(UserQuery query)
         {
             return await userManager.Users.ToAsyncEnumerable().ToList();
         }

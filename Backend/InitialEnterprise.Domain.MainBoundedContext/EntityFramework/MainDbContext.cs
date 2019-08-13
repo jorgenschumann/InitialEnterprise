@@ -1,5 +1,6 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
@@ -8,6 +9,7 @@ using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +37,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         public virtual DbSet<EmailAddress> EmailAddress { get; set; }
 
+        public virtual DbSet<CreditCard> CreditCard { get; set; }
+
         public virtual DbSet<PersonAddress> PersonAddress { get; set; }
 
         public virtual DbSet<Document> Document { get; set; }
@@ -50,6 +54,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ConfigureValueConverter(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new CurrencyRateEntityTypeConfiguration());
@@ -57,6 +63,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
             modelBuilder.ApplyConfiguration(new PersonEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new EmailAddressEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CreditCardEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new PersonAddressEntityTypeConfiguration());
 
@@ -67,7 +75,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
             modelBuilder.ApplyConfiguration(new ProvinceEntityTypeConfiguration());
 
             base.OnModelCreating(modelBuilder);
-                        
+
             modelBuilder.Entity<Province>()
               .HasOne(p => p.Country)
               .WithMany(e => e.Provinces)
@@ -75,7 +83,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
             modelBuilder.Entity<PersonAddress>()
                .HasOne(p => p.Person)
-               .WithMany(e => e.Addresses)               
+               .WithMany(e => e.Addresses)
                .HasForeignKey(e => e.PersonId);
 
             modelBuilder.Entity<EmailAddress>()
@@ -129,6 +137,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
                    .HasForeignKey(rc => rc.RoleId)
                    .IsRequired();
             });
+        }
+
+        private void ConfigureValueConverter(ModelBuilder modelBuilder)
+        {
+            //var converter = new ValueConverter<CreditCardType, string>(
+            //    v => v.ToString(),
+            //    v => (CreditCardType)Enum.Parse(typeof(CreditCardType), v));
+
+            //modelBuilder.Entity<CreditCard>().Property(
+            //    e => e.CreditCardType).HasConversion(converter);
         }
     }
 }

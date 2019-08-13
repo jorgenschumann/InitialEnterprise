@@ -39,6 +39,9 @@
     <None Update="Country.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="CreditCard.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Currency.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

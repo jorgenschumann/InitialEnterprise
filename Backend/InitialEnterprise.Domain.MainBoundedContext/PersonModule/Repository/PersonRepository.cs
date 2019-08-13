@@ -11,11 +11,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
 {
     public class PersonRepository : IPersonRepository
     {
-        private readonly IMainDbContext mainDbContext;
+        private readonly MainDbContext mainDbContext;
+
+        //private readonly IMainDbContext mainDbContext;
 
         public PersonRepository(MainDbContext context)
         {
-            mainDbContext = context;
+            mainDbContext = context;           
         }
 
         public IUnitOfWork UnitOfWork => mainDbContext;
@@ -25,7 +27,22 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
             var added = await mainDbContext.Person.AddAsync(person);
             await mainDbContext.SaveEntitiesAsync();
             return added.Entity;
-        }
+        }       
+
+        //public async Task<Person> Query(Guid personId)
+        //{
+        //    var person = await mainDbContext.Person.FindAsync(personId);
+        //    if (person != null)
+        //    {
+        //        await mainDbContext.Entry(person)
+        //            .Collection(x => x.EmailAddresses).LoadAsync();
+        //        await mainDbContext.Entry(person)
+        //           .Collection(x => x.Addresses).LoadAsync();
+        //        await mainDbContext.Entry(person)
+        //           .Collection(x => x.CreditCards).LoadAsync();
+        //    }
+        //    return person;
+        //}
 
         public async Task<Person> Query(Guid personId)
         {
@@ -41,8 +58,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
         {
             return await mainDbContext
                 .Person
-                .Include(x => x.EmailAddresses)
-                .Include(p => p.Addresses)
+                //.Include(x => x.EmailAddresses)
+                //.Include(p => p.Addresses)
                 .ToListAsync();
         }
 

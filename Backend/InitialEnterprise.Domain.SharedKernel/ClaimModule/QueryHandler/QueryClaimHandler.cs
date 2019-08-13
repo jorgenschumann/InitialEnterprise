@@ -9,7 +9,7 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimModule.QueryHandler
     public class QueryClaimHandler :
           IQueryHandlerAsync<Queries.ClaimQuery, ClaimDefinition>
     {
-        public async Task<ClaimDefinition> RetrieveAsync(Queries.ClaimQuery query)
+        public async Task<ClaimDefinition> Retrieve(Queries.ClaimQuery query)
         {
             return null;//return await Task.FromResult(new ClaimsDefinitions().Claims);    
         }

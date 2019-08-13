@@ -62,7 +62,7 @@ export class PersonDetailComponent implements OnInit {
       lastName: [this.person.lastName, Validators.required],
       suffix: [this.person.suffix],
       emailPromotion: [this.person.emailPromotion, Validators.required],
-      emailAddresses: this.emailAddresses,
+      emailAddresses: this.emailAddresses
     });
   }
 

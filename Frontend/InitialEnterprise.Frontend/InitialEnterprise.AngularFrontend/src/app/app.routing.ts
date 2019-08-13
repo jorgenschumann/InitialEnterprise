@@ -9,6 +9,7 @@ import { PersonListComponent } from './person/person-list/person-list.component'
 import { PersonDetailComponent } from './person/person-detail/person-detail.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { Role } from './shared/models/user.types';
+import { CreditCardDetailComponent } from './shared/creditcard/creditcard-detail/creditcard-detail.component';
 
 const appRoutes: Routes = [
   {
@@ -38,6 +39,10 @@ const appRoutes: Routes = [
   {
     path: 'persons/:personId/addresses/:id',
     component: AddressDetailComponent
+  },
+  {
+    path: 'persons/:personId/creditcards/:id',
+    component: CreditCardDetailComponent
   },
   {
       path: 'admin',

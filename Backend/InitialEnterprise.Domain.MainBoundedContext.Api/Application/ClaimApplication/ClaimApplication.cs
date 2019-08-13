@@ -1,6 +1,5 @@
 ﻿using AgileObjects.AgileMapper;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
-using InitialEnterprise.Domain.SharedKernel.ClaimModule.Queries;
 using InitialEnterprise.Infrastructure.CQRS;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using System;

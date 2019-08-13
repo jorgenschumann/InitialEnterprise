@@ -27,11 +27,18 @@ export class AuthenticationService extends BaseApiService {
       const url = `${this.config.Endpoint}/useraccount/signin`;
       return this.http.post<UserSignInResultDto>(url, { email, password })
             .pipe(map(user => {
+<<<<<<< HEAD
                 if (user && user.token) {
                     this.currentUserSubject.next(user);
+=======
+                if (user) {
+                  localStorage.setItem(this.config.localStorageUserKey, JSON.stringify(user));
+                  localStorage.setItem(this.config.localStorageTokenKey, 'Bearer ' + user.token);
+                  this.currentUserSubject.next(user);
+>>>>>>> authorisation
                 }
                 return user;
-            }));
+        }));
     }
 
     logout() {

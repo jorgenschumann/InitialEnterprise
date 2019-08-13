@@ -18,12 +18,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
             this.countryRepository = countryRepository;
         }
 
-        public async Task<Country> RetrieveAsync(CountryQuery query)
+        public async Task<Country> Retrieve(CountryQuery query)
         {
             return await countryRepository.Query(query.CountryId);
         }
 
-        async Task<IEnumerable<Country>> IQueryHandlerAsync<CountryQuery, IEnumerable<Country>>.RetrieveAsync(CountryQuery query)
+        async Task<IEnumerable<Country>> IQueryHandlerAsync<CountryQuery, IEnumerable<Country>>.Retrieve(CountryQuery query)
         {
             return await countryRepository.Query(query);
         }

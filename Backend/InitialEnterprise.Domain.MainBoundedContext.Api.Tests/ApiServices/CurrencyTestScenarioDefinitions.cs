@@ -8,6 +8,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
         public static class Get
         {
+            public static string GetCurrencies()
+            {
+                return $"{ApiUrlBase}";
+            }
+
             public static string GetCurrency(Guid id)
             {
                 return $"{ApiUrlBase}/{id}";

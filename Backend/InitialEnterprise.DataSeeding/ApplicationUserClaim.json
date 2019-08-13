@@ -31,7 +31,7 @@
   },
   {
     "Id": "8",
-    "ClaimType": "Claim",
+    "ClaimType": "Person",
     "ClaimValue": "Query",
     "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
   },
@@ -45,6 +45,36 @@
     "Id": "4",
     "ClaimType": "Person",
     "ClaimValue": "Write",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "9",
+    "ClaimType": "Person",
+    "ClaimValue": "Create",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "10",
+    "ClaimType": "User",
+    "ClaimValue": "Query",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "11",
+    "ClaimType": "User",
+    "ClaimValue": "Read",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "12",
+    "ClaimType": "User",
+    "ClaimValue": "Write",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "13",
+    "ClaimType": "User",
+    "ClaimValue": "Create",
     "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
   }
 ]

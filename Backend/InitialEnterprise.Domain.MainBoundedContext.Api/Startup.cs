@@ -1,5 +1,4 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Controller;
-using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+﻿using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.Api.Filter;
@@ -12,14 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
 using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
@@ -64,6 +60,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
+                       
 
             services.AddSwaggerGen(c =>
             {
@@ -87,11 +84,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                  option.Password.RequireUppercase = false;
                  option.Password.RequireLowercase = false;
              }
-             ).AddEntityFrameworkStores<MainDbContext>().AddDefaultTokenProviders();
-
+             ).AddEntityFrameworkStores<MainDbContext>()
+             .AddDefaultTokenProviders();
+            
             var jwtAuthenticationSettings = Configuration.GetSection("JwtAuthentication");
             services.Configure<JwtAuthentication>(jwtAuthenticationSettings);
             var jwtAuthentication = jwtAuthenticationSettings.Get<JwtAuthentication>();
+                      
 
             services.AddAuthentication(option =>
             {
@@ -101,7 +100,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
-                options.RequireHttpsMetadata = true;
+                options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -126,7 +125,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.AddPolicy(PersonReadClaim.PolicyName, policy => policy.Requirements.Add(new PersonReadClaim().ClaimRequirement));
                 options.AddPolicy(PersonWriteClaim.PolicyName, policy => policy.Requirements.Add(new PersonWriteClaim().ClaimRequirement));
                 options.AddPolicy(PersonCreateClaim.PolicyName, policy => policy.Requirements.Add(new PersonCreateClaim().ClaimRequirement));
+                options.AddPolicy(PersonQueryClaim.PolicyName, policy => policy.Requirements.Add(new PersonQueryClaim().ClaimRequirement));
 
+                options.AddPolicy(UserQueryClaim.PolicyName, policy => policy.Requirements.Add(new UserQueryClaim().ClaimRequirement));
                 options.AddPolicy(UserReadClaim.PolicyName, policy => policy.Requirements.Add(new UserReadClaim().ClaimRequirement));
                 options.AddPolicy(UserWriteClaim.PolicyName, policy => policy.Requirements.Add(new UserWriteClaim().ClaimRequirement));
                 options.AddPolicy(UserCreateClaim.PolicyName, policy => policy.Requirements.Add(new UserCreateClaim().ClaimRequirement));
@@ -135,6 +136,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 options.AddPolicy(ClaimQuery.PolicyName, policy => policy.Requirements.Add(new ClaimQuery().ClaimRequirement));
 
             });
+
         }
 
         public virtual void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -151,8 +153,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     c.AllowAnyOrigin();
                     c.AllowCredentials();
                 });
-            }       
-
+            }
+         
             if (hostingEnvironment.IsEnvironment(ApplicationDefinitions.HostingEnvironmentTest))
             {
                 var context = app.ApplicationServices.GetService<MainDbContext>();
@@ -161,8 +163,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.EnsureTestdataSeeding();
             }
 
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
+            app.UseHttpsRedirection();         
+            app.UseAuthentication();         
             app.UseMvc();
             app.UseStaticFiles();
             app.UseSwagger();

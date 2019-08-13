@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Id": "794F4373-F885-4ED0-A8FD-22739A19281F",
+    "CreditCardType": 1,
+    "CardNumber": "1234",
+    "ExpireMonth": 12,
+    "ExpireYear": 2021,
+    "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100"
+  }
+]

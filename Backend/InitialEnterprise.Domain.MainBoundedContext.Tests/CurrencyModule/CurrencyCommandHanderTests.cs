@@ -1,4 +1,5 @@
 using FluentValidation;
+using FluentValidation.Results;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHandler;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
@@ -8,6 +9,7 @@ using InitialEnterpriseTests.DataSeeding;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
@@ -20,21 +22,22 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             //Arrange
             var currencies = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>();
             var mockCurrencyRepository = new Mock<ICurrencyRepository>();
-            var mockCurrencyQuery = new Mock<CurrencyQuery>();
-            var mockCreateValidationHandler = new Mock<IValidator<CurrencyCreateCommand>>();
-            var mockUpdateValidationHandler = new Mock<IValidator<CurrencyUpdateCommand>>();
 
-            mockCreateValidationHandler.Setup(handler => handler.Validate(null));
-            mockUpdateValidationHandler.Setup(handler => handler.Validate(null));
+            var mockCurrencyQuery = new Mock<CurrencyQuery>();
             mockCurrencyRepository.Setup(service => service.Query(mockCurrencyQuery.Object)).ReturnsAsync(currencies);
 
+            var mockCreateValidationHandler = new MockValidator<CurrencyCreateCommand>();
+            var mockUpdateValidationHandler = new MockValidator<CurrencyUpdateCommand>();
+
+            var command = new CurrencyCreateCommand("Euro", "EUR", 2, Guid.NewGuid());          
+
             var currencyCommandHandler = new CurrencyCommandHandler(
-                mockCurrencyRepository.Object, mockCreateValidationHandler.Object, mockUpdateValidationHandler.Object);
-
-            var createCommand = new CurrencyCreateCommand("British Pound", "GBP", 1, Guid.NewGuid());
-
+                mockCurrencyRepository.Object,
+                mockCreateValidationHandler.Object,
+                mockUpdateValidationHandler.Object);
+       
             //Act
-            var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(createCommand);
+            var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(command);
 
             //Assert
             Assert.IsNotNull(commandHandlerAnswer);
@@ -44,32 +47,43 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
         public async Task Should_handle_currencyupdatecommand_return_commandhandleranswerasync()
         {
             //Arrange
-            var currency = SeedDataBuilder.BuildType<Currency>();
+            var currency = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>().FirstOrDefault();
             var mockCurrencyRepository = new Mock<ICurrencyRepository>();
-            var mockCreateValidationHandler = new Mock<IValidator<CurrencyCreateCommand>>();
-            var mockUpdateValidationHandler = new Mock<IValidator<CurrencyUpdateCommand>>();
 
-            mockCreateValidationHandler.Setup(handler => handler.Validate(null));
-            mockUpdateValidationHandler.Setup(handler => handler.Validate(null));
-            mockCurrencyRepository.Setup(x => x.Query(It.IsAny<Guid>())).Returns(Task.FromResult(currency));
-
-            var currencyCommandHandler = new CurrencyCommandHandler(
-                mockCurrencyRepository.Object, mockCreateValidationHandler.Object, mockUpdateValidationHandler.Object);
+            mockCurrencyRepository.Setup(service => service.Query(It.IsAny<Guid>())).ReturnsAsync(currency);                 
+          
+            var mockCreateValidationHandler = new MockValidator<CurrencyCreateCommand>();
+            var mockUpdateValidationHandler = new MockValidator<CurrencyUpdateCommand>();
 
             var command = new CurrencyUpdateCommand
             {
-                Id = Guid.NewGuid(),
-                IsoCode = "GBP",
-                Name = "British Pound",
+                Id = currency.Id,
+                IsoCode = currency.IsoCode,
+                Name = currency.Name,
                 TimeStamp = DateTime.Now,
-                UserId = Guid.NewGuid()
+                UserId = currency.UserId
             };
+
+            var currencyCommandHandler = new CurrencyCommandHandler(
+                mockCurrencyRepository.Object,
+                mockCreateValidationHandler.Object,
+                mockUpdateValidationHandler.Object);
 
             //Act
             var commandHandlerAnswer = await currencyCommandHandler.HandleAsync(command);
 
             //Assert
-            Assert.IsNotNull(commandHandlerAnswer);
+            Assert.IsNotNull(commandHandlerAnswer);      
+        }
+    }
+
+    public class MockValidator<T> : Mock<IValidator<T>> where T : class
+    {
+        //http://xml14x2.blogspot.com/2015/06/mock-collectionvalidator-using-moq-and.html
+
+        public MockValidator()
+        {
+            Setup(x => x.Validate(It.IsAny<ValidationContext>())).Returns(new ValidationResult());          
         }
     }
 }

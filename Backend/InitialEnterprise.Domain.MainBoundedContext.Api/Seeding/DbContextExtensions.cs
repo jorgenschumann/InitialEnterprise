@@ -1,4 +1,5 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
@@ -62,6 +63,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             if (!context.EmailAddress.Any())
             {
                 context.EmailAddress.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<EmailAddress>());
+                context.SaveChanges();
+            }
+
+            if (!context.CreditCard.Any())
+            {
+                context.CreditCard.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<CreditCard>());
                 context.SaveChanges();
             }
 
