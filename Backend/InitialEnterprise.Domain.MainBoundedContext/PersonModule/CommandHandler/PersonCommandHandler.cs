@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
@@ -18,7 +19,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
           ICommandHandlerWithResultAsync<EmailAddressUpdateCommand>,
           ICommandHandlerWithResultAsync<AddressDeleteCommand>,
           ICommandHandlerWithResultAsync<AddressUpdateCommand>,
-          ICommandHandlerWithResultAsync<AddressCreateCommand>
+          ICommandHandlerWithResultAsync<AddressCreateCommand>,
+          ICommandHandlerWithResultAsync<CreditCardCreateCommand>,
+          ICommandHandlerWithResultAsync<CreditCardUpdateCommand>,
+          ICommandHandlerWithResultAsync<CreditCardDeactivateCommand>,
+          ICommandHandlerWithResultAsync<CreditCardDeleteCommand>
 
     {
         private readonly IPersonRepository personRepository;
@@ -30,6 +35,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
         private readonly IValidator<AddressDeleteCommand> deleteAddressValidationHandler;
         private readonly IValidator<AddressCreateCommand> createAddressValidationHandler;
         private readonly IValidator<AddressUpdateCommand> updateAddressValidationHandler;
+        private readonly IValidator<CreditCardDeleteCommand> deleteCreditCardValidationHandler;
+        private readonly IValidator<CreditCardDeactivateCommand> deactivateCreditCardValidationHandler;
+        private readonly IValidator<CreditCardUpdateCommand> udateCreditCardValidationHandler;
+        private readonly IValidator<CreditCardCreateCommand> createCreditCardValidationHandler;
 
         public PersonCommandHandler(
             IPersonRepository personRepository,
@@ -40,7 +49,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             IValidator<EmailAddressUpdateCommand> updateMailValidationHandler,
             IValidator<AddressDeleteCommand> deleteAddressValidationHandler,
             IValidator<AddressCreateCommand> createAddressValidationHandler,
-            IValidator<AddressUpdateCommand> updateAddressValidationHandler)
+            IValidator<AddressUpdateCommand> updateAddressValidationHandler,
+            IValidator<CreditCardDeleteCommand> deleteCreditCardValidationHandler,
+            IValidator<CreditCardDeactivateCommand> deactivateCreditCardValidationHandler,
+            IValidator<CreditCardUpdateCommand> udateCreditCardValidationHandler,
+            IValidator<CreditCardCreateCommand> createCreditCardValidationHandler)
         {
             this.personRepository = personRepository;
             this.createValidationHandler = createValidationHandler;
@@ -51,12 +64,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             this.deleteAddressValidationHandler = deleteAddressValidationHandler;
             this.createAddressValidationHandler = createAddressValidationHandler;
             this.updateAddressValidationHandler = updateAddressValidationHandler;
-
+            this.deleteCreditCardValidationHandler = deleteCreditCardValidationHandler;
+            this.deactivateCreditCardValidationHandler = deactivateCreditCardValidationHandler;
+            this.udateCreditCardValidationHandler = udateCreditCardValidationHandler;
+            this.createCreditCardValidationHandler = createCreditCardValidationHandler;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(PersonCreateCommand command)
-        {            
-            var answer = new CommandHandlerAnswer
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(PersonCreateCommand command)
+        {
+            var answer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = this.createValidationHandler.Validate(command),
                 AggregateRoot = await personRepository.Insert(new Person(command))
@@ -67,9 +83,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(PersonUpdateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(PersonUpdateCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.Id);
             if (person.IsNotNull())
             {
@@ -77,15 +93,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
 
                 if (command.IsValid)
                 {
-                    answer.AggregateRoot = await personRepository.Update(person.Take(command));                
-                }               
+                    answer.AggregateRoot = await personRepository.Update(person.Take(command));
+                }
             }
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(EmailAddressDeleteCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(EmailAddressDeleteCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.PersonId);
             if (person.IsNotNull())
             {
@@ -99,9 +115,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(EmailAddressUpdateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(EmailAddressUpdateCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.PersonId);
             if (person.IsNotNull())
             {
@@ -115,9 +131,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(EmailAddressCreateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(EmailAddressCreateCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.PersonId);
             if (person.IsNotNull())
             {
@@ -131,9 +147,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(AddressDeleteCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(AddressDeleteCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.PersonId);
             if (person.IsNotNull())
             {
@@ -147,9 +163,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(AddressUpdateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(AddressUpdateCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.PersonId);
             if (person.IsNotNull())
             {
@@ -163,13 +179,77 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.CommandHandle
             return answer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(AddressCreateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(AddressCreateCommand command)
         {
-            var answer = new CommandHandlerAnswer();
+            var answer = new CommandHandlerAggregateAnswer();
             var person = await personRepository.Query(command.PersonId);
             if (person.IsNotNull())
             {
                 answer.ValidationResult = this.createAddressValidationHandler.Validate(command);
+
+                if (command.IsValid)
+                {
+                    answer.AggregateRoot = await personRepository.Update(person.Take(command));
+                }
+            }
+            return answer;
+        }
+
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(CreditCardCreateCommand command)
+        {
+            var answer = new CommandHandlerAggregateAnswer();
+            var person = await personRepository.Query(command.PersonId);
+            if (person.IsNotNull())
+            {
+                answer.ValidationResult = this.createCreditCardValidationHandler.Validate(command);
+
+                if (command.IsValid)
+                {
+                    answer.AggregateRoot = await personRepository.Update(person.Take(command));
+                }
+            }
+            return answer;
+        }
+
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(CreditCardUpdateCommand command)
+        {
+            var answer = new CommandHandlerAggregateAnswer();
+            var person = await personRepository.Query(command.PersonId);
+            if (person.IsNotNull())
+            {
+                answer.ValidationResult = this.udateCreditCardValidationHandler.Validate(command);
+
+                if (command.IsValid)
+                {
+                    answer.AggregateRoot = await personRepository.Update(person.Take(command));
+                }
+            }
+            return answer;
+        }
+
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(CreditCardDeactivateCommand command)
+        {
+            var answer = new CommandHandlerAggregateAnswer();
+            var person = await personRepository.Query(command.PersonId);
+            if (person.IsNotNull())
+            {
+                answer.ValidationResult = this.deactivateCreditCardValidationHandler.Validate(command);
+
+                if (command.IsValid)
+                {
+                    answer.AggregateRoot = await personRepository.Update(person.Take(command));
+                }
+            }
+            return answer;
+        }
+
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(CreditCardDeleteCommand command)
+        {
+            var answer = new CommandHandlerAggregateAnswer();
+            var person = await personRepository.Query(command.PersonId);
+            if (person.IsNotNull())
+            {
+                answer.ValidationResult = this.deleteCreditCardValidationHandler.Validate(command);
 
                 if (command.IsValid)
                 {

@@ -2,6 +2,7 @@ using InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplicat
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddressApplication
 {
@@ -9,10 +10,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddre
     {
         Task<PersonAddressDto> Query(Guid personId, Guid addressId);
 
-        Task<ICommandHandlerAnswer> Create(Guid personId, PersonAddressDto dto);
+        Task<ICommandHandlerAggregateAnswer> Create(Guid personId, PersonAddressDto dto);
 
-        Task<ICommandHandlerAnswer> Update(Guid personId, PersonAddressDto dto);
+        Task<ICommandHandlerAggregateAnswer> Update(Guid personId, PersonAddressDto dto);
 
-        Task<ICommandHandlerAnswer> Delete(Guid personId, Guid id);
+        Task<ICommandHandlerAggregateAnswer> Delete(Guid personId, Guid id);
     }
 }

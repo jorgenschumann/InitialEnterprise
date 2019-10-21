@@ -1,5 +1,6 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
@@ -165,7 +166,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
             return this;
         }
 
-
         public Person Take(AddressCreateCommand command)
         {
             var address = new PersonAddress(command);
@@ -173,6 +173,70 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
             this.Addresses.Add(address);
 
             base.AddEvent(new PersonAddressCreateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(CreditCardCreateCommand command)
+        {
+            var creditCard = new CreditCard(command);
+
+            this.CreditCards.Add(creditCard);
+
+            base.AddEvent(new PersonCreditCardCreateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(CreditCardUpdateCommand command)
+        {
+            var creditCard = this.CreditCards.First(c => c.Id == command.Id);
+
+            creditCard.Take(command);
+            
+            base.AddEvent(new PersonCreditCardUpdateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(CreditCardDeactivateCommand command)
+        {
+            var creditCard = CreditCards.First(c => c.Id == command.CreditCardId);
+
+            creditCard.Take(command);
+
+            base.AddEvent(new PersonCreditCardUpdateDomainEvent
+            {
+                AggregateRootId = Id,
+                CommandJson = JsonConvert.SerializeObject(command),
+                UserId = command.UserId
+            });
+
+            return this;
+        }
+
+        public Person Take(CreditCardDeleteCommand command)
+        {
+            var creditCard = CreditCards.First(e => e.Id == command.CreditCardId);
+
+            this.CreditCards.Remove(creditCard);
+
+            base.AddEvent(new PersonCreditCardDeleteDomainEvent
             {
                 AggregateRootId = Id,
                 CommandJson = JsonConvert.SerializeObject(command),

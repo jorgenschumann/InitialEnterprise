@@ -6,7 +6,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
     public interface ICommandHandlerWithResultAsync<TCommand> where TCommand : IDomainCommand
     {
-        Task<ICommandHandlerAnswer> HandleAsync(TCommand command);
+        Task<ICommandHandlerAggregateAnswer> HandleAsync(TCommand command);
     }
 
     public interface ICommandHandlerWithResultAsync<TCommand,TResult> where TCommand : IDomainCommand

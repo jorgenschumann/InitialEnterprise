@@ -26,10 +26,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.DocumentModule.CommandHand
             this.createValidationHandler = createValidationHandler;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(DocumentUpdateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(DocumentUpdateCommand command)
         {
             var currency = await documentRepository.Query(command.Id);
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = this.updateValidationHandler.Validate(command)
             };
@@ -42,9 +42,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.DocumentModule.CommandHand
             return commandHandlerAnswer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(DocumentCreateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(DocumentCreateCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = this.createValidationHandler.Validate(command)
             };

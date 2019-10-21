@@ -1,4 +1,6 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
+﻿using AgileObjects.AgileMapper;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Commands;
+using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.Utils;
@@ -34,15 +36,22 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate
 
         public CreditCard(CreditCardCreateCommand command)
         {
-            this.CopyPropertiesFrom(command);
+            CardNumber = command.CardNumber;
+            CreditCardType = command.CreditCardType.Name;
+            ExpireMonth = command.ExpireMonth;
+            ExpireYear = command.ExpireYear;
+            PersonId = command.PersonId;
         }
 
-        public CreditCard(CreditCardUpdateCommand command)
+        public void Take(CreditCardUpdateCommand command)
         {
-            this.CopyPropertiesFrom(command);
-        }
+            CardNumber = command.CardNumber;
+            CreditCardType = command.CreditCardType.Name;
+            ExpireMonth = command.ExpireMonth;
+            ExpireYear = command.ExpireYear;
+        }           
 
-        public CreditCard(CreditCardDeactivateCommand command)
+        public void Take(CreditCardDeactivateCommand command)
         {
             this.CopyPropertiesFrom(command);
         }

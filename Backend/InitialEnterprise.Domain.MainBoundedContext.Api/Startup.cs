@@ -2,6 +2,7 @@
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.Api.Filter;
+using InitialEnterprise.Infrastructure.Application;
 using InitialEnterprise.Infrastructure.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,7 +17,9 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
@@ -142,7 +145,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public virtual void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             ConfigureLogger(loggerFactory);
-
+                   
             if (hostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

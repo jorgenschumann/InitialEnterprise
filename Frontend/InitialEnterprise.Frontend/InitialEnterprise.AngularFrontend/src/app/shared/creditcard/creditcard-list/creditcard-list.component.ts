@@ -16,14 +16,13 @@ export class CreditCardListComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute) {
-    }
-
+  }
 
   ngOnInit() {
   }
 
   create() {
-    this.router.navigate(['/persons', this.person.id, 'creditCards', Guid.emptyGuid()], { relativeTo: this.route });
- }
+    this.router.navigate(['/persons', this.person.id, 'creditcards', Guid.emptyGuid()], { relativeTo: this.route });
+  }
 
 }

@@ -3,7 +3,6 @@
   <div class="card-header">{{ creditCard.creditCardType}}</div>
   <div class="card-body text-dark">
       <h5 class="card-title">{{ creditCard.cardNumber}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ creditCard.id}}</h6>
       <h6 class="card-subtitle mb-2 text-muted"></h6>
       <a [routerLink]="['/persons', creditCard.personId, 'creditcards', creditCard.id]" class="card-link">Edit</a>
       <a [routerLink]="['./']" (click)="delete(creditCard)" class="card-link">Delete</a>

@@ -25,9 +25,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHand
             this.createValidationHandler = createValidationHandler;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(CurrencyCreateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(CurrencyCreateCommand command)
         {      
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = this.createValidationHandler.Validate<CurrencyCreateCommand>(command)
             };
@@ -40,10 +40,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.CommandHand
             return commandHandlerAnswer;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(CurrencyUpdateCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(CurrencyUpdateCommand command)
         {
             var currency = await currencyRepository.Query(command.Id);
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = this.updateValidationHandler.Validate<CurrencyUpdateCommand>(command)
             };

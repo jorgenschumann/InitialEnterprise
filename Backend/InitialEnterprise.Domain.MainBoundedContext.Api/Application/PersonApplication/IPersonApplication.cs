@@ -3,6 +3,7 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication
 {
@@ -14,9 +15,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
 
         Task<IEnumerable<PersonDto>> Query(IQuery model);
 
-        Task<ICommandHandlerAnswer> Insert(PersonDto model);
+        Task<ICommandHandlerAggregateAnswer> Insert(PersonDto model);
 
-        Task<ICommandHandlerAnswer> Update(PersonDto model);
+        Task<ICommandHandlerAggregateAnswer> Update(PersonDto model);
 
     }
 }

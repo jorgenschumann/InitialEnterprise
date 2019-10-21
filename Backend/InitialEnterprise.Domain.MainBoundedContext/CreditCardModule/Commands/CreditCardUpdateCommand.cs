@@ -1,4 +1,4 @@
-namespace InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands
+namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Commands
 {
     public class CreditCardUpdateCommand : BaseCreditCardCommand
     {

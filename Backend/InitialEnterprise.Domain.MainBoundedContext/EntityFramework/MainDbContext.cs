@@ -9,7 +9,6 @@ using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

@@ -9,26 +9,25 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
   templateUrl: './user-avatar.component.html',
   styleUrls: ['./user-avatar.component.css']
 })
+
 export class UserAvatarComponent implements OnInit {
   currentUser: UserDto;
   userFromApi: UserDto;
-
-    constructor(
-        private userService: UserService,
-        private authenticationService: AuthenticationService
-    ) {
-      if (this.authenticationService.currentUserValue != null) {
-        //this.currentUser = this.authenticationService.currentUserValue.user;
-        //this.currentUser.image = this.currentUser.image = 'data:image/png;base64,' + this.currentUser.image;
-      }
+  constructor(
+    private userService: UserService,
+    private authenticationService: AuthenticationService) {
+    if (this.authenticationService.currentUserValue != null) {
+      //this.currentUser = this.authenticationService.currentUserValue.user;
+      //this.currentUser.image = this.currentUser.image = 'data:image/png;base64,' + this.currentUser.image;
     }
+  }
 
-    ngOnInit() {
-        // this.userService.get(this.currentUser.id)
-        // .pipe(first())
-        // .subscribe(user => {
-        //     this.userFromApi = user;
-        // });
-    }
+  ngOnInit() {
+    // this.userService.get(this.currentUser.id)
+    // .pipe(first())
+    // .subscribe(user => {
+    //     this.userFromApi = user;
+    // });
+  }
 
 }

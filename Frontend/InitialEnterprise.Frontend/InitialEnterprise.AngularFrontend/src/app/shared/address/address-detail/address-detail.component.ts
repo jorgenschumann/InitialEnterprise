@@ -2,7 +2,7 @@ import { Country } from './../../models/country';
 import { Address } from './../../models/address';
 import { AddressFactory } from './../../factories/address-factory';
 import { AddressService } from './../../services/address.service';
-import { OnInit, Component, Input} from '@angular/core';
+import { OnInit, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -18,7 +18,7 @@ import { ToastService } from '../../components/toasts/toast.service';
   styleUrls: ['./address-detail.component.css']
 })
 
-export class AddressDetailComponent implements OnInit  {
+export class AddressDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -28,34 +28,34 @@ export class AddressDetailComponent implements OnInit  {
     private camelCasePipe: CamelCasePipe,
     public location: Location,
     public toastService: ToastService,
-    ) {
-      this.addressService.RootEntityEndpointFragment = 'person';
-    }
+  ) {
+    this.addressService.RootEntityEndpointFragment = 'person';
+  }
 
   @Input() address: Address;
   form: FormGroup;
   validationResult: ValidationResult;
   errors: { [key: string]: string } = {};
-  countries: Country [];
-  provinces: string [];
+  countries: Country[];
+  provinces: string[];
 
   ngOnInit() {
-    this.countryService.list().subscribe (
-      (response: any) => {
-        this.countries = response;
-      });
     const params = this.route.snapshot.params;
     if (params.id === Guid.emptyGuid()) {
       this.address = AddressFactory.empty(params.personId);
       this.initForm();
     } else {
       this.addressService.get(params.personId, params.id)
-      .subscribe(address => {
-        this.address = address;
-        this.onCountryChange(this.address.country);
-        this.initForm();
-      });
+        .subscribe(address => {
+          this.address = address;
+          this.onCountryChange(this.address.country);
+          this.initForm();
+        });
     }
+    this.countryService.list().subscribe(
+      (response: any) => {
+        this.countries = response;
+      });
   }
 
   private initForm() {
@@ -73,12 +73,12 @@ export class AddressDetailComponent implements OnInit  {
   }
 
   public submit() {
-    const address: Address =  Object.assign({}, this.form.value);
+    const address: Address = Object.assign({}, this.form.value);
     if (address.id === Guid.emptyGuid()) {
-        this.post(address);
-        } else {
-          this.put(address);
-      }
+      this.post(address);
+    } else {
+      this.put(address);
+    }
   }
 
   private post(address: Address) {
@@ -86,11 +86,11 @@ export class AddressDetailComponent implements OnInit  {
       (response: any) => {
         this.address = response.aggregateRoot.addresses.find((e) => e.id === address.id);
         this.toastService.showSuccess('Address created');
-        },
-        error => {
-            this.validationResult = error.error.validationResult;
-            this.updateErrorMessages();
-        });
+      },
+      error => {
+        this.validationResult = error.error.validationResult;
+        this.updateErrorMessages();
+      });
   }
 
   private put(address: Address) {
@@ -98,11 +98,11 @@ export class AddressDetailComponent implements OnInit  {
       (response: any) => {
         this.address = response.aggregateRoot.addresses.find((e) => e.id === address.id);
         this.toastService.showSuccess('Address updated');
-        },
-        error => {
-            this.validationResult = error.error.validationResult;
-            this.updateErrorMessages();
-        });
+      },
+      error => {
+        this.validationResult = error.error.validationResult;
+        this.updateErrorMessages();
+      });
   }
 
   private updateErrorMessages() {

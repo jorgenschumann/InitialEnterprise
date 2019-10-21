@@ -1,0 +1,87 @@
+﻿@page "/currency/edit/{Id}"
+
+@inherits Component.ViewComponentBase
+
+@using InitialEnterprise.BlazorFrontend.Controller
+@using InitialEnterprise.Shared.Dtos
+@using FluentValidation.Results
+
+@inject CurrencyController Controller
+@inject NavigationManager NavigationManager
+
+
+<form class="ui form">
+    <h4 class="ui dividing header"><i class="globe icon"></i> Edit Currency</h4>
+    <div class="field">
+        <label>Name</label>
+        <div class="two fields">
+            <div class="field @ErrorState("Name")">
+                <input type="text" @bind="@currency.Name" placeholder="Name" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Iso Code</label>
+        <div class="two fields">
+            <div class="field @ErrorState("IsoCode")">
+                <input type="text" @bind="@currency.IsoCode" placeholder="Iso Code" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackCommand"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@SubmitCommand"><i class="save icon"></i></button>
+</div>
+
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+    CurrencyDto currency = new CurrencyDto();
+
+    ValidationResult validationResult = new ValidationResult();
+
+    private Task FetchCommand()
+    {
+        return TryRun(async () =>
+        {
+            this.currency = await Controller.Fetch(Guid.Parse(Id));
+        });
+    }
+
+    private Task SubmitCommand()
+    {       
+        return TryRun(async () =>
+        {
+            CommandHandlerAnswerDto<CurrencyDto> answer = await Controller.Save(currency);
+            {
+                this.currency = answer.AggregateRoot;
+                this.validationResult = answer.ValidationResult;
+            }
+        });
+    }
+
+    private void BackCommand()
+    {
+        NavigationManager.NavigateTo("/currency/list");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.currency = await Controller.Fetch(Guid.Parse(Id));
+    }
+
+    private string ErrorState(string propertyName)
+    {
+        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == propertyName) != null)
+        {
+            return "error";
+        }
+        return string.Empty;
+    }
+
+}
+

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InitialEnterprise.AngularFrontend", "InitialEnterprise.AngularFrontend\", "{D144E543-4DAA-4EC1-9A6B-35BE842BE259}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -21,11 +21,14 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InitialEnterprise.AngularFr
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "50451"
+		SlnRelativePath = "InitialEnterprise.AngularFrontend\"
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.BlazorFrontend", "InitialEnterprise.BlazorFrontend\Blazor.Frontend\InitialEnterprise.BlazorFrontend.csproj", "{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.ReactFrontend", "InitialEnterprise.ReactFrontend\InitialEnterprise.ReactFrontend.csproj", "{47BACA4C-AFA8-40BE-A800-F92EC9670767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InitialEnterprise.BlazorFrontend", "InitialEnterprise.BlazorFrontend\InitialEnterprise.BlazorFrontend.csproj", "{ABCFE1D8-6431-41F8-B261-B3C9837A585E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Shared", "..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj", "{D06F5D18-732B-4A23-90F2-D3FF98B31C8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +40,18 @@ Global
 		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{D144E543-4DAA-4EC1-9A6B-35BE842BE259}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{65CE0994-8743-4AF4-AAC8-D79F14CE1E84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47BACA4C-AFA8-40BE-A800-F92EC9670767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABCFE1D8-6431-41F8-B261-B3C9837A585E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABCFE1D8-6431-41F8-B261-B3C9837A585E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABCFE1D8-6431-41F8-B261-B3C9837A585E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABCFE1D8-6431-41F8-B261-B3C9837A585E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06F5D18-732B-4A23-90F2-D3FF98B31C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06F5D18-732B-4A23-90F2-D3FF98B31C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06F5D18-732B-4A23-90F2-D3FF98B31C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06F5D18-732B-4A23-90F2-D3FF98B31C8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

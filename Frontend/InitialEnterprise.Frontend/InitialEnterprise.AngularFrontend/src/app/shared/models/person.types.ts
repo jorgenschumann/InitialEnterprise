@@ -4,7 +4,7 @@ import { CreditCard } from './creditcard';
 
 export class Person {
   id: string;
-  personType: string ;
+  personType: string;
   nameStyle: string;
   title: string;
   firstName: string;
@@ -14,7 +14,5 @@ export class Person {
   emailPromotion: string;
   emailAddresses: MailAddress[];
   addresses: Address[];
-  creditcards: CreditCard[];
+  creditCards: CreditCard[];
 }
-
-

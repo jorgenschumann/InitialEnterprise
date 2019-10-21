@@ -106,7 +106,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
                .PostAsync(Post.Currency,
                    SerializeContentString(newCurrencyDto));
 
-            var answer = await DeserializeContentStringAsync<CommandHandlerAnswer>(response);
+            var answer = await DeserializeContentStringAsync<CommandHandlerAggregateAnswer>(response);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
             Assert.IsNotNull(answer.ValidationResult);
             Assert.IsNotEmpty(answer.ValidationResult.Errors);

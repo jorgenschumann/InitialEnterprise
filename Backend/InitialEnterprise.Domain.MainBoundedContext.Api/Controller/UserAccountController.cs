@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Queries;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.Misc;
@@ -8,8 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -31,8 +30,17 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [AllowAnonymous]
         public async Task<IActionResult> SignIn([FromBody] UserLoginDto model)
         {
-            var result = await userAccountApplication.SignIn(model) as UserSignInResult;
+            var result = await userAccountApplication.SignIn(model);
             return result.SignInResult.Succeeded ? (IActionResult)Ok(result) : Unauthorized();
+        }
+
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> LogIn([FromBody] UserLoginDto model)
+        {
+            var result = await userAccountApplication.LogIn(model);
+            return result.Success ? (IActionResult)Ok(result) : Unauthorized();
         }
 
         [HttpPost]
@@ -70,7 +78,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 
         [HttpPut("{id}")]
         [Authorize(Policy = UserWriteClaim.PolicyName)]
-        public async Task<IActionResult> Put(Guid id, [FromBody] UserDto model)
+        public async Task<IActionResult> Put(Guid id, [FromBody]UserDto model)
         {
             var result = await userAccountApplication.Update(model);
             return Ok(result);

@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {   NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Person } from 'src/app/shared/models/person.types';
 import { MailAddress } from 'src/app/shared/models/mailaddress';
 import { ValidationResult } from 'src/app/shared/models/commandHandlerAnswer';
@@ -37,7 +37,7 @@ export class PersonDetailComponent implements OnInit {
     private modalService: NgbModal,
     public toastService: ToastService,
   ) {
-      this.mailAddressService.RootEntityEndpointFragment = 'person';
+    this.mailAddressService.RootEntityEndpointFragment = 'person';
   }
 
   ngOnInit() {
@@ -67,17 +67,17 @@ export class PersonDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    const person: Person =  Object.assign({}, this.form.value);
+    const person: Person = Object.assign({}, this.form.value);
     this.personService.put(person)
       .subscribe(
         (response: any) => {
           this.person = response.aggregateRoot;
           this.toastService.showSuccess('Person saved');
-          },
-          error => {
-              this.validationResult = error.error.validationResult;
-              this.updateErrorMessages();
-          });
+        },
+        error => {
+          this.validationResult = error.error.validationResult;
+          this.updateErrorMessages();
+        });
   }
 
   delete() {
@@ -103,7 +103,8 @@ export class PersonDetailComponent implements OnInit {
 
   createEmailAddressControl() {
     this.emailAddresses.push(this.formBuilder.group({
-      isPrimary: false, mailAddress: null, mailAddressType: null, id: Guid.emptyGuid(), personId: this.person.id }));
+      isPrimary: false, mailAddress: null, mailAddressType: null, id: Guid.emptyGuid(), personId: this.person.id
+    }));
   }
 
   updateEmailAddress(index: number) {
@@ -111,45 +112,45 @@ export class PersonDetailComponent implements OnInit {
     this.infoContent = emailAddress.mailAddress;
     if (emailAddress.id === Guid.emptyGuid()) {
       this.mailAddressService.post(emailAddress)
-      .subscribe(
-        (response: any) => {
-          this.person = response.aggregateRoot;
-          const element: HTMLElement = document.getElementById('popoverInfo') as HTMLElement;
-          this.infoTitle = 'Create';
-          element.click();
+        .subscribe(
+          (response: any) => {
+            this.person = response.aggregateRoot;
+            const element: HTMLElement = document.getElementById('popoverInfo') as HTMLElement;
+            this.infoTitle = 'Create';
+            element.click();
           },
           error => {
-              this.validationResult = error.error.validationResult;
+            this.validationResult = error.error.validationResult;
           });
     } else {
       this.mailAddressService.put(emailAddress)
-      .subscribe(
-        (response: any) => {
-          this.person = response.aggregateRoot;
-          const element: HTMLElement = document.getElementById('popoverInfo') as HTMLElement;
-          this.infoTitle = 'Update';
-          element.click();
+        .subscribe(
+          (response: any) => {
+            this.person = response.aggregateRoot;
+            const element: HTMLElement = document.getElementById('popoverInfo') as HTMLElement;
+            this.infoTitle = 'Update';
+            element.click();
           },
           error => {
-              this.validationResult = error.error.validationResult;
-              this.updateErrorMessages();
+            this.validationResult = error.error.validationResult;
+            this.updateErrorMessages();
           });
-        }
+    }
   }
 
   deleteEmailAddress(index: number) {
     const emailAddress = this.emailAddresses.value[index] as MailAddress;
     const modal = ConfirmDialogBuilder.deleteConfirmBox(
-    this.modalService, 'Delete MailAddress', `email: ${emailAddress.mailAddress}`);
+      this.modalService, 'Delete MailAddress', `email: ${emailAddress.mailAddress}`);
     modal.result.then((result) => {
-        if (result === 'confirm') {
-          this.mailAddressService.delete(emailAddress.personId, emailAddress)
+      if (result === 'confirm') {
+        this.mailAddressService.delete(emailAddress.personId, emailAddress)
           .subscribe(() => {
           }, err => {
             console.log(err);
           });
-          this.emailAddresses.removeAt(index);
-        }
+        this.emailAddresses.removeAt(index);
+      }
     });
   }
 

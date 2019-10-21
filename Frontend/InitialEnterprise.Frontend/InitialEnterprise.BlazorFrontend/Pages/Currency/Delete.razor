@@ -1,0 +1,37 @@
+﻿@page "/currency/delete/{Id}"
+
+@inherits Component.ViewComponentBase
+
+@using InitialEnterprise.BlazorFrontend.Services
+@using InitialEnterprise.Shared.Dtos
+
+@inject NavigationManager NavigationManager
+@inject ICurrencyService CurrencyService
+
+<h1>Delete Currency</h1>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@Back"><i class="reply icon"></i></button>
+    <button class="ui button"><i class="trash icon"></i></button>
+</div>
+
+<p>@Id</p>
+
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+    CurrencyDto currency;
+
+    //void Delete()
+    //{
+    //    CurrencyService.Delete(Guid.Parse(Id));
+    //}
+
+    void Back()
+    {
+        this.NavigationManager.NavigateTo("/currency/list");
+    }
+}
+

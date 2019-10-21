@@ -1,4 +1,3 @@
-import { config } from 'rxjs';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { Configuration } from 'src/app/configuration';
@@ -12,14 +11,14 @@ import { Configuration } from 'src/app/configuration';
 export class UploadComponent implements OnInit {
   public progress: number;
   public message: string;
-  protected config: Configuration;
+  protected configuration: Configuration;
 
   // tslint:disable-next-line:no-output-on-prefix
   @Output() public onUploadFinished = new EventEmitter();
 
   constructor(private http: HttpClient,
               configuration: Configuration) {
-              this.config = configuration;
+    this.configuration = configuration;
     }
 
   ngOnInit() {
@@ -33,7 +32,7 @@ export class UploadComponent implements OnInit {
     const fileToUpload = files[0] as File;
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    const url = `${this.config.Endpoint}/useraccount/uploadimage/16075CDB-EA93-4A10-80F0-844E6FD85F76`;
+    const url = `${this.configuration.Endpoint}/useraccount/uploadimage/16075CDB-EA93-4A10-80F0-844E6FD85F76`;
     this.http.post(url, formData, {reportProgress: true, observe: 'events'})
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {

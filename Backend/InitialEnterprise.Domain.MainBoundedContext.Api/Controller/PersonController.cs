@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -81,7 +82,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             throw new NotImplementedException();
         }
 
-
         [HttpGet("{personId}/creditcards/{creditCardId}")]
         [Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> GetCreditCard(Guid personId, Guid creditCardId)
@@ -89,7 +89,30 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             var result = await creditCardApplication.Query(personId, creditCardId);
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound(new { personId, creditCardId });
         }
+        
+        [HttpPost("{personId}/creditcards")]
+        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        public async Task<IActionResult> PostCreditCard(Guid personId, [FromBody] CreditCardDto dto)
+        {
+            var result = await creditCardApplication.Create(personId, dto);
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
+        }
 
+        [HttpPut("{personId}/creditcards")]
+        [Authorize(Policy = PersonWriteClaim.PolicyName)]       
+        public async Task<IActionResult> PutCreditCard(Guid personId, [FromBody] CreditCardDto dto)
+        {
+            var result = await creditCardApplication.Update(personId, dto);
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
+        }
+
+        [HttpDelete("{personId}/creditcards/{creditcardId}")]
+        [Authorize(Policy = PersonWriteClaim.PolicyName)]
+        public async Task<IActionResult> DeleteCreditCard(Guid personId, Guid creditcardId)
+        {
+            var result = await creditCardApplication.Delete(personId, creditcardId);
+            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
+        }
 
         [HttpGet("{personId}/emailaddresses/{mailAddressId}")]
         [Authorize(Policy = PersonWriteClaim.PolicyName)]

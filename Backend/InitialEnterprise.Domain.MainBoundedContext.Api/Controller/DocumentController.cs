@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {

@@ -46,7 +46,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 
         public async Task<UserSignInResult> HandleAsync(SignInCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = loginValidationHandler.Validate(command)
             };
@@ -88,7 +88,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 
         public async Task<IdentityResult> HandleAsync(UserRegisterCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = registerValidationHandler.Validate(command)
             };
@@ -104,7 +104,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 
         public async Task<IdentityResult> HandleAsync(UserUpdateCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = updateValidationHandler.Validate(command)
             };
@@ -120,7 +120,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 
         public async Task<ApplicationUser> HandleAsync(UserUpdateImageCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = updateImageValidationHandler.Validate(command)
             };

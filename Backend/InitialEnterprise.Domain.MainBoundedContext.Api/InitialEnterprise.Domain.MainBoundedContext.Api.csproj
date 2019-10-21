@@ -27,16 +27,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
     <ProjectReference Include="..\InitialEnterprise.DataSeeding\InitialEnterprise.DataSeeding.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Application\UserAccountApplication\UserDto.cs">
-      <Generator></Generator>
-    </Compile>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>

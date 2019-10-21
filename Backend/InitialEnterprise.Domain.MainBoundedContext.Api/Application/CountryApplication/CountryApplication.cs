@@ -1,16 +1,11 @@
 using AgileObjects.AgileMapper;
-using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
-using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Queries;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication;
 using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Queries;
-using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
-using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Infrastructure.CQRS;
-using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddressApplication
 {
@@ -26,7 +21,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddre
         public async Task<IEnumerable<CountryDto>> Query()
         {
             var query = new CountryQuery();
-            var countries = await dispatcher.GetResultAsync<CountryQuery, IEnumerable<Country>>(query);
+            var countries = await dispatcher.Query<CountryQuery, IEnumerable<Country>>(query);
             var countryDtos = new List<CountryDto>();
             foreach (var country in countries)
             {
@@ -44,7 +39,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddre
         public async Task<CountryDto> Query(Guid id)
         {
             var query = new CountryQuery { CountryId = id };
-            var country = await dispatcher.GetResultAsync<CountryQuery, Country>(query);
+            var country = await dispatcher.Query<CountryQuery, Country>(query);
             return Mapper.Map(country).ToANew<CountryDto>();
         }
     }

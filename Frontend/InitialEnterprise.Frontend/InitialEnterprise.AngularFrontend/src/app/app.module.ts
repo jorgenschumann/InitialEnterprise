@@ -34,60 +34,60 @@ import { PopoverComponent } from './shared/components/popover/popover.component'
 import { ToastsComponent } from './shared/components/toasts/toasts.component';
 import { CreditCardListItemComponent } from './shared/creditcard/creditcard-list-item/creditcard-list-item.component';
 import { CreditCardDetailComponent } from './shared/creditcard/creditcard-detail/creditcard-detail.component';
+import { ErrorInterceptor } from './shared/interceptor';
 
 @NgModule({
-   imports: [
-      BrowserModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HttpClientModule,
-      NgbModule,
-      ReactiveFormsModule,
-      routing
-   ],
-   providers: [
-    {
-       provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
-    }
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    ReactiveFormsModule,
+    routing
   ],
-   declarations: [
-      AppComponent,
-      NgbdDatepickerBasic,
-      NavMenuComponent,
-      HomeComponent,
-      CurrencyListComponent,
-      UserLoginComponent,
-      AdminComponent,
-      UserListComponent,
-      UserAvatarComponent,
-      UserDetailComponent,
-      CurrencyDetailComponent,
-      ConfirmDialogComponent,
-      CamelCasePipe,
-      UploadComponent,
-      PersonListComponent,
-      PersonListItemComponent,
-      PersonDetailComponent,
-      JsonModelComponent,
-      AddressListComponent,
-      AddressListItemComponent,
-      AddressDetailComponent,
-      PaymentComponent,
-      PopoverComponent,
-      ToastsComponent,
-      CreditCardListComponent,
-      CreditCardListItemComponent,
-      CreditCardDetailComponent
-   ],
-   entryComponents: [
-      UserListComponent,
-      UserDetailComponent,
-      CurrencyDetailComponent,
-      ConfirmDialogComponent
-   ],
-   bootstrap: [
-      AppComponent
-   ]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
+  declarations: [
+    AppComponent,
+    NgbdDatepickerBasic,
+    NavMenuComponent,
+    HomeComponent,
+    CurrencyListComponent,
+    UserLoginComponent,
+    AdminComponent,
+    UserListComponent,
+    UserAvatarComponent,
+    UserDetailComponent,
+    CurrencyDetailComponent,
+    ConfirmDialogComponent,
+    CamelCasePipe,
+    UploadComponent,
+    PersonListComponent,
+    PersonListItemComponent,
+    PersonDetailComponent,
+    JsonModelComponent,
+    AddressListComponent,
+    AddressListItemComponent,
+    AddressDetailComponent,
+    PaymentComponent,
+    PopoverComponent,
+    ToastsComponent,
+    CreditCardListComponent,
+    CreditCardListItemComponent,
+    CreditCardDetailComponent
+  ],
+  entryComponents: [
+    UserListComponent,
+    UserDetailComponent,
+    CurrencyDetailComponent,
+    ConfirmDialogComponent
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 
-export class AppModule {}
+export class AppModule { }

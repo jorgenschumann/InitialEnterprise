@@ -14,6 +14,9 @@
     <Compile Remove="CurrencyModule\CommandHandler\UpdateCurrencyCommandHandler.cs" />
     <Compile Remove="CurrencyModule\CommandHandler\UpdateIsoCodeCurrencyCommandHandler.cs" />
     <Compile Remove="CurrencyModule\CommandHandler\UpdateRateCurrencyCommandHandler.cs" />
+    <Compile Remove="PersonModule\Commands\CreditCardCreateCommand.cs" />
+    <Compile Remove="PersonModule\Commands\CreditCardDeactivateCommand.cs" />
+    <Compile Remove="PersonModule\Commands\CreditCardUpdateCommand.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +44,7 @@
     <Folder Include="CountryModule\Commands\" />
     <Folder Include="CountryModule\Events\" />
     <Folder Include="CountryModule\ValidationHandler\" />
+    <Folder Include="CreditCardModule\CommandHandler\" />
     <Folder Include="DocumentModule\QueryHandler\" />
     <Folder Include="DocumentModule\ValidationHandler\" />
     <Folder Include="EmailAddressModule\CommandHandler\" />

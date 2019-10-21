@@ -1,6 +1,6 @@
 export interface Register {
   userName: string;
-  email: string ;
+  email: string;
   password: string;
   confirmPassword: string;
 }
@@ -21,7 +21,7 @@ export interface Login {
 
 export interface ApplicationUserClaim {
   id: number;
-  claimType: string ;
+  claimType: string;
   claimValue: string;
 }
 
@@ -47,13 +47,6 @@ export interface UserSignInResultDto {
   user: UserDto;
   token: string;
 }
-
-// export interface TokenDto {
-//   Id: string;
-//   Sub: string;
-//   Exp: number;
-//   Iat: number;
-// }
 
 export enum Role {
   User = 'User',

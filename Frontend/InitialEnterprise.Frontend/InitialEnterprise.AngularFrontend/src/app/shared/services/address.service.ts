@@ -17,16 +17,14 @@ export class AddressService extends BaseApiService {
   list(personId: any): Observable<Array<any>> {
     const url = `${this.config.Endpoint}/${this.RootEntityEndpointFragment}/${personId}/addresses/`;
     return this.http.get<Address[]>(url).pipe(
-      tap(_ => console.log(`list addresses`)),
-      catchError(this.handleError<Address[]>(`list`))
+      tap(_ => console.log(`list addresses`))
     );
   }
 
   get(personId: any, id: any): Observable<any> {
     const url = `${this.config.Endpoint}/${this.RootEntityEndpointFragment}/${personId}/addresses/${id}`;
     return this.http.get<Address>(url).pipe(
-      tap(_ => console.log(`get Address id=${id}`)),
-      catchError(this.handleError<Address>(`get addresses for ${this.RootEntityEndpointFragment} with id=${id}`))
+      tap(_ => console.log(`get Address id=${id}`))
     );
   }
 
@@ -39,16 +37,14 @@ export class AddressService extends BaseApiService {
   post(address: Address): Observable<any> {
     const url = `${this.config.Endpoint}/${this.RootEntityEndpointFragment}/${address.personId}/addresses`;
     return this.http.post<Address>(url, address, this.httpOptions).pipe(
-      tap((c: Address) => console.log(`post mailaddress w/ id=${address.id}`)),
-      catchError(this.handleError<Address>('post'))
+      tap((c: Address) => console.log(`post mailaddress w/ id=${address.id}`))
     );
   }
 
   delete(rootEntityId: any, address: Address): Observable<any> {
     const url = `${this.config.Endpoint}/${this.RootEntityEndpointFragment}/${rootEntityId}/addresses/${address.id}`;
     return this.http.delete<Address>(url).pipe(
-      tap(_ => console.log(`deleted person id=${address.id}`)),
-      catchError(this.handleError<Address>('delete'))
+      tap(_ => console.log(`deleted person id=${address.id}`))
     );
   }
 }

@@ -1,9 +1,8 @@
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.CreditCardApplication;
-using InitialEnterprise.Infrastructure.Application;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddressApplication
 {
@@ -13,11 +12,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddre
 
         Task<CreditCardDto> Query(Guid personId, Guid creditCardId);
 
-        Task<ICommandHandlerAnswer> Create(Guid personId, CreditCardDto dto);
+        Task<ICommandHandlerAggregateAnswer> Create(Guid personId, CreditCardDto dto);
 
-        Task<ICommandHandlerAnswer> Update(Guid personId, CreditCardDto dto);
+        Task<ICommandHandlerAggregateAnswer> Update(Guid personId, CreditCardDto dto);
 
-        Task<ICommandHandlerAnswer> Delete(Guid personId, Guid creditCardId);
+        Task<ICommandHandlerAggregateAnswer> Delete(Guid personId, Guid creditCardId);
 
         Task<IEnumerable<CreditCardTypeDto>> QueryCreditCardTypes();
     }

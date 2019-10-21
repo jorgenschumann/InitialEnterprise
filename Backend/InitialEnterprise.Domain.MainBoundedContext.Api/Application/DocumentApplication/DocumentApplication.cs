@@ -1,8 +1,8 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Shared;
-using InitialEnterprise.Infrastructure.CQRS;
+﻿using InitialEnterprise.Infrastructure.CQRS;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.DocumentApplication
 {

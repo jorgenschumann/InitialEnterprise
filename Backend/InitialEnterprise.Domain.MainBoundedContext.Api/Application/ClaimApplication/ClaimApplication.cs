@@ -5,6 +5,7 @@ using InitialEnterprise.Infrastructure.CQRS.Queries;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.ClaimApplication
 {
@@ -20,7 +21,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.ClaimAppli
         public async Task<IEnumerable<ClaimRequirementDto>> Query()
         {
             var query = new SharedKernel.ClaimModule.Queries.ClaimQuery();
-            var claims = await dispatcher.GetResultAsync<SharedKernel.ClaimModule.Queries.ClaimQuery, List<ClaimDefinition>>(query);
+            var claims = await dispatcher.Query<SharedKernel.ClaimModule.Queries.ClaimQuery, List<ClaimDefinition>>(query);
             return Mapper.Map(claims).ToANew<IEnumerable<ClaimRequirementDto>>();
         }
 
