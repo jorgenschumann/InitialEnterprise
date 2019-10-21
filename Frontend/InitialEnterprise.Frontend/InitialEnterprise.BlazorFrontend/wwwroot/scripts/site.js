@@ -1,60 +1,24 @@
-﻿var Duracellko;
-(function (Duracellko) {
-    // Static class providing functionality for Planning Poker application.
-    var PlanningPoker = (function () {
-        function PlanningPoker() {
-        }
+﻿var SiteScript;
 
-        PlanningPoker.credentialsCookieName = "PlanningPoker.Credentials";
-        PlanningPoker.cookieExpiration = 900000;
+(function (SiteScript) {
+    var BusyIndicator = (function () {
+        function BusyIndicator() {
+        }    
 
-        // Shows message box using jQuery.
-        PlanningPoker.showMessageBox = function (element) {
+        BusyIndicator.showMessageBox = function (element) {
             $(element).modal({ backdrop: 'static' });
         };
-
-        // Shows busy indicator using jQuery.
-        PlanningPoker.showBusyIndicator = function (element) {
+      
+        BusyIndicator.showBusyIndicator = function (element) {
             $(element).modal({ backdrop: 'static', keyboard: false });
         };
-
-        // Hides element using jQuery.
-        PlanningPoker.hide = function (element) {
+   
+        BusyIndicator.hide = function (element) {
             $(element).modal('hide');
-        };
+        };         
 
-        // Loads member credentials of connected user from cookie.
-        PlanningPoker.getMemberCredentials = function () {
-            let cookie = document.cookie;
-            let cookiePairs = cookie.split(';');
-            for (let i = 0; i < cookiePairs.length; i++) {
-                let cookiePair = cookiePairs[i];
-                let startText = PlanningPoker.credentialsCookieName + '=';
-                if (cookiePair.startsWith(startText)) {
-                    let value = cookiePair.substr(startText.length);
-                    return decodeURIComponent(value);
-                }
-            }
-
-            return null;
-        };
-
-        // Saves member credentials of connected user into cookie.
-        PlanningPoker.setMemberCredentials = function (credentials) {
-            if (credentials === null) {
-                credentials = '';
-            }
-            let cookie = PlanningPoker.credentialsCookieName + '=' + encodeURIComponent(credentials);
-
-            let expiration = new Date(Date.now() + PlanningPoker.cookieExpiration);
-            cookie += "; expires=" + expiration.toUTCString();
-            cookie += "; path=/";
-
-            document.cookie = cookie;
-        };
-
-        return PlanningPoker;
+        return BusyIndicator;
     })();
 
-    Duracellko.PlanningPoker = PlanningPoker;
-})(Duracellko || (Duracellko = {}));
+    SiteScript.BusyIndicator = BusyIndicator;
+})(SiteScript || (SiteScript = {}));

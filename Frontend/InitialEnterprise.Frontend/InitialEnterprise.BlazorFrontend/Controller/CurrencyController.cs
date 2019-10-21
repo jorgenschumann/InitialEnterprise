@@ -52,6 +52,5 @@ namespace InitialEnterprise.BlazorFrontend.Controller
                 return await currencyService.Post(currency);
             }
         }
-
     }
 }

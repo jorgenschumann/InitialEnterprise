@@ -1,4 +1,4 @@
-﻿namespace InitialEnterprise.Shared.Dtos.User
+﻿namespace InitialEnterprise.Shared.Dtos
 {
     public class UserSignInResultDto
     {       

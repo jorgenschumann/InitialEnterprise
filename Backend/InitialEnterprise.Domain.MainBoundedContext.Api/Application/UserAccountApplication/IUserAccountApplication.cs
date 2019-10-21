@@ -1,6 +1,5 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
-using InitialEnterprise.Shared.Dtos.User;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

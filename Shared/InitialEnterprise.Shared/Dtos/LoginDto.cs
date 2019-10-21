@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace InitialEnterprise.Shared.Dtos
 {
     public class UserLoginDto

@@ -1,7 +1,7 @@
 ﻿@page "/login"
 
 @using InitialEnterprise.BlazorFrontend.Models
-@using InitialEnterprise.Shared.Dtos.User
+@using InitialEnterprise.Shared.Dtos
 @using InitialEnterprise.BlazorFrontend.Services
 
 @inject NavigationManager NavigationManager
@@ -28,12 +28,12 @@
 </form>
 
 <div class="ui small basic icon buttons">
-    <button class="ui button" @onclick="@LogonUser"><i class="icon"></i>Signin</button>
+    <button class="ui button" @onclick="@LogonUser">Signin</button>
 </div>
 
 
 @code {
-    UserLogin userLogin = new UserLogin();
+    UserLoginDto userLogin = new UserLoginDto();
 
     async Task LogonUser()    {
       

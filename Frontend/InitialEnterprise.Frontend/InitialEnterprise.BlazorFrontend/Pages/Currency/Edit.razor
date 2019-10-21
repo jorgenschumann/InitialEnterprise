@@ -9,7 +9,6 @@
 @inject CurrencyController Controller
 @inject NavigationManager NavigationManager
 
-
 <form class="ui form">
     <h4 class="ui dividing header"><i class="globe icon"></i> Edit Currency</h4>
     <div class="field">
@@ -53,7 +52,7 @@
     }
 
     private Task SubmitCommand()
-    {       
+    {
         return TryRun(async () =>
         {
             CommandHandlerAnswerDto<CurrencyDto> answer = await Controller.Save(currency);
@@ -76,9 +75,12 @@
 
     private string ErrorState(string propertyName)
     {
-        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == propertyName) != null)
+        if (this.validationResult != null)
         {
-            return "error";
+            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == propertyName) != null)
+            {
+                return "error";
+            }
         }
         return string.Empty;
     }

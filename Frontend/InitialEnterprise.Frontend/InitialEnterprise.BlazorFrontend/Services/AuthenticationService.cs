@@ -1,11 +1,11 @@
 ﻿using InitialEnterprise.BlazorFrontend.Infrastructure;
 using InitialEnterprise.BlazorFrontend.Models;
-using InitialEnterprise.Shared.Dtos.User;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Blazored.LocalStorage;
 using System.Net.Http;
 using InitialEnterprise.BlazorFrontend.Settings;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.BlazorFrontend.Services
 {
@@ -28,9 +28,11 @@ namespace InitialEnterprise.BlazorFrontend.Services
             this.apiSettings = apiSettings;
         }        
 
-        public async Task<UserSignInResultDto> Login(UserLogin userLogin)
+        public async Task<UserSignInResultDto> Login(UserLoginDto userLogin)
         {
-            var result =  await requestService.PostAsync<UserLogin, UserSignInResultDto>($"{apiSettings.Url}/useraccount/login", userLogin);      
+            var result =  await requestService.PostAsync<UserLoginDto, UserSignInResultDto>(
+                $"{apiSettings.Url}/useraccount/login", userLogin);      
+
             if (result.Success)
             {
                 await localStorage.SetItemAsync("authToken", result.Token);               

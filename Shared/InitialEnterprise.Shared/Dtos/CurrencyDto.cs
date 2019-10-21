@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
 namespace InitialEnterprise.Shared.Dtos
 {
     public class CurrencyDto : DataTransferObject
