@@ -16,8 +16,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
             builder.Property(o => o.NameStyle);
             builder.Property(o => o.PersonType);
             builder.Property(o => o.Suffix);
-            builder.Property(o => o.Title);            
-         
+            builder.Property(o => o.Title);       
+
             builder.HasKey(o => o.Id);
             builder.Ignore(o => o.UserId);
             builder.Ignore(b => b.Events);

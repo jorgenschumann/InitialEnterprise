@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
@@ -11,12 +12,10 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 
         protected Entity(Guid id)
         {
-            if (id == Guid.Empty)
-                id = Guid.NewGuid();
-
-            Id = id;
+            Id = id == Guid.Empty ? Guid.NewGuid() : id;
         }
 
+        [JsonProperty]
         public Guid Id { get; protected set; }
     }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
-import { UserDto } from 'src/app/models/user.types';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from './../shared/user.service';
-import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
-
+import { UserService } from 'src/app/shared/services/user.service';
+import { CamelCasePipe } from 'src/app/shared/pipes/camel-case.pipe';
+import { UserDto } from 'src/app/shared/models/user.types';
+import { ValidationResult } from 'src/app/shared/models/commandHandlerAnswer';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -13,15 +13,21 @@ import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap
 
 @Injectable({ providedIn: 'root' })
 export class UserDetailComponent implements OnInit {
+
+  constructor(public activeModal: NgbActiveModal,
+              private formBuilder: FormBuilder,
+              private userService: UserService,
+              private camelCasePipe: CamelCasePipe) {}
+
+   get f() {
+    return this.userForm.controls;
+  }
   @Input() user: UserDto;
   userForm: FormGroup;
   loading = false;
   submitted = false;
-  error = '';
-
-  constructor(public activeModal: NgbActiveModal,
-              private formBuilder: FormBuilder,
-              private userService: UserService) {}
+  errors: { [key: string]: string } = {};
+  validationResult: ValidationResult;
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
@@ -35,25 +41,27 @@ export class UserDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.userForm.valid) {
-      this.userService.put(this.userForm.value)
+      const user: UserDto = Object.assign({}, this.userForm.value);
+      this.userService.put(user)
       .subscribe(
-          data => {
-            this.user = Object.assign({}, this.userForm.value);
-            this.activeModal.close(this.user);
-          },
-          error => {
-              this.error = error;
-              this.loading = false;
-          });
-      }
+                (response: any) => {
+                  this.user = response.aggregateRoot;
+                  this.activeModal.close(this.user);
+                  },
+                  error => {
+                      this.validationResult = error.error.validationResult;
+                      this.updateErrorMessages();
+                  });
    }
+
+   updateErrorMessages() {
+    this.errors = {};
+    for (const message of this.validationResult.errors) {
+      this.errors[this.camelCasePipe.transform(message.propertyName)] = message.errorMessage;
+    }
+  }
 
    onCancel() {
     this.activeModal.close(this.user);
    }
-
-   get f() {
-    return this.userForm.controls;
-  }
 }

@@ -1,0 +1,85 @@
+﻿@implements IDisposable
+@inject UiServices.MessageBoxService _messageBoxService
+@inject IJSRuntime _jsRuntime
+
+<div class="ui modal @Active">
+    <div class="content">
+        <h5 class="title">@Title</h5>
+        <p>@Message</p>
+    </div>
+</div>
+
+ @*await messageBoxService.ShowMessage("message", "Resources.MessagePanel_Error");*@
+
+
+@code
+{
+    private ElementReference messageBoxElement;
+
+    private TaskCompletionSource<bool> _showMessageTask;
+
+    private string Message { get; set; }
+
+    private string Title { get; set; }
+
+    private string PrimaryButtonText { get; set; }
+
+    private String Active = string.Empty;
+
+    public void Dispose()
+    {
+        _messageBoxService.SetMessageHandler(null);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _messageBoxService.SetMessageHandler(ShowMessage);
+    }
+
+    private Task<bool> ShowMessage(string message, string title, string primaryButton)
+    {
+        Message = message;
+        Title = title;
+        PrimaryButtonText = primaryButton;
+
+        StateHasChanged();
+        ShowDialog();
+
+        _showMessageTask = new TaskCompletionSource<bool>();
+        return _showMessageTask.Task;
+    }
+
+    private void CloseDialog()
+    {
+        EndShowMessageTask(false);
+
+        HideDialog();
+    }
+
+    private void PrimaryCommand()
+    {
+        EndShowMessageTask(true);
+
+        HideDialog();
+    }
+
+    private void EndShowMessageTask(bool result)
+    {
+        if (_showMessageTask != null)
+        {
+            _showMessageTask.SetResult(result);
+            _showMessageTask = null;
+        }
+    }
+
+    private void ShowDialog()
+    {
+        this.Active = "active";
+    }
+
+    private void HideDialog()
+    {
+        this.Active = "";
+    }
+}

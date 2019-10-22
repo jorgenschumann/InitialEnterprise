@@ -1,0 +1,85 @@
+﻿@page "/currency/list"
+
+@inherits Component.ViewComponentBase
+
+@using InitialEnterprise.BlazorFrontend.Controller
+@using InitialEnterprise.Shared.Dtos
+
+@inject CurrencyController Controller
+@inject NavigationManager NavigationManager
+
+<h1>Currencies</h1>
+
+@if (currencies == null)
+{<p><em>Loading...</em></p>
+
+}
+else
+{
+    <div class="ui small basic icon buttons">
+        <button class="ui button" @onclick="@CreateCommand"><i class="add icon"></i></button>
+    </div>
+
+    <table class="ui celled striped table">
+        <thead>
+            <tr>
+                <th>Actions</th>               
+                <th>Name</th>
+                <th>IsoCode</th>               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var currency in currencies)
+            {
+                <tr>
+                    <td class="collapsing">  
+                        <div class="ui mini compact menu">
+                            <div class="ui small simple dropdown item">
+                                <i class="cogs icon"></i>
+                                <div class="menu">
+                                    <a href="/currency/edit/@currency.Id.ToString()"
+                                       class="item"><i class="edit icon"></i>
+                                    </a>
+                                    <a href="/currency/delete/@currency.Id.ToString()"
+                                       class="item"><i class="trash icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @*<a href="/currency/edit/@currency.Id.ToString()">
+                            <i class="edit icon"></i>
+                        </a>
+                        <a href="/currency/delete/@currency.Id.ToString()">
+                            <i class="trash icon"></i>
+                        </a>*@
+                    </td>                 
+                    <td>@currency.Name</td>
+                    <td>@currency.IsoCode</td>                  
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    IEnumerable<CurrencyDto> currencies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchCommand();
+    }
+
+    private Task FetchCommand()
+    {
+        return TryRun(async () =>
+        {
+            this.currencies = await Controller.Fetch();
+        });
+    }
+
+    private void CreateCommand()
+    {
+        NavigationManager.NavigateTo($"/currency/edit/{Guid.NewGuid().ToString()}");
+    }  
+}

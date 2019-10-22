@@ -9,7 +9,7 @@ import { ConfirmDialogComponent } from './confirm-dialog.component';
 export class ConfirmDialogBuilder {
   static deleteConfirmBox(modalService: NgbModal, header: string, body: string): NgbModalRef {
     const model = new ConfirmDialogModel(header , body);
-    const modal = modalService.open(ConfirmDialogComponent, { size: 'sm' });
+    const modal = modalService.open(ConfirmDialogComponent, { size: 'sm', centered: true  });
     const confirmDialogComponent = modal.componentInstance as ConfirmDialogComponent;
     confirmDialogComponent.setModel(model);
     return modal;

@@ -5,7 +5,6 @@ using InitialEnterprise.Infrastructure.DDD.Command;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.DDD.Event;
 using InitialEnterprise.Infrastructure.Utils;
-using System.Linq;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Command
 {
@@ -31,7 +30,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             this.commandStore = commandStore;
         }
 
-        public async Task SendAsync<TCommand>(TCommand command)
+        public async Task Send<TCommand>(TCommand command)
             where TCommand : ICommand
         {
             Guard.AgainstNull<ArgumentNullException>(command);
@@ -39,12 +38,13 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             var commandHandler = resolver.Resolve<ICommandHandlerAsync<TCommand>>();
 
             Guard.AgainstNull<ApplicationException>(commandHandler,
-                $"No handler of type CommandHandlerAsync<TCommand> found for command '{command.GetType().FullName}'");
+                $"No handler of type CommandHandlerAsync<TCommand> found for command '" +
+                $"{command.GetType().FullName}'");
 
             await commandHandler.HandleAsync(command);
         }
 
-        public async Task<ICommandHandlerAnswer> SendAsync<TCommand, TAggregate>(TCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> Send<TCommand, TAggregate>(TCommand command)
             where TCommand : IDomainCommand
             where TAggregate : IAggregateRoot
         {
@@ -55,10 +55,11 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             var commandHandler = resolver.Resolve<ICommandHandlerWithResultAsync<TCommand>>();
 
             Guard.AgainstNull<ApplicationException>(commandHandler,
-                $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '{command.GetType().FullName}'");
+                $"No handler of type ICommandHandlerWithAggregateAsync<TCommand> found for command '" +
+                $"{command.GetType().FullName}'");
 
-            var commandHanderAnswer = await commandHandler.HandleAsync(command);    
-            
+            var commandHanderAnswer = await commandHandler.HandleAsync(command);
+
             if (commandHanderAnswer.ValidationResult.IsValid)
             {
                 foreach (var @event in commandHanderAnswer.AggregateRoot.Events)
@@ -66,12 +67,13 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
                     @event.CommandId = command.Id;
                     var concreteEvent = eventFactory.CreateConcreteEvent(@event);
                     await eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
+                    await eventPublisherAsync.PublishAsync(concreteEvent);
                 }
             }
             return commandHanderAnswer;
         }
 
-        public async Task SendAndPublishAsync<TCommand>(TCommand command)
+        public async Task SendAndPublish<TCommand>(TCommand command)
             where TCommand : ICommand
         {
             Guard.AgainstNull<ArgumentNullException>(command);
@@ -91,7 +93,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             }
         }
 
-        public async Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command)
+        public async Task SendAndPublish<TCommand, TAggregate>(TCommand command)
             where TCommand : IDomainCommand
             where TAggregate : IAggregateRoot
         {
@@ -116,21 +118,22 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
                     await eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
                     await eventPublisherAsync.PublishAsync(concreteEvent);
                 }
-            }         
+            }
         }
 
-        public async Task<TResult> SendAndReturnAsync<TCommand, TResult>(TCommand command)
-            where TCommand : IDomainCommand
+        public async Task<TResult> SendAndReturn<TCommand, TResult>(TCommand command)
+            where TCommand : IDomainCommand       
             where TResult : class
         {
             Guard.AgainstNull<ArgumentNullException>(command);
 
-            //await commandStore.SaveCommandAsync<TResult>(command);
+            //await commandStore.SaveCommandAsync<TAggregate>(command);
 
             var commandHandler = resolver.Resolve<ICommandHandlerWithResultAsync<TCommand, TResult>>();
 
             Guard.AgainstNull<ApplicationException>(commandHandler,
-                $"No handler of type ICommandHandlerWithResultAsync<TCommand, TResult> found for command '{command.GetType().FullName}'");
+                $"No handler of type ICommandHandlerWithResultAsync<TCommand, TResult> found for command '" +
+                $"{command.GetType().FullName}'");
 
             var commandHanderResult = await commandHandler.HandleAsync(command);
 
@@ -145,5 +148,6 @@ namespace InitialEnterprise.Infrastructure.CQRS.Command
             //}
             return commandHanderResult;
         }
+              
     }
 }

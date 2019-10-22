@@ -1,0 +1,105 @@
+﻿using InitialEnterprise.Domain.MainBoundedContext.Api;
+
+namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
+{
+    public class ClaimDefinition
+    {
+        public const string READ = "Read";
+        public const string WRITE = "Write";
+        public const string QUERY = "Query";
+        public const string CREATE = "Create";
+        public const string DELETE = "Delete";
+    }
+
+    public interface IClaimDefinition
+    {
+        ClaimRequirement ClaimRequirement { get; }
+    }
+
+    public class ClaimQuery : IClaimDefinition
+    {
+        public const string PolicyName = ClaimDefinition.QUERY;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Claim", PolicyName);
+    }
+
+    public class CurrencyCreateClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Currency" + ClaimDefinition.CREATE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Currency", ClaimDefinition.CREATE);
+    }
+    public class CurrencyReadClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Currency" + ClaimDefinition.READ;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Currency", ClaimDefinition.READ);
+    }
+    public class CurrencyWriteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Currency" + ClaimDefinition.WRITE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Currency", ClaimDefinition.WRITE);
+    }
+    public class CurrencyDeleteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Currency" + ClaimDefinition.DELETE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Currency", ClaimDefinition.DELETE);
+    }
+    public class CurrencyQueryClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Currency" + ClaimDefinition.QUERY;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Currency", ClaimDefinition.QUERY);
+    }
+
+    public class PersonCreateClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Person" + ClaimDefinition.CREATE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.CREATE);
+
+    }
+    public class PersonReadClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Person" + ClaimDefinition.READ;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.READ);
+    }
+    public class PersonWriteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Person" + ClaimDefinition.WRITE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.WRITE);
+    }
+    public class PersonDeleteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Person" + ClaimDefinition.DELETE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.DELETE);
+    }
+    public class PersonQueryClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Person" + ClaimDefinition.QUERY;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.QUERY);
+    }
+
+    public class UserCreateClaim : IClaimDefinition
+    {
+        public const string PolicyName = "User" + ClaimDefinition.CREATE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", PolicyName);
+
+    }
+    public class UserReadClaim : IClaimDefinition
+    {
+        public const string PolicyName = "User" + ClaimDefinition.READ;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", ClaimDefinition.READ);
+    }
+    public class UserWriteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "User" + ClaimDefinition.WRITE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", ClaimDefinition.WRITE);
+    }
+    public class UserDeleteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "User" + ClaimDefinition.DELETE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", ClaimDefinition.DELETE);
+    }
+    public class UserQueryClaim : IClaimDefinition
+    {
+        public const string PolicyName = "User" + ClaimDefinition.QUERY;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", ClaimDefinition.QUERY);
+    }
+
+}

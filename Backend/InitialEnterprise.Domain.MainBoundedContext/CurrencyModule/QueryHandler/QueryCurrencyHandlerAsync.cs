@@ -1,5 +1,5 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Queries;
+﻿using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Queries;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Repository;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using System.Collections.Generic;
@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandler
 {
-    public class QueryCurrencyHandlerAsync :
-        IQueryHandlerAsync<CurrencyQuery, Currency>,
-        IQueryHandlerAsync<CurrencyQuery,IEnumerable<Currency>>
+    public class QueryCountryHandlerAsync :
+        IQueryHandlerAsync<CountryQuery, Country>,
+        IQueryHandlerAsync<CountryQuery, IEnumerable<Country>>
     {
-        private readonly ICurrencyRepository currencyRepository;
+        private readonly ICountryRepository countryRepository;
 
-        public QueryCurrencyHandlerAsync(ICurrencyRepository currencyRepository)
+        public QueryCountryHandlerAsync(ICountryRepository countryRepository)
         {
-            this.currencyRepository = currencyRepository;
+            this.countryRepository = countryRepository;
         }
 
-        public async Task<Currency> RetrieveAsync(CurrencyQuery query)
+        public async Task<Country> Retrieve(CountryQuery query)
         {
-            return await currencyRepository.Query(query.Id);
+            return await countryRepository.Query(query.CountryId);
         }
 
-        async Task<IEnumerable<Currency>> IQueryHandlerAsync<CurrencyQuery, IEnumerable<Currency>>.RetrieveAsync(CurrencyQuery query)
+        async Task<IEnumerable<Country>> IQueryHandlerAsync<CountryQuery, IEnumerable<Country>>.Retrieve(CountryQuery query)
         {
-            return await currencyRepository.Query(query);
+            return await countryRepository.Query(query);
         }
     }
 }

@@ -1,0 +1,3 @@
+<ng-template #popTitle><b>{{infoTitle}}</b></ng-template>
+<ng-template #popContent>{{infoContent}}</ng-template>
+<div id="popoverInfo" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="true"></div>

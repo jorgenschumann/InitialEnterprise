@@ -6,9 +6,9 @@ using InitialEnterprise.Infrastructure.DDD.Validation;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationHandler
 {
-    public class UpdatePersonCommandValidationHandler : CommandValidator<UpdatePersonCommand>
+    public class UpdatePersonCommandValidationHandler : CommandValidator<PersonUpdateCommand>
     {
-        public override ValidationResult Validate(ValidationContext<UpdatePersonCommand> context)
+        public override ValidationResult Validate(ValidationContext<PersonUpdateCommand> context)
         {
             ValidateFirstName();
             ValidateLastnameCode();
@@ -19,14 +19,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
         {
             RuleFor(c => c.FirstName)
                 .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
-                .Length(1, 100).WithMessage("FirstName must have....");
+                .Length(2, 100).WithMessage("Firstname length must beetwen 2 and 100 charakters");
         }
 
         protected void ValidateLastnameCode()
         {
             RuleFor(c => c.LastName)
                 .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
-                   .Length(1, 100).WithMessage("LastName must have....");
+                   .Length(2, 100).WithMessage("LastName length must beetwen 2 and 100 charakters");
         }
     }
 }

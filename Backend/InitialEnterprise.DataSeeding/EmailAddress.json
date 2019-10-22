@@ -2,11 +2,22 @@
   {
     "Id": "8A1901E4-671B-431A-871C-EADB2942E9EE",
     "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100",
-    "MailAddress": "Ken@ie-works.com"
+    "MailAddress": "Ken@ie-works.com",
+    "MailAddressType": "Private",
+    "isPrimary": false
   },
   {
     "Id": "B5FF9EFD-72A2-4F87-830B-F338FDD4D162",
     "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100",
-    "MailAddress": "Ken_superman@ie-works.com"
+    "MailAddress": "Ken_superman@ie-works.com",
+    "MailAddressType": "Work",
+    "isPrimary": true
+  },
+  {
+    "Id": "B5FF9EFD-72A2-4F87-830B-F338FDD4D162",
+    "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100",
+    "MailAddress": "kennie@gmail.com",
+    "MailAddressType": "Private",
+    "isPrimary": false
   }
  ]

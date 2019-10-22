@@ -1,23 +1,21 @@
 <div *ngIf="(currency) as currency;">
 
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Edit Currency</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{modus}} Currency</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('CrossClick')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
-
           <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-2 col-md-6">
                     <label for="name">name</label>
                     <div class="input-group">
                         <div class="form-group form-inline">
-                            <input type="text" formControlName="name" class="form-control ml-auto" />
+                            <input type="text" formControlName="name" class="form-control ml-auto" [ngClass]="{ 'is-invalid': errors.name }" />
                         </div>
                     </div>
                 </div>
@@ -25,21 +23,25 @@
                     <label for="lastName">isoCode</label>
                     <div class="input-group">
                         <div class="form-group form-inline">
-                            <input  type="text" formControlName="isoCode" class="form-control ml-auto"/>
+                            <input  type="text" formControlName="isoCode" class="form-control ml-auto" [ngClass]="{ 'is-invalid': errors.isoCode }"/>
                         </div>
                     </div>
                 </div>
               </div>
             </div>
+            <div *ngIf="errors.isoCode"  class="alert alert-danger" role="alert">
+              {{ errors.isoCode }}
+            </div>
+            <div *ngIf="errors.name" class="alert alert-danger" role="alert">
+              {{ errors.name }}
+           </div>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="onCancel()">Cancel</button>
-          <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn btn-secondary" [disabled]="form.invalid">Save</button>
       </div>
     </form>
   </div>
-
-<!-- <pre>Model: {{ currency | json }}</pre> -->
-
 </div>
 
+<app-JsonModel [model]="currency"></app-JsonModel>

@@ -21,49 +21,50 @@ namespace InitialEnterprise.Infrastructure.CQRS
             this.queryProcessorAsync = queryProcessorAsync;
         }
 
-        public async Task SendAsync<TCommand>(TCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> Send<TCommand, TAggregate>(TCommand command)
+           where TCommand : IDomainCommand
+           where TAggregate : IAggregateRoot
+        {
+            return await commandSenderAsync.Send<TCommand, TAggregate>(command);
+        }   
+
+        public async Task Send<TCommand>(TCommand command)
             where TCommand : ICommand
         {
-            await commandSenderAsync.SendAsync(command);
+            await commandSenderAsync.Send(command);
         }
 
-        public async Task<ICommandHandlerAnswer> SendAsync<TCommand, TAggregate>(TCommand command)
+        public async Task SendAndPublish<TCommand>(TCommand command)
+            where TCommand : ICommand
+        {
+            await commandSenderAsync.SendAndPublish(command);
+        }
+
+        public async Task SendAndPublish<TCommand, TAggregate>(TCommand command)
             where TCommand : IDomainCommand
             where TAggregate : IAggregateRoot
         {
-            return await commandSenderAsync.SendAsync<TCommand, TAggregate>(command);
+            await commandSenderAsync.SendAndPublish<TCommand, TAggregate>(command);
         }
 
-        public async Task SendAndPublishAsync<TCommand>(TCommand command)
-            where TCommand : ICommand
+        public async Task<TResult> SendR<TCommand, TResult>(TCommand command)
+         where TCommand : IDomainCommand
+         where TResult : class
         {
-            await commandSenderAsync.SendAndPublishAsync(command);
+            return await commandSenderAsync.SendAndReturn<TCommand, TResult>(command);
         }
 
-        public async Task SendAndPublishAsync<TCommand, TAggregate>(TCommand command)
-            where TCommand : IDomainCommand
-            where TAggregate : IAggregateRoot
-        {
-            await commandSenderAsync.SendAndPublishAsync<TCommand, TAggregate>(command);
-        }
-
-        public async Task PublishAsync<TEvent>(TEvent @event)
+        public async Task Publish<TEvent>(TEvent @event)
             where TEvent : IEvent
         {
             await eventPublisherAsync.PublishAsync(@event);
         }
 
-        public async Task<TResult> GetResultAsync<TQuery, TResult>(TQuery query)
+        public async Task<TResult> Query<TQuery, TResult>(TQuery query)
             where TQuery : IQuery
         {
             return await queryProcessorAsync.ProcessAsync<TQuery, TResult>(query);
         }
 
-        public async Task<TResult> SendAndReturnAsync<TCommand, TResult>(TCommand command)
-            where TCommand : IDomainCommand
-            where TResult : class
-        {
-            return await commandSenderAsync.SendAndReturnAsync<TCommand, TResult>(command);
-        }
     }
 }

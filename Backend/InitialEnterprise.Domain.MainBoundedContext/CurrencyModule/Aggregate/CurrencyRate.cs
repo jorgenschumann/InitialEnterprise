@@ -4,12 +4,7 @@ using Newtonsoft.Json;
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 {
     public class CurrencyRate : AggregateRoot
-    {
-        [JsonConstructor]
-        private CurrencyRate()
-        {
-        }
-
+    { 
         [JsonProperty]
         public string CurrencyRateDate { get; private set; }
 
@@ -24,5 +19,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
 
         [JsonProperty]
         public string FromCurrencyCode { get; private set; }
+
+        [JsonConstructor]
+        private CurrencyRate()
+        {
+        }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InitialEnterprise.Infrastructure.Utils
 {
@@ -85,4 +83,5 @@ namespace InitialEnterprise.Infrastructure.Utils
             return @object.ToString().ToLower();
         }
     }
+    
 }

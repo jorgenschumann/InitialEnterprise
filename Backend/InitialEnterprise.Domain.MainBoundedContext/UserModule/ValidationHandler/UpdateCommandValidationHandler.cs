@@ -5,6 +5,7 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.ValidationHandler
 {
+
     public class UpdateCommandValidationHandler : CommandValidator<UserUpdateCommand>
     {
         public override ValidationResult Validate(ValidationContext<UserUpdateCommand> context)
@@ -40,7 +41,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.ValidationHandl
         protected void ValidateEmail()
         {
             RuleFor(c => c.Email)
-                .NotEmpty().WithMessage(nameof(UserRegisterCommand.Email))
                 .EmailAddress().WithMessage("A valid email is required");
         }
     }

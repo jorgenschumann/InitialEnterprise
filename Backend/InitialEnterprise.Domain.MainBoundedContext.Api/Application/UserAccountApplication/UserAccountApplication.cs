@@ -8,23 +8,10 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
-    public interface IUserAccountApplication
-    {
-        Task<UserSignInResult> SignIn(UserLoginDto model);
-
-        Task<IdentityResult> Register(UserRegisterDto model);
-
-        Task<IdentityResult> Update(UserDto model);
-
-        Task<IdentityResult> Delete(Guid id);
-
-        Task<ApplicationUser> Query(Guid id);
-
-        Task<IEnumerable<ApplicationUser>> QueryAsync(IQuery query);
-    }
 
     public class UserAccountApplication : IUserAccountApplication
     {
@@ -36,39 +23,63 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
             this.dispatcher = dispatcher;
         }
 
+        public async Task<UserSignInResultDto> LogIn(UserLoginDto model)
+        {
+            var command = Mapper.Map(model).ToANew<SignInCommand>();
+            var result = await dispatcher.SendR<SignInCommand, UserSignInResult>(command);
+           
+            Mapper.WhenMapping
+                .From<UserSignInResult>()          
+                .To<UserSignInResultDto>()          
+                .Map((p, dto) => p.SignInResult.Succeeded)   
+                .To(p => p.Success); 
+            
+            return Mapper.Map(result).ToANew<UserSignInResultDto>();
+        }            
+
         public async Task<UserSignInResult> SignIn(UserLoginDto model)
         {
             var command = Mapper.Map(model).ToANew<SignInCommand>();
-            return await dispatcher.SendAndReturnAsync<SignInCommand, UserSignInResult>(command);
+            return await dispatcher.SendR<SignInCommand, UserSignInResult>(command);
         }
 
         public async Task<IdentityResult> Register(UserRegisterDto model)
         {
             var command = Mapper.Map(model).ToANew<UserRegisterCommand>();
-            return await dispatcher.SendAndReturnAsync<UserRegisterCommand, IdentityResult>(command);
+            return await dispatcher.SendR<UserRegisterCommand, IdentityResult>(command);       
         }
 
         public async Task<ApplicationUser> Query(Guid id)
         {
             var query = new UserQuery { Id = id };
-            return await dispatcher.GetResultAsync<UserQuery, ApplicationUser>(query);
+            return await dispatcher.Query<UserQuery, ApplicationUser>(query);
         }
 
         public async Task<IdentityResult> Update(UserDto model)
         {
             var command = Mapper.Map(model).ToANew<UserUpdateCommand>();
-            return await dispatcher.SendAndReturnAsync<UserUpdateCommand, IdentityResult>(command);
+            return await dispatcher.SendR<UserUpdateCommand, IdentityResult>(command);
         }
 
         public async Task<IEnumerable<ApplicationUser>> QueryAsync(IQuery query)
         {
             var userQuery = query as UserQuery;
-            return await dispatcher.GetResultAsync<UserQuery, IEnumerable<ApplicationUser>>(userQuery);
+            return await dispatcher.Query<UserQuery, IEnumerable<ApplicationUser>>(userQuery);
         }
 
         public Task<IdentityResult> Delete(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<ApplicationUser> UploadImage(Guid id, byte[] image)
+        {
+            var command = new UserUpdateImageCommand
+            {
+                Id = id,
+                Image = image
+            };
+            return await dispatcher.SendR<UserUpdateImageCommand, ApplicationUser>(command);
         }
     }
 }

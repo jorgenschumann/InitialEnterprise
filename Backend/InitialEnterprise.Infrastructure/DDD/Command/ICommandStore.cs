@@ -8,7 +8,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
     public interface ICommandStore
     {
         Task SaveCommandAsync<TAggregate>(IDomainCommand command) where TAggregate : IAggregateRoot;
-
+                
         Task<IEnumerable<DomainCommand>> GetCommandsAsync(Guid aggregateId);
     }
 
@@ -16,8 +16,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Command
     {
         public async Task SaveCommandAsync<TAggregate>(IDomainCommand command) where TAggregate : IAggregateRoot
         {
-            await Task.CompletedTask;
-            // throw new NotImplementedException();
+            await Task.CompletedTask;           
         }
 
         public async Task<IEnumerable<DomainCommand>> GetCommandsAsync(Guid aggregateId)

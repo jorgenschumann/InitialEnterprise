@@ -3,6 +3,10 @@ import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyService } from '../shared/currency.service';
+import { ConfirmDialogModus } from 'src/app/shared/components/confirm-dialog/confirm-dialog-modus.enum';
+import { CamelCasePipe } from 'src/app/shared/pipes/camel-case.pipe';
+import { ValidationResult } from 'src/app/shared/models/commandHandlerAnswer';
+
 
 @Component({
   selector: 'app-currency-detail',
@@ -13,37 +17,53 @@ import { CurrencyService } from '../shared/currency.service';
 @Injectable({ providedIn: 'root' })
 export class CurrencyDetailComponent implements OnInit {
   @Input() currency: Currency;
+  @Input() modus = ConfirmDialogModus;
   form: FormGroup;
   loading = false;
   submitted = false;
-  error = '';
+  errors: { [key: string]: string } = {};
+
+
+  validationResult: ValidationResult;
 
   constructor(public activeModal: NgbActiveModal,
               private currencyService: CurrencyService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private camelCasePipe: CamelCasePipe) { }
 
   ngOnInit() {
+    this.initCurrency();
+  }
+
+  initCurrency() {
     this.form = this.formBuilder.group({
       id: [this.currency.id, Validators.required],
       name: [this.currency.name, Validators.required],
       isoCode: [this.currency.isoCode, Validators.required]
       });
+    this.form.statusChanges.subscribe(() => this.updateErrorMessages());
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.currencyService.put(this.form.value)
-      .subscribe(
-          data => {
-            this.currency = Object.assign({}, this.form.value);
+      const currency: Currency =  Object.assign({}, this.form.value);
+      this.currencyService.put(currency)
+        .subscribe(
+          (response: any) => {
+            this.currency = response.aggregateRoot;
             this.activeModal.close(this.currency);
-          },
-          error => {
-              this.error = error;
-              this.loading = false;
-          });
-      }
+            },
+            error => {
+                this.validationResult = error.error.validationResult;
+                this.updateErrorMessages();
+            });
    }
+
+  updateErrorMessages() {
+    this.errors = {};
+    for (const message of this.validationResult.errors) {
+      this.errors[this.camelCasePipe.transform(message.propertyName)] = message.errorMessage;
+    }
+  }
 
    onCancel() {
     this.activeModal.close(this.currency);

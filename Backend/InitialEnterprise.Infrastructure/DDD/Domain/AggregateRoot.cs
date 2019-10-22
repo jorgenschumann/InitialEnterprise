@@ -7,7 +7,6 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
     public class AggregateRoot : IAggregateRoot
     {
-
         protected AggregateRoot()
         {
             Id = Guid.Empty;
@@ -32,17 +31,13 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
         {
             foreach (var @event in events)
             {
-                Events.Add(@event);
-                //this.AsDynamic().Apply(@event);//TODO:ReflectionMagic
+                Events.Add(@event);               
             }
         }
 
         protected void AddEvent(IDomainEvent @event)
         {
-            Events.Add(@event);
-            {
-                //this.AsDynamic().Apply(@event); //TODO:ReflectionMagic
-            }
+            Events.Add(@event);            
         }
     }
 }

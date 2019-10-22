@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -24,7 +25,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost("query")]
-        [Authorize(Policy = CurrencyClaims.CurrencyRead)]
+        [Authorize(Policy = CurrencyQueryClaim.PolicyName)]
         public async Task<IActionResult> Query([FromBody]IQuery query)
         {
             var result = await currencyApplication.Query(query);
@@ -32,8 +33,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-        [Authorize(Policy = CurrencyClaims.CurrencyQuery)]
-        [Authorize(Policy = CurrencyClaims.CurrencyRead)]
+        [Authorize(Policy = CurrencyReadClaim.PolicyName)]
+        [Authorize(Policy = CurrencyQueryClaim.PolicyName)]
+        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             var result = await currencyApplication.Query();
@@ -41,7 +43,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = CurrencyClaims.CurrencyRead)]
+        [Authorize(Policy = CurrencyReadClaim.PolicyName)]    
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await currencyApplication.Query(id);
@@ -49,7 +51,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        [Authorize(Policy = CurrencyClaims.CurrencyWrite)]
+        [Authorize(Policy = CurrencyCreateClaim.PolicyName)]     
         public async Task<IActionResult> Post([FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Insert(value);
@@ -57,7 +59,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = CurrencyClaims.CurrencyWrite)]
+        [Authorize(Policy = CurrencyWriteClaim.PolicyName)]      
+     
         public async Task<IActionResult> Put(Guid id, [FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Update(value);

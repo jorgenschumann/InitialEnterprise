@@ -1,7 +1,7 @@
 <div *ngIf="(user) as user;">
 
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Persönliche Daten bearbeiten</h4>
+      <h4 class="modal-title" id="modal-basic-title">User</h4>
       <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('CrossClick')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -18,6 +18,9 @@
                       <div class="input-group">
                           <div class="form-group form-inline">
                               <input type="text" formControlName="firstName" class="form-control ml-auto" />
+                              <div *ngIf="errors.firstName"  class="invalid-feedback">
+                                {{ errors.firstName }}
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -70,15 +73,15 @@
                   </div>
                 </div>
               </div>
+              <app-upload></app-upload>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" (click)="onCancel()">Cancel</button>
-            <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+            <button type="button" class="btn btn-outline-dark" (click)="onSubmit()" [disabled]="userForm.invalid">Save</button>
         </div>
       </form>
     </div>
-
-  <!-- <pre>Model: {{ user | json }}</pre> -->
-
 </div>
+
+<app-JsonModel [model]="user"></app-JsonModel>
 

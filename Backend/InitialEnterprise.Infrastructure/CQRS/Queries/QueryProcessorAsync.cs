@@ -22,7 +22,7 @@ namespace InitialEnterprise.Infrastructure.CQRS.Queries
             Guard.AgainstNull<ArgumentException>(handler,
                 $"No handler of type IQueryHandlerAsync<TQuery, TResult>> found for query '{query.GetType().FullName}'");
 
-            return await handler.RetrieveAsync(query);
+            return await handler.Retrieve(query);
         }
     }
 }

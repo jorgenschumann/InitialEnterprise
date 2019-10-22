@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -14,6 +14,9 @@
     <Compile Remove="CurrencyModule\CommandHandler\UpdateCurrencyCommandHandler.cs" />
     <Compile Remove="CurrencyModule\CommandHandler\UpdateIsoCodeCurrencyCommandHandler.cs" />
     <Compile Remove="CurrencyModule\CommandHandler\UpdateRateCurrencyCommandHandler.cs" />
+    <Compile Remove="PersonModule\Commands\CreditCardCreateCommand.cs" />
+    <Compile Remove="PersonModule\Commands\CreditCardDeactivateCommand.cs" />
+    <Compile Remove="PersonModule\Commands\CreditCardUpdateCommand.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +36,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AddressModule\CommandHandler\" />
+    <Folder Include="AddressModule\Events\" />
+    <Folder Include="AddressModule\Queries\" />
+    <Folder Include="AddressModule\QueryHandler\" />
+    <Folder Include="CountryModule\CommandHandler\" />
+    <Folder Include="CountryModule\Commands\" />
+    <Folder Include="CountryModule\Events\" />
+    <Folder Include="CountryModule\ValidationHandler\" />
+    <Folder Include="CreditCardModule\CommandHandler\" />
+    <Folder Include="DocumentModule\QueryHandler\" />
+    <Folder Include="DocumentModule\ValidationHandler\" />
+    <Folder Include="EmailAddressModule\CommandHandler\" />
+    <Folder Include="EmailAddressModule\Events\" />
+    <Folder Include="EmailAddressModule\Queries\" />
+    <Folder Include="EmailAddressModule\QueryHandler\" />
+    <Folder Include="EmailAddressModule\Repository\" />
     <Folder Include="Migrations\" />
     <Folder Include="ModuleTemplate\Aggreate\" />
     <Folder Include="ModuleTemplate\CommandHandler\" />
@@ -42,7 +61,6 @@
     <Folder Include="ModuleTemplate\QueryHandler\" />
     <Folder Include="ModuleTemplate\Repository\" />
     <Folder Include="ModuleTemplate\ValidationHandler\" />
-    <Folder Include="PersonModule\Events\" />
     <Folder Include="UserModule\Events\" />
   </ItemGroup>
 

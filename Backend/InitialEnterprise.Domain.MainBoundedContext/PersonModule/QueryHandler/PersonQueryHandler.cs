@@ -17,12 +17,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.QueryHandler
             this.personRepository = personRepository;
         }
 
-        public async Task<IEnumerable<Person>> RetrieveAsync(PersonQuery query)
+        public async Task<IEnumerable<Person>> Retrieve(PersonQuery query)
         {
             return await personRepository.Query(query);
         }
 
-        async Task<Person> IQueryHandlerAsync<PersonQuery, Person>.RetrieveAsync(PersonQuery query)
+        async Task<Person> IQueryHandlerAsync<PersonQuery, Person>.Retrieve(PersonQuery query)
         {
             return await personRepository.Query(query.Id);
         }

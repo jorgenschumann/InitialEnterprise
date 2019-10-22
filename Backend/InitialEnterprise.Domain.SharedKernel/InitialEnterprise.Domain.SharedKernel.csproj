@@ -1,7 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ClaimModule\CommandHandler\" />
+    <Folder Include="ClaimModule\Commands\" />
+    <Folder Include="ClaimModule\Events\" />
+    <Folder Include="ClaimModule\Repository\" />
+    <Folder Include="ClaimModule\ValidationHandler\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -1,0 +1,23 @@
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html,
+body {
+    height: 100%;
+}
+
+.maincontainer {
+    height: 100%;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+.ui.pushable {
+    min-height: 100%;
+}
+
+.ui.overlay {
+    min-height: 100%;   
+    opacity: 0.4;
+}

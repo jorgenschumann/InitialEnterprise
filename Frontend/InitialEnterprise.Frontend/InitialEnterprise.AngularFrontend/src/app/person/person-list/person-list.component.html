@@ -1,0 +1,31 @@
+
+  <h2>People</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th></th>
+          <th>PersonType</th>
+          <th>NameStyle</th>
+          <th>Title</th>
+          <th>FirstName</th>
+          <th>MiddleName</th>
+          <th>LastName</th>
+          <th>Suffix</th>
+          <th>EmailPromotion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="app-person-list-item"
+                *ngFor="let person of people"
+                [person]="person">
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<ng-template #loading>
+  <div class="ui active dimmer">
+    <div class="ui large text loader">Daten werden geladen...</div>
+  </div>
+</ng-template>

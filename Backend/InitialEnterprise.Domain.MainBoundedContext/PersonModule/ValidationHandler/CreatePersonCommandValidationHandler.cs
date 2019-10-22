@@ -6,9 +6,9 @@ using InitialEnterprise.Infrastructure.DDD.Validation;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.ValidationHandler
 {
-    public class CreatePersonCommandValidationHandler : CommandValidator<CreatePersonCommand>
+    public class CreatePersonCommandValidationHandler : CommandValidator<PersonCreateCommand>
     {
-        public override ValidationResult Validate(ValidationContext<CreatePersonCommand> context)
+        public override ValidationResult Validate(ValidationContext<PersonCreateCommand> context)
         {
             ValidateFirstName();
             ValidateLastnameCode();

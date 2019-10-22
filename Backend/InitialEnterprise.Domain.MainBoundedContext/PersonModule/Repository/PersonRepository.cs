@@ -12,39 +12,40 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Repository
     public class PersonRepository : IPersonRepository
     {
         private readonly MainDbContext mainDbContext;
-
+     
         public PersonRepository(MainDbContext context)
         {
-            mainDbContext = context;
+            mainDbContext = context;           
         }
 
         public IUnitOfWork UnitOfWork => mainDbContext;
 
         public async Task<Person> Insert(Person person)
         {
-            var added = await mainDbContext.Person.AddAsync(person);           
+            var added = await mainDbContext.Person.AddAsync(person);
+            await mainDbContext.SaveEntitiesAsync();
             return added.Entity;
-        }
-
+        }       
+     
         public async Task<Person> Query(Guid personId)
-        {       
+        {
             return await mainDbContext
                 .Person
                 .Include(p => p.EmailAddresses)
-                .SingleOrDefaultAsync(p=>p.Id ==personId);
+                .Include(p => p.Addresses)
+                .Include(p => p.CreditCards)
+                .SingleOrDefaultAsync(p => p.Id == personId);
         }
 
         public async Task<IEnumerable<Person>> Query(PersonQuery query)
         {
-            return await mainDbContext
-                .Person
-                .Include(x => x.EmailAddresses)
-                .ToListAsync();
+            return await mainDbContext.Person.ToListAsync();
         }
 
         public async Task<Person> Update(Person person)
         {
-            var updated = mainDbContext.Person.Update(person);      
+            var updated = mainDbContext.Person.Update(person);
+            await mainDbContext.SaveEntitiesAsync();
             return updated.Entity;
         }
     }

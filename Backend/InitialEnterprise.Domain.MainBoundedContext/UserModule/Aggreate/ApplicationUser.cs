@@ -28,6 +28,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
 
         public DateTime DateOfBirth { get; set; }
 
+        public byte[] Image { get; set; } 
+
         public ApplicationUser()
         {
         }
@@ -43,6 +45,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
             this.NormalizedEmail = this.Email.ToUpper();
             //this.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(this, command.Password);
             //todo: set other values
+        }
+
+        public void Update(UserUpdateImageCommand command)
+        {
+            this.Image = command.Image;         
+        }
+
+        public void Update(UserRemoveImageCommand command)
+        {
+            this.Image = null;
         }
 
         public ApplicationUser(UserRegisterCommand command)

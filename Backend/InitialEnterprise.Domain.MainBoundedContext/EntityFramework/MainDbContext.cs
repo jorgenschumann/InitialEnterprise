@@ -1,4 +1,9 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+﻿using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
+using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
+using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
@@ -25,11 +30,21 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         public virtual DbSet<Currency> Currency { get; set; }
 
-        public DbSet<CurrencyRate> CurrencyRate { get; set; }
+        public virtual DbSet<CurrencyRate> CurrencyRate { get; set; }
 
-        public DbSet<Person> Person { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
 
-        public DbSet<EmailAddress> EmailAddress { get; set; }
+        public virtual DbSet<EmailAddress> EmailAddress { get; set; }
+
+        public virtual DbSet<CreditCard> CreditCard { get; set; }
+
+        public virtual DbSet<PersonAddress> PersonAddress { get; set; }
+
+        public virtual DbSet<Document> Document { get; set; }
+
+        public virtual DbSet<Country> Country { get; set; }
+
+        public virtual DbSet<Province> Province { get; set; }
 
         public async Task SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -38,6 +53,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            ConfigureValueConverter(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new CurrencyRateEntityTypeConfiguration());
@@ -46,12 +63,37 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
             modelBuilder.ApplyConfiguration(new EmailAddressEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new CreditCardEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new PersonAddressEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CountryEntityTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ProvinceEntityTypeConfiguration());
+
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Province>()
+              .HasOne(p => p.Country)
+              .WithMany(e => e.Provinces)
+              .HasForeignKey(e => e.CountryId);
+
+            modelBuilder.Entity<PersonAddress>()
+               .HasOne(p => p.Person)
+               .WithMany(e => e.Addresses)
+               .HasForeignKey(e => e.PersonId);
 
             modelBuilder.Entity<EmailAddress>()
                .HasOne(p => p.Person)
                .WithMany(e => e.EmailAddresses)
                .HasForeignKey(e => e.PersonId);
+
+            modelBuilder.Entity<CreditCard>()
+              .HasOne(p => p.Person)
+              .WithMany(e => e.CreditCards)
+              .HasForeignKey(e => e.PersonId);
 
             modelBuilder.Entity<ApplicationUser>(b =>
            {
@@ -94,6 +136,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
                    .HasForeignKey(rc => rc.RoleId)
                    .IsRequired();
             });
+        }
+
+        private void ConfigureValueConverter(ModelBuilder modelBuilder)
+        {
+            //var converter = new ValueConverter<CreditCardType, string>(
+            //    v => v.ToString(),
+            //    v => (CreditCardType)Enum.Parse(typeof(CreditCardType), v));
+
+            //modelBuilder.Entity<CreditCard>().Property(
+            //    e => e.CreditCardType).HasConversion(converter);
         }
     }
 }

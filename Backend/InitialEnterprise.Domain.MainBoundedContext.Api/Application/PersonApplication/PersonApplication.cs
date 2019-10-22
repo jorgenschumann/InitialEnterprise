@@ -1,5 +1,4 @@
 ﻿using AgileObjects.AgileMapper;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Shared;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Queries;
@@ -9,6 +8,7 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication
 {
@@ -21,33 +21,37 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
             this.dispatcher = dispatcher;
         }
 
-        public async Task<ICommandHandlerAnswer> Insert(PersonDto model)
+        public async Task<ICommandHandlerAggregateAnswer> Insert(PersonDto model)
         {
-            var command = Mapper.Map(model).ToANew<CreatePersonCommand>();
-            return await dispatcher.SendAsync<CreatePersonCommand, Person>(command);
+            var command = Mapper.Map(model).ToANew<PersonCreateCommand>();
+            return await dispatcher.Send<PersonCreateCommand, Person>(command);
         }
 
-        public Task<PersonDto> Query(Guid id)
+        public async Task<PersonDto> Query(Guid id)
         {
-            throw new NotImplementedException();
+            var query = new PersonQuery { Id = id };
+            var person = await dispatcher.Query<PersonQuery, Person>(query);
+
+            return Mapper.Map(person).ToANew<PersonDto>();
         }
 
-        public Task<IEnumerable<PersonDto>> Query(IQuery model)
-        {
-            throw new NotImplementedException();
+        public async Task<IEnumerable<PersonDto>> Query(IQuery model)
+        {            
+            var people = await dispatcher.Query<PersonQuery, IEnumerable<Person>>(model as PersonQuery);
+            return Mapper.Map(people).ToANew<IEnumerable<PersonDto>>();
         }
 
         public async Task<IEnumerable<PersonDto>> Query()
         {
             var personQuery = new PersonQuery();
-            var people = await dispatcher.GetResultAsync<PersonQuery, IEnumerable<Person>>(personQuery);
+            var people = await dispatcher.Query<PersonQuery, IEnumerable<Person>>(personQuery);
             return Mapper.Map(people).ToANew<IEnumerable<PersonDto>>();
         }
 
-        public async Task<ICommandHandlerAnswer> Update(PersonDto model)
+        public async Task<ICommandHandlerAggregateAnswer> Update(PersonDto model)
         {
-            var command = Mapper.Map(model).ToANew<UpdatePersonCommand>();
-            return await dispatcher.SendAsync<UpdatePersonCommand, Person>(command);
+            var command = Mapper.Map(model).ToANew<PersonUpdateCommand>();           
+            return await dispatcher.Send<PersonUpdateCommand, Person>(command);
         }
     }
 }

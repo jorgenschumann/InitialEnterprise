@@ -1,4 +1,6 @@
-﻿using InitialEnterprise.Infrastructure.DDD.Command;
+﻿using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
+using InitialEnterprise.Infrastructure.DDD.Command;
+using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands
 {
@@ -19,5 +21,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Commands
         public string Suffix { get; set; }
 
         public int EmailPromotion { get; set; }
+
+        public ICollection<BaseMailAddressCommand> EmailAddresses { get; set; }
     }
 }

@@ -1,0 +1,24 @@
+﻿[
+  {
+    "Id": "8A1901E4-671B-431A-871C-EADB2942E9EE",
+    "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100",
+    "Street": "Herderweg",
+    "Number": "7",
+    "City": "Emmendingen",
+    "Country": "Germany",
+    "Province": "Baden",
+    "Zip": "79312",
+    "isPrimary": true
+  },
+  {
+    "Id": "17028F6F-1A00-4939-B10F-FA71519840D2",
+    "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100",
+    "Street": "Holzweg",
+    "Number": "5",
+    "City": "Heuweiler",
+    "Country": "Germany",
+    "Province": "Baden",
+    "Zip": "79249",
+    "isPrimary": false
+  }
+ ]

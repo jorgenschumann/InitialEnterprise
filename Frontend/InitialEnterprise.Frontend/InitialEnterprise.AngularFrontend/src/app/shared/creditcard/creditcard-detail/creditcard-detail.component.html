@@ -1,0 +1,60 @@
+<p *ngIf="!creditCard"><em>Loading...</em></p>
+
+<div *ngIf="(creditCard) as CreditCard;">
+  <div class="modal-header">
+    <h1 class="modal-title" id="modal-basic-title">Personal data</h1>
+      <div class="btn-group">
+          <button class='btn btn-secondary' (click)="location.back()" >
+              <i class='material-icons'>undo</i>
+            </button>
+            <button (click)="submit()" class="btn btn-secondary" [disabled]="form.invalid">
+              <i class='material-icons'>save</i>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row">
+            <div>
+                <h4 class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="text-muted">Your Creditcard</span>
+                  </h4>
+                <div class="row">
+                <div class="col-md-5 mb-2">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" class="form-control ml-auto" formControlName="cardNumber"
+                      [(ngModel)]="creditCard.cardNumber"
+                      [ngClass]="{ 'is-invalid': errors.cardNumber }" />
+                  </div>
+                  <div class="col-md-4 mb-2">
+                    <label for="creditCardType">Card Type</label>
+                    <select class="custom-select d-block w-100" formControlName="creditCardType"
+                      [(ngModel)]="creditCard.creditCardType"
+                      [ngClass]="{ 'is-invalid': errors.creditCardType }">
+                      <option *ngFor="let creditCardType of creditCardTypes" [(ngValue)]="creditCardType.name">{{creditCardType.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-5 mb-2">
+                    <label for="expireMonth">Expire Month</label>
+                    <select class="custom-select d-block w-100" formControlName="expireMonth"
+                      [(ngModel)]="creditCard.expireMonth"
+                      [ngClass]="{ 'is-invalid': errors.expireMonth }">
+                      <option *ngFor="let month of months" [(ngValue)]="month">{{month}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 mb-2">
+                    <label for="expireYear">Expire Year</label>
+                    <select class="custom-select d-block w-100" formControlName="expireYear"
+                      [(ngModel)]="creditCard.expireYear"
+                      [ngClass]="{ 'is-invalid': errors.expireMonth }">
+                      <option *ngFor="let year of years" [(ngValue)]="year">{{year}}</option>
+                    </select>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </form>
+  </div>
+</div>
+
+<app-JsonModel [model]="creditCard"></app-JsonModel>

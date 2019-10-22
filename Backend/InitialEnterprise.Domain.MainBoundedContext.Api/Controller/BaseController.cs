@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using InitialEnterprise.Domain.MainBoundedContext.Api.ActionFilter;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
+    [InjectUserId]
     [Authorize]
     public class BaseController : Microsoft.AspNetCore.Mvc.Controller
     {

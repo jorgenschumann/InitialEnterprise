@@ -24,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             mockCurrencyRepository.Setup(service => service.Query(It.IsAny<Guid>())).ReturnsAsync(currency);
 
             //Act
-            var returnedCurrency = await currencyQueryHandler.RetrieveAsync(mockCurrencyQuery.Object);
+            var returnedCurrency = await currencyQueryHandler.Retrieve(mockCurrencyQuery.Object);
 
             //Assert
             Assert.IsNotNull(returnedCurrency);

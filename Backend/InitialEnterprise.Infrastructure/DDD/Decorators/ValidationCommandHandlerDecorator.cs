@@ -14,7 +14,7 @@ namespace InitialEnterprise.Infrastructure.DDD.Decorators
             decoratee = decoratedHandler;
         }
 
-        public async Task<ICommandHandlerAnswer> HandleAsync(TCommand command)
+        public async Task<ICommandHandlerAggregateAnswer> HandleAsync(TCommand command)
         {
             return await decoratee.HandleAsync(command);
         }

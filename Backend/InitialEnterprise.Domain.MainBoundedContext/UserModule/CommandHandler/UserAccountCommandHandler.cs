@@ -13,12 +13,15 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
     public class UserAccountCommandHandler :
          ICommandHandlerWithResultAsync<SignInCommand, UserSignInResult>,
          ICommandHandlerWithResultAsync<UserRegisterCommand, IdentityResult>,
-         ICommandHandlerWithResultAsync<UserUpdateCommand, IdentityResult>
+         ICommandHandlerWithResultAsync<UserUpdateCommand, IdentityResult>,
+         ICommandHandlerWithResultAsync<UserUpdateImageCommand, ApplicationUser>,
+         ICommandHandlerWithResultAsync<UserRemoveImageCommand, ApplicationUser>
 
     {
         private readonly IValidator<SignInCommand> loginValidationHandler;
         private readonly IValidator<UserRegisterCommand> registerValidationHandler;
         private readonly IValidator<UserUpdateCommand> updateValidationHandler;
+        private readonly IValidator<UserUpdateImageCommand> updateImageValidationHandler;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IJwtSecurityTokenBuilder tokenBuilder;
@@ -27,6 +30,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
             IValidator<SignInCommand> loginValidationHandler,
             IValidator<UserRegisterCommand> registerValidationHandler,
             IValidator<UserUpdateCommand> updateValidationHandler,
+            IValidator<UserUpdateImageCommand> updateImageValidationHandler,
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IJwtSecurityTokenBuilder tokenBuilder)
@@ -35,13 +39,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
             this.userManager = userManager;
             this.loginValidationHandler = loginValidationHandler;
             this.updateValidationHandler = updateValidationHandler;
+            this.updateImageValidationHandler = updateImageValidationHandler;
             this.registerValidationHandler = registerValidationHandler;
             this.tokenBuilder = tokenBuilder;
         }
 
         public async Task<UserSignInResult> HandleAsync(SignInCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = loginValidationHandler.Validate(command)
             };
@@ -83,13 +88,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 
         public async Task<IdentityResult> HandleAsync(UserRegisterCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = registerValidationHandler.Validate(command)
             };
 
             var identityResult = new IdentityResult();
-            if (command.IsValid)
+            if (commandHandlerAnswer.ValidationResult.IsValid)
             {
                 var user = new ApplicationUser(command);
                 identityResult = await userManager.CreateAsync(user);
@@ -99,18 +104,44 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.CommandHandler
 
         public async Task<IdentityResult> HandleAsync(UserUpdateCommand command)
         {
-            var commandHandlerAnswer = new CommandHandlerAnswer
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
             {
                 ValidationResult = updateValidationHandler.Validate(command)
             };
             var identityResult = new IdentityResult();
-            if (command.IsValid)
+            if (commandHandlerAnswer.ValidationResult.IsValid)
             {
                 var user = await userManager.FindByEmailAsync(command.Email);
                 user.Update(command);
                 identityResult = await userManager.UpdateAsync(user);
             }
             return identityResult;
+        }
+
+        public async Task<ApplicationUser> HandleAsync(UserUpdateImageCommand command)
+        {
+            var commandHandlerAnswer = new CommandHandlerAggregateAnswer
+            {
+                ValidationResult = updateImageValidationHandler.Validate(command)
+            };
+            var user = await userManager.FindByIdAsync(command.Id.ToString());
+            if (commandHandlerAnswer.ValidationResult.IsValid)
+            {
+                user.Update(command);
+                await userManager.UpdateAsync(user);
+            }
+            return user;
+        }
+
+        public async Task<ApplicationUser> HandleAsync(UserRemoveImageCommand command)
+        {
+            var user = await userManager.FindByIdAsync(command.Id.ToString());
+            {
+                user.Update(command);
+
+                await userManager.UpdateAsync(user);
+            }     
+            return user;
         }
     }
 }
