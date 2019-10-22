@@ -3,10 +3,12 @@
 @using InitialEnterprise.BlazorFrontend.Models
 @using InitialEnterprise.Shared.Dtos
 @using InitialEnterprise.BlazorFrontend.Services
+@using InitialEnterprise.BlazorFrontend.Controller
+
 
 @inject NavigationManager NavigationManager
-@inject IAuthenticationService authenticationService
 @inject UiServices.MessageBoxService messageBoxService
+@inject AuthenticationController authenticationController
 
 <form class="ui form">
     <h4 class="ui dividing header"><i class="lock icon"></i>Signin</h4>
@@ -36,11 +38,12 @@
 
 
 @code {
-    UserLoginDto userLogin = new UserLoginDto();
 
+    UserLoginDto userLogin = new UserLoginDto();
+       
     async Task LogonUser()
-    {
-        UserSignInResultDto userSignInResult = await this.authenticationService.Login(userLogin);
+    {      
+       UserSignInResultDto userSignInResult  = await this.authenticationController.Login(userLogin);
      
         if (userSignInResult.Success)
         {

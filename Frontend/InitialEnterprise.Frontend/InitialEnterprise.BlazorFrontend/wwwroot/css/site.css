@@ -17,7 +17,7 @@ body {
     min-height: 100%;
 }
 
-.ui.overlay {    
+.ui.overlay {
     min-height: 100%;   
     opacity: 0.4;
 }

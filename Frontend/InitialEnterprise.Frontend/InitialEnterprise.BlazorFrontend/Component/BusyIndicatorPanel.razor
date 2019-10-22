@@ -1,13 +1,12 @@
 ﻿
 @implements IDisposable
 @inject UiServices.BusyIndicatorService _busyIndicatorService
-
+    
 <div class="ui overlay modal fullscreen @_active">
-    <div class="content">        
+    <div class="content">
         <div class="ui active centered inline loader"></div>
     </div>
-</div>
-
+</div> 
 
 @code
 {  

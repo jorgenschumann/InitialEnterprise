@@ -33,19 +33,20 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddBlazoredLocalStorage();
             services.AddAuthenticationCore();
             services.AddAuthorizationCore();
+            services.AddScoped<HttpClient>();
+            services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<BusyIndicatorService>();
             services.AddScoped<IBusyIndicatorService>(p => p.GetRequiredService<BusyIndicatorService>());
             services.AddScoped<MessageBoxService>();
             services.AddScoped<IMessageBoxService>(p => p.GetRequiredService<MessageBoxService>());
             services.AddScoped<INavigationManager, AppNavigationManager>();
-
+            
             services.AddScoped<CurrencyController>();
-            services.AddScoped<CurrencyController>();
-            services.AddScoped<ICurrencyService,CurrencyService>();
+            services.AddScoped<ICurrencyService,CurrencyService>();  
 
-            services.AddScoped<IRequestService,RequestService>();
+            services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();       
-            services.AddScoped<HttpClient>();            
+                  
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
