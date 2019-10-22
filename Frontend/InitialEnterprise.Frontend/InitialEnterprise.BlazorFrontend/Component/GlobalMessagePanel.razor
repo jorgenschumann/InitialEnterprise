@@ -2,26 +2,15 @@
 @inject UiServices.MessageBoxService _messageBoxService
 @inject IJSRuntime _jsRuntime
 
-<div @ref="messageBoxElement" id="messageBox" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@Title</h5>
-                <button type="button" class="close" @onclick="CloseDialog" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <p>@Message</p>
-            </div>
-            <div class="modal-footer">
-                @if (PrimaryButtonText != null)
-                {
-                    <button type="button" class="btn btn-primary" @onclick="PrimaryCommand">@PrimaryButtonText</button>
-                }
-                <button type="button" class="btn btn-secondary" @onclick="CloseDialog">Close</button>
-            </div>
-        </div>
+<div class="ui modal @Active">
+    <div class="content">
+        <h5 class="title">@Title</h5>
+        <p>@Message</p>
     </div>
 </div>
+
+ @*await messageBoxService.ShowMessage("message", "Resources.MessagePanel_Error");*@
+
 
 @code
 {
@@ -34,6 +23,8 @@
     private string Title { get; set; }
 
     private string PrimaryButtonText { get; set; }
+
+    private String Active = string.Empty;
 
     public void Dispose()
     {
@@ -62,12 +53,14 @@
     private void CloseDialog()
     {
         EndShowMessageTask(false);
+
         HideDialog();
     }
 
     private void PrimaryCommand()
     {
         EndShowMessageTask(true);
+
         HideDialog();
     }
 
@@ -80,13 +73,13 @@
         }
     }
 
-    private async void ShowDialog()
+    private void ShowDialog()
     {
-        await _jsRuntime.InvokeAsync<object>("Duracellko.PlanningPoker.showMessageBox", messageBoxElement);
+        this.Active = "active";
     }
 
-    private async void HideDialog()
+    private void HideDialog()
     {
-        await _jsRuntime.InvokeAsync<object>("Duracellko.PlanningPoker.hide", messageBoxElement);
+        this.Active = "";
     }
 }

@@ -43,14 +43,14 @@ namespace InitialEnterprise.BlazorFrontend.Controller
         }
 
         public async Task<CommandHandlerAnswerDto<CurrencyDto>> Save(CurrencyDto currency)
-        {
+        {            
             using (busyIndicatorService.Show())
             {
                 if (currency.Id != Guid.Empty){
                     return await currencyService.Put(currency);
                 }
                 return await currencyService.Post(currency);
-            }
-        }
+            }          
+                    }
     }
 }
