@@ -5,16 +5,16 @@
         function BusyIndicator() {
         }    
 
-        BusyIndicator.showMessageBox = function (element) {
-            $(element).modal({ backdrop: 'static' });
+        BusyIndicator.showMessageBox = function (element) {    
+            $(element).addClass('active');
         };
       
         BusyIndicator.showBusyIndicator = function (element) {
-            $(element).modal({ backdrop: 'static', keyboard: false });
+            $(element).addClass('active');
         };
    
-        BusyIndicator.hide = function (element) {
-            $(element).modal('hide');
+        BusyIndicator.hide = function (element) {          
+            $(element).removeClass('active');
         };         
 
         return BusyIndicator;

@@ -6,6 +6,7 @@
 
 @inject NavigationManager NavigationManager
 @inject IAuthenticationService authenticationService
+@inject UiServices.MessageBoxService messageBoxService
 
 <form class="ui form">
     <h4 class="ui dividing header"><i class="lock icon"></i>Signin</h4>
@@ -31,18 +32,19 @@
     <button class="ui button" @onclick="@LogonUser">Signin</button>
 </div>
 
+<p></p>
+
 
 @code {
     UserLoginDto userLogin = new UserLoginDto();
 
-    async Task LogonUser()    {
-      
+    async Task LogonUser()
+    {
         UserSignInResultDto userSignInResult = await this.authenticationService.Login(userLogin);
      
         if (userSignInResult.Success)
         {
             NavigationManager.NavigateTo("/");
         }
-    }
- 
+    }  
 }

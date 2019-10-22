@@ -1,25 +1,21 @@
-﻿namespace InitialEnterprise.BlazorFrontend.Component
-{
+﻿
 @implements IDisposable
 @inject UiServices.BusyIndicatorService _busyIndicatorService
-@inject IJSRuntime _jsRuntime
 
-<div @ref="busyIndicatorElement" class="modal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p class="modal-title">Processing...</p>
-            </div>
-        </div>
+<div class="ui overlay modal fullscreen @_active">
+    <div class="content">        
+        <div class="ui active centered inline loader"></div>
     </div>
 </div>
 
+
 @code
-{
-    private ElementReference busyIndicatorElement;
+{  
+    private String _active = string.Empty;
 
     public void Dispose()
     {
+        _active = string.Empty;
         _busyIndicatorService.SetBusyIndicatorHandler(null);
     }
 
@@ -29,17 +25,10 @@
         _busyIndicatorService.SetBusyIndicatorHandler(SetVisibility);
     }
 
-    private async void SetVisibility(bool visible)
+    private void SetVisibility(bool visible)
     {
+        _active = visible ? "active" : string.Empty;
+
         StateHasChanged();
-        if (visible)
-        {
-            await _jsRuntime.InvokeAsync<object>("Duracellko.PlanningPoker.showBusyIndicator", busyIndicatorElement);
-        }
-        else
-        {
-            await _jsRuntime.InvokeAsync<object>("Duracellko.PlanningPoker.hide", busyIndicatorElement);
-        }
     }
-}
 }
