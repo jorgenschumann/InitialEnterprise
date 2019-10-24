@@ -1,6 +1,7 @@
 ﻿using InitialEnterprise.BlazorFrontend.Services;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.Shared.Dtos;
+using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.BlazorFrontend.Controller
@@ -9,21 +10,29 @@ namespace InitialEnterprise.BlazorFrontend.Controller
     {
         private readonly IBusyIndicatorService busyIndicatorService;
         private readonly IAuthenticationService authenticationService;
+        private readonly NavigationManager navigationManager;
 
         public AuthenticationController(
             IBusyIndicatorService busyIndicatorService,
-             IAuthenticationService authenticationService
+             IAuthenticationService authenticationService,
+             NavigationManager navigationManager
             )
         {
             this.busyIndicatorService = busyIndicatorService;
             this.authenticationService = authenticationService;
+            this.navigationManager = navigationManager;
         }              
 
         public async Task<UserSignInResultDto> Login(UserLoginDto userLogin)
         {
             using (busyIndicatorService.Show())
             {            
-                return await this.authenticationService.Login(userLogin);
+                var userSignInResult = await authenticationService.Login(userLogin);
+                if (userSignInResult.Success)
+                {
+                    navigationManager.NavigateTo("/");
+                }
+                return userSignInResult;
             }
         }
     }

@@ -12,6 +12,8 @@ namespace InitialEnterprise.BlazorFrontend.Services
         private readonly IRequestService requestService;
         private readonly ApiSettings apiSettings;
 
+        private readonly string Endpoint = "currency";
+
         public CurrencyService(IRequestService requestService, ApiSettings apiSettings)
         {
             this.requestService = requestService;
@@ -21,31 +23,31 @@ namespace InitialEnterprise.BlazorFrontend.Services
         public async Task Delete(Guid id)
         {
             await requestService.DeleteAsync<object>(
-                $"{apiSettings.Url}/currency/{id}");
+                $"{apiSettings.Url}/{Endpoint}/{id}");
         }
 
         public async Task<IEnumerable<CurrencyDto>> Fetch()
         {
             return await requestService.GetAsync<List<CurrencyDto>>(
-                $"{apiSettings.Url}/currency");
+                $"{apiSettings.Url}/{Endpoint}");
         }
 
         public async Task<CurrencyDto> Fetch(Guid id)
         {
             return await requestService.GetAsync<CurrencyDto>
-                ($"{apiSettings.Url}/currency/{id}");
+                ($"{apiSettings.Url}/{Endpoint}/{id}");
         }
 
         public async Task<CommandHandlerAnswerDto<CurrencyDto>> Post(CurrencyDto currency)
         {
             return await requestService.PostAsync<CurrencyDto, CommandHandlerAnswerDto<CurrencyDto>>(
-                $"{apiSettings.Url}/currency", currency);
+                $"{apiSettings.Url}/{Endpoint}", currency);
         }
 
         public async Task<CommandHandlerAnswerDto<CurrencyDto>> Put(CurrencyDto currency)
         {
             return await requestService.PutAsync<CurrencyDto, CommandHandlerAnswerDto<CurrencyDto>>(
-                         $"{apiSettings.Url}/currency/{currency.Id}", currency);
+                         $"{apiSettings.Url}/{Endpoint}/{currency.Id}", currency);
         }
     }
 }

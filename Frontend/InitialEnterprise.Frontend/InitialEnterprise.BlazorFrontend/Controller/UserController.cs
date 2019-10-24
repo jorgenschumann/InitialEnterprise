@@ -8,59 +8,59 @@ using System.Threading.Tasks;
 
 namespace InitialEnterprise.BlazorFrontend.Controller
 {
-    public class CurrencyController
+    public class UserController
     {
-        private readonly ICurrencyService currencyService;
+        private readonly IUserService userService;
         private readonly IMessageBoxService messageBoxService;
         private readonly IBusyIndicatorService busyIndicatorService;
         private readonly NavigationManager navigationManager;
 
-        public CurrencyController(
-            ICurrencyService CurrencyService,
+        public UserController(
+            IUserService userService,
             IMessageBoxService messageBoxService,
             IBusyIndicatorService busyIndicatorService,
             NavigationManager navigationManager
             )
         {
-            currencyService = CurrencyService;
+            this.userService = userService;
             this.messageBoxService = messageBoxService;
             this.busyIndicatorService = busyIndicatorService;
             this.navigationManager = navigationManager;
         }
 
-        public async Task<IEnumerable<CurrencyDto>> Fetch()
+        public async Task<IEnumerable<UserDto>> Get()
         {
             using (busyIndicatorService.Show())
             {                
-                return await currencyService.Fetch();
+                return await userService.Get();
             }
         }
 
-        public async Task<CurrencyDto> Fetch(Guid id)
+        public async Task<UserDto> Get(Guid id)
         {
             using (busyIndicatorService.Show())
             {
-                return await currencyService.Fetch(id);
+                return await userService.Get(id);
             }
         }
-        
+
         public async Task Delete(Guid id)
         {
             using (busyIndicatorService.Show())
             {
-                await currencyService.Delete(id);
-                navigationManager.NavigateTo("/currency/list");
+                await userService.Delete(id);
+                navigationManager.NavigateTo("/user/list");
             }
         }
 
-        public async Task<CommandHandlerAnswerDto<CurrencyDto>> Save(CurrencyDto currency)
+        public async Task<CommandHandlerAnswerDto<UserDto>> Save(UserDto user)
         {            
             using (busyIndicatorService.Show())
             {
-                if (currency.Id != Guid.Empty){
-                    return await currencyService.Put(currency);
+                if (user.Id != Guid.Empty){
+                    return await userService.Put(user);
                 }
-                return await currencyService.Post(currency);
+                return await userService.Post(user);
             }          
         }
     }

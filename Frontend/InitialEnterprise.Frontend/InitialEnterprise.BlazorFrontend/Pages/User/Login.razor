@@ -31,7 +31,7 @@
 </form>
 
 <div class="ui small basic icon buttons">
-    <button class="ui button" @onclick="@LogonUser">Signin</button>
+    <button class="ui button" @onclick="@LoginAction">Signin</button>
 </div>
 
 <p></p>
@@ -40,14 +40,11 @@
 @code {
 
     UserLoginDto userLogin = new UserLoginDto();
-       
-    async Task LogonUser()
-    {      
-       UserSignInResultDto userSignInResult  = await this.authenticationController.Login(userLogin);
-     
-        if (userSignInResult.Success)
-        {
-            NavigationManager.NavigateTo("/");
-        }
-    }  
+
+    UserSignInResultDto userSignInResult = new UserSignInResultDto();
+
+    async Task LoginAction()
+    {
+        userSignInResult  = await this.authenticationController.Login(userLogin);
+    }
 }

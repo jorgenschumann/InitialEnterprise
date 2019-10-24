@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Person\" />
     <Folder Include="UiServices\" />
   </ItemGroup>
 

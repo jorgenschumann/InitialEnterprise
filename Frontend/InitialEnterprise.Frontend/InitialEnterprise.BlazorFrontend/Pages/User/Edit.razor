@@ -1,0 +1,115 @@
+﻿@page "/user/edit/{Id}"
+
+@inherits Component.ViewComponentBase
+
+@using InitialEnterprise.BlazorFrontend.Controller
+@using InitialEnterprise.Shared.Dtos
+@using FluentValidation.Results
+
+@inject UserController Controller
+@inject NavigationManager NavigationManager
+
+    <form class="ui form">
+        <h4 class="ui dividing header"><i class="user icon"></i> Edit User</h4>
+        <div class="field">
+            <label>First Name</label>
+            <div class="two fields">
+                <div class="field @ErrorState("FirstName")">
+                    <input type="text" @bind="@user.FirstName" placeholder="First Name" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Last Name</label>
+            <div class="two fields">
+                <div class="field @ErrorState("LastName")">
+                    <input type="text" @bind="@user.LastName" placeholder="LastName" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>UserName</label>
+            <div class="two fields">
+                <div class="field @ErrorState("UserName")">
+                    <input type="text" @bind="@user.UserName" placeholder="UserName" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <div class="two fields">
+                <div class="field ui left icon input @ErrorState("Email")">
+                    <input type="text" @bind="@user.Email" placeholder="Email" />
+                    <i class="envelope icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>PhoneNumber</label>
+            <div class="two fields">
+                <div class="field ui left icon input @ErrorState("PhoneNumber")">
+                    <input type="text" @bind="@user.PhoneNumber" placeholder="PhoneNumber" />
+                    <i class="phone icon"></i>
+                </div>
+            </div>
+        </div>        
+    </form>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
+</div>
+
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+    UserDto user = new UserDto();
+
+    ValidationResult validationResult = new ValidationResult();
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            this.user = await Controller.Get(Guid.Parse(Id));
+        });
+    }
+
+    private Task SubmitAction()
+    {
+        return TryRun(async () =>
+        {
+            CommandHandlerAnswerDto<UserDto> answer = await Controller.Save(user);
+            {
+                this.user = answer.AggregateRoot;
+                this.validationResult = answer.ValidationResult;
+            }
+        });
+    }
+
+    private void BackAction()
+    {
+        NavigationManager.NavigateTo("/user/list");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.user = await Controller.Get(Guid.Parse(Id));
+    }
+
+    private string ErrorState(string propertyName)
+    {
+        if (this.validationResult != null)
+        {
+            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == propertyName) != null)
+            {
+                return "error";
+            }
+        }
+        return string.Empty;
+    }
+
+}
+

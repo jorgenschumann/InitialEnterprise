@@ -1,18 +1,18 @@
-﻿@page "/currency/list"
+﻿@page "/user/list"
 
 @inherits Component.ViewComponentBase
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
 
-@inject CurrencyController Controller
+@inject UserController Controller
 @inject NavigationManager NavigationManager
 
-<h1>Currencies</h1>
+<h1>Users</h1>
 
-@if (currencies == null)
-{<p><em>Loading...</em></p>
-
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
 }
 else
 {
@@ -24,12 +24,14 @@ else
         <thead>
             <tr>
                 <th>Actions</th>
-                <th>Name</th>
-                <th>IsoCode</th>
+                <th>User Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var currency in currencies)
+            @foreach (var user in users)
             {
                 <tr>
                     <td class="collapsing">
@@ -37,37 +39,33 @@ else
                             <div class="ui small simple dropdown item">
                                 <i class="cogs icon"></i>
                                 <div class="menu">
-                                    <a href="/currency/edit/@currency.Id.ToString()"
+                                    <a href="/user/edit/@user.Id.ToString()"
                                        class="item">
                                         <i class="edit icon"></i>
                                     </a>
-                                    <a href="/currency/delete/@currency.Id.ToString()"
+                                    <a href="/user/delete/@user.Id.ToString()"
                                        class="item">
                                         <i class="trash icon"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        @*<a href="/currency/edit/@currency.Id.ToString()">
-                            <i class="edit icon"></i>
-                        </a>
-                        <a href="/currency/delete/@currency.Id.ToString()">
-                            <i class="trash icon"></i>
-                        </a>*@
                     </td>
-                    <td>@currency.Name</td>
-                    <td>@currency.IsoCode</td>
+                    <td>@user.UserName</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
                 </tr>
             }
         </tbody>
-        <tfoot>
+        <tfoot>           
         </tfoot>
     </table>
 }
 
 @code {
 
-    IEnumerable<CurrencyDto> currencies;
+    IEnumerable<UserDto> users;
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,12 +76,12 @@ else
     {
         return TryRun(async () =>
         {
-            this.currencies = await Controller.Fetch();
+            this.users = await Controller.Get();
         });
     }
 
     private void CreateAction()
     {
-        NavigationManager.NavigateTo($"/currency/edit/{Guid.NewGuid().ToString()}");
+        NavigationManager.NavigateTo($"/user/edit/{Guid.NewGuid().ToString()}");
     }
 }

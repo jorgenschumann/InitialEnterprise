@@ -1,0 +1,16 @@
+﻿@using InitialEnterprise.Shared.Dtos
+
+<div class="panel panel-default">
+    <div class="panel-heading">@User?.FirstName</div>    
+    <button class="btn btn-primary" @onclick="OnClick">
+        Trigger a Parent component method
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public UserDto User { get; set; }
+       
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

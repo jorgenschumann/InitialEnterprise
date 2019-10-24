@@ -14,7 +14,7 @@
     <div class="field">
         <label>Name</label>
         <div class="two fields">
-            <div class="field @ErrorState("Name")">
+            <div class="field @NameState">
                 <input type="text" @bind="@currency.Name" placeholder="Name" />
             </div>
         </div>
@@ -22,7 +22,7 @@
     <div class="field">
         <label>Iso Code</label>
         <div class="two fields">
-            <div class="field @ErrorState("IsoCode")">
+            <div class="field @IsoCodeState)">
                 <input type="text" @bind="@currency.IsoCode" placeholder="Iso Code" />
             </div>
         </div>
@@ -30,8 +30,8 @@
 </form>
 
 <div class="ui small basic icon buttons">
-    <button class="ui button" @onclick="@BackCommand"><i class="reply icon"></i></button>
-    <button class="ui button" @onclick="@SubmitCommand"><i class="save icon"></i></button>
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button> 
 </div>
 
 
@@ -41,9 +41,11 @@
 
     CurrencyDto currency = new CurrencyDto();
 
+    String NameState = String.Empty;
+    String IsoCodeState = String.Empty;
     ValidationResult validationResult = new ValidationResult();
 
-    private Task FetchCommand()
+    private Task FetchAction()
     {
         return TryRun(async () =>
         {
@@ -51,7 +53,7 @@
         });
     }
 
-    private Task SubmitCommand()
+    private Task SubmitAction()
     {
         return TryRun(async () =>
         {
@@ -59,11 +61,12 @@
             {
                 this.currency = answer.AggregateRoot;
                 this.validationResult = answer.ValidationResult;
-            }
+                this.ErrorState();
+            }          
         });
     }
 
-    private void BackCommand()
+    private void BackAction()
     {
         NavigationManager.NavigateTo("/currency/list");
     }
@@ -73,17 +76,19 @@
         this.currency = await Controller.Fetch(Guid.Parse(Id));
     }
 
-    private string ErrorState(string propertyName)
+    private void ErrorState()
     {
         if (this.validationResult != null)
         {
-            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == propertyName) != null)
+            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Name") != null)
             {
-                return "error";
+                NameState = "error";
             }
-        }
-        return string.Empty;
+            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "IsoCode") != null)
+            {
+                IsoCodeState = "error";
+            }
+        }   
     }
-
 }
 

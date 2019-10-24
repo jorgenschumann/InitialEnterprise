@@ -42,7 +42,10 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<INavigationManager, AppNavigationManager>();
             
             services.AddScoped<CurrencyController>();
-            services.AddScoped<ICurrencyService,CurrencyService>();  
+            services.AddScoped<ICurrencyService,CurrencyService>();
+
+            services.AddScoped<UserController>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();       

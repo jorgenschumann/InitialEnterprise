@@ -44,7 +44,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        [Authorize(Policy = UserReadClaim.PolicyName)]
+        [Authorize(Policy = UserQueryClaim.PolicyName)] 
         public async Task<IActionResult> Query([FromBody]UserQuery query)
         {
             var result = await userAccountApplication.QueryAsync(query);
@@ -52,7 +52,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-         [Authorize(Policy = UserQueryClaim.PolicyName)]
+        [Authorize(Policy = UserQueryClaim.PolicyName)]           
         public async Task<IActionResult> Get()
         {
             var result = await userAccountApplication.QueryAsync(new UserQuery());
@@ -85,7 +85,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost("uploadimage/{id}"), DisableRequestSizeLimit]
-        [AllowAnonymous]//[Authorize(Policy = UserWriteClaim.PolicyName)]
+        [Authorize(Policy = UserWriteClaim.PolicyName)]
         public async Task<IActionResult> UploadImage(Guid id)
         {
             var result = await userAccountApplication.UploadImage(id, Request.Form.Files[0].ToByteArray());
