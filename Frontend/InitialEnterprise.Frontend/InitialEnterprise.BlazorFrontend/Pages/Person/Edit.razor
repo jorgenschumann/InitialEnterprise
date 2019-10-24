@@ -9,86 +9,109 @@
 @inject PersonController Controller
 @inject NavigationManager NavigationManager
 
-@*<form class="ui form">
-    <h4 class="ui dividing header"><i class="globe icon"></i> Edit Person</h4>
-    <div class="field">
-        <label>Name</label>
-        <div class="two fields">
-            <div class="field @NameState">
-                <input type="text" @bind="@currency.Name" placeholder="Name" />
+    <form class="ui form">
+        <h4 class="ui dividing header"><i class="globe icon"></i> Edit Person</h4>
+        <div class="field">
+            <label>Person Type</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" @bind="@person.Title" placeholder="Title" />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <label>Iso Code</label>
-        <div class="two fields">
-            <div class="field @IsoCodeState)">
-                <input type="text" @bind="@currency.IsoCode" placeholder="Iso Code" />
+        <div class="field">
+            <label>Suffix</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" @bind="@person.Suffix" placeholder="Suffix" />
+                </div>
             </div>
         </div>
-    </div>
-</form>
+        <div class="field">
+            <label>Title</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" @bind="@person.FirstName" placeholder="FirstName" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>MiddleName</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" @bind="@person.MiddleName" placeholder="MiddleName" />
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>LastName</label>
+            <div class="two fields">
+                <div class="field">
+                    <input type="text" @bind="@person.LastName" placeholder="LastName" />
+                </div>
+            </div>
+        </div>      
+    </form>
 
 <div class="ui small basic icon buttons">
     <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
     <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button> 
-</div>*@
-
+</div>
 
 @code {
-    //[Parameter]
-    //public String Id { get; set; }
+    [Parameter]
+    public String Id { get; set; }
 
-    //CurrencyDto currency = new CurrencyDto();
+    PersonDto person = new PersonDto();
 
-    //String NameState = String.Empty;
-    //String IsoCodeState = String.Empty;
-    //ValidationResult validationResult = new ValidationResult();
+    String NameState = String.Empty;
+    String IsoCodeState = String.Empty;
+    ValidationResult validationResult = new ValidationResult();
 
-    //private Task FetchAction()
-    //{
-    //    return TryRun(async () =>
-    //    {
-    //        this.currency = await Controller.Get(Guid.Parse(Id));
-    //    });
-    //}
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            this.person = await Controller.Get(Guid.Parse(Id));
+        });
+    }
 
-    //private Task SubmitAction()
-    //{
-    //    return TryRun(async () =>
-    //    {
-    //        CommandHandlerAnswerDto<CurrencyDto> answer = await Controller.Save(currency);
-    //        {
-    //            this.currency = answer.AggregateRoot;
-    //            this.validationResult = answer.ValidationResult;
-    //            this.ErrorState();
-    //        }          
-    //    });
-    //}
+    private Task SubmitAction()
+    {
+        return TryRun(async () =>
+        {
+            CommandHandlerAnswerDto<PersonDto> answer = await Controller.Save(person);
+            {
+                this.person = answer.AggregateRoot;
+                this.validationResult = answer.ValidationResult;
+                this.ErrorState();
+            }
+        });
+    }
 
-    //private void BackAction()
-    //{
-    //    NavigationManager.NavigateTo("/currency/list");
-    //}
+    private void BackAction()
+    {
+        NavigationManager.NavigateTo("/person/list");
+    }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    this.currency = await Controller.Fetch(Guid.Parse(Id));
-    //}
+    protected override async Task OnInitializedAsync()
+    {
+        this.person = await Controller.Get(Guid.Parse(Id));
+    }
 
-    //private void ErrorState()
-    //{
-    //    if (this.validationResult != null)
-    //    {
-    //        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Name") != null)
-    //        {
-    //            NameState = "error";
-    //        }
-    //        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "IsoCode") != null)
-    //        {
-    //            IsoCodeState = "error";
-    //        }
-    //    }   
-    //}
+    private void ErrorState()
+    {
+        if (this.validationResult != null)
+        {
+            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "PersonType") != null)
+            {
+                NameState = "error";
+            }
+            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Title") != null)
+            {
+                IsoCodeState = "error";
+            }
+        }
+    }
 }
 
