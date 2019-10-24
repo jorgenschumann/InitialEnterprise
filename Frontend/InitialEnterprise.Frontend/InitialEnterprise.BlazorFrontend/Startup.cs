@@ -47,6 +47,9 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<UserController>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<PersonController>();
+            services.AddScoped<IPersonService, PersonService>();
+
             services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();       
                   
