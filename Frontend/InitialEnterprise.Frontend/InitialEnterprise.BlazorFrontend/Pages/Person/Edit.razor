@@ -5,58 +5,66 @@
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
 @using FluentValidation.Results
+@using InitialEnterprise.BlazorFrontend.Pages.Person
 
 @inject PersonController Controller
 @inject NavigationManager NavigationManager
 
-    <form class="ui form">
-        <h4 class="ui dividing header"><i class="globe icon"></i> Edit Person</h4>
-        <div class="field">
-            <label>Person Type</label>
-            <div class="two fields">
-                <div class="field">
-                    <input type="text" @bind="@person.Title" placeholder="Title" />
-                </div>
+<form class="ui form">
+    <h4 class="ui dividing header"><i class="globe icon"></i> Edit Person</h4>
+    <div class="field">
+        <label>Person Type</label>
+        <div class="two fields">
+            <div class="field">
+                <input type="text" @bind="@person.Title" placeholder="Title" />
             </div>
         </div>
-        <div class="field">
-            <label>Suffix</label>
-            <div class="two fields">
-                <div class="field">
-                    <input type="text" @bind="@person.Suffix" placeholder="Suffix" />
-                </div>
+    </div>
+    <div class="field">
+        <label>Suffix</label>
+        <div class="two fields">
+            <div class="field">
+                <input type="text" @bind="@person.Suffix" placeholder="Suffix" />
             </div>
         </div>
-        <div class="field">
-            <label>Title</label>
-            <div class="two fields">
-                <div class="field">
-                    <input type="text" @bind="@person.FirstName" placeholder="FirstName" />
-                </div>
+    </div>
+    <div class="field">
+        <label>Title</label>
+        <div class="two fields">
+            <div class="field">
+                <input type="text" @bind="@person.FirstName" placeholder="FirstName" />
             </div>
         </div>
-        <div class="field">
-            <label>MiddleName</label>
-            <div class="two fields">
-                <div class="field">
-                    <input type="text" @bind="@person.MiddleName" placeholder="MiddleName" />
-                </div>
+    </div>
+    <div class="field">
+        <label>MiddleName</label>
+        <div class="two fields">
+            <div class="field">
+                <input type="text" @bind="@person.MiddleName" placeholder="MiddleName" />
             </div>
         </div>
-        <div class="field">
-            <label>LastName</label>
-            <div class="two fields">
-                <div class="field">
-                    <input type="text" @bind="@person.LastName" placeholder="LastName" />
-                </div>
+    </div>
+    <div class="field">
+        <label>LastName</label>
+        <div class="two fields">
+            <div class="field">
+                <input type="text" @bind="@person.LastName" placeholder="LastName" />
             </div>
-        </div>      
-    </form>
+        </div>
+    </div>
+
+</form>
 
 <div class="ui small basic icon buttons">
     <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
-    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button> 
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
 </div>
+
+
+<InitialEnterprise.BlazorFrontend.Pages.Person.MailAddress.List 
+                                                                Person="this.person"
+                                                                EmailAddresses="this.person.EmailAddresses">
+</InitialEnterprise.BlazorFrontend.Pages.Person.MailAddress.List>
 
 @code {
     [Parameter]

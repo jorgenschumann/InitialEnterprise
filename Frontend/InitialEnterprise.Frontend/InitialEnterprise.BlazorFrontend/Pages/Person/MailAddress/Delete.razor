@@ -1,17 +1,17 @@
-﻿@page "/currency/delete/{Id}"
+﻿@page "/person/{PersonId}/mailaddress/delete/{Id}"
 
 @inherits Component.ViewComponentBase
 
 @using InitialEnterprise.BlazorFrontend.Controller
-@using InitialEnterprise.BlazorFrontend.Services
 @using InitialEnterprise.Shared.Dtos
+@using FluentValidation.Results
 
+@inject EmailAddressController Controller
 @inject NavigationManager NavigationManager
-@inject CurrencyController Controller
 
 <h4 class="ui dividing header">
     <i class="globe icon"></i>
-    Delete Currency
+    Delete Email
 </h4>
 
 <div class="ui warning message">
@@ -20,8 +20,6 @@
     </div>
     <p>
         Do you really want to delete?
-
-        
     </p>
 </div>
 
@@ -34,16 +32,26 @@
     [Parameter]
     public String Id { get; set; }
 
-    CurrencyDto currency;
+    [Parameter]
+    public String PersonId { get; set; }
 
-    async Task DeleteAction()
+    EmailAddressDto EmailAddress = new EmailAddressDto();
+
+    ValidationResult validationResult = new ValidationResult();
+
+    private Task DeleteAction()
     {
-        await Controller.Delete(Guid.Parse(Id));
+        //todo:message
+        return TryRun(async () =>
+        {
+            await Controller.Delete(Guid.Parse(this.PersonId), Guid.Parse(this.Id));
+            BackAction();
+        });
     }
 
-    void BackAction()
+    private void BackAction()
     {
-        this.NavigationManager.NavigateTo("/currency/list");
-    }
+        NavigationManager.NavigateTo($"/person/edit/{this.PersonId}");
+    }    
 }
 

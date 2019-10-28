@@ -9,13 +9,8 @@
     </div>
 </div>
 
- @*await messageBoxService.ShowMessage("message", "Resources.MessagePanel_Error");*@
-
-
 @code
 {
-    private ElementReference messageBoxElement;
-
     private TaskCompletionSource<bool> _showMessageTask;
 
     private string Message { get; set; }

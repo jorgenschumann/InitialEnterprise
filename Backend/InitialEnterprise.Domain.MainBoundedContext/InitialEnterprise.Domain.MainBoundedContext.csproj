@@ -49,9 +49,6 @@
     <Folder Include="DocumentModule\ValidationHandler\" />
     <Folder Include="EmailAddressModule\CommandHandler\" />
     <Folder Include="EmailAddressModule\Events\" />
-    <Folder Include="EmailAddressModule\Queries\" />
-    <Folder Include="EmailAddressModule\QueryHandler\" />
-    <Folder Include="EmailAddressModule\Repository\" />
     <Folder Include="Migrations\" />
     <Folder Include="ModuleTemplate\Aggreate\" />
     <Folder Include="ModuleTemplate\CommandHandler\" />

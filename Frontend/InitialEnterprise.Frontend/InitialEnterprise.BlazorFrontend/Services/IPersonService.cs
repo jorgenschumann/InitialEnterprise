@@ -9,7 +9,7 @@ namespace InitialEnterprise.BlazorFrontend.Services
     {
         Task<IEnumerable<PersonDto>> Get();
 
-        Task<PersonDto> Get(Guid id);
+        Task<PersonDto> Get(Guid id);    
 
         Task<CommandHandlerAnswerDto<PersonDto>> Put(PersonDto person);
 

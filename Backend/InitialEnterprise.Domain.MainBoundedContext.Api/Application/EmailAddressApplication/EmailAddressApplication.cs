@@ -6,6 +6,8 @@ using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Repository;
+using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddressApplication
 {
@@ -39,6 +41,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddre
             var command = Mapper.Map(dto).ToANew<EmailAddressUpdateCommand>();
             return await dispatcher.Send<EmailAddressUpdateCommand, Person>(command);
         }
-       
+
+        public async Task<EmailAddressDto> Query(Guid personId, Guid id)
+        {
+            var query = new EmailAddressQuery() { PersonId = personId, Id = id };
+            var result = await dispatcher.Query<EmailAddressQuery, EmailAddress>(query);
+            return Mapper.Map(result).ToANew<EmailAddressDto>();
+        }
     }
 }

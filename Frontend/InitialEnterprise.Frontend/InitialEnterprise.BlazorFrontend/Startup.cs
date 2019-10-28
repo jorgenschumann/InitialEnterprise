@@ -10,6 +10,7 @@ using Blazored.LocalStorage;
 using InitialEnterprise.BlazorFrontend.Settings;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.BlazorFrontend.Controller;
+using Microsoft.AspNetCore.Components;
 
 namespace InitialEnterprise.BlazorFrontend
 {
@@ -39,8 +40,7 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<IBusyIndicatorService>(p => p.GetRequiredService<BusyIndicatorService>());
             services.AddScoped<MessageBoxService>();
             services.AddScoped<IMessageBoxService>(p => p.GetRequiredService<MessageBoxService>());
-            services.AddScoped<INavigationManager, AppNavigationManager>();
-            
+                    
             services.AddScoped<CurrencyController>();
             services.AddScoped<ICurrencyService,CurrencyService>();
 
@@ -49,6 +49,9 @@ namespace InitialEnterprise.BlazorFrontend
 
             services.AddScoped<PersonController>();
             services.AddScoped<IPersonService, PersonService>();
+
+            services.AddScoped<EmailAddressController>();
+            services.AddScoped<IEmailAddressService, EmailAddressService>();            
 
             services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();       
