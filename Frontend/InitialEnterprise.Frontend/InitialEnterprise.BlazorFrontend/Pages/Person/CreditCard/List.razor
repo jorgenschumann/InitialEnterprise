@@ -22,13 +22,14 @@ else
         {
             <div class="card">
                 <div class="content">
-                    <div class="header">@creditCard.CardNumber</div>
+                    <div class="header">@creditCard.CardNumber <i class="credit card icon right floated"></i></div>
                     <div class="description">
                         @creditCard.CreditCardType
                         <div class="meta">
                             <div class="ui field">
+                                Expired
                                 <label>@creditCard.ExpireYear</label>
-                                <label>@creditCard.ExpireMonth</label>                         
+                                <label>@creditCard.ExpireMonth</label>
                             </div>
                         </div>                       
                     </div>
