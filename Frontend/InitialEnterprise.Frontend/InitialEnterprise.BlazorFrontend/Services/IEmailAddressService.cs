@@ -13,6 +13,5 @@ namespace InitialEnterprise.BlazorFrontend.Services
         Task<CommandHandlerAnswerDto<EmailAddressDto>> Post(EmailAddressDto mail);
 
         Task Delete(Guid personId, Guid id);
-    }
-
+    } 
 }

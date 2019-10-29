@@ -11,7 +11,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate
 {
   
     public class CreditCard : Entity
-    {
+    {        
+        [JsonProperty]
+        public string CreditCardHolderName { get; private set; }
+
         [JsonProperty]
         public string CreditCardType { get; private set; }
 
@@ -36,6 +39,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate
 
         public CreditCard(CreditCardCreateCommand command)
         {
+            CreditCardHolderName = command.CreditCardHolderName;
             CardNumber = command.CardNumber;
             CreditCardType = command.CreditCardType.Name;
             ExpireMonth = command.ExpireMonth;
@@ -45,6 +49,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate
 
         public void Take(CreditCardUpdateCommand command)
         {
+            CreditCardHolderName = command.CreditCardHolderName;
             CardNumber = command.CardNumber;
             CreditCardType = command.CreditCardType.Name;
             ExpireMonth = command.ExpireMonth;

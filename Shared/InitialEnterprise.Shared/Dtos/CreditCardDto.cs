@@ -6,6 +6,8 @@ namespace InitialEnterprise.Shared.Dtos
     {
         public Guid Id { get; set; }
 
+        public string CreditCardHolderName { get; set; }
+
         public string CreditCardType { get; set; }
 
         public string CardNumber { get; set; }

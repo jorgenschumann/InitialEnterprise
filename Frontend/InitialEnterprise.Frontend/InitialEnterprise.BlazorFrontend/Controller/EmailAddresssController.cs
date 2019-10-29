@@ -11,18 +11,18 @@ namespace InitialEnterprise.BlazorFrontend.Controller
         private readonly IEmailAddressService emailAddressService;
         private readonly IMessageBoxService messageBoxService;
         private readonly IBusyIndicatorService busyIndicatorService;
-      
+
 
         public EmailAddressController(
             IEmailAddressService emailAddressService,
             IMessageBoxService messageBoxService,
             IBusyIndicatorService busyIndicatorService
-          
+
             )
         {
             this.emailAddressService = emailAddressService;
             this.messageBoxService = messageBoxService;
-            this.busyIndicatorService = busyIndicatorService;          
+            this.busyIndicatorService = busyIndicatorService;
         }
 
 
@@ -38,7 +38,7 @@ namespace InitialEnterprise.BlazorFrontend.Controller
         {
             using (busyIndicatorService.Show())
             {
-                await emailAddressService.Delete(personId, id);             
+                await emailAddressService.Delete(personId, id);
             }
         }
 

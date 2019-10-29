@@ -18,6 +18,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
                .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
                .WithMessage("Person Id missing");
 
+            RuleFor(c => c.CreditCardHolderName)
+              .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
+              .WithMessage("CreditCardHolderName missing");
+
             RuleFor(c => c.CreditCardType)
                 .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
                 .WithMessage("CreditCardType missing");

@@ -50,12 +50,17 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<PersonController>();
             services.AddScoped<IPersonService, PersonService>();
 
+            services.AddScoped<CreditCardController>();
+            services.AddScoped<ICreditCardService, CreditCardService>();
+
             services.AddScoped<EmailAddressController>();
             services.AddScoped<IEmailAddressService, EmailAddressService>();            
 
             services.AddScoped<AuthenticationController>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();       
-                  
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
