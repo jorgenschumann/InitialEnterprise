@@ -20,10 +20,13 @@
             </div>
         </div>
         <div class="field">
-            <label>Iso Code</label>
+            <label>Type</label>
             <div class="two fields">
-                <div class="field)">
-                    <input type="text" @bind="@EmailAddress.MailAddressType" placeholder="MailAddressType" />
+                <div class="field">
+                    <select class="ui dropdown" @bind="@EmailAddress.MailAddressType">
+                        <option value="Private">Private</option>
+                        <option value="Work">Work</option>
+                    </select>
                 </div>
             </div>
         </div>

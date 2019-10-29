@@ -16,7 +16,7 @@
 else
 {
     <h4 class="ui dividing header"><i class="address card icon"></i>Email Addresses</h4>
-      
+    
     <div class="ui cards">
         @foreach (var emailAddress in this.EmailAddresses)
         {
@@ -25,7 +25,12 @@ else
                     <div class="header">@emailAddress.MailAddress</div>
                     <div class="description">
                         @emailAddress.MailAddressType
-                        @emailAddress.IsPrimary
+                        <div class="meta">
+                            <div class="ui field checked checkbox">
+                                <input type="checkbox" @bind="@emailAddress.IsPrimary" placeholder="IsPrimary" />
+                                <label>Primary Mail</label>
+                            </div>
+                        </div>                       
                     </div>
                 </div>
                 <div class="extra content">
@@ -43,16 +48,16 @@ else
             </div>
         }
         <a class="card" href="/person/@Person.Id/mailaddress/create/">
-            <div class="content">               
+            <div class="content">
             </div>
             <div class="extra content">
                 <span class="left floated like">
                     <span class="header">
                         <i class="add icon"></i>add
                     </span>
-                </span>               
+                </span>
             </div>
-        </a>    
+        </a>
     </div>
 }
 
