@@ -66,6 +66,12 @@
                                                                 EmailAddresses="this.person.EmailAddresses">
 </InitialEnterprise.BlazorFrontend.Pages.Person.MailAddress.List>
 
+
+<InitialEnterprise.BlazorFrontend.Pages.Person.CreditCard.List 
+                                                               Person="this.person" 
+                                                               CreditCards="this.person.CreditCards">
+</InitialEnterprise.BlazorFrontend.Pages.Person.CreditCard.List>
+
 @code {
     [Parameter]
     public String Id { get; set; }
