@@ -40,7 +40,10 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<IBusyIndicatorService>(p => p.GetRequiredService<BusyIndicatorService>());
             services.AddScoped<MessageBoxService>();
             services.AddScoped<IMessageBoxService>(p => p.GetRequiredService<MessageBoxService>());
-                    
+            
+            services.AddScoped<AuthenticationController>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
             services.AddScoped<CurrencyController>();
             services.AddScoped<ICurrencyService,CurrencyService>();
 
@@ -54,13 +57,11 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<ICreditCardService, CreditCardService>();
 
             services.AddScoped<EmailAddressController>();
-            services.AddScoped<IEmailAddressService, EmailAddressService>();            
+            services.AddScoped<IEmailAddressService, EmailAddressService>();
 
-            services.AddScoped<AuthenticationController>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<AddressController>();
+            services.AddScoped<IPersonAddressService, PersonAddressService>();
 
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

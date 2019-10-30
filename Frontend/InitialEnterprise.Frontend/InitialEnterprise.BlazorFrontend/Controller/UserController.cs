@@ -1,4 +1,5 @@
-﻿using InitialEnterprise.BlazorFrontend.Services;
+﻿using InitialEnterprise.BlazorFrontend.Pages.User;
+using InitialEnterprise.BlazorFrontend.Services;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
@@ -27,6 +28,12 @@ namespace InitialEnterprise.BlazorFrontend.Controller
             this.busyIndicatorService = busyIndicatorService;
             this.navigationManager = navigationManager;
         }
+        
+        private UserEditView userEditView;
+        public void SetView(UserEditView userEditView)
+        {
+            this.userEditView = userEditView;
+        }
 
         public async Task<IEnumerable<UserDto>> Get()
         {
@@ -36,11 +43,11 @@ namespace InitialEnterprise.BlazorFrontend.Controller
             }
         }
 
-        public async Task<UserDto> Get(Guid id)
+        public async Task Get(Guid id)
         {
             using (busyIndicatorService.Show())
             {
-                return await userService.Get(id);
+                userEditView.User = await userService.Get(id);
             }
         }
 

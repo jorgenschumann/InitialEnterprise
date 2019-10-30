@@ -1,7 +1,6 @@
 ﻿using InitialEnterprise.Shared.Dtos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.BlazorFrontend.Services
@@ -19,4 +18,5 @@ namespace InitialEnterprise.BlazorFrontend.Services
         Task<List<CreditCardTypeDto>> GetCreditCardTypes();
         
     }
+    
 }

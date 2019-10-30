@@ -1,53 +1,52 @@
-﻿@page "/person/mailaddress/list"
+﻿@page "/person/address/list"
 
-@inherits Component.ViewComponentBase
+@inherits AddressEditView
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
 
-@inject PersonController Controller
+@inject AddressController Controller
 @inject NavigationManager NavigationManager
 
 
-@if (this.EmailAddresses == null)
+@if (this.Addresses == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <h3 class="ui dividing header"><i class="address card icon"></i>Email Addresses</h3>
+    <h3 class="ui dividing header"><i class="address card icon"></i>Addresses</h3>
     
     <div class="ui cards">
-        @foreach (var emailAddress in this.EmailAddresses)
+        @foreach (var address in this.Addresses)
         {
             <div class="card">
                 <div class="content">
-                    <div class="header">@emailAddress.MailAddress</div>
+                    <div class="header">@address.City</div>
                     <div class="description">
-                        @emailAddress.MailAddressType
                         <div class="meta">
-                            <div class="ui field checked checkbox">
-                                <input type="checkbox" @bind="@emailAddress.IsPrimary" placeholder="IsPrimary" />
-                                <label>Primary Mail</label>
+                            <div class="ui field">                             
+                                <label>@address.Zip</label>
+                                <label>@address.Street</label>
                             </div>
-                        </div>                       
+                        </div>
                     </div>
                 </div>
                 <div class="extra content">
                     <span class="left floated like">
-                        <a class="header" href="/person/@Person.Id/mailaddress/edit/@emailAddress.Id">
+                        <a class="header" href="/person/@Person.Id/address/edit/@address.Id">
                             <i class="edit icon"></i>edit
                         </a>
                     </span>
                     <span class="right floated star">
-                        <a class="header" href="/person/@Person.Id/mailaddress/delete/@emailAddress.Id">
+                        <a class="header" href="/person/@Person.Id/address/delete/@address.Id">
                             <i class="trash icon"></i>delete
                         </a>
                     </span>
                 </div>
             </div>
         }
-        <a class="card" href="/person/@Person.Id/mailaddress/create/">
+        <a class="card" href="/person/@Person.Id/address/create/">
             <div class="content">
             </div>
             <div class="extra content">
@@ -61,22 +60,23 @@ else
     </div>
 }
 
+
 @code {
 
     [Parameter]
-    public ICollection<EmailAddressDto> EmailAddresses { get; set; }
+    public ICollection<PersonAddressDto> Addresses { get; set; }
 
     [Parameter]
     public PersonDto Person { get; set; }
 
     private void EditAction(string personId, string id)
     {
-        NavigationManager.NavigateTo($"/person/edit/{personId}/mailaddress/edit/{id}");
+        NavigationManager.NavigateTo($"/person/edit/{personId}/address/edit/{id}");
     }
 
     private void CreateAction()
     {
-        NavigationManager.NavigateTo($"/person/edit/{this.Person.Id}/mailaddress/create");
+        NavigationManager.NavigateTo($"/person/edit/{this.Person.Id}/address/create");
     }
 
 }

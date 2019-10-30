@@ -15,7 +15,7 @@
         <div class="field">
             <label>Card Holder</label>
             <div class="two fields">
-                <div class="field">
+                <div class="field @Error(nameof(CreditCard.CreditCardHolderName))">
                     <input type="text" @bind="@CreditCard.CreditCardHolderName" placeholder="Card Holder" />
                 </div>
             </div>
@@ -23,7 +23,7 @@
         <div class="field">
             <label>Card Number</label>
             <div class="two fields">
-                <div class="field">
+                <div class="field @Error(nameof(CreditCard.CardNumber))">
                     <input type="text" @bind="@CreditCard.CardNumber" placeholder="CardNumber" />
                 </div>
             </div>
@@ -31,7 +31,7 @@
         <div class="field">
             <label>Expired</label>
             <div class="four fields">
-                <div class="ui field">
+                <div class="ui field @Error(nameof(CreditCard.ExpireMonth))">
                     <select class="ui dropdown" @bind="@CreditCard.ExpireMonth">
                         @for (int i = 1; i <= 12; i++)
                         {
@@ -39,7 +39,7 @@
                         }
                     </select>                    
                 </div>
-                <div class="ui field">
+                <div class="ui field @Error(nameof(CreditCard.ExpireYear))">
                     <select class="ui dropdown" @bind="@CreditCard.ExpireYear">
                         @for (int i = 2019; i <= 2025; i++)
                         {
@@ -52,7 +52,7 @@
         <div class="field">
             <label>Type</label>
             <div class="two fields">
-                <div class="field">
+                <div class="field @Error(nameof(CreditCard.CreditCardType))">
                     <select class="ui dropdown" @bind="@CreditCard.CreditCardType">
                         @foreach (var cardType in this.CreditCardTypes)
                         {
@@ -78,10 +78,8 @@
     public String Id { get; set; }
 
     CreditCardDto CreditCard = new CreditCardDto();
-
-    ValidationResult validationResult = new ValidationResult();
-
-     List<CreditCardTypeDto> CreditCardTypes = new List<CreditCardTypeDto>();
+    
+    List<CreditCardTypeDto> CreditCardTypes = new List<CreditCardTypeDto>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -104,8 +102,8 @@
         {
             CommandHandlerAnswerDto<CreditCardDto> answer = await Controller.Save(CreditCard);
             {
-                this.CreditCard = answer.AggregateRoot;
-                this.validationResult = answer.ValidationResult;
+                this.CreditCard = answer.AggregateRoot == null ? CreditCard : answer.AggregateRoot;
+                this.ValidationResult = answer.ValidationResult;
             }
             if (answer.ValidationResult.IsValid)
             {
@@ -117,21 +115,6 @@
     private void BackAction()
     {
         NavigationManager.NavigateTo($"/person/edit/{this.PersonId}");
-    }
-
-    //private void ErrorState()
-    //{
-    //    if (this.validationResult != null)
-    //    {
-    //        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Name") != null)
-    //        {
-    //            NameState = "error";
-    //        }
-    //        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "IsoCode") != null)
-    //        {
-    //            IsoCodeState = "error";
-    //        }
-    //    }
-    //}
+    }  
 }
 

@@ -4,7 +4,7 @@
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
-@using FluentValidation.Results
+
 
 @inject CurrencyController Controller
 @inject NavigationManager NavigationManager
@@ -14,16 +14,16 @@
     <div class="field">
         <label>Name</label>
         <div class="two fields">
-            <div class="field @NameState">
-                <input type="text" @bind="@currency.Name" placeholder="Name" />
+            <div class="field @Error(nameof(Currency.Name))">
+                <input type="text" @bind="@Currency.Name" placeholder="Name" />
             </div>
         </div>
     </div>
     <div class="field">
         <label>Iso Code</label>
         <div class="two fields">
-            <div class="field @IsoCodeState)">
-                <input type="text" @bind="@currency.IsoCode" placeholder="Iso Code" />
+            <div class="field @Error(nameof(Currency.IsoCode))">
+                <input type="text" @bind="@Currency.IsoCode" placeholder="Iso Code" />
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
 <div class="ui small basic icon buttons">
     <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
-    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button> 
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
 </div>
 
 
@@ -39,17 +39,18 @@
     [Parameter]
     public String Id { get; set; }
 
-    CurrencyDto currency = new CurrencyDto();
+    CurrencyDto Currency = new CurrencyDto();
 
-    String NameState = String.Empty;
-    String IsoCodeState = String.Empty;
-    ValidationResult validationResult = new ValidationResult();
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchAction();
+    }
 
     private Task FetchAction()
     {
         return TryRun(async () =>
         {
-            this.currency = await Controller.Fetch(Guid.Parse(Id));
+            this.Currency = await Controller.Fetch(Guid.Parse(Id));
         });
     }
 
@@ -57,38 +58,15 @@
     {
         return TryRun(async () =>
         {
-            CommandHandlerAnswerDto<CurrencyDto> answer = await Controller.Save(currency);
-            {
-                this.currency = answer.AggregateRoot;
-                this.validationResult = answer.ValidationResult;
-                this.ErrorState();
-            }          
+            CommandHandlerAnswerDto<CurrencyDto> answer = await Controller.Save(Currency);
+            this.Currency = answer.AggregateRoot == null ? Currency : answer.AggregateRoot;
+            this.ValidationResult = answer.ValidationResult;
         });
     }
 
     private void BackAction()
     {
         NavigationManager.NavigateTo("/currency/list");
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        this.currency = await Controller.Fetch(Guid.Parse(Id));
-    }
-
-    private void ErrorState()
-    {
-        if (this.validationResult != null)
-        {
-            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Name") != null)
-            {
-                NameState = "error";
-            }
-            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "IsoCode") != null)
-            {
-                IsoCodeState = "error";
-            }
-        }   
     }
 }
 

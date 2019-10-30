@@ -50,9 +50,7 @@
     public String PersonId { get; set; }
  
     EmailAddressDto EmailAddress = new EmailAddressDto();
-        
-    ValidationResult validationResult = new ValidationResult();      
-
+           
     protected override async Task OnInitializedAsync()
     {       
     }
@@ -64,7 +62,7 @@
             CommandHandlerAnswerDto<EmailAddressDto> answer = await Controller.Save(EmailAddress);
             {
                 this.EmailAddress = answer.AggregateRoot;
-                this.validationResult = answer.ValidationResult;
+                this.ValidationResult = answer.ValidationResult;
             }
         });
     }

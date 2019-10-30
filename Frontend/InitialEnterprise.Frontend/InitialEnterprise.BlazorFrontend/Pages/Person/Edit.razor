@@ -11,7 +11,7 @@
 @inject NavigationManager NavigationManager
 
 <form class="ui form">
-    <h4 class="ui dividing header"><i class="globe icon"></i> Edit Person</h4>
+    <h2 class="ui dividing header"><i class="globe icon"></i> Edit Person</h2>
     <div class="field">
         <label>Person Type</label>
         <div class="two fields">
@@ -72,6 +72,11 @@
                                                                CreditCards="this.person.CreditCards">
 </InitialEnterprise.BlazorFrontend.Pages.Person.CreditCard.List>
 
+<InitialEnterprise.BlazorFrontend.Pages.Person.Address.List 
+                                                            Person="this.person" 
+                                                            Addresses="this.person.Addresses">
+</InitialEnterprise.BlazorFrontend.Pages.Person.Address.List>
+
 @code {
     [Parameter]
     public String Id { get; set; }
@@ -80,8 +85,7 @@
 
     String NameState = String.Empty;
     String IsoCodeState = String.Empty;
-    ValidationResult validationResult = new ValidationResult();
-
+  
     private Task FetchAction()
     {
         return TryRun(async () =>
@@ -96,9 +100,8 @@
         {
             CommandHandlerAnswerDto<PersonDto> answer = await Controller.Save(person);
             {
-                this.person = answer.AggregateRoot;
-                this.validationResult = answer.ValidationResult;
-                this.ErrorState();
+                this.person = answer.AggregateRoot == null ? person : answer.AggregateRoot;
+                this.ValidationResult = answer.ValidationResult;               
             }
         });
     }
@@ -111,21 +114,6 @@
     protected override async Task OnInitializedAsync()
     {
         this.person = await Controller.Get(Guid.Parse(Id));
-    }
-
-    private void ErrorState()
-    {
-        if (this.validationResult != null)
-        {
-            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "PersonType") != null)
-            {
-                NameState = "error";
-            }
-            if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Title") != null)
-            {
-                IsoCodeState = "error";
-            }
-        }
-    }
+    }    
 }
 

@@ -54,9 +54,7 @@
     public String Id { get; set; }
 
     EmailAddressDto EmailAddress = new EmailAddressDto();
-
-    ValidationResult validationResult = new ValidationResult();
-
+ 
     protected override async Task OnInitializedAsync()
     {
         await FetchAction();
@@ -77,7 +75,7 @@
             CommandHandlerAnswerDto<EmailAddressDto> answer = await Controller.Save(EmailAddress);
             {
                 this.EmailAddress = answer.AggregateRoot;
-                this.validationResult = answer.ValidationResult;
+                this.ValidationResult = answer.ValidationResult;
             }
             if (answer.ValidationResult.IsValid)
             {
@@ -91,19 +89,5 @@
         NavigationManager.NavigateTo($"/person/edit/{this.PersonId}");
     }
 
-    //private void ErrorState()
-    //{
-    //    if (this.validationResult != null)
-    //    {
-    //        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "Name") != null)
-    //        {
-    //            NameState = "error";
-    //        }
-    //        if (this.validationResult.Errors.FirstOrDefault(e => e.PropertyName == "IsoCode") != null)
-    //        {
-    //            IsoCodeState = "error";
-    //        }
-    //    }
-    //}
 }
 

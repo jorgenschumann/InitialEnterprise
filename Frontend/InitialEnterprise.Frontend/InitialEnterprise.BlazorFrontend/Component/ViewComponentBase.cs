@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using Microsoft.AspNetCore.Components;
 
 namespace InitialEnterprise.BlazorFrontend.Component
-{  
+{
     public class ViewComponentBase : ComponentBase
-    {       
+    {
         [Inject]
         public IMessageBoxService MessageBox { get; set; }
-                
+        public ValidationResult ValidationResult { get; set; } = new ValidationResult();
+
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Error is displayed to user.")]
         protected async Task TryRun(Func<Task> action)
         {
@@ -21,7 +24,7 @@ namespace InitialEnterprise.BlazorFrontend.Component
 
             try
             {
-               await action();
+                await action();
             }
             catch (Exception ex)
             {
@@ -37,6 +40,18 @@ namespace InitialEnterprise.BlazorFrontend.Component
             }
 
             return MessageBox.ShowMessage(exception.Message, "MessagePanel_Error");
+        }
+
+        protected string Error(string propertyName)
+        {
+            if (ValidationResult != null)
+            {
+                if (ValidationResult.Errors.FirstOrDefault(e => e.PropertyName == propertyName) != null)
+                {
+                    return "error";
+                }
+            }
+            return string.Empty;
         }
     }
 }
