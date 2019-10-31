@@ -4,7 +4,7 @@ Initial Enterprise Architecture for a .net core based business critical backend 
 ### Concepts Backend
 * [IntegrationTDD] for RESTApi with TestServer
 * [UnitTest] with Mocking
-* [SEEING] for InMemory Database & Testfixtures
+* [SEEDING] for InMemory Database & Testfixtures
 * [CQRS] Infrastructure with Dispatcher for Commands & Queries
 * [DDD] Infrastructure 
 * [QueryHandler] to handle Queries
@@ -34,7 +34,7 @@ https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPatte
 [IntegrationTDD]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Api.Tests/ApiServices> 
 [CQRS]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Infrastructure/CQRS>
 [DDD]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.Infrastructure/DDD>
-[SEEING]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.DataSeeding>
+[SEEDING]: <https://github.com/jorgenschumann/InitialEnterprise/tree/master/Backend/InitialEnterprise.DataSeeding>
 [JWTTOKENBUILDER]: <https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/UserModule/Services/JwtSecurityTokenBuilder.cs>
 [CLEANREST]: <https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Api/Controller/CurrencyController.cs>
 [DDDApplication]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Api/Application/CurrencyApplication/CurrencyApplication.cs>
