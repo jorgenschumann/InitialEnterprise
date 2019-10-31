@@ -43,8 +43,7 @@ https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPatte
 [CommandHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/CurrencyModule/CommandHandler/CurrencyCommandHandler.cs>
 [ValidationHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/PersonModule/ValidationHandler/CreatePersonCommandValidationHandler.cs>
 [UnitTest]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Tests/CurrencyModule/CurrencyCommandHanderTests.cs>
-
-[BLAZORhttps://github.com/jorgenschumann/InitialEnterprise/tree/master/Frontend/InitialEnterprise.Frontend/InitialEnterprise.BlazorFrontend>
+[BLAZOR]:<https://github.com/jorgenschumann/InitialEnterprise/tree/master/Frontend/InitialEnterprise.Frontend/InitialEnterprise.BlazorFrontend>
 
 
 
