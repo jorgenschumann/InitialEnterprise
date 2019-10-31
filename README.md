@@ -13,6 +13,7 @@ Initial Enterprise Architecture for a .net core based business critical backend 
 * [DDDApplication] Layer for the Domain orchestration, Command dispachting & mapping
 * [JWTTOKENBUILDER] with JwtAuthentication & Claims 
 * [CLEANREST]  
+* [BLAZOR]  
 
 ### Concepts Frontend
 
@@ -42,6 +43,8 @@ https://github.com/vkhorikov/SpecificationPattern/tree/master/SpecificationPatte
 [CommandHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/CurrencyModule/CommandHandler/CurrencyCommandHandler.cs>
 [ValidationHandler]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext/PersonModule/ValidationHandler/CreatePersonCommandValidationHandler.cs>
 [UnitTest]:<https://github.com/jorgenschumann/InitialEnterprise/blob/master/Backend/InitialEnterprise.Domain.MainBoundedContext.Tests/CurrencyModule/CurrencyCommandHanderTests.cs>
+
+[BLAZORhttps://github.com/jorgenschumann/InitialEnterprise/tree/master/Frontend/InitialEnterprise.Frontend/InitialEnterprise.BlazorFrontend>
 
 
 
