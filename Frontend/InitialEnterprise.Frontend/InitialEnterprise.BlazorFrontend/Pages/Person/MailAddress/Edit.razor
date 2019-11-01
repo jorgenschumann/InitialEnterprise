@@ -73,8 +73,8 @@
         return TryRun(async () =>
         {
             CommandHandlerAnswerDto<EmailAddressDto> answer = await Controller.Save(EmailAddress);
-            {
-                this.EmailAddress = answer.AggregateRoot;
+            {             
+                this.EmailAddress = answer.AggregateRoot == null ? EmailAddress : answer.AggregateRoot;     
                 this.ValidationResult = answer.ValidationResult;
             }
             if (answer.ValidationResult.IsValid)

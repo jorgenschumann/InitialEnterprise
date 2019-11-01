@@ -4,51 +4,49 @@
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
-@using FluentValidation.Results
-@using InitialEnterprise.BlazorFrontend.Pages.Person
 
 @inject PersonController Controller
 @inject NavigationManager NavigationManager
 
 <form class="ui form">
-    <h2 class="ui dividing header"><i class="globe icon"></i> Edit Person</h2>
+    <h2 class="ui dividing header"><i class="user icon"></i> Edit Person</h2>
     <div class="field">
         <label>Person Type</label>
         <div class="two fields">
-            <div class="field">
-                <input type="text" @bind="@person.Title" placeholder="Title" />
+            <div class="field @Error(nameof(Person.Title))">
+                <input type="text" @bind="@Person.Title" placeholder="Title" />
             </div>
         </div>
     </div>
     <div class="field">
         <label>Suffix</label>
         <div class="two fields">
-            <div class="field">
-                <input type="text" @bind="@person.Suffix" placeholder="Suffix" />
+            <div class="field @Error(nameof(Person.Suffix))">
+                <input type="text" @bind="@Person.Suffix" placeholder="Suffix" />
             </div>
         </div>
     </div>
     <div class="field">
         <label>Title</label>
         <div class="two fields">
-            <div class="field">
-                <input type="text" @bind="@person.FirstName" placeholder="FirstName" />
+            <div class="field @Error(nameof(Person.FirstName))">
+                <input type="text" @bind="@Person.FirstName" placeholder="FirstName" />
             </div>
         </div>
     </div>
     <div class="field">
         <label>MiddleName</label>
         <div class="two fields">
-            <div class="field">
-                <input type="text" @bind="@person.MiddleName" placeholder="MiddleName" />
+            <div class="field @Error(nameof(Person.MiddleName))">
+                <input type="text" @bind="@Person.MiddleName" placeholder="MiddleName" />
             </div>
         </div>
     </div>
     <div class="field">
         <label>LastName</label>
         <div class="two fields">
-            <div class="field">
-                <input type="text" @bind="@person.LastName" placeholder="LastName" />
+            <div class="field @Error(nameof(Person.LastName))">
+                <input type="text" @bind="@Person.LastName" placeholder="LastName" />
             </div>
         </div>
     </div>
@@ -62,26 +60,26 @@
 
 
 <InitialEnterprise.BlazorFrontend.Pages.Person.MailAddress.List 
-                                                                Person="this.person"
-                                                                EmailAddresses="this.person.EmailAddresses">
+                                                                Person="this.Person"
+                                                                EmailAddresses="this.Person.EmailAddresses">
 </InitialEnterprise.BlazorFrontend.Pages.Person.MailAddress.List>
 
 
 <InitialEnterprise.BlazorFrontend.Pages.Person.CreditCard.List 
-                                                               Person="this.person" 
-                                                               CreditCards="this.person.CreditCards">
+                                                               Person="this.Person" 
+                                                               CreditCards="this.Person.CreditCards">
 </InitialEnterprise.BlazorFrontend.Pages.Person.CreditCard.List>
 
 <InitialEnterprise.BlazorFrontend.Pages.Person.Address.List 
-                                                            Person="this.person" 
-                                                            Addresses="this.person.Addresses">
+                                                            Person="this.Person" 
+                                                            Addresses="this.Person.Addresses">
 </InitialEnterprise.BlazorFrontend.Pages.Person.Address.List>
 
 @code {
     [Parameter]
     public String Id { get; set; }
 
-    PersonDto person = new PersonDto();
+    PersonDto Person = new PersonDto();
 
     String NameState = String.Empty;
     String IsoCodeState = String.Empty;
@@ -90,7 +88,7 @@
     {
         return TryRun(async () =>
         {
-            this.person = await Controller.Get(Guid.Parse(Id));
+            this.Person = await Controller.Get(Guid.Parse(Id));
         });
     }
 
@@ -98,9 +96,9 @@
     {
         return TryRun(async () =>
         {
-            CommandHandlerAnswerDto<PersonDto> answer = await Controller.Save(person);
+            CommandHandlerAnswerDto<PersonDto> answer = await Controller.Save(Person);
             {
-                this.person = answer.AggregateRoot == null ? person : answer.AggregateRoot;
+                this.Person = answer.AggregateRoot == null ? Person : answer.AggregateRoot;
                 this.ValidationResult = answer.ValidationResult;               
             }
         });
@@ -113,7 +111,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.person = await Controller.Get(Guid.Parse(Id));
+        this.Person = await Controller.Get(Guid.Parse(Id));
     }    
 }
 

@@ -11,6 +11,7 @@ using InitialEnterprise.BlazorFrontend.Settings;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.BlazorFrontend.Controller;
 using Microsoft.AspNetCore.Components;
+using InitialEnterprise.BlazorFrontend.Pages.Person.Address;
 
 namespace InitialEnterprise.BlazorFrontend
 {

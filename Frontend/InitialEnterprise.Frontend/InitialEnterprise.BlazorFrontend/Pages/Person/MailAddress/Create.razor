@@ -48,11 +48,12 @@
 @code {
     [Parameter]
     public String PersonId { get; set; }
- 
+
     EmailAddressDto EmailAddress = new EmailAddressDto();
-           
+
     protected override async Task OnInitializedAsync()
-    {       
+    {
+        this.EmailAddress.PersonId = Guid.Parse(PersonId);
     }
 
     private Task SubmitAction()
@@ -61,7 +62,7 @@
         {
             CommandHandlerAnswerDto<EmailAddressDto> answer = await Controller.Save(EmailAddress);
             {
-                this.EmailAddress = answer.AggregateRoot;
+                this.EmailAddress = answer.AggregateRoot == null ? EmailAddress : answer.AggregateRoot;    
                 this.ValidationResult = answer.ValidationResult;
             }
         });
@@ -70,6 +71,6 @@
     private void BackAction()
     {
         NavigationManager.NavigateTo($"/person/edit/{this.PersonId}");
-    }  
+    }
 }
 

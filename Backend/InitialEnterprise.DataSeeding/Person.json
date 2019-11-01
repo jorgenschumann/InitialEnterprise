@@ -57,32 +57,21 @@
       }
     ], 
     "CreditCards": [
-      //{
-      //  "Id": "794F4373-F885-4ED0-A8FD-22739A19281F",
-      //  "CreditCardType": {
-      //    "Id": 2,
-      //    "Name": "Visa"
-      //  },
-      //  "CardNumber": "4024007177298071",
-      //  "ExpireMonth": 3,
-      //  "ExpireYear": 2026,
-      //  "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100"
-      //},
+      {
+        "Id": "794F4373-F885-4ED0-A8FD-22739A19281F",
+        "CreditCardHolderName": "Jorgen Schumann",
+        "CreditCardType": "Visa",
+        "CardNumber": "4024007177298071",
+        "ExpireMonth": 3,
+        "ExpireYear": 2026,
+        "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100"
+      },
       {
         "Id": "CE52C130-15B2-41DA-B5A8-E30993B7C73A",
         "CreditCardHolderName": "Jorgen Schumann",
         "CreditCardType": "MasterCard",
         "CardNumber": "5277877392399446",
         "ExpireMonth": 5,
-        "ExpireYear": 2021,
-        "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100"
-      },
-      {
-        "Id": "794F4373-F885-4ED0-A8FD-22739A19281F",
-        "CreditCardHolderName": "Jorgen Schumann",
-        "CreditCardType": 1,
-        "CardNumber": "1234",
-        "ExpireMonth": 12,
         "ExpireYear": 2021,
         "PersonId": "C82D36A4-2650-4827-9DEA-ED624E30C100"
       }

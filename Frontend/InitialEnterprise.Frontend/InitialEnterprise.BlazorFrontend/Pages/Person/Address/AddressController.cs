@@ -5,9 +5,8 @@ using InitialEnterprise.Shared.Dtos;
 using System;
 using System.Threading.Tasks;
 
-namespace InitialEnterprise.BlazorFrontend.Controller
-{
-    public class AddressController
+namespace InitialEnterprise.BlazorFrontend.Pages.Person.Address
+{    public class AddressController
     {
         private readonly IPersonAddressService personAddressService;
         private readonly IMessageBoxService messageBoxService;
@@ -25,15 +24,16 @@ namespace InitialEnterprise.BlazorFrontend.Controller
             this.busyIndicatorService = busyIndicatorService;
         }
 
-        private AddressEditView addressEditView;
+        private AddressDetailsView addressDetailsView;
         private AddressListView addressListView;
 
-        public void SetView(AddressEditView addressEditView)
+        public async Task SetView(AddressDetailsView addressDetailsView)
         {
-            this.addressEditView = addressEditView;
-        }
+            this.addressDetailsView = addressDetailsView;
+            this.addressDetailsView.Countries = await personAddressService.GetCountries();
+        } 
 
-        public void SetView(AddressListView addressListView)
+        public async Task SetView(AddressListView addressListView)
         {
             this.addressListView = addressListView;
         }
@@ -42,8 +42,7 @@ namespace InitialEnterprise.BlazorFrontend.Controller
         {
             using (busyIndicatorService.Show())
             {
-                this.addressEditView.PersonAddress = await personAddressService.Get(personId, id);
-                this.addressEditView.Countries = await personAddressService.GetCountries();
+                this.addressDetailsView.PersonAddress = await personAddressService.Get(personId, id);
             }
         }
 
@@ -56,7 +55,7 @@ namespace InitialEnterprise.BlazorFrontend.Controller
         }
 
         public async Task<CommandHandlerAnswerDto<PersonAddressDto>> Save(PersonAddressDto address)
-        {
+        {            
             using (busyIndicatorService.Show())
             {
                 if (address.Id != Guid.Empty)

@@ -4,17 +4,16 @@
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
-@using FluentValidation.Results
 
 @inject CreditCardController Controller
 @inject NavigationManager NavigationManager
 
     <form class="ui form">
-        <h4 class="ui dividing header"><i class="globe icon"></i>Create Email</h4>
+        <h4 class="ui dividing header"><i class="globe icon"></i>Edit Credit Card</h4>
         <div class="field">
             <label>Card Holder</label>
             <div class="two fields">
-                <div class="field">
+                <div class="field @Error(nameof(CreditCard.CreditCardHolderName))">
                     <input type="text" @bind="@CreditCard.CreditCardHolderName" placeholder="Card Holder" />
                 </div>
             </div>
@@ -22,30 +21,43 @@
         <div class="field">
             <label>Card Number</label>
             <div class="two fields">
-                <div class="field">
+                <div class="field @Error(nameof(CreditCard.CardNumber))">
                     <input type="text" @bind="@CreditCard.CardNumber" placeholder="CardNumber" />
                 </div>
             </div>
         </div>
         <div class="field">
-            <label>Type</label>
-            <div class="two fields">
-                <div class="field">
-                    <select class="ui dropdown" @bind="@CreditCard.CreditCardType">
-                        @foreach (var cardType in this.CreditCardTypes)
+            <label>Expired</label>
+            <div class="four fields">
+                <div class="field @Error(nameof(CreditCard.ExpireMonth))">
+                    <select class="dropdown" @bind="@CreditCard.ExpireMonth">
+                        @for (int i = 1; i <= 12; i++)
                         {
-                            <option value="@cardType.Name">@cardType.Name</option>
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+                <div class="field @Error(nameof(CreditCard.ExpireYear))">
+                    <select class="dropdown" @bind="@CreditCard.ExpireYear">
+                        @for (int i = 2019; i <= 2025; i++)
+                        {
+                            <option value="@i">@i</option>
                         }
                     </select>
                 </div>
             </div>
         </div>
         <div class="field">
+            <label>Type</label>
             <div class="two fields">
-                @*<div class="ui field checked checkbox">
-                    <input type="checkbox" @bind="@CreditCard.IsPrimary" placeholder="IsPrimary" />
-                    <label>Primary Mail</label>
-                </div>*@
+                <div class="field @Error(nameof(CreditCard.CreditCardType))">
+                    <select class="dropdown" @bind="@CreditCard.CreditCardType">
+                        @foreach (var cardType in this.CreditCardTypes)
+                        {
+                            <option value="@cardType.Name">@cardType.Name</option>
+                        }
+                    </select>
+                </div>
             </div>
         </div>
     </form>
@@ -59,12 +71,13 @@
     [Parameter]
     public String PersonId { get; set; }
 
-    CreditCardDto CreditCard = new CreditCardDto();
+    CreditCardDto CreditCard = new CreditCardDto();  
 
     List<CreditCardTypeDto> CreditCardTypes = new List<CreditCardTypeDto>();
 
     protected override async Task OnInitializedAsync()
     {
+        this.CreditCard.PersonId = Guid.Parse(PersonId);
         this.CreditCardTypes = await this.Controller.GetCreditCardTypes();
     }
 
@@ -74,7 +87,7 @@
         {
             CommandHandlerAnswerDto<CreditCardDto> answer = await Controller.Save(CreditCard);
             {
-                this.CreditCard = answer.AggregateRoot;
+                this.CreditCard = answer.AggregateRoot == null ? CreditCard : answer.AggregateRoot;                
                 this.ValidationResult = answer.ValidationResult;
             }
         });
