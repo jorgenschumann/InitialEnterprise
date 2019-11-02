@@ -16,18 +16,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
 
         protected void ValidateName()
         {
-            RuleFor(c => c.Name)
-                .NotEmpty()
-                .WithMessage("Name")
+            RuleFor(c => c.Name)               
                 .Length(4, 100)
                 .WithMessage("Name length must beetwen 4 and 100 charakters");
         }
 
         protected void ValidateIsoCode()
         {
-            RuleFor(c => c.IsoCode)
-                .NotEmpty()
-                .WithMessage("IsoCode")
+            RuleFor(c => c.IsoCode)                       
                 .Length(3, 3)
                 .WithMessage("IsoCode must have 3 charakters");
         }

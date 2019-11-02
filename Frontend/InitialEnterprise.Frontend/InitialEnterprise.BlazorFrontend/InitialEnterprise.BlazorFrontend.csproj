@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
+    <PackageReference Include="Blazored.Modal" Version="2.3.0" />
     <PackageReference Include="FluentValidation" Version="8.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
@@ -20,10 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UiServices\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" appsettings_1development_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

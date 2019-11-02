@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation.Results;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace InitialEnterprise.BlazorFrontend.Component
 {
@@ -52,6 +53,16 @@ namespace InitialEnterprise.BlazorFrontend.Component
                 }
             }
             return string.Empty;
+        }
+
+        public void DisplayErrors(EditContext context)
+        {
+            var messageStore = new ValidationMessageStore(context);
+            foreach (var err in this.ValidationResult.Errors)
+            {
+                messageStore.Add(context.Field(err.PropertyName), err.ErrorMessage);
+            }
+            context.NotifyValidationStateChanged();
         }
     }
 }

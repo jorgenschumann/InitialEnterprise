@@ -4,10 +4,10 @@
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
+@using InitialEnterprise.BlazorFrontend.UiServices
 
 @inject UserController Controller
 @inject NavigationManager NavigationManager
-
 <h1>Users</h1>
 
 @if (users == null)
@@ -58,7 +58,7 @@ else
                 </tr>
             }
         </tbody>
-        <tfoot>           
+        <tfoot>
         </tfoot>
     </table>
 }

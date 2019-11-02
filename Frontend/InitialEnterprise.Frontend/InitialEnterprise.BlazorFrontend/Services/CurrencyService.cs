@@ -26,7 +26,7 @@ namespace InitialEnterprise.BlazorFrontend.Services
                 $"{apiSettings.Url}/{Endpoint}/{id}");
         }
 
-        public async Task<IEnumerable<CurrencyDto>> Fetch()
+        public async Task<List<CurrencyDto>> Fetch()
         {
             return await requestService.GetAsync<List<CurrencyDto>>(
                 $"{apiSettings.Url}/{Endpoint}");

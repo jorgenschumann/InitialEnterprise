@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace InitialEnterprise.Shared.Dtos
 {
     public class CurrencyDto : DataTransferObject
@@ -7,7 +9,7 @@ namespace InitialEnterprise.Shared.Dtos
         public Guid Id { get; set; }
               
         public string Name { get; set; }
-
+                   
         public string IsoCode { get; set; }
 
         public List<CurrencyRateDto> Rates { get; set; }

@@ -12,6 +12,8 @@ using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.BlazorFrontend.Controller;
 using Microsoft.AspNetCore.Components;
 using InitialEnterprise.BlazorFrontend.Pages.Person.Address;
+using Blazored.Modal;
+using InitialEnterprise.BlazorFrontend.Pages.Currency;
 
 namespace InitialEnterprise.BlazorFrontend
 {
@@ -42,6 +44,8 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<MessageBoxService>();
             services.AddScoped<IMessageBoxService>(p => p.GetRequiredService<MessageBoxService>());
             
+            services.AddBlazoredModal();
+
             services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 

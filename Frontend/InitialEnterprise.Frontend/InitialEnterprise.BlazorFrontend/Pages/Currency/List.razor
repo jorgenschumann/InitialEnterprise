@@ -1,21 +1,24 @@
 ﻿@page "/currency/list"
 
-@inherits Component.ViewComponentBase
+@inherits CurrencyListView
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
+@using Blazored.Modal
+@using Blazored.Modal.Services
 
 @inject CurrencyController Controller
 @inject NavigationManager NavigationManager
+@inject IModalService ModalService
 
 <h1>Currencies</h1>
 
-@if (currencies == null)
+@if (Currencies == null)
 {<p><em>Loading...</em></p>
 
 }
 else
-{
+{  
     <div class="ui small basic icon buttons">
         <button class="ui button" @onclick="@CreateAction"><i class="add icon"></i></button>
     </div>
@@ -29,16 +32,16 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var currency in currencies)
+            @foreach (var currency in Currencies)
             {
                 <tr>
                     <td class="collapsing">
                         <div class="ui mini compact menu">
+
                             <div class="ui small simple dropdown item">
                                 <i class="cogs icon"></i>
                                 <div class="menu">
-                                    <a href="/currency/edit/@currency.Id.ToString()"
-                                       class="item">
+                                    <a class="item" @onclick="@(() => EditAction(currency.Id.ToString()))">
                                         <i class="edit icon"></i>
                                     </a>
                                     <a href="/currency/delete/@currency.Id.ToString()"
@@ -46,15 +49,9 @@ else
                                         <i class="trash icon"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div>                           
                         </div>
-                        @*<a href="/currency/edit/@currency.Id.ToString()">
-                            <i class="edit icon"></i>
-                        </a>
-                        <a href="/currency/delete/@currency.Id.ToString()">
-                            <i class="trash icon"></i>
-                        </a>*@
-                    </td>
+                   </td>
                     <td>@currency.Name</td>
                     <td>@currency.IsoCode</td>
                 </tr>
@@ -66,11 +63,11 @@ else
 }
 
 @code {
-
-    IEnumerable<CurrencyDto> currencies;
-
+      
     protected override async Task OnInitializedAsync()
     {
+        await this.Controller.SetView(this);
+
         await FetchAction();
     }
 
@@ -78,12 +75,34 @@ else
     {
         return TryRun(async () =>
         {
-            this.currencies = await Controller.Fetch();
+            await Controller.Fetch();
         });
     }
 
     private void CreateAction()
     {
         NavigationManager.NavigateTo($"/currency/edit/{Guid.NewGuid().ToString()}");
+    }
+
+    void EditAction(string Id)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(CurrencyDto.Id), Id);
+        
+        ModalService.OnClose += ModalClosed;
+        ModalService.Show<Details>("Edit Currency", parameters);
+    }
+
+    void ModalClosed(ModalResult modalResult)
+    {
+        if (!modalResult.Cancelled)
+        {
+            var currency = modalResult.Data as CurrencyDto;       
+            Currencies[Currencies.FindIndex(x => x.Id == currency.Id)] = currency;
+           
+            StateHasChanged();
+        }
+
+        ModalService.OnClose -= ModalClosed;
     }
 }

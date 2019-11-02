@@ -7,7 +7,7 @@ namespace InitialEnterprise.BlazorFrontend.Services
 {
     public interface ICurrencyService
     {
-        Task<IEnumerable<CurrencyDto>> Fetch();
+        Task<List<CurrencyDto>> Fetch();
 
         Task<CurrencyDto> Fetch(Guid id);
 

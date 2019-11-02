@@ -2,11 +2,12 @@
 using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace InitialEnterprise.BlazorFrontend.Controller
+namespace InitialEnterprise.BlazorFrontend.Pages.Currency
 {
     public class CurrencyController
     {
@@ -28,22 +29,36 @@ namespace InitialEnterprise.BlazorFrontend.Controller
             this.navigationManager = navigationManager;
         }
 
-        public async Task<IEnumerable<CurrencyDto>> Fetch()
+        private CurrencyDetailsView currencyDetailsView;
+        private CurrencyListView currencyListView;
+
+        public async Task SetView(CurrencyDetailsView view)
         {
-            using (busyIndicatorService.Show())
-            {                
-                return await currencyService.Fetch();
-            }
+            this.currencyDetailsView = view;
+            this.currencyDetailsView.Id = this.currencyDetailsView.Parameters.Get<string>(nameof(CurrencyDto.Id));
         }
 
-        public async Task<CurrencyDto> Fetch(Guid id)
+        public async Task SetView(CurrencyListView view)
+        {
+            this.currencyListView = view;
+        }
+
+        public async Task Fetch()
         {
             using (busyIndicatorService.Show())
             {
-                return await currencyService.Fetch(id);
+                this.currencyListView.Currencies = await currencyService.Fetch();
             }
         }
-        
+
+        public async Task Fetch(Guid id)
+        {
+            using (busyIndicatorService.Show())
+            {
+                this.currencyDetailsView.Currency = await currencyService.Fetch(id);
+            }
+        }
+
         public async Task Delete(Guid id)
         {
             using (busyIndicatorService.Show())
@@ -53,15 +68,20 @@ namespace InitialEnterprise.BlazorFrontend.Controller
             }
         }
 
-        public async Task<CommandHandlerAnswerDto<CurrencyDto>> Save(CurrencyDto currency)
-        {            
+        public async Task Save(CurrencyDto currency , EditContext context)
+        { 
             using (busyIndicatorService.Show())
             {
-                if (currency.Id != Guid.Empty){
-                    return await currencyService.Put(currency);
-                }
-                return await currencyService.Post(currency);
-            }          
+                var answer =  
+                    currency.Id != Guid.Empty ? 
+                    await currencyService.Put(currency): 
+                    await currencyService.Post(currency);
+        
+                this.currencyDetailsView.Currency = answer.AggregateRoot ?? currency;
+                this.currencyDetailsView.ValidationResult = answer.ValidationResult;
+                this.currencyDetailsView.DisplayErrors(context);
+            }
         }
+
     }
 }
