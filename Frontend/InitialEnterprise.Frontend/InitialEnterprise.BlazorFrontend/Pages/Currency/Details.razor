@@ -1,4 +1,4 @@
-﻿@page "/currency/edit/{Id}"
+﻿@page "/currency/details/{Id}"
 
 @inherits CurrencyDetailsView
 
@@ -43,8 +43,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await this.Controller.SetView(this);
-              
+        Controller.SetView(this);
+
         await FetchAction();
     }
 
@@ -60,11 +60,7 @@
     {
         return TryRun(async () =>
         {
-            await Controller.Save(Currency,context);
-
-            if (this.ValidationResult.IsValid){
-                BackAction();
-            }
+            await Controller.Save(Currency, context, onSuccess: BackAction);
         });
     }
 

@@ -20,11 +20,17 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
             this.dispatcher = dispatcher;
         }
 
-        public async Task<CommandHandlerAnswerDto<CurrencyDto>> Insert(CurrencyDto currencyDto)
+        //public async Task<CommandHandlerAnswerDto<CurrencyDto>> Insert(CurrencyDto currencyDto)
+        //{
+        //    var command = Mapper.Map(currencyDto).ToANew<CurrencyCreateCommand>();
+        //    var asyncResult = await dispatcher.Send<CurrencyCreateCommand, CurrencyModule.Aggregate.Currency>(command);
+        //    return Mapper.Map(asyncResult).ToANew<CommandHandlerAnswerDto<CurrencyDto>>();
+        //}
+
+        public async Task<ICommandHandlerAggregateAnswer> Insert(CurrencyDto currencyDto)
         {
-            var command = Mapper.Map(currencyDto).ToANew<CurrencyCreateCommand>();
-            var asyncResult = await dispatcher.Send<CurrencyCreateCommand, CurrencyModule.Aggregate.Currency>(command);
-            return Mapper.Map(asyncResult).ToANew<CommandHandlerAnswerDto<CurrencyDto>>();
+            var command = Mapper.Map(currencyDto).ToANew<CurrencyUpdateCommand>();
+            return await dispatcher.Send<CurrencyUpdateCommand, CurrencyModule.Aggregate.Currency>(command);
         }
 
         public async Task<CurrencyDto> Query(Guid id)

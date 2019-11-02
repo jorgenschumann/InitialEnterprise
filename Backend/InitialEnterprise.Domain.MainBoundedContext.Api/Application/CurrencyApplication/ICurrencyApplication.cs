@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
 
         Task<IEnumerable<CurrencyDto>> Query(IQuery model);
 
-        Task<CommandHandlerAnswerDto<CurrencyDto>> Insert(CurrencyDto model);
+        Task<ICommandHandlerAggregateAnswer> Insert(CurrencyDto model);
 
         Task<ICommandHandlerAggregateAnswer> Update(CurrencyDto model);
     }

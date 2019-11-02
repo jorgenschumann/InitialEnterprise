@@ -32,13 +32,13 @@ namespace InitialEnterprise.BlazorFrontend.Pages.Currency
         private CurrencyDetailsView currencyDetailsView;
         private CurrencyListView currencyListView;
 
-        public async Task SetView(CurrencyDetailsView view)
+        public void SetView(CurrencyDetailsView view)
         {
             this.currencyDetailsView = view;
             this.currencyDetailsView.Id = this.currencyDetailsView.Parameters.Get<string>(nameof(CurrencyDto.Id));
         }
 
-        public async Task SetView(CurrencyListView view)
+        public void SetView(CurrencyListView view)
         {
             this.currencyListView = view;
         }
@@ -59,16 +59,16 @@ namespace InitialEnterprise.BlazorFrontend.Pages.Currency
             }
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(Guid id , Action onSuccess )
         {
             using (busyIndicatorService.Show())
             {
                 await currencyService.Delete(id);
-                navigationManager.NavigateTo("/currency/list");
+                onSuccess();
             }
         }
 
-        public async Task Save(CurrencyDto currency , EditContext context)
+        public async Task Save(CurrencyDto currency , EditContext context, Action onSuccess)
         { 
             using (busyIndicatorService.Show())
             {
@@ -80,6 +80,9 @@ namespace InitialEnterprise.BlazorFrontend.Pages.Currency
                 this.currencyDetailsView.Currency = answer.AggregateRoot ?? currency;
                 this.currencyDetailsView.ValidationResult = answer.ValidationResult;
                 this.currencyDetailsView.DisplayErrors(context);
+                if (answer.ValidationResult.IsValid) {
+                    onSuccess();
+                }
             }
         }
 

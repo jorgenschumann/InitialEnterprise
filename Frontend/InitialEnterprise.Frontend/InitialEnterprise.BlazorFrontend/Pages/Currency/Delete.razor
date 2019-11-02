@@ -36,7 +36,7 @@
 
     async Task DeleteAction()
     {
-        await Controller.Delete(Guid.Parse(Id));
+        await Controller.Delete(Guid.Parse(Id), onSuccess: BackAction);
     }
 
     void BackAction()

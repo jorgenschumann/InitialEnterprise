@@ -20,7 +20,7 @@
 else
 {  
     <div class="ui small basic icon buttons">
-        <button class="ui button" @onclick="@CreateAction"><i class="add icon"></i></button>
+        <button class="ui button" @onclick="@(() => DetailsAction(Guid.Empty.ToString()))"><i class="add icon"></i></button>
     </div>
 
     <table class="ui celled striped table">
@@ -41,7 +41,7 @@ else
                             <div class="ui small simple dropdown item">
                                 <i class="cogs icon"></i>
                                 <div class="menu">
-                                    <a class="item" @onclick="@(() => EditAction(currency.Id.ToString()))">
+                                    <a class="item" @onclick="@(() => DetailsAction(currency.Id.ToString()))">
                                         <i class="edit icon"></i>
                                     </a>
                                     <a href="/currency/delete/@currency.Id.ToString()"
@@ -63,10 +63,10 @@ else
 }
 
 @code {
-      
+
     protected override async Task OnInitializedAsync()
     {
-        await this.Controller.SetView(this);
+        Controller.SetView(this);
 
         await FetchAction();
     }
@@ -79,30 +79,33 @@ else
         });
     }
 
-    private void CreateAction()
-    {
-        NavigationManager.NavigateTo($"/currency/edit/{Guid.NewGuid().ToString()}");
-    }
-
-    void EditAction(string Id)
+    void DetailsAction(string Id)
     {
         var parameters = new ModalParameters();
         parameters.Add(nameof(CurrencyDto.Id), Id);
-        
+
         ModalService.OnClose += ModalClosed;
-        ModalService.Show<Details>("Edit Currency", parameters);
+        ModalService.Show<Details>("Currency", parameters);
     }
 
     void ModalClosed(ModalResult modalResult)
     {
         if (!modalResult.Cancelled)
         {
-            var currency = modalResult.Data as CurrencyDto;       
+            var currency = modalResult.Data as CurrencyDto;
             Currencies[Currencies.FindIndex(x => x.Id == currency.Id)] = currency;
-           
+
             StateHasChanged();
         }
 
         ModalService.OnClose -= ModalClosed;
+    }
+
+    public class AppModalParameters: ModalParameters
+    {
+        public AppModalParameters(List<object> parameters)
+        {
+
+        }
     }
 }
