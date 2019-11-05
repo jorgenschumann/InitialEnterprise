@@ -1,8 +1,8 @@
-﻿<AuthorizeView>
+﻿<div class="header">User</div>
+<AuthorizeView>
     <Authorized>
         <div>
-            <label>Hello, @context.User.Identity.Name!</label>
-            <label>You can only see this content if you're authenticated.</label>
+            <label>Hello, @context.User.Identity.Name!</label>          
         </div>
         <div class="menu">
             <a class="item" href="logout">
