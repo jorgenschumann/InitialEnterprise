@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using InitialEnterprise.BlazorFrontend.Services;
 using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using System;
@@ -12,7 +11,7 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
 {
     public class RequestService : IRequestService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient httpClient;
         private readonly ILocalStorageService localStorage;
         private readonly NavigationManager navigationManager;
 
@@ -21,20 +20,19 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
             ILocalStorageService localStorage, 
             NavigationManager navigationManager)
         {
-            _httpClient = httpClient;
+            this.httpClient = httpClient;
             this.localStorage = localStorage;
             this.navigationManager = navigationManager;
-            _httpClient.MaxResponseContentBufferSize = 256000;
+            this.httpClient.MaxResponseContentBufferSize = 256000;
         }
 
         private async Task AddHeader()
         {
             var token = await localStorage.GetItemAsync<string>("authToken");
-            if (string.IsNullOrEmpty(token)){
-                navigationManager.NavigateTo("login");
-            }
-            _httpClient.DefaultRequestHeaders.Authorization =
-               new AuthenticationHeaderValue("bearer", token);
+            if (!string.IsNullOrEmpty(token)){
+                httpClient.DefaultRequestHeaders.Authorization =
+              new AuthenticationHeaderValue("bearer", token);
+            }           
         }
              
         public async Task<TResult> GetAsync<TResult>(string uri) where TResult : new()
@@ -42,7 +40,7 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
             await AddHeader();
 
             var responseData = new TResult();
-            var response = await _httpClient.GetAsync(new Uri(string.Format(uri)));
+            var response = await httpClient.GetAsync(new Uri(string.Format(uri)));
             if (response.IsSuccessStatusCode)
                 responseData = JsonConvert.DeserializeObject<TResult>(await response.Content.ReadAsStringAsync());
 
@@ -53,7 +51,7 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
         {
             await AddHeader();
 
-            var response = await _httpClient.PostAsync(new Uri(string.Format(uri)), SerializeContentString(data));
+            var response = await httpClient.PostAsync(new Uri(string.Format(uri)), SerializeContentString(data));
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             return JsonConvert.DeserializeObject<TResult>(content);
         }
@@ -62,16 +60,25 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
         {
             await AddHeader();
 
-            var response = await _httpClient.PostAsync(new Uri(string.Format(uri)), SerializeContentString(data));
-            var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TResult>(content);
+            try
+            {
+                var response = await httpClient.PostAsync(new Uri(string.Format(uri)), SerializeContentString(data));
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<TResult>(content);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+          
         }
 
         public async Task<TResult> PutAsync<TResult>(string uri, TResult data)
         {
             await AddHeader();
 
-            var response = await _httpClient.PutAsync(new Uri(string.Format(uri)), SerializeContentString(data));
+            var response = await httpClient.PutAsync(new Uri(string.Format(uri)), SerializeContentString(data));
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             return JsonConvert.DeserializeObject<TResult>(content);
         }
@@ -80,7 +87,7 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
         {
             await AddHeader();
 
-            var response = await _httpClient.PutAsync(new Uri(string.Format(uri)), SerializeContentString(data));
+            var response = await httpClient.PutAsync(new Uri(string.Format(uri)), SerializeContentString(data));
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TResult>(content);
         }
@@ -89,7 +96,7 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
         {
             await AddHeader();
 
-            var response = await _httpClient.DeleteAsync(new Uri(string.Format(uri)));
+            var response = await httpClient.DeleteAsync(new Uri(string.Format(uri)));
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TResult>(content);
         }

@@ -26,13 +26,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         public async Task<UserSignInResultDto> LogIn(UserLoginDto model)
         {
             var command = Mapper.Map(model).ToANew<SignInCommand>();
-            var result = await dispatcher.SendR<SignInCommand, UserSignInResult>(command);
-           
-            Mapper.WhenMapping
-                .From<UserSignInResult>()          
-                .To<UserSignInResultDto>()          
-                .Map((p, dto) => p.SignInResult.Succeeded)   
-                .To(p => p.Success); 
+            var result = await dispatcher.SendR<SignInCommand, UserSignInResult>(command);                  
             
             return Mapper.Map(result).ToANew<UserSignInResultDto>();
         }            

@@ -10,10 +10,10 @@ using Blazored.LocalStorage;
 using InitialEnterprise.BlazorFrontend.Settings;
 using InitialEnterprise.BlazorFrontend.UiServices;
 using InitialEnterprise.BlazorFrontend.Controller;
-using Microsoft.AspNetCore.Components;
 using InitialEnterprise.BlazorFrontend.Pages.Person.Address;
 using Blazored.Modal;
 using InitialEnterprise.BlazorFrontend.Pages.Currency;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace InitialEnterprise.BlazorFrontend
 {
@@ -32,20 +32,27 @@ namespace InitialEnterprise.BlazorFrontend
         {          
             services.AddSingleton<ApiSettings>();
 
+            
             services.AddRazorPages();
+            services.AddBlazoredModal(); 
             services.AddServerSideBlazor();
             services.AddBlazoredLocalStorage();
             services.AddAuthenticationCore();
             services.AddAuthorizationCore();
+
             services.AddScoped<HttpClient>();
             services.AddScoped<IRequestService, RequestService>();
+
+            services.AddScoped<ApiAuthenticationStateProvider>();
+            services.AddScoped<AuthenticationStateProvider>(provider =>
+            provider.GetRequiredService<ApiAuthenticationStateProvider>());
+
             services.AddScoped<BusyIndicatorService>();
             services.AddScoped<IBusyIndicatorService>(p => p.GetRequiredService<BusyIndicatorService>());
-            services.AddScoped<MessageBoxService>();
-            services.AddScoped<IMessageBoxService>(p => p.GetRequiredService<MessageBoxService>());
-            
-            services.AddBlazoredModal();
 
+            services.AddScoped<MessageBoxService>();
+            services.AddScoped<IMessageBoxService>(p => p.GetRequiredService<MessageBoxService>());            
+            
             services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 

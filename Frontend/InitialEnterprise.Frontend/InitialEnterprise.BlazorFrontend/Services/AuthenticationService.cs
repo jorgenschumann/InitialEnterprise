@@ -5,6 +5,7 @@ using Blazored.LocalStorage;
 using System.Net.Http;
 using InitialEnterprise.BlazorFrontend.Settings;
 using InitialEnterprise.Shared.Dtos;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace InitialEnterprise.BlazorFrontend.Services
 {
@@ -14,17 +15,20 @@ namespace InitialEnterprise.BlazorFrontend.Services
         private readonly ILocalStorageService localStorage;
         private readonly HttpClient httpClient;
         private readonly ApiSettings apiSettings;
+        private readonly AuthenticationStateProvider authenticationStateProvider;
 
         public AuthenticationService(
             IRequestService requestService, 
             ILocalStorageService localStorage, 
             HttpClient httpClient, 
-            ApiSettings apiSettings)
+            ApiSettings apiSettings,
+            AuthenticationStateProvider authenticationStateProvider)
         {
             this.requestService = requestService;
             this.localStorage = localStorage;
             this.httpClient = httpClient;        
             this.apiSettings = apiSettings;
+            this.authenticationStateProvider = authenticationStateProvider;
         }        
 
         public async Task<UserSignInResultDto> Login(UserLoginDto userLogin)
@@ -34,16 +38,20 @@ namespace InitialEnterprise.BlazorFrontend.Services
 
             if (result.Success)
             {
-                await localStorage.SetItemAsync("authToken", result.Token);               
+                await localStorage.SetItemAsync("authToken", result.Token);
+                await localStorage.SetItemAsync("authUser", result.User);
+                ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsAuthenticated(result.User);
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);               
             }
             return result;
         }       
 
         public async Task Logout()
-        {
-            await localStorage.RemoveItemAsync("authToken");   
+        {          
+            await localStorage.RemoveItemAsync("authToken");
+            await localStorage.RemoveItemAsync("authUser");
             httpClient.DefaultRequestHeaders.Authorization = null;
+            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
         }   
     } 
 }

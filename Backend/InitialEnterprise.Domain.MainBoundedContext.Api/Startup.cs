@@ -1,4 +1,5 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
+﻿using InitialEnterprise.Domain.MainBoundedContext.Api.MappingProfiles;
+using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.Api.Filter;
@@ -73,6 +74,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                     Version = ApplicationDefinitions.SwaggerVersion
                 });
             });
+            
+            ConfigureMapper();
 
             ConfigureJsonSerializer(builder);
 
@@ -233,6 +236,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection(ApplictionConfigSections.Logging));
             loggerFactory.AddDebug();
+        }
+
+        private void ConfigureMapper()
+        {
+            new UserAccountConfiguration();
         }
     }
 }

@@ -1,0 +1,20 @@
+﻿@page "/logout"
+
+@using InitialEnterprise.Shared.Dtos
+@using InitialEnterprise.BlazorFrontend.Services
+@using InitialEnterprise.BlazorFrontend.Controller
+
+
+@inject NavigationManager NavigationManager
+@inject UiServices.MessageBoxService messageBoxService
+@inject AuthenticationController authenticationController
+
+<p>logout</p>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationController.Logout();
+    }
+}

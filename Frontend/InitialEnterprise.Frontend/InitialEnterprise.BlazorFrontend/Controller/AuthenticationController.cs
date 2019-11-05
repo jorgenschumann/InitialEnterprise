@@ -35,5 +35,14 @@ namespace InitialEnterprise.BlazorFrontend.Controller
                 return userSignInResult;
             }
         }
+
+        public async Task Logout()
+        {
+            using (busyIndicatorService.Show())
+            {
+                await authenticationService.Logout();            
+                navigationManager.NavigateTo("/");   
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@
 
 @inject UserController Controller
 @inject NavigationManager NavigationManager
+@inject ILocalStorageService localStorage
+
 <h1>Users</h1>
 
 @if (users == null)
@@ -63,17 +65,16 @@ else
     </table>
 }
 
-@code {
-
+@code {    
     IEnumerable<UserDto> users;
 
     protected override async Task OnInitializedAsync()
-    {
+    {      
         await FetchAction();
     }
 
     private Task FetchAction()
-    {
+    {       
         return TryRun(async () =>
         {
             this.users = await Controller.Get();
