@@ -1,22 +1,42 @@
-﻿<div class="ui visible inverted left vertical sidebar menu">
-    <div class="item">          
-        <InitialEnterprise.BlazorFrontend.Pages.User.Avatar />
-    </div>   
+﻿@inherits ViewComponentBase
+
+@inject IUserNavigationService UserNavigationService
+
+<div class="ui visible inverted left vertical sidebar menu">
     <div class="item">
-        <div class="header">Main Data</div>
-        <div class="menu">
-            <a class="item" href="currency/list">
-                <i class="globe icon"></i>
-                Currencies
-            </a>
-            <a class="item" href="user/list">
-                <i class="user icon"></i>
-                Users
-            </a>
-            <a class="item" href="person/list">
-                <i class="users icon"></i>
-                People
-            </a>
-        </div>
+        <InitialEnterprise.BlazorFrontend.Pages.User.Avatar />
+    </div>
+    <div class="item">   
+        @foreach (var group in UserNavigation.Groups)
+        {
+            <div class="header">@group.DisplayName</div>
+            <div class="menu">
+                @foreach (var entry in group.Entries)
+                {
+                    <a class="item" href="@entry.Href">
+                        <i class="icon @entry.Icon"></i>
+                        @entry.DisplayName
+                    </a>
+                }
+            </div>
+        }
     </div>
 </div>
+
+@code {
+
+    private Models.UserNavigation UserNavigation;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            UserNavigation = await UserNavigationService.GetUserNavigation(Guid.NewGuid());
+        });
+    }
+}

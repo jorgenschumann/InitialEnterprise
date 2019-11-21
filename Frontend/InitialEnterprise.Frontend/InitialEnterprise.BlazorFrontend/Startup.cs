@@ -14,6 +14,7 @@ using InitialEnterprise.BlazorFrontend.Pages.Person.Address;
 using Blazored.Modal;
 using InitialEnterprise.BlazorFrontend.Pages.Currency;
 using Microsoft.AspNetCore.Components.Authorization;
+using Blazored.Toast.Services;
 
 namespace InitialEnterprise.BlazorFrontend
 {
@@ -32,7 +33,7 @@ namespace InitialEnterprise.BlazorFrontend
         {          
             services.AddSingleton<ApiSettings>();
 
-            
+            services.AddScoped<ToastService>();
             services.AddRazorPages();
             services.AddBlazoredModal(); 
             services.AddServerSideBlazor();
@@ -55,6 +56,8 @@ namespace InitialEnterprise.BlazorFrontend
             
             services.AddScoped<AuthenticationController>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            services.AddScoped<IUserNavigationService, UserNavigationService>();                        
 
             services.AddScoped<CurrencyController>();
             services.AddScoped<ICurrencyService,CurrencyService>();

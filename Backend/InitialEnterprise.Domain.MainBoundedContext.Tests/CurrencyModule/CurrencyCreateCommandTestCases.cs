@@ -10,20 +10,16 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
         public IEnumerator<Tuple<bool, CurrencyCreateCommand>> GetEnumerator()
         {
             yield return new Tuple<bool, CurrencyCreateCommand>(
-                true, new CurrencyCreateCommand(
-                    "British Pound", "GBP", 2, Guid.NewGuid()));
+                true, new CurrencyCreateCommand { Name= "British Pound", IsoCode= "GBP", Rate=2 });
 
             yield return new Tuple<bool, CurrencyCreateCommand>(
-              true, new CurrencyCreateCommand(
-                  "Euro", "EUR", 3, Guid.NewGuid()));
+             true, new CurrencyCreateCommand { Name = "Euro", IsoCode = "EUR", Rate = 3 });
 
             yield return new Tuple<bool, CurrencyCreateCommand>(
-                false, new CurrencyCreateCommand(
-                    "", "EUR", 3, Guid.NewGuid()));
+                    true, new CurrencyCreateCommand { Name = "", IsoCode = "EUR", Rate = 3 });
 
             yield return new Tuple<bool, CurrencyCreateCommand>(
-                false, new CurrencyCreateCommand(
-                    "Euro", "", 3, Guid.NewGuid()));
+                  true, new CurrencyCreateCommand { Name = "Euro", IsoCode = "", Rate = 3 });        
         }
 
         IEnumerator IEnumerable.GetEnumerator()

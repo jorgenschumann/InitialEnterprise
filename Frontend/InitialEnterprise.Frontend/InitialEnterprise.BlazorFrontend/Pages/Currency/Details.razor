@@ -60,13 +60,18 @@
     {
         return TryRun(async () =>
         {
-            await Controller.Save(Currency, context, onSuccess: BackAction);
+            await Controller.Save(Currency, context, onSuccess: OkAction);
         });
+    }
+
+    private void OkAction()
+    {
+        ModalService.Close(ModalResult.Ok<CurrencyDto>(this.Currency));
     }
 
     private void BackAction()
     {
-        ModalService.Close(ModalResult.Ok<CurrencyDto>(this.Currency));
+        ModalService.Close(ModalResult.Cancel());
     }
  }
 
