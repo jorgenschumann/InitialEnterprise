@@ -8,6 +8,7 @@ using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
+
     public interface IUserAccountApplication
     {
         Task<UserSignInResultDto> LogIn(UserLoginDto model);

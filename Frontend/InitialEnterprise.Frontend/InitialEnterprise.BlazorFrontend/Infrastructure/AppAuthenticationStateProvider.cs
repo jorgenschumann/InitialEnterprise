@@ -36,6 +36,18 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
                     
             return new AuthenticationState(ParseFromUserDto(authUser));
         }
+
+        public async Task<UserDto> GetAuthenticationUserDtoAsync()
+        {            
+            return await _localStorage.GetItemAsync<UserDto>("authUser");
+        }        
+
+        public async Task<(bool IsAuthenticated, UserDto User)> IsAuthenticated()
+        {
+            var user = await _localStorage.GetItemAsync<UserDto>("authUser");
+            return (IsAuthenticated: user != null, User: user);
+        }
+
         public void MarkUserAsAuthenticated(UserDto userDto)
         {
             var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[]

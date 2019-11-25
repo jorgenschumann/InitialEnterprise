@@ -1,33 +1,26 @@
-﻿using InitialEnterprise.BlazorFrontend.Models;
+﻿using InitialEnterprise.BlazorFrontend.Infrastructure;
+using InitialEnterprise.BlazorFrontend.Settings;
+using InitialEnterprise.Shared.Dtos;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.BlazorFrontend.Services
 {
-    public interface IUserNavigationService
-    {
-        Task<UserNavigation> GetUserNavigation(Guid userId);
-    }
-
     public class UserNavigationService : IUserNavigationService
-    {
-        public async Task<UserNavigation> GetUserNavigation(Guid userId)
+    {      
+        private readonly IRequestService requestService;
+        private readonly ApiSettings apiSettings;
+                
+        public UserNavigationService(IRequestService requestService, ApiSettings apiSettings)
         {
-            var group1Entries = new List<UserNavigationMenuGroupItem>
-            {
-                new UserNavigationMenuGroupItem { DisplayName = "Currencies", Href = "currency/list" , Icon = "globe"},
-                new UserNavigationMenuGroupItem { DisplayName = "Users", Href = "user/list",Icon = "user" },
-                new UserNavigationMenuGroupItem { DisplayName = "People", Href = "person/list" ,Icon = "users"}
-            };
+            this.requestService = requestService;
+            this.apiSettings = apiSettings;
+        }
 
-            var group1 = new UserNavigationMenuGroup { DisplayName = "MainData", Entries = group1Entries };
-           
-            var userMenu = new UserNavigation();
-            userMenu.Groups.Add(group1);
-
-            return userMenu;
+        public async Task<UserNavigationDto> GetUserNavigation(Guid userId)
+        {
+            return await requestService.GetAsync<UserNavigationDto>(
+                 $"{apiSettings.Url}/UserAccount/{userId}/UserNavigation");
         }
     }
 }

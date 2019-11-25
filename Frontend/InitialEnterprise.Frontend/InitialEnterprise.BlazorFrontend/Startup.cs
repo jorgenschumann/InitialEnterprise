@@ -64,6 +64,7 @@ namespace InitialEnterprise.BlazorFrontend
 
             services.AddScoped<UserController>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserNavigationService, UserNavigationService>();
 
             services.AddScoped<PersonController>();
             services.AddScoped<IPersonService, PersonService>();
@@ -75,7 +76,8 @@ namespace InitialEnterprise.BlazorFrontend
             services.AddScoped<IEmailAddressService, EmailAddressService>();
 
             services.AddScoped<AddressController>();
-            services.AddScoped<IPersonAddressService, PersonAddressService>();
+            services.AddScoped<IPersonAddressService, PersonAddressService>();                 
+
 
         }
 

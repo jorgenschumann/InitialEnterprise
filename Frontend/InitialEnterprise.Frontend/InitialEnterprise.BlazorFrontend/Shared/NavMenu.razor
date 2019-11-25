@@ -1,31 +1,60 @@
 ﻿@inherits ViewComponentBase
 
+@using InitialEnterprise.Shared.Dtos
+@using InitialEnterprise.BlazorFrontend.Infrastructure
+
 @inject IUserNavigationService UserNavigationService
+@inject ApiAuthenticationStateProvider AuthStateProvider
 
 <div class="ui visible inverted left vertical sidebar menu">
-    <div class="item">
-        <InitialEnterprise.BlazorFrontend.Pages.User.Avatar />
-    </div>
-    <div class="item">   
-        @foreach (var group in UserNavigation.Groups)
-        {
-            <div class="header">@group.DisplayName</div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="header">User</div>        
             <div class="menu">
-                @foreach (var entry in group.Entries)
+                <a class="item" href="Avatar">
+                    <i class="user icon"></i>
+                    Hello, @context.User.Identity.Name!
+                </a>
+            </div>
+            <div class="menu">
+                <a class="item" href="logout">
+                    <i class="lock icon"></i>
+                    logout
+                </a>
+            </div>           
+            <div class="item">
+                @if (this.UserNavigation != null)
                 {
-                    <a class="item" href="@entry.Href">
-                        <i class="icon @entry.Icon"></i>
-                        @entry.DisplayName
-                    </a>
+                    @foreach (var group in UserNavigation.Groups)
+                    {
+                        <div class="header">@group.DisplayName</div>
+                        <div class="menu">
+                            @foreach (var entry in group.Entries)
+                            {
+                                <a class="item" href="@entry.Href">
+                                    <i class="icon @entry.Icon"></i>
+                                    @entry.DisplayName
+                                </a>
+                            }
+                        </div>
+                    }
                 }
             </div>
-        }
-    </div>
+        </Authorized>
+        <NotAuthorized>
+            <div class="menu">
+                <a class="item" href="login">
+                    <i class="lock open icon"></i>
+                    Login
+                </a>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>    
 </div>
 
 @code {
 
-    private Models.UserNavigation UserNavigation;
+    private UserNavigationDto UserNavigation;
 
     protected override async Task OnInitializedAsync()
     {
@@ -36,7 +65,12 @@
     {
         return TryRun(async () =>
         {
-            UserNavigation = await UserNavigationService.GetUserNavigation(Guid.NewGuid());
+            var state = await AuthStateProvider.IsAuthenticated();
+            if (state.IsAuthenticated == true)
+            {                
+                UserNavigation = await UserNavigationService.GetUserNavigation(state.User.Id);
+                StateHasChanged();
+            }         
         });
     }
 }
