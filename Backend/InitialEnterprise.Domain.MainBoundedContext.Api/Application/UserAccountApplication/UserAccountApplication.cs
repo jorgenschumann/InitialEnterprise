@@ -12,26 +12,10 @@ using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
-    public class UserAccountNaviationApplication : IUserAccountNaviationApplication
-    {
-        private readonly IDispatcher dispatcher;
-        public UserAccountNaviationApplication(IDispatcher dispatcher)
-        {
-            this.dispatcher = dispatcher;
-        }
-        public async Task<UserNavigationDto> Query(Guid userId)
-        {
-            var query = new UserQuery { Id = userId };
-            var result = await dispatcher.Query<UserQuery, UserNavigation>(query);
-            return Mapper.Map(result).ToANew<UserNavigationDto>();
-        }
-    }
-
     public class UserAccountApplication : IUserAccountApplication
     {
         private readonly IDispatcher dispatcher;
-        private readonly SignInManager<ApplicationUser> signInManager;
-
+       
         public UserAccountApplication(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;

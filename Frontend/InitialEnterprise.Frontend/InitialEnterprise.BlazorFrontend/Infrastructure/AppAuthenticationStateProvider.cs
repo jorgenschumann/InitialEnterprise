@@ -42,7 +42,7 @@ namespace InitialEnterprise.BlazorFrontend.Infrastructure
             return await _localStorage.GetItemAsync<UserDto>("authUser");
         }        
 
-        public async Task<(bool IsAuthenticated, UserDto User)> IsAuthenticated()
+        public async Task<(bool IsAuthenticated, UserDto User)> GetStateAsync()
         {
             var user = await _localStorage.GetItemAsync<UserDto>("authUser");
             return (IsAuthenticated: user != null, User: user);

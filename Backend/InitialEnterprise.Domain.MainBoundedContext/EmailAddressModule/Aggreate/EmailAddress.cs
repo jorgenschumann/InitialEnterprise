@@ -13,13 +13,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreat
         public string MailAddress { get; private set; }
 
         [JsonProperty]
-        public string MailAddressType { get; private set; }
-
-        [JsonProperty]
-        public Guid PersonId { get; private set; }
+        public string MailAddressType { get; private set; }            
 
         [JsonProperty]
         public bool IsPrimary { get; set; }
+
+        [JsonProperty]
+        public Guid PersonId { get; private set; }
 
         public virtual Person Person { get; private set; }
 

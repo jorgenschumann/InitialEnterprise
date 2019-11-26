@@ -119,6 +119,24 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.UserRoles.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserRole>());
                 context.SaveChanges();
             }
+
+            if (!context.UserNavigation.Any())
+            {
+                context.UserNavigation.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<UserNavigation>());
+                context.SaveChanges();
+            }
+
+            if (!context.UserNavigationMenuGroup.Any())
+            {
+                context.UserNavigationMenuGroup.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<UserNavigationMenuGroup>());
+                context.SaveChanges();
+            }
+
+            if (!context.UserNavigationMenuGroupItem.Any())
+            {
+                context.UserNavigationMenuGroupItem.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<UserNavigationMenuGroupItem>());
+                context.SaveChanges();
+            }
         }
     }
 }

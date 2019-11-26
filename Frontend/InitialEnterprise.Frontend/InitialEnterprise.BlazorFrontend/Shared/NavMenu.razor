@@ -65,7 +65,7 @@
     {
         return TryRun(async () =>
         {
-            var state = await AuthStateProvider.IsAuthenticated();
+            var state = await AuthStateProvider.GetStateAsync();
             if (state.IsAuthenticated == true)
             {                
                 UserNavigation = await UserNavigationService.GetUserNavigation(state.User.Id);
