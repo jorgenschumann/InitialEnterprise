@@ -8,11 +8,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
     public class UserNavigation : Entity
     {
         [JsonProperty]
-        public Guid UserId { get; private  set; }        
+        public Guid UserId { get; private  set; }       
+        
         public virtual ApplicationUser User { get; private set; }
+
         [JsonProperty]
         public string DisplayName { get; set; }
+
         [JsonProperty]
-        public List<UserNavigationMenuGroup> Groups { get; set; } = new List<UserNavigationMenuGroup>();
+        public ICollection<UserNavigationMenuGroup> Groups { get; private set; } = new List<UserNavigationMenuGroup>();
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using InitialEnterprise.Domain.MainBoundedContext.UserModule.Repository;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandler
 {
@@ -14,10 +15,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
         IQueryHandlerAsync<UserQuery, UserNavigation>
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserNavigationRepository userNavigationRepository;
 
-        public QueryUserHandlerAsync(UserManager<ApplicationUser> userManager)
+        public QueryUserHandlerAsync(UserManager<ApplicationUser> userManager, 
+            IUserNavigationRepository userNavigationRepository)
         {
             this.userManager = userManager;
+            this.userNavigationRepository = userNavigationRepository;
         }
 
         public async Task<ApplicationUser> Retrieve(UserQuery query)
@@ -32,19 +36,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
 
         async Task<UserNavigation> IQueryHandlerAsync<UserQuery, UserNavigation>.Retrieve(UserQuery query)
         {
-            var group1Entries = new List<UserNavigationMenuGroupItem>
-                {
-                    new UserNavigationMenuGroupItem { DisplayName = "Currencies", Href = "currency/list" , Icon = "globe"},
-                    new UserNavigationMenuGroupItem { DisplayName = "Users", Href = "user/list",Icon = "user" },
-                    new UserNavigationMenuGroupItem { DisplayName = "People", Href = "person/list" ,Icon = "users"}
-                };
-
-            var group1 = new UserNavigationMenuGroup { DisplayName = "MainData", Entries = group1Entries };
-
-            var userMenu = new UserNavigation();
-            userMenu.Groups.Add(group1);
-
-            return userMenu;
+            return await userNavigationRepository.Query(query);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
     public class UserNavigationMenuGroup : Entity
     {
         [JsonProperty]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
 
         [JsonProperty]
         public Guid UserNavigationId { get; private set; }
@@ -16,6 +16,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
         public virtual UserNavigation UserNavigation { get; private set; }
 
         [JsonProperty]
-        public List<UserNavigationMenuGroupItem> Entries { get; set; } = new List<UserNavigationMenuGroupItem>();
+        public ICollection<UserNavigationMenuGroupItem> Entries { get; private set; } = new List<UserNavigationMenuGroupItem>();
     }
 }

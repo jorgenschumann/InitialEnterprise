@@ -4,16 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityTypeConfigurations
 {
-    public class CountryEntityTypeConfiguration : IEntityTypeConfiguration<Country>
+    public class ProvinceEntityTypeConfiguration : IEntityTypeConfiguration<Province>
     {
-        public void Configure(EntityTypeBuilder<Country> builder)
-        {            
+        public void Configure(EntityTypeBuilder<Province> builder)
+        {
             builder.Property(o => o.Id);
             builder.Property(o => o.Name);
-         
-            builder.HasKey(o => o.Id);
-            builder.Ignore(o => o.UserId);
-            builder.Ignore(b => b.Events);
+
+            builder.HasKey(o => o.Id);           
         }
     }
 }

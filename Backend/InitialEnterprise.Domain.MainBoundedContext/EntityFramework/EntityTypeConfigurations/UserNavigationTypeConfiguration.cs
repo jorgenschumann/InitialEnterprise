@@ -10,10 +10,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
         {
             builder.Property(o => o.Id);
             builder.Property(o => o.UserId);
-            builder.Property(o => o.DisplayName);
-       
-            builder.HasKey(o => o.Id);
-            builder.Ignore(o => o.UserId);          
+            builder.Property(o => o.DisplayName);            
+            builder.HasKey(o => o.Id);                  
         }
     }
     public class UserNavigationMenuGroupTypeConfiguration : IEntityTypeConfiguration<UserNavigationMenuGroup>

@@ -79,6 +79,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
             modelBuilder.ApplyConfiguration(new ProvinceEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new UserNavigationTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new UserNavigationMenuGroupTypeConfiguration());
+
+            modelBuilder.ApplyConfiguration(new UserNavigationMenuGroupItemTypeConfiguration());
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Province>()
@@ -134,12 +140,20 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
                    .WithOne(e => e.UserNavigation)
                    .HasForeignKey(ur => ur.UserNavigationId)
                    .IsRequired();
-            });
+            }); 
 
             modelBuilder.Entity<UserNavigationMenuGroup>(b =>
             {
                 b.HasMany(e => e.Entries)
                    .WithOne(e => e.Group)
+                   .HasForeignKey(ur => ur.GroupId)
+                   .IsRequired();
+            });
+
+            modelBuilder.Entity<UserNavigationMenuGroupItem>(b =>
+            {
+                b.HasOne(e => e.Group)
+                  .WithMany(e => e.Entries)
                    .HasForeignKey(ur => ur.GroupId)
                    .IsRequired();
             });
