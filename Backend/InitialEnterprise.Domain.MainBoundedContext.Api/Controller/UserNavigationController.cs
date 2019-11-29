@@ -29,7 +29,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await userAccountNaviationApplication.Query(id);
-            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound(new { id });
         }
     }
 }

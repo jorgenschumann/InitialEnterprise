@@ -4,67 +4,85 @@
 
 @using InitialEnterprise.BlazorFrontend.Controller
 @using InitialEnterprise.Shared.Dtos
-@using FluentValidation.Results
+@using Blazored.Modal
+@using Blazored.Modal.Services
 
+@inject IModalService ModalService
 @inject UserController Controller
 @inject NavigationManager NavigationManager
 
-    <form class="ui form">
-        <h4 class="ui dividing header"><i class="user icon"></i> Edit User</h4>
-        <div class="field">
-            <label>First Name</label>
-            <div class="two fields">
-                <div class="field @Error("FirstName")">
-                    <input type="text" @bind="@User.FirstName" placeholder="First Name" />
-                </div>
+<form class="ui form">
+    <h4 class="ui dividing header"><i class="user icon"></i> Edit User</h4>
+    <div class="field">
+        <label>First Name</label>
+        <div class="two fields">
+            <div class="field @Error("FirstName")">
+                <input type="text" @bind="@User.FirstName" placeholder="First Name" />
             </div>
         </div>
-        <div class="field">
-            <label>Last Name</label>
-            <div class="two fields">
-                <div class="field @Error("LastName")">
-                    <input type="text" @bind="@User.LastName" placeholder="LastName" />
-                </div>
+    </div>
+    <div class="field">
+        <label>Last Name</label>
+        <div class="two fields">
+            <div class="field @Error("LastName")">
+                <input type="text" @bind="@User.LastName" placeholder="LastName" />
             </div>
         </div>
-        <div class="field">
-            <label>UserName</label>
-            <div class="two fields">
-                <div class="field @Error("UserName")">
-                    <input type="text" @bind="@User.UserName" placeholder="UserName" />
-                </div>
+    </div>
+    <div class="field">
+        <label>UserName</label>
+        <div class="two fields">
+            <div class="field @Error("UserName")">
+                <input type="text" @bind="@User.UserName" placeholder="UserName" />
             </div>
         </div>
-        <div class="field">
-            <label>Email</label>
-            <div class="two fields">
-                <div class="field ui left icon input @Error("Email")">
-                    <input type="text" @bind="@User.Email" placeholder="Email" />
-                    <i class="envelope icon"></i>
-                </div>
+    </div>
+    <div class="field">
+        <label>Email</label>
+        <div class="two fields">
+            <div class="field ui left icon input @Error("Email")">
+                <input type="text" @bind="@User.Email" placeholder="Email" />
+                <i class="envelope icon"></i>
             </div>
         </div>
-        <div class="field">
-            <label>PhoneNumber</label>
-            <div class="two fields">
-                <div class="field ui left icon input @Error("PhoneNumber")">
-                    <input type="text" @bind="@User.PhoneNumber" placeholder="PhoneNumber" />
-                    <i class="phone icon"></i>
-                </div>
+    </div>
+    <div class="field">
+        <label>PhoneNumber</label>
+        <div class="two fields">
+            <div class="field ui left icon input @Error("PhoneNumber")">
+                <input type="text" @bind="@User.PhoneNumber" placeholder="PhoneNumber" />
+                <i class="phone icon"></i>
             </div>
-        </div>        
-    </form>
+        </div>
+    </div>
+</form>
+@*ui right demo sidebar vertical inverted menu overlay visible*@
+<div class="ui left vertical menu sidebar visible">
+    <a class="item">
+        Item 1
+    </a>
+    <a class="item">
+        Item 2
+    </a>
+    <a class="item">
+        Item 3
+    </a>
+</div>
+<div class="pusher">
+    <!-- Site content !-->
+</div>
 
 <div class="ui small basic icon buttons">
     <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
     <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
+    <button class="ui button" @onclick="@RightSystemAction"><i class="unlock alternate icon"></i></button>
 </div>
 
 
 @code {
     [Parameter]
     public String Id { get; set; }
-       
+
     protected override async Task OnInitializedAsync()
     {
         this.Controller.SetView(this);
@@ -85,7 +103,7 @@
         return TryRun(async () =>
         {
             CommandHandlerAnswerDto<UserDto> answer = await Controller.Save(User);
-            {                
+            {
                 this.User = answer.AggregateRoot == null ? User : answer.AggregateRoot;
                 this.ValidationResult = answer.ValidationResult;
             }
@@ -95,7 +113,29 @@
     private void BackAction()
     {
         NavigationManager.NavigateTo("/user/list");
-    }       
+    }
 
+    private void RightSystemAction()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(User.Id), Id);
+
+        ModalService.OnClose += ModalClosed;
+        ModalService.Show<Rights>("Rights", parameters);
+    }
+
+
+    void ModalClosed(ModalResult modalResult)
+    {
+        //if (!modalResult.Cancelled)
+        //{
+        //    var currency = modalResult.Data as CurrencyDto;
+        //    Currencies[Currencies.FindIndex(x => x.Id == currency.Id)] = currency;
+
+        //    StateHasChanged();
+        //}
+
+        ModalService.OnClose -= ModalClosed;
+    }
 }
 

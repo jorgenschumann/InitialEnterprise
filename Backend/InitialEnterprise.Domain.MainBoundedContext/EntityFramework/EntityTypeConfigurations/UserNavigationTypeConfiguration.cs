@@ -14,28 +14,4 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
             builder.HasKey(o => o.Id);                  
         }
     }
-    public class UserNavigationMenuGroupTypeConfiguration : IEntityTypeConfiguration<UserNavigationMenuGroup>
-    {
-        public void Configure(EntityTypeBuilder<UserNavigationMenuGroup> builder)
-        {
-            builder.Property(o => o.Id);
-            builder.Property(o => o.UserNavigationId);
-            builder.Property(o => o.DisplayName);
-            builder.HasKey(o => o.Id);         
-        }
-    }
-
-    public class UserNavigationMenuGroupItemTypeConfiguration : IEntityTypeConfiguration<UserNavigationMenuGroupItem>
-    {
-        public void Configure(EntityTypeBuilder<UserNavigationMenuGroupItem> builder)
-        {
-            builder.Property(o => o.Id);
-            builder.Property(o => o.GroupId);
-            builder.Property(o => o.DisplayName);
-            builder.Property(o => o.Href);
-            builder.Property(o => o.Icon); 
-
-            builder.HasKey(o => o.Id);           
-        }
-    }  
 }

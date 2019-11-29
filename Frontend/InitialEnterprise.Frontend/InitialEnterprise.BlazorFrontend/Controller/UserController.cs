@@ -35,6 +35,12 @@ namespace InitialEnterprise.BlazorFrontend.Controller
             this.userEditView = userEditView;
         }
 
+        private UserRightsView userRightsView;
+        public void SetView(UserRightsView userRightsView)
+        {
+            this.userRightsView = userRightsView;
+        }
+
         public async Task<IEnumerable<UserDto>> Get()
         {
             using (busyIndicatorService.Show())
@@ -44,6 +50,14 @@ namespace InitialEnterprise.BlazorFrontend.Controller
         }
 
         public async Task Get(Guid id)
+        {
+            using (busyIndicatorService.Show())
+            {
+                userEditView.User = await userService.Get(id);
+            }
+        }
+
+        public async Task GetUserRights(Guid id)
         {
             using (busyIndicatorService.Show())
             {

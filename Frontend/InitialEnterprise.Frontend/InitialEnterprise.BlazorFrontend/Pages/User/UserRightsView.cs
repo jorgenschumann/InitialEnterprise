@@ -2,7 +2,7 @@
 
 namespace InitialEnterprise.BlazorFrontend.Pages.User
 {
-    public class UserEditView : Component.ViewComponentBase
+    public class UserRightsView : Component.ViewComponentBase
     {
         public UserDto User { get; set; } = new UserDto();
     }
