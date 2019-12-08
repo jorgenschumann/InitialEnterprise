@@ -28,8 +28,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate
 
         public DateTime DateOfBirth { get; set; }
 
-        public byte[] Image { get; set; } 
-
+        public byte[] Image { get; set; }
+     
         public ApplicationUser()
         {
         }

@@ -6,6 +6,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Commands
 {
     public class BaseCreditCardCommand : DomainCommand
     {
+        public string CreditCardHolderName { get; set; }
+
         public CreditCardType CreditCardType { get; set; }
 
         public string CardNumber { get; set; }

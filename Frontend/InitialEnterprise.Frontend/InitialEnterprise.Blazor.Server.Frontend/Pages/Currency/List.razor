@@ -1,0 +1,112 @@
+﻿@page "/currency/list"
+
+@inherits CurrencyListView
+
+@using InitialEnterprise.BlazorFrontend.Controller
+@using InitialEnterprise.Shared.Dtos
+@using Blazored.Modal
+@using Blazored.Modal.Services
+
+@inject CurrencyController Controller
+@inject NavigationManager NavigationManager
+@inject IModalService ModalService
+
+<h1>Currencies</h1>
+
+@if (Currencies == null)
+{
+    <p><em>Loading...</em></p>
+
+}
+else
+{  
+    <div class="ui small basic icon buttons">
+        <button class="ui button" @onclick="@(() => DetailsAction(Guid.Empty.ToString()))"><i class="add icon"></i></button>
+    </div>
+
+    <table class="ui celled striped table">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Name</th>
+                <th>IsoCode</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var currency in Currencies)
+            {
+                <tr>
+                    <td class="collapsing">
+                        <div class="ui mini compact menu">
+
+                            <div class="ui small simple dropdown item">
+                                <i class="cogs icon"></i>
+                                <div class="menu">
+                                    <a class="item" @onclick="@(() => DetailsAction(currency.Id.ToString()))">
+                                        <i class="edit icon"></i>
+                                    </a>
+                                    <a href="/currency/delete/@currency.Id.ToString()"
+                                       class="item">
+                                        <i class="trash icon"></i>
+                                    </a>
+                                </div>
+                            </div>                           
+                        </div>
+                   </td>
+                    <td>@currency.Name</td>
+                    <td>@currency.IsoCode</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+}
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        Controller.SetView(this);
+
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            await Controller.Fetch();
+        });
+    }
+
+    void DetailsAction(string Id)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(CurrencyDto.Id), Id);
+
+        ModalService.OnClose += ModalClosed;
+        ModalService.Show<Details>("Currency", parameters);
+    }
+
+    void ModalClosed(ModalResult modalResult)
+    {
+        if (!modalResult.Cancelled)
+        {
+            var currency = modalResult.Data as CurrencyDto;
+            Currencies[Currencies.FindIndex(x => x.Id == currency.Id)] = currency;
+
+            StateHasChanged();
+        }
+
+        ModalService.OnClose -= ModalClosed;
+    }
+
+    public class AppModalParameters: ModalParameters
+    {
+        public AppModalParameters(List<object> parameters)
+        {
+
+        }
+    }
+}

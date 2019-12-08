@@ -63,6 +63,9 @@
     <None Update="Province.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="UserNavigationGroup.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties applicationuserclaim_1json__JsonSchema="http://json.schemastore.org/babelrc" /></VisualStudio></ProjectExtensions>

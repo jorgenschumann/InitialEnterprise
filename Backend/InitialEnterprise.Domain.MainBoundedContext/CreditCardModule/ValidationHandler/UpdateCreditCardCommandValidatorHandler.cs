@@ -9,7 +9,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
     public class UpdateCreditCardCommandValidatorHandler : CommandValidator<CreditCardUpdateCommand>
     {
         public override ValidationResult Validate(ValidationContext<CreditCardUpdateCommand> context)
-        {
+        {            
+            
             RuleFor(c => c.Id)
                 .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
                 .WithMessage("Card Id missing");
@@ -17,6 +18,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.ValidationH
             RuleFor(c => c.PersonId)
                .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
                .WithMessage("Person Id missing");
+
+            RuleFor(c => c.CreditCardHolderName)
+                .NotEmpty().WithErrorCode(ValidationErrorCode.Error)
+                .WithMessage("CreditCardHolderName missing");
+
 
             RuleFor(c => c.CreditCardType)
                 .NotEmpty().WithErrorCode(ValidationErrorCode.Error)

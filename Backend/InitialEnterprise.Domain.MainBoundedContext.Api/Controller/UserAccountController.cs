@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using AgileObjects.AgileMapper;
+using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -44,7 +46,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost]
-        [Authorize(Policy = UserReadClaim.PolicyName)]
+        [Authorize(Policy = UserQueryClaim.PolicyName)] 
         public async Task<IActionResult> Query([FromBody]UserQuery query)
         {
             var result = await userAccountApplication.QueryAsync(query);
@@ -52,7 +54,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-         [Authorize(Policy = UserQueryClaim.PolicyName)]
+        [Authorize(Policy = UserQueryClaim.PolicyName)]           
         public async Task<IActionResult> Get()
         {
             var result = await userAccountApplication.QueryAsync(new UserQuery());
@@ -64,6 +66,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await userAccountApplication.Query(id);
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+        }
+        
+        [HttpGet("claims/{id}")]
+        [Authorize(Policy = UserReadClaim.PolicyName)]
+        public async Task<IActionResult> GetClaims(Guid id)
+        {
+            var result = await userAccountApplication.QueryClaims(id);
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 
@@ -85,7 +95,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPost("uploadimage/{id}"), DisableRequestSizeLimit]
-        [AllowAnonymous]//[Authorize(Policy = UserWriteClaim.PolicyName)]
+        [Authorize(Policy = UserWriteClaim.PolicyName)]
         public async Task<IActionResult> UploadImage(Guid id)
         {
             var result = await userAccountApplication.UploadImage(id, Request.Form.Files[0].ToByteArray());

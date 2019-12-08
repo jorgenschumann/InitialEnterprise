@@ -1,0 +1,77 @@
+﻿@inherits ViewComponentBase
+
+@using InitialEnterprise.Shared.Dtos
+@using InitialEnterprise.Blazor.Frontend.Infrastructure
+@using InitialEnterprise.Blazor.Frontend.Models
+
+@inject INavigationService UserNavigationService
+@inject ApiAuthenticationStateProvider AuthStateProvider
+
+    <div class="ui visible inverted left vertical sidebar menu">
+        <AuthorizeView>
+            <Authorized>
+                <div class="header">User</div>
+                <div class="menu">
+                    <a class="item" href="Avatar">
+                        <i class="user icon"></i>
+                        Hello, @context.User.Identity.Name!
+                    </a>
+                </div>
+                <div class="menu">
+                    <a class="item" href="logout">
+                        <i class="lock icon"></i>
+                        logout
+                    </a>
+                </div>
+                <div class="item">
+                    @if (this.UserNavigation != null)
+                    {
+                        @foreach (var group in UserNavigation.Groups)
+                        {
+                            <div class="header">@group.DisplayName</div>
+                            <div class="menu">
+                                @foreach (var entry in group.Entries.Where(e => e.Active == true))
+                                {
+                                    <a class="item" href="@entry.Href">
+                                        <i class="icon @entry.Icon"></i>
+                                        @entry.DisplayName
+                                    </a>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="menu">
+                    <a class="item" href="login">
+                        <i class="lock open icon"></i>
+                        Login
+                    </a>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>      
+    </div>
+
+@code {    
+
+    private NavigationDto UserNavigation;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            var state = await AuthStateProvider.GetStateAsync();
+            if (state.IsAuthenticated == true)
+            {
+                UserNavigation = await UserNavigationService.GetUserNavigation(state.User.Id);
+                StateHasChanged();
+            }
+        });
+    }
+}

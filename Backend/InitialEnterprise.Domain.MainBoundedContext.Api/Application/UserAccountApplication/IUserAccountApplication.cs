@@ -8,6 +8,7 @@ using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
+
     public interface IUserAccountApplication
     {
         Task<UserSignInResultDto> LogIn(UserLoginDto model);
@@ -21,6 +22,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         Task<IdentityResult> Delete(Guid id);
 
         Task<ApplicationUser> Query(Guid id);
+
+        Task<List<ClaimDto>> QueryClaims(Guid id);
 
         Task<ApplicationUser> UploadImage(Guid id, byte[] image);
 

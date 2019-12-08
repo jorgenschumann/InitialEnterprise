@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+@using Blazored
+@using Blazored.Modal
+@using Blazored.Modal.Services
+@using InitialEnterprise.BlazorFrontend.Component
+
+<div class="maincontainer">
+    <div class="wrapper">
+        <GlobalMessagePanel />
+        <BusyIndicatorPanel />
+        <BlazoredModal />       
+        <div class="ui bottom attached segment pushable">
+            <NavMenu></NavMenu>
+            <div class="pusher">
+                <div class="ui basic segment">
+                    @Body
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

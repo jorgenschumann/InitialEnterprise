@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\UserAccountApplication\IUserAccountNaviationApplication.cs" />
+    <Compile Remove="Application\UserAccountApplication\UserAccountNaviationApplication.cs" />
+    <Compile Remove="Controller\UserNavigationController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>

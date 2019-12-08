@@ -16,15 +16,4 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
             builder.Ignore(b => b.Events);
         }
     }
-
-    public class ProvinceEntityTypeConfiguration : IEntityTypeConfiguration<Province>
-    {
-        public void Configure(EntityTypeBuilder<Province> builder)
-        {
-            builder.Property(o => o.Id);
-            builder.Property(o => o.Name);
-
-            builder.HasKey(o => o.Id);           
-        }
-    }
 }

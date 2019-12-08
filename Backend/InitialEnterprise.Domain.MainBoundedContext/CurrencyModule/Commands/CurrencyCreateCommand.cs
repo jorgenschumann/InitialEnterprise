@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Infrastructure.DDD.Command;
-using System;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
 {
@@ -10,5 +9,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Commands
         public string IsoCode { get; set; }
 
         public decimal Rate { get; set; }
+   
     }
 }

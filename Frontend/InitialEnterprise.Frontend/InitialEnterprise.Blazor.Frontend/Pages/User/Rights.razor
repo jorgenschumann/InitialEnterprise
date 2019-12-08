@@ -1,0 +1,67 @@
+﻿
+@page "/user/rights/{Id}"
+
+@inherits UserRightsView
+
+@using InitialEnterprise.Shared.Dtos
+
+@inject UserController Controller
+@inject NavigationManager NavigationManager
+
+    <h4 class="ui dividing header">
+        <i class="user icon"></i>
+        Rights
+    </h4>
+
+    <div class="ui warning message">
+        <div class="header">
+            rights @Id
+        </div>
+        <p>
+            your rights
+        </p>
+    </div>
+
+    <div class="ui small basic icon buttons">
+        <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+        <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
+    </div>
+
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+       
+    protected override async Task OnInitializedAsync()
+    {
+        Controller.SetView(this);
+
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            await Controller.GetUserRights(Guid.Parse(Id));
+        });
+    }
+
+    
+    private Task SubmitAction()
+    {
+        return TryRun(async () =>
+        {
+            //CommandHandlerAnswerDto<UserDto> answer = await Controller.Save(User);
+            //{
+            //    this.User = answer.AggregateRoot == null ? User : answer.AggregateRoot;
+            //    this.ValidationResult = answer.ValidationResult;
+            //}
+        });
+    }
+
+    void BackAction()
+    {
+        NavigationManager.NavigateTo("/user/list");
+    }
+}

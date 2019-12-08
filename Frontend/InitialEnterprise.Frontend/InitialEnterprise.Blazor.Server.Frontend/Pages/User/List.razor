@@ -1,0 +1,88 @@
+﻿@page "/user/list"
+
+@inherits Component.ViewComponentBase
+
+@using InitialEnterprise.BlazorFrontend.Controller
+@using InitialEnterprise.Shared.Dtos
+@using InitialEnterprise.BlazorFrontend.UiServices
+
+@inject UserController Controller
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService localStorage
+
+<h1>Users</h1>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="ui small basic icon buttons">
+        <button class="ui button" @onclick="@CreateAction"><i class="add icon"></i></button>
+    </div>
+
+    <table class="ui celled striped table">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>User Name</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td class="collapsing">
+                        <div class="ui mini compact menu">
+                            <div class="ui small simple dropdown item">
+                                <i class="cogs icon"></i>
+                                <div class="menu">
+                                    <a href="/user/edit/@user.Id.ToString()"
+                                       class="item">
+                                        <i class="edit icon"></i>
+                                    </a>
+                                    <a href="/user/delete/@user.Id.ToString()"
+                                       class="item">
+                                        <i class="trash icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@user.UserName</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+}
+
+@code {    
+    IEnumerable<UserDto> users;
+
+    protected override async Task OnInitializedAsync()
+    {      
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {       
+        return TryRun(async () =>
+        {
+            this.users = await Controller.Get();
+        });
+    }
+
+    private void CreateAction()
+    {
+        NavigationManager.NavigateTo($"/user/edit/{Guid.NewGuid().ToString()}");
+    }
+}

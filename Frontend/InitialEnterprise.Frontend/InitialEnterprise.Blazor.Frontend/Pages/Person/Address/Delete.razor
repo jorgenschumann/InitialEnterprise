@@ -1,0 +1,52 @@
+﻿@page "/person/{PersonId}/address/delete/{Id}/{Info}"
+
+@inherits ViewComponentBase
+
+@using InitialEnterprise.Shared.Dtos
+
+@inject AddressController Controller
+@inject NavigationManager NavigationManager
+
+<h4 class="ui dividing header">
+    <i class="globe icon"></i>
+    Delete Address
+</h4>
+
+<div class="ui warning message">
+    <p>
+        Do you really want to delete?
+    </p>
+    <div class="header">
+        @Info
+    </div>
+</div>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@DeleteAction"><i class="trash icon"></i></button>
+</div>
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+  
+    [Parameter]
+    public String PersonId { get; set; }      
+        
+    [Parameter]
+    public String Info { get; set; }      
+     
+    private Task DeleteAction()
+    {      
+        return TryRun(async () =>
+        {
+            await Controller.Delete(Guid.Parse(this.PersonId), Guid.Parse(this.Id));
+            BackAction();
+        });
+    }
+
+    private void BackAction()
+    {
+        NavigationManager.NavigateTo($"/person/edit/{this.PersonId}");
+    }    
+}

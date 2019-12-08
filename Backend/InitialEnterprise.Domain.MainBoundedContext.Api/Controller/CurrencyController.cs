@@ -32,10 +32,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 
-        [HttpGet]
-        [Authorize(Policy = CurrencyReadClaim.PolicyName)]
-        [Authorize(Policy = CurrencyQueryClaim.PolicyName)]
-        [AllowAnonymous]
+        [HttpGet]       
+        [Authorize(Policy = CurrencyQueryClaim.PolicyName)]      
         public async Task<IActionResult> Get()
         {
             var result = await currencyApplication.Query();
@@ -59,8 +57,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = CurrencyWriteClaim.PolicyName)]      
-     
+        [Authorize(Policy = CurrencyWriteClaim.PolicyName)]           
         public async Task<IActionResult> Put(Guid id, [FromBody] CurrencyDto value)
         {
             var result = await currencyApplication.Update(value);

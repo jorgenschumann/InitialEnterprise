@@ -41,10 +41,4 @@ namespace InitialEnterprise.Shared.Dtos
         public virtual string ClaimValue { get; set; }
     }
 
-    //public class UserSignInResultDto
-    //{
-    //    public SignInResult SignInResult { get; set; }
-    //    public UserDto User { get; set; }
-    //    public String Token { get; set; }
-    //}
 }

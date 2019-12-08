@@ -29,7 +29,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
             var mockCreateValidationHandler = new MockValidator<CurrencyCreateCommand>();
             var mockUpdateValidationHandler = new MockValidator<CurrencyUpdateCommand>();
 
-            var command = new CurrencyCreateCommand("Euro", "EUR", 2, Guid.NewGuid());          
+            var command = new CurrencyCreateCommand { Name = "British Pound", IsoCode = "GBP", Rate = 2 };  
 
             var currencyCommandHandler = new CurrencyCommandHandler(
                 mockCurrencyRepository.Object,

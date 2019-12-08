@@ -9,15 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using System.Security.Claims;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication
 {
-
     public class UserAccountApplication : IUserAccountApplication
     {
         private readonly IDispatcher dispatcher;
-        private readonly SignInManager<ApplicationUser> signInManager;
-
+       
         public UserAccountApplication(IDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
@@ -26,13 +25,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         public async Task<UserSignInResultDto> LogIn(UserLoginDto model)
         {
             var command = Mapper.Map(model).ToANew<SignInCommand>();
-            var result = await dispatcher.SendR<SignInCommand, UserSignInResult>(command);
-           
-            Mapper.WhenMapping
-                .From<UserSignInResult>()          
-                .To<UserSignInResultDto>()          
-                .Map((p, dto) => p.SignInResult.Succeeded)   
-                .To(p => p.Success); 
+            var result = await dispatcher.SendR<SignInCommand, UserSignInResult>(command);                  
             
             return Mapper.Map(result).ToANew<UserSignInResultDto>();
         }            
@@ -53,6 +46,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
         {
             var query = new UserQuery { Id = id };
             return await dispatcher.Query<UserQuery, ApplicationUser>(query);
+        }
+        public async Task<List<ClaimDto>> QueryClaims(Guid id)
+        {
+            var query = new UserQuery { Id = id };
+            var claims = await dispatcher.Query<UserQuery, IList<Claim>>(query);
+            return Mapper.Map(claims ).ToANew<List<ClaimDto>>();
         }
 
         public async Task<IdentityResult> Update(UserDto model)
@@ -81,5 +80,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
             };
             return await dispatcher.SendR<UserUpdateImageCommand, ApplicationUser>(command);
         }
+
+       
     }
 }

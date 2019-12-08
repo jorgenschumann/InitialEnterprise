@@ -1,0 +1,51 @@
+﻿@page "/login"
+
+@using InitialEnterprise.Shared.Dtos
+@using InitialEnterprise.BlazorFrontend.Services
+@using InitialEnterprise.BlazorFrontend.Controller
+
+
+@inject NavigationManager NavigationManager
+@inject UiServices.MessageBoxService messageBoxService
+@inject AuthenticationController authenticationController
+
+<form class="ui form">
+    <h4 class="ui dividing header"><i class="lock icon"></i>Signin</h4>
+    <div class="field">
+        <label>Email</label>
+        <div class="two fields">
+            <div class="ui field left icon input">
+                <input type="text" @bind="@userLogin.Email" placeholder="Email" />
+                <i class="address card icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <div class="two fields">
+            <div class="ui field left icon input">
+                <input type="password" @bind="@userLogin.Password" placeholder="Password" />
+                <i class="lock icon"></i>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@LoginAction">Signin</button>
+</div>
+
+<p></p>
+
+
+@code {
+
+    UserLoginDto userLogin = new UserLoginDto();
+
+    UserSignInResultDto userSignInResult = new UserSignInResultDto();
+
+    async Task LoginAction()
+    {
+        userSignInResult  = await this.authenticationController.Login(userLogin);       
+    }
+}

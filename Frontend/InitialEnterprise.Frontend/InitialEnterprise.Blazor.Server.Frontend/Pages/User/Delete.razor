@@ -1,0 +1,45 @@
+﻿@page "/user/delete/{Id}"
+
+@inherits Component.ViewComponentBase
+
+@using InitialEnterprise.BlazorFrontend.Controller
+@using InitialEnterprise.Shared.Dtos
+@using FluentValidation.Results
+
+@inject UserController Controller
+@inject NavigationManager NavigationManager
+
+<h4 class="ui dividing header">
+    <i class="user icon"></i>
+    Delete User
+</h4>
+
+<div class="ui warning message"> 
+    <div class="header">
+        Delete @Id
+    </div>
+    <p>
+        Do you really want to delete?
+    </p>
+</div>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@DeleteAction"><i class="trash icon"></i></button>
+</div>
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+    async Task DeleteAction()
+    {
+        await Controller.Delete(Guid.Parse(Id));
+    }
+
+    void BackAction()
+    {
+        NavigationManager.NavigateTo("/user/list");
+    }
+}
+

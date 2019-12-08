@@ -11,6 +11,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework.EntityType
             builder.Property(o => o.Id);
             builder.Property(o => o.PersonId);
             builder.Property(o => o.CardNumber);
+            builder.Property(o => o.CreditCardHolderName);
             builder.Property(o => o.CreditCardType);
             builder.Property(o => o.ExpireMonth);
             builder.Property(o => o.ExpireYear);

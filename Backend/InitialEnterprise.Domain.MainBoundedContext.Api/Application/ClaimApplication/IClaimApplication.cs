@@ -8,8 +8,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.ClaimAppli
 {
     public interface IClaimApplication
     {
-        Task<IEnumerable<ClaimRequirementDto>> Query();
+        Task<IEnumerable<ClaimDto>> Query();
 
-        Task<IEnumerable<ClaimRequirementDto>> Query(IQuery model);
+        Task<IEnumerable<ClaimDto>> Query(IQuery model);
     }
 }

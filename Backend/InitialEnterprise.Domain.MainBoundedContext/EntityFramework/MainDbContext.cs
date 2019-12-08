@@ -72,7 +72,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
             modelBuilder.ApplyConfiguration(new CountryEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new ProvinceEntityTypeConfiguration());
-
+   
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Province>()
@@ -95,43 +95,37 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
               .WithMany(e => e.CreditCards)
               .HasForeignKey(e => e.PersonId);
 
-            modelBuilder.Entity<ApplicationUser>(b =>
+           modelBuilder.Entity<ApplicationUser>(b =>
            {
-               // Each User can have many UserClaims
-               b.HasMany(e => e.Claims)
+                b.HasMany(e => e.Claims)
                   .WithOne(e => e.User)
                   .HasForeignKey(uc => uc.UserId)
                   .IsRequired();
 
-               // Each User can have many UserLogins
                b.HasMany(e => e.Logins)
                   .WithOne(e => e.User)
                   .HasForeignKey(ul => ul.UserId)
                   .IsRequired();
 
-               // Each User can have many UserTokens
-               b.HasMany(e => e.Tokens)
+                b.HasMany(e => e.Tokens)
                   .WithOne(e => e.User)
                   .HasForeignKey(ut => ut.UserId)
                   .IsRequired();
 
-               // Each User can have many entries in the UserRole join table
-               b.HasMany(e => e.UserRoles)
+                b.HasMany(e => e.UserRoles)
                   .WithOne(e => e.User)
                   .HasForeignKey(ur => ur.UserId)
-                  .IsRequired();
+                  .IsRequired();  
            });
-
+                       
             modelBuilder.Entity<ApplicationRole>(b =>
             {
-                // Each Role can have many entries in the UserRole join table
                 b.HasMany(e => e.UserRoles)
                    .WithOne(e => e.Role)
                    .HasForeignKey(ur => ur.RoleId)
                    .IsRequired();
 
-                // Each Role can have many associated RoleClaims
-                b.HasMany(e => e.RoleClaims)
+               b.HasMany(e => e.RoleClaims)
                    .WithOne(e => e.Role)
                    .HasForeignKey(rc => rc.RoleId)
                    .IsRequired();

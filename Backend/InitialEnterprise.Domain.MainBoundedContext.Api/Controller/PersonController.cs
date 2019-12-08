@@ -118,8 +118,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [Authorize(Policy = PersonWriteClaim.PolicyName)]
         public async Task<IActionResult> GetMail(Guid personId, Guid mailAddressId)
         {
-            var result = await emailAddressApplication.Delete(personId, mailAddressId);
-            return result.ValidationResult.IsValid ? Ok(result) : (IActionResult)BadRequest(result);
+            var result = await emailAddressApplication.Query(personId, mailAddressId);     
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound(new { personId, mailAddressId });
         }
 
         [HttpDelete("{personId}/emailaddresses/{mailAddressId}")]       

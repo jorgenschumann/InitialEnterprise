@@ -34,7 +34,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Tests.CurrencyModule
         public void Should_create_entity_with_command_by_private_ctor()
         {
             //Arrange
-            var createCommand = new CurrencyCreateCommand("British Pound", "GBP", 1, Guid.NewGuid());
+            var createCommand = new CurrencyCreateCommand { Name = "British Pound", IsoCode = "GBP", Rate =1 };
 
             //Act
             var activatedCurrency = Activator.CreateInstance(typeof(Currency), createCommand);

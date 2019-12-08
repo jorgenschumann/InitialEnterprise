@@ -1,6 +1,7 @@
 ﻿[
   {
     "Id": "794F4373-F885-4ED0-A8FD-22739A19281F",
+    "CreditCardHolderName": "Jorgen Schumann",
     "CreditCardType": 1,
     "CardNumber": "1234",
     "ExpireMonth": 12,

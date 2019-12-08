@@ -118,7 +118,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
             {
                 context.UserRoles.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserRole>());
                 context.SaveChanges();
-            }
+            }            
         }
     }
 }
