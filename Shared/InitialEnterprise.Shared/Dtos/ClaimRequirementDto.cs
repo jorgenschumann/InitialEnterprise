@@ -5,5 +5,5 @@ namespace InitialEnterprise.Shared.Dtos
     {
         public string ClaimName { get; set; }
         public string ClaimValue { get; set; }
-    }
+    } 
 }

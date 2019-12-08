@@ -13,6 +13,7 @@ namespace InitialEnterprise.Shared.Dtos
         public string IsoCode { get; set; }
 
         public List<CurrencyRateDto> Rates { get; set; }
+        public string Rate { get; set; }
     }
 
     public class CurrencyRateDto 

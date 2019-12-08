@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using AgileObjects.AgileMapper;
+using System.Collections.Generic;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -64,6 +66,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await userAccountApplication.Query(id);
+            return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
+        }
+        
+        [HttpGet("claims/{id}")]
+        [Authorize(Policy = UserReadClaim.PolicyName)]
+        public async Task<IActionResult> GetClaims(Guid id)
+        {
+            var result = await userAccountApplication.QueryClaims(id);
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
         }
 

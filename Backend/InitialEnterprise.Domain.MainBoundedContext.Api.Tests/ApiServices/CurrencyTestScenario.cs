@@ -1,8 +1,5 @@
 using AgileObjects.AgileMapper;
 using DeepEqual.Syntax;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Shared;
-using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterpriseTests.DataSeeding;
 using Newtonsoft.Json;
@@ -13,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using InitialEnterprise.Shared.Dtos;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 {
@@ -22,7 +20,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         [Test]
         public async Task Get_all_currencies_response_ok_status_code()
         {
-            var currencies = SeedDataBuilder.BuildTypeCollectionFromFile<Currency>();
+            var currencies = SeedDataBuilder.BuildTypeCollectionFromFile<CurrencyDto>();
        
             HttpResponseMessage response;
             var server = CreateServer(directory);
@@ -41,7 +39,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
         [Test]
         public async Task Get_currency_response_ok_status_code()
         {
-            var currency = SeedDataBuilder.BuildType<Currency>();
+            var currency = SeedDataBuilder.BuildType<CurrencyDto>();
             var expectedCurrencyDto = Mapper.Map(currency).ToANew<CurrencyDto>();
 
             HttpResponseMessage response;
@@ -84,8 +82,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Tests.ApiServices
 
             Assert.IsNotNull(answer.ValidationResult);
             Assert.IsEmpty(answer.ValidationResult.Errors);
-            Assert.IsNotNull(answer.AggregateRoot);
-            Assert.IsNotEmpty(answer.AggregateRoot.Events);
+            Assert.IsNotNull(answer.AggregateRoot);           
         }
 
         [Test]

@@ -46,12 +46,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
 
         public virtual DbSet<Province> Province { get; set; }
 
-        public virtual DbSet<UserNavigation> UserNavigation { get; set; }
-
-        public virtual DbSet<UserNavigationMenuGroup> UserNavigationMenuGroup { get; set; }
-
-        public virtual DbSet<UserNavigationMenuGroupItem> UserNavigationMenuGroupItem { get; set; }
-
         public async Task SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await SaveChangesAsync();
@@ -78,13 +72,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
             modelBuilder.ApplyConfiguration(new CountryEntityTypeConfiguration());
 
             modelBuilder.ApplyConfiguration(new ProvinceEntityTypeConfiguration());
-
-            modelBuilder.ApplyConfiguration(new UserNavigationTypeConfiguration());
-
-            modelBuilder.ApplyConfiguration(new UserNavigationMenuGroupTypeConfiguration());
-
-            modelBuilder.ApplyConfiguration(new UserNavigationMenuGroupItemTypeConfiguration());
-
+   
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Province>()
@@ -127,37 +115,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
                 b.HasMany(e => e.UserRoles)
                   .WithOne(e => e.User)
                   .HasForeignKey(ur => ur.UserId)
-                  .IsRequired();
-             
-               b.HasOne(e => e.UserNavigation)
-                  .WithOne(e => e.User)
-                  .IsRequired();
+                  .IsRequired();  
            });
-
-            modelBuilder.Entity<UserNavigation>(b => 
-            {               
-                b.HasMany(e => e.Groups)
-                   .WithOne(e => e.UserNavigation)
-                   .HasForeignKey(ur => ur.UserNavigationId)
-                   .IsRequired();
-            }); 
-
-            modelBuilder.Entity<UserNavigationMenuGroup>(b =>
-            {
-                b.HasMany(e => e.Entries)
-                   .WithOne(e => e.Group)
-                   .HasForeignKey(ur => ur.GroupId)
-                   .IsRequired();
-            });
-
-            modelBuilder.Entity<UserNavigationMenuGroupItem>(b =>
-            {
-                b.HasOne(e => e.Group)
-                  .WithMany(e => e.Entries)
-                   .HasForeignKey(ur => ur.GroupId)
-                   .IsRequired();
-            });
-
+                       
             modelBuilder.Entity<ApplicationRole>(b =>
             {
                 b.HasMany(e => e.UserRoles)

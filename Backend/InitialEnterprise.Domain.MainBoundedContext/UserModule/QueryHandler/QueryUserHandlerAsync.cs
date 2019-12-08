@@ -5,23 +5,22 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Repository;
+using System.Security.Claims;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandler
 {
     public class QueryUserHandlerAsync :
         IQueryHandlerAsync<UserQuery, ApplicationUser>,
         IQueryHandlerAsync<UserQuery, IEnumerable<ApplicationUser>>,
-        IQueryHandlerAsync<UserQuery, UserNavigation>
-    {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserNavigationRepository userNavigationRepository;
+        IQueryHandlerAsync<UserQuery, IList<Claim>>
 
-        public QueryUserHandlerAsync(UserManager<ApplicationUser> userManager, 
-            IUserNavigationRepository userNavigationRepository)
+    {
+
+        private readonly UserManager<ApplicationUser> userManager;
+      
+        public QueryUserHandlerAsync(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
-            this.userNavigationRepository = userNavigationRepository;
         }
 
         public async Task<ApplicationUser> Retrieve(UserQuery query)
@@ -34,9 +33,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.QueryHandle
             return await userManager.Users.ToAsyncEnumerable().ToList();
         }
 
-        async Task<UserNavigation> IQueryHandlerAsync<UserQuery, UserNavigation>.Retrieve(UserQuery query)
+        async Task<IList<Claim>> IQueryHandlerAsync<UserQuery, IList<Claim>>.Retrieve(UserQuery query)
         {
-            return await userNavigationRepository.Query(query);
+            var user = await Retrieve(query);
+            return await userManager.GetClaimsAsync(user);          
         }
     }
 }

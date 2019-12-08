@@ -18,14 +18,14 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.ClaimAppli
             this.dispatcher = dispatcher;
         }
 
-        public async Task<IEnumerable<ClaimRequirementDto>> Query()
+        public async Task<IEnumerable<ClaimDto>> Query()
         {
             var query = new SharedKernel.ClaimModule.Queries.ClaimQuery();
-            var claims = await dispatcher.Query<SharedKernel.ClaimModule.Queries.ClaimQuery, List<ClaimDefinition>>(query);
-            return Mapper.Map(claims).ToANew<IEnumerable<ClaimRequirementDto>>();
+            var claims = await dispatcher.Query<SharedKernel.ClaimModule.Queries.ClaimQuery, List<IClaimDefinition>>(query);
+            return Mapper.Map(claims).ToANew<IEnumerable<ClaimDto>>();
         }
 
-        public async Task<IEnumerable<ClaimRequirementDto>> Query(IQuery model)
+        public async Task<IEnumerable<ClaimDto>> Query(IQuery model)
         {
             throw new NotImplementedException();
         }

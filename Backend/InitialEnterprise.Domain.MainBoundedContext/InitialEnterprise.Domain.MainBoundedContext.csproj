@@ -26,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
   </ItemGroup>
 
@@ -59,6 +61,7 @@
     <Folder Include="ModuleTemplate\Repository\" />
     <Folder Include="ModuleTemplate\ValidationHandler\" />
     <Folder Include="UserModule\Events\" />
+    <Folder Include="UserModule\Repository\" />
   </ItemGroup>
 
 </Project>

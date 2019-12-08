@@ -1,0 +1,114 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <AssemblyName>InitialEnterprise.Blazor.Frontend</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
+    <PackageReference Include="Blazored.Modal" Version="3.0.0" />
+    <PackageReference Include="Blazored.Toast" Version="2.0.7" />
+    <PackageReference Include="FluentValidation" Version="8.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview3.19555.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.1.0-preview3.19555.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.1.0-preview3.19555.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.1.0-preview3.19555.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Shared\CreateCard.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Shared\Footer.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Shared\MainLayout.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Shared\NavMenu.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="_Imports.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Component\BusyIndicatorPanel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Component\BusyIndicatorPanel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Component\BusyIndicatorPanel.razor" />
+    <_ContentIncludedByDefault Remove="Component\GlobalMessagePanel.razor" />
+    <_ContentIncludedByDefault Remove="Shared\CreateCard.razor" />
+    <_ContentIncludedByDefault Remove="Shared\Footer.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Component\GlobalMessagePanel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Component\GlobalMessagePanel.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Shared\CreateCard.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\CreateCard.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Shared\Footer.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\Footer.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Currency\Delete.razor" />
+    <None Include="Pages\Currency\Details.razor" />
+    <None Include="Pages\Currency\List.razor" />
+    <None Include="Pages\Person\Address\Delete.razor" />
+    <None Include="Pages\Person\Address\Details.razor" />
+    <None Include="Pages\Person\Address\List.razor" />
+    <None Include="Pages\Person\CreditCard\Create.razor" />
+    <None Include="Pages\Person\CreditCard\Delete.razor" />
+    <None Include="Pages\Person\CreditCard\Edit.razor" />
+    <None Include="Pages\Person\CreditCard\List.razor" />
+    <None Include="Pages\Person\Delete.razor" />
+    <None Include="Pages\Person\Edit.razor" />
+    <None Include="Pages\Person\List.razor" />
+    <None Include="Pages\Person\MailAddress\Create.razor" />
+    <None Include="Pages\Person\MailAddress\Delete.razor" />
+    <None Include="Pages\Person\MailAddress\Edit.razor" />
+    <None Include="Pages\Person\MailAddress\List.razor" />
+    <None Include="Pages\User\Delete.razor" />
+    <None Include="Pages\User\Edit.razor" />
+    <None Include="Pages\User\List.razor" />
+    <None Include="Pages\User\Login.razor" />
+    <None Include="Pages\User\Logout.razor" />
+    <None Include="Pages\User\Rights.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Shared\" />
+  </ItemGroup>
+
+</Project>

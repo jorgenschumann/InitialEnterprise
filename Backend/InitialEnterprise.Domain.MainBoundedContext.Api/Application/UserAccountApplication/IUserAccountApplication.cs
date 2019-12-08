@@ -23,6 +23,8 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManage
 
         Task<ApplicationUser> Query(Guid id);
 
+        Task<List<ClaimDto>> QueryClaims(Guid id);
+
         Task<ApplicationUser> UploadImage(Guid id, byte[] image);
 
         Task<IEnumerable<ApplicationUser>> QueryAsync(IQuery query);

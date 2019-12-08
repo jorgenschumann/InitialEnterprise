@@ -4,6 +4,7 @@ using InitialEnterprise.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
@@ -22,12 +23,11 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet]
-        [Authorize(Policy = ClaimQuery.PolicyName)]
+        [Authorize(Policy = ClaimQuery.PolicyName)]        
         public async Task<IActionResult> Get()
         {
             var result = await claimApplication.Query();
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
-        }
+        }     
     }
-
 }

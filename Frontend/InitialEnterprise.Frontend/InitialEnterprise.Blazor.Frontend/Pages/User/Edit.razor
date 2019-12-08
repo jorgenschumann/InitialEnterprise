@@ -1,0 +1,146 @@
+﻿@page "/user/edit/{Id}"
+
+@inherits UserEditView
+
+@using InitialEnterprise.Shared.Dtos
+@using Blazored.Modal
+@using Blazored.Modal.Services
+@using InitialEnterprise.Blazor.Frontend.Models
+@using InitialEnterprise.Blazor.Frontend.Infrastructure
+
+@inject IModalService ModalService
+@inject UserController Controller
+@inject NavigationManager NavigationManager
+@inject INavigationService UserNavigationService
+@inject IUserService UserService
+@inject ApiAuthenticationStateProvider AuthStateProvider
+
+<form class="ui form">
+    <h4 class="ui dividing header"><i class="user icon"></i> Edit User</h4>
+    <div class="field">
+        <label>First Name</label>
+        <div class="two fields">
+            <div class="field @Error("FirstName")">
+                <input type="text" @bind="@User.FirstName" placeholder="First Name" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Last Name</label>
+        <div class="two fields">
+            <div class="field @Error("LastName")">
+                <input type="text" @bind="@User.LastName" placeholder="LastName" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>UserName</label>
+        <div class="two fields">
+            <div class="field @Error("UserName")">
+                <input type="text" @bind="@User.UserName" placeholder="UserName" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Email</label>
+        <div class="two fields">
+            <div class="field ui left icon input @Error("Email")">
+                <input type="text" @bind="@User.Email" placeholder="Email" />
+                <i class="envelope icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>PhoneNumber</label>
+        <div class="two fields">
+            <div class="field ui left icon input @Error("PhoneNumber")">
+                <input type="text" @bind="@User.PhoneNumber" placeholder="PhoneNumber" />
+                <i class="phone icon"></i>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@*<AuthorizeView Policy="UserRead">
+    <p>UserRead</p>
+</AuthorizeView>
+
+<AuthorizeView Policy="UserPost">
+    <p>UserPost</p>
+</AuthorizeView>*@
+
+<AuthorizeView>
+    <p>UserRead</p>
+</AuthorizeView>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
+</div>
+
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+    private String PosibleNavigationVisible;
+
+    private NavigationDto UserNavigation;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.Controller.SetView(this);
+
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            await Controller.Get(Guid.Parse(Id));
+        });
+    }
+
+    private Task SubmitAction()
+    {
+        return TryRun(async () =>
+        {
+            CommandHandlerAnswerDto<UserDto> answer = await Controller.Save(User);
+            {
+                this.User = answer.AggregateRoot == null ? User : answer.AggregateRoot;
+                this.ValidationResult = answer.ValidationResult;
+            }
+        });
+    }
+
+    private void BackAction()
+    {
+        NavigationManager.NavigateTo("/user/list");
+    }
+
+    private Task FetchNavigationAction()
+    {
+        return TryRun(async () =>
+        {
+            UserNavigation = await UserNavigationService.GetUserNavigation(Guid.Parse(Id));
+            StateHasChanged();
+        });
+    }
+
+    private Task ToggleRightAction(NavigationMenuGroupItemDto navigationItem)
+    {
+        navigationItem.Active = !navigationItem.Active;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task SubmitRightsAction()
+    {
+        return TryRun(async () =>
+        {
+
+        });
+    }    
+}

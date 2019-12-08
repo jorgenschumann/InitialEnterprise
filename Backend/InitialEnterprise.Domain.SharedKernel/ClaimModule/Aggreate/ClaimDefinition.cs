@@ -12,14 +12,14 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
     }
 
     public interface IClaimDefinition
-    {
+    {        
         ClaimRequirement ClaimRequirement { get; }
     }
 
     public class ClaimQuery : IClaimDefinition
     {
         public const string PolicyName = ClaimDefinition.QUERY;
-        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Claim", PolicyName);
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Claim", PolicyName);      
     }
 
     public class CurrencyCreateClaim : IClaimDefinition
@@ -66,6 +66,7 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
     }
     public class PersonDeleteClaim : IClaimDefinition
     {
+
         public const string PolicyName = "Person" + ClaimDefinition.DELETE;
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.DELETE);
     }
@@ -100,6 +101,33 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
     {
         public const string PolicyName = "User" + ClaimDefinition.QUERY;
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", ClaimDefinition.QUERY);
+    }
+
+    public class CountryCreateClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Country" + ClaimDefinition.CREATE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Country", PolicyName);
+
+    }
+    public class CountryReadClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Country" + ClaimDefinition.READ;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Country", ClaimDefinition.READ);
+    }
+    public class CountryWriteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Country" + ClaimDefinition.WRITE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Country", ClaimDefinition.WRITE);
+    }
+    public class CountryDeleteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Country" + ClaimDefinition.DELETE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Country", ClaimDefinition.DELETE);
+    }
+    public class CountryQueryClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Country" + ClaimDefinition.QUERY;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Country", ClaimDefinition.QUERY);
     }
 
 }

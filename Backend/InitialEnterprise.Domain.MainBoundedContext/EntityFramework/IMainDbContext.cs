@@ -5,7 +5,6 @@ using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
 using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
 using InitialEnterprise.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,10 +22,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EntityFramework
         DbSet<CreditCard> CreditCard { get; set; }
         DbSet<Country> Country { get; set; }
         DbSet<Province> Province { get; set; }
-        DbSet<UserNavigation> UserNavigation { get; set; }
-        DbSet<UserNavigationMenuGroup> UserNavigationMenuGroup { get; set; }
-        DbSet<UserNavigationMenuGroupItem> UserNavigationMenuGroupItem { get; set; }               
-
     }
     
 

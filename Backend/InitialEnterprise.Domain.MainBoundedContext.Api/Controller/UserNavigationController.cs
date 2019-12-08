@@ -1,7 +1,5 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.UserManagerApplication;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Queries;
 using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
-using InitialEnterprise.Infrastructure.Misc;
 using InitialEnterprise.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
