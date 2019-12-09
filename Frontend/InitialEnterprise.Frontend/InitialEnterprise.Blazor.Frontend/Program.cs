@@ -11,6 +11,6 @@ namespace InitialEnterprise.Blazor.Frontend
 
         public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args) =>
             BlazorWebAssemblyHost.CreateDefaultBuilder()
-                .UseBlazorStartup<Startup>();
+            .UseBlazorStartup<Startup>();
     }
 }
