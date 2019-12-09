@@ -20,10 +20,13 @@ namespace InitialEnterprise.Blazor.Frontend
 {
     public class Startup
     {
+        public void Configure(IComponentsApplicationBuilder app)
+        {
+            app.AddComponent<App>("app");
+        }
 
         public void ConfigureServices(IServiceCollection services)
-        {        
-
+        {  
             services.AddSingleton<ApiSettings>();
 
             services.AddScoped<ToastService>();
@@ -71,9 +74,5 @@ namespace InitialEnterprise.Blazor.Frontend
 
         }
 
-        public void Configure(IComponentsApplicationBuilder app)
-        {
-            app.AddComponent<App>("app");
-        }
     }
 }
