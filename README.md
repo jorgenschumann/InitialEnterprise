@@ -1,10 +1,16 @@
 # InitialEnterprise
 Initial Enterprise Architecture for a .net core based business critical backend softwaresystem 
+
 The goals of this project are:
+
       show a sample implementation of all DDD modules and techniques without any technical compromise
+      
       demonstrate advanced techniques 
-      Representation of well-developed code that is ready for use in production
+      
+      Representation of well-developed code that is ready for use in production      
+      
       Present ready-to-use and easy-to-use tools and best practices
+      
 
 ### Concepts Backend
 * [IntegrationTDD] for RESTApi with TestServer
