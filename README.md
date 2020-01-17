@@ -5,7 +5,7 @@ The goals of this project are:
 
   * shows a complex implementation of all DDD modules and techniques without any technical compromise      
   * demonstrate advanced techniques       
-  * Representation of well-developed code that you can use in production            
+  * representation of well-developed code that you can use in production            
         
 
 ### Concepts Backend
