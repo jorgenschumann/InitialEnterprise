@@ -1,4 +1,4 @@
-# InitialEnterprise
+# InitialEnterprise ( domain driven design)
 Initial Enterprise Architecture for a .net core based business critical backend softwaresystem 
 
 The goals of this project are:
