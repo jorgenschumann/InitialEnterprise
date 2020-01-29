@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api
 {
@@ -76,6 +77,13 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
 
             });
 
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InitialEnterprise.Indentity.Api", Version = "v1" });
+            });
+
+
             services.AddControllers();
         }
 
@@ -86,6 +94,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint("/swagger/v1/swagger.json", "InitialEnterprise Indentity Api");
+            });
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
