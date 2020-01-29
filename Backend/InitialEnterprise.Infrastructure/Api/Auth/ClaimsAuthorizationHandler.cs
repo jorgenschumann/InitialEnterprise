@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace InitialEnterprise.Domain.MainBoundedContext.Api
+namespace InitialEnterprise.Infrastructure.Api.Auth
 {
     public class ClaimsAuthorizationHandler : AuthorizationHandler<ClaimRequirement>
     {       

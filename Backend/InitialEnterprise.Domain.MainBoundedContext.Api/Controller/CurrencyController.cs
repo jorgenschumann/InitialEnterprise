@@ -1,5 +1,4 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency;
-using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using InitialEnterprise.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using InitialEnterprise.Infrastructure.Api;
+using InitialEnterprise.Domain.SharedKernel.ClaimModule.Aggreate;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {

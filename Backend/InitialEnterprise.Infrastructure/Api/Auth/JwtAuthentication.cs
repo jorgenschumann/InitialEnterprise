@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.Api
+namespace InitialEnterprise.Infrastructure.Api.Auth
 {
     public class JwtAuthentication
     {

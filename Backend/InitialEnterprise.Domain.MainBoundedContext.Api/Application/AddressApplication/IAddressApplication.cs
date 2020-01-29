@@ -1,4 +1,3 @@
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using System;
 using System.Threading.Tasks;

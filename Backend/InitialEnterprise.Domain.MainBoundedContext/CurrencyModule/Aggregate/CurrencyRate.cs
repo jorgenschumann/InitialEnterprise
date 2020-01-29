@@ -21,7 +21,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
         public string FromCurrencyCode { get; private set; }
 
         [JsonConstructor]
-        private CurrencyRate()
+        public CurrencyRate()
         {
         }
     }

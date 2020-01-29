@@ -36,7 +36,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate
         public virtual Person Person { get; private set; }
 
         [JsonConstructor]
-        private PersonAddress()
+        public PersonAddress()
         {
         }
 

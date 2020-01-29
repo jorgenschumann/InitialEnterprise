@@ -1,0 +1,78 @@
+﻿@page "/customer/edit/{Id}"
+
+@inherits ViewComponentBase
+@inject IState<AppState> AppState
+@inject NavigationManager NavigationManager
+@inject INavigationService UserNavigationService
+@inject IModalService ModalService
+@inject IJSRuntime JSRuntime
+@inject IDispatcher Dispatcher
+@inject IBusyIndicatorService BusyIndicator
+
+@using InitialEnterprise.Shared.Dtos
+@using Blazored.Modal.Services
+
+<EditForm Model="Customer" OnValidSubmit="@SubmitAction" class="ui form">
+    <DataAnnotationsValidator />
+    <h2 class="ui dividing header"><i class="user icon"></i> Edit Customer</h2>
+    <div class="field">
+        <label>Account</label>
+        <div class="two fields">
+            <div class="field @Error(nameof(Customer.AccountNumber))">
+                <input type="text" @bind="@Customer.AccountNumber" placeholder="AccountNumber" />
+                <ValidationMessage For="@(() => Customer.AccountNumber)" />
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    @*<button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>*@
+</div>
+
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+
+    CustomerDto Customer { get; set; } = new CustomerDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitializedAsync();
+
+        await FetchAction();
+    }
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            using (BusyIndicator.Show())
+            {
+                //Dispatcher.Dispatch(new CustomersSearchAction(new CustomerSearchQueryDto(Id)));
+            }
+        });
+    }
+
+    private Task SubmitAction(EditContext context)
+    {
+        return TryRun(async () =>
+        {
+            //await Controller.Save(Currency, context, onSuccess: OkAction);
+        });
+    }
+
+    private void OkAction()
+    {
+        ModalService.Close(ModalResult.Ok<CustomerDto>(this.Customer));
+    }
+
+    private async Task BackAction()
+    {
+        NavigationManager.NavigateTo("/customer/list");
+    }
+}
+

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using SeedPacket.Extensions;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 
-namespace InitialEnterpriseTests.DataSeeding
+namespace InitialEnterprise.Shared.DataSeeding
 {
     public static class SeedDataBuilder
     {
@@ -13,12 +12,7 @@ namespace InitialEnterpriseTests.DataSeeding
         {
             return BuildTypeCollectionFromFile<TType>().FirstOrDefault();
         }
-
-        public static IEnumerable<TType> BuildTypeCollection<TType>(int count)
-        {
-            return new List<TType>().Seed(count);
-        }
-
+     
         public static IEnumerable<TType> BuildTypeCollectionFromFile<TType>()
         {
             var typeName = $"{typeof(TType).Name}.json";
@@ -33,11 +27,6 @@ namespace InitialEnterpriseTests.DataSeeding
             var fileContent = File.ReadAllText($"{directory}\\{typeName}");
 
             return JsonConvert.DeserializeObject<TType>(fileContent);
-        }
-
-        public static TType FetchTypeFromFile<TType>()
-        {
-            return BuildTypeCollection<TType>(1).FirstOrDefault();
         }
     }
 }

@@ -7,5 +7,4 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
         public IAggregateRoot AggregateRoot { get; set; }
         public ValidationResult ValidationResult { get; set; }
     }
-
 }

@@ -1,11 +1,11 @@
 ﻿using AgileObjects.AgileMapper;
-using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.CQRS;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using InitialEnterprise.Domain.SharedKernel.ClaimModule.Aggreate;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.ClaimApplication
 {

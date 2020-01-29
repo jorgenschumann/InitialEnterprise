@@ -1,12 +1,10 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
+﻿using InitialEnterprise.Shared.DataSeeding;
+using InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate;
-using InitialEnterprise.Domain.MainBoundedContext.DocumentModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.EntityFramework;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
-using InitialEnterpriseTests.DataSeeding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -41,13 +39,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
         public static void EnsureTestdataSeeding(this MainDbContext context)
         {
             EnsureDataSeeded(context);
-
-            if (!context.Document.Any())
-            {
-                context.Document.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Document>());
-                context.SaveChanges();
-            }
-
+         
             if (!context.Currency.Any())
             {
                 context.Currency.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Currency>());
@@ -78,30 +70,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.SaveChanges();
             }
 
-            if (!context.Users.Any())
-            {
-                context.Users.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUser>());
-                context.SaveChanges();
-            }
-
-            if (!context.Roles.Any())
-            {
-                context.Roles.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationRole>());
-                context.SaveChanges();
-            }
-
-            if (!context.RoleClaims.Any())
-            {
-                context.RoleClaims.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationRoleClaim>());
-                context.SaveChanges();
-            }
-
-            if (!context.UserClaims.Any())
-            {
-                context.UserClaims.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserClaim>());
-                context.SaveChanges();
-            }
-
             if (!context.Country.Any())
             {
                 context.Country.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Country>());
@@ -113,12 +81,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api
                 context.Province.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<Province>());
                 context.SaveChanges();
             }
-
-            if (!context.UserRoles.Any())
-            {
-                context.UserRoles.AddRange(SeedDataBuilder.BuildTypeCollectionFromFile<ApplicationUserRole>());
-                context.SaveChanges();
-            }            
+                 
         }
     }
 }

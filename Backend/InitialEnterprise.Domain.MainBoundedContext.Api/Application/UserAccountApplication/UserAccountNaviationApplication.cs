@@ -1,6 +1,4 @@
 ﻿using AgileObjects.AgileMapper;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Aggreate;
-using InitialEnterprise.Domain.MainBoundedContext.UserModule.Queries;
 using InitialEnterprise.Infrastructure.CQRS;
 using System;
 using System.Threading.Tasks;

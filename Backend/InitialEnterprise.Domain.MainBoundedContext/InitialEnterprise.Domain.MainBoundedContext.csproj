@@ -1,67 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="CurrencyModule\Validations\**" />
-    <EmbeddedResource Remove="CurrencyModule\Validations\**" />
-    <None Remove="CurrencyModule\Validations\**" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="CurrencyModule\CommandHandler\UpdateCurrencyCommandHandler.cs" />
-    <Compile Remove="CurrencyModule\CommandHandler\UpdateIsoCodeCurrencyCommandHandler.cs" />
-    <Compile Remove="CurrencyModule\CommandHandler\UpdateRateCurrencyCommandHandler.cs" />
-    <Compile Remove="PersonModule\Commands\CreditCardCreateCommand.cs" />
-    <Compile Remove="PersonModule\Commands\CreditCardDeactivateCommand.cs" />
-    <Compile Remove="PersonModule\Commands\CreditCardUpdateCommand.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore">
-      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.1.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="AddressModule\CommandHandler\" />
-    <Folder Include="AddressModule\Events\" />
-    <Folder Include="AddressModule\Queries\" />
-    <Folder Include="AddressModule\QueryHandler\" />
-    <Folder Include="CountryModule\CommandHandler\" />
-    <Folder Include="CountryModule\Commands\" />
-    <Folder Include="CountryModule\Events\" />
-    <Folder Include="CountryModule\ValidationHandler\" />
-    <Folder Include="CreditCardModule\CommandHandler\" />
-    <Folder Include="DocumentModule\QueryHandler\" />
-    <Folder Include="DocumentModule\ValidationHandler\" />
-    <Folder Include="EmailAddressModule\CommandHandler\" />
-    <Folder Include="EmailAddressModule\Events\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="ModuleTemplate\Aggreate\" />
-    <Folder Include="ModuleTemplate\CommandHandler\" />
-    <Folder Include="ModuleTemplate\Commands\" />
-    <Folder Include="ModuleTemplate\Events\" />
-    <Folder Include="ModuleTemplate\Queries\" />
-    <Folder Include="ModuleTemplate\QueryHandler\" />
-    <Folder Include="ModuleTemplate\Repository\" />
-    <Folder Include="ModuleTemplate\ValidationHandler\" />
-    <Folder Include="UserModule\Events\" />
-    <Folder Include="UserModule\Repository\" />
   </ItemGroup>
 
 </Project>

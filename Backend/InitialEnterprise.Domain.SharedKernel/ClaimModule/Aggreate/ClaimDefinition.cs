@@ -1,6 +1,6 @@
-﻿using InitialEnterprise.Domain.MainBoundedContext.Api;
+﻿using InitialEnterprise.Infrastructure.Api.Auth;
 
-namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
+namespace InitialEnterprise.Domain.SharedKernel.ClaimModule.Aggreate
 {
     public class ClaimDefinition
     {
@@ -21,6 +21,7 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
         public const string PolicyName = ClaimDefinition.QUERY;
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("Claim", PolicyName);      
     }
+
 
     public class CurrencyCreateClaim : IClaimDefinition
     {
@@ -47,6 +48,7 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
         public const string PolicyName = "Currency" + ClaimDefinition.QUERY;
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("Currency", ClaimDefinition.QUERY);
     }
+
 
     public class PersonCreateClaim : IClaimDefinition
     {
@@ -76,6 +78,7 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("Person", ClaimDefinition.QUERY);
     }
 
+
     public class UserCreateClaim : IClaimDefinition
     {
         public const string PolicyName = "User" + ClaimDefinition.CREATE;
@@ -103,6 +106,7 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("User", ClaimDefinition.QUERY);
     }
 
+
     public class CountryCreateClaim : IClaimDefinition
     {
         public const string PolicyName = "Country" + ClaimDefinition.CREATE;
@@ -128,6 +132,34 @@ namespace InitialEnterprise.Domain.SharedKernel.ClaimDefinitions
     {
         public const string PolicyName = "Country" + ClaimDefinition.QUERY;
         public ClaimRequirement ClaimRequirement => new ClaimRequirement("Country", ClaimDefinition.QUERY);
+    }
+
+
+    public class CustomerCreateClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Customer" + ClaimDefinition.CREATE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Customer", PolicyName);
+
+    }
+    public class CustomerReadClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Customer" + ClaimDefinition.READ;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Customer", ClaimDefinition.READ);
+    }
+    public class CustomerWriteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Customer" + ClaimDefinition.WRITE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Customer", ClaimDefinition.WRITE);
+    }
+    public class CustomerDeleteClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Customer" + ClaimDefinition.DELETE;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Customer", ClaimDefinition.DELETE);
+    }
+    public class CustomerQueryClaim : IClaimDefinition
+    {
+        public const string PolicyName = "Customer" + ClaimDefinition.QUERY;
+        public ClaimRequirement ClaimRequirement => new ClaimRequirement("Customer", ClaimDefinition.QUERY);
     }
 
 }

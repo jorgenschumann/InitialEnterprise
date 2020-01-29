@@ -4,7 +4,7 @@ namespace InitialEnterprise.Shared.Dtos
 {
     public class PersonAddressDto : DataTransferObject
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }        
 
         public Guid PersonId { get; set; }
 

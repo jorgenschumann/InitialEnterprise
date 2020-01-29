@@ -1,4 +1,4 @@
-﻿using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
+﻿using InitialEnterprise.Domain.SharedKernel.ClaimModule.Aggreate;
 using InitialEnterprise.Infrastructure.CQRS.Queries;
 using System.Collections.Generic;
 using System.Threading.Tasks;

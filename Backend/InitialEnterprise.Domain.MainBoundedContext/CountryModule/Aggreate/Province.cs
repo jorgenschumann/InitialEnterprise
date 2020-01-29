@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CountryModule.Aggreate
         public virtual Country Country { get; private set; }
 
         [JsonConstructor]
-        private Province()
+        public Province()
         {
         }
 

@@ -1,16 +1,17 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace InitialEnterprise.Infrastructure.Api.Filter
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {
-        private readonly IHostingEnvironment env;
+        private readonly IWebHostEnvironment env;
         private readonly ILogger<HttpGlobalExceptionFilter> logger;
 
-        public HttpGlobalExceptionFilter(IHostingEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
+        public HttpGlobalExceptionFilter(IWebHostEnvironment env, ILogger<HttpGlobalExceptionFilter> logger)
         {
             this.env = env;
             this.logger = logger;
@@ -32,7 +33,8 @@ namespace InitialEnterprise.Infrastructure.Api.Filter
                 jsonErrorResponse.DeveloperMessage = context.Exception;
             }
 
-            context.Result = new InternalServerErrorObjectResult(jsonErrorResponse);
+            //todo
+            //context.Result = new InternalServerErrorObjectResult(jsonErrorResponse);
             context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
             context.ExceptionHandled = true;
         }

@@ -1,0 +1,75 @@
+﻿
+@page "/person/{personId}/mailaddress/create"
+
+@using InitialEnterprise.Shared.Dtos
+@using FluentValidation.Results
+
+@inherits ViewComponentBase
+
+@inject EmailAddressController Controller
+@inject NavigationManager NavigationManager
+
+<form class="ui form">
+    <h4 class="ui dividing header"><i class="address card icon"></i>Create Email</h4>
+    <div class="field">
+        <label>Mail</label>
+        <div class="two fields">
+            <div class="field">
+                <input type="text" @bind="@EmailAddress.MailAddress" placeholder="MailAddress" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Type</label>
+        <div class="two fields">
+            <div class="field">
+                <select class="ui dropdown" @bind="@EmailAddress.MailAddressType">
+                    <option value="Private">Private</option>
+                    <option value="Work">Work</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="two fields">
+            <div class="ui field checked checkbox">
+                <input type="checkbox" @bind="@EmailAddress.IsPrimary" placeholder="IsPrimary" />
+                <label>Primary Mail</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
+</div>
+
+@code {
+    [Parameter]
+    public String PersonId { get; set; }
+
+    EmailAddressDto EmailAddress = new EmailAddressDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.EmailAddress.PersonId = Guid.Parse(PersonId);
+    }
+
+    private Task SubmitAction()
+    {
+        return TryRun(async () =>
+        {
+            CommandHandlerAnswerDto<EmailAddressDto> answer = await Controller.Save(EmailAddress);
+            {
+                this.EmailAddress = answer.AggregateRoot == null ? EmailAddress : answer.AggregateRoot;
+                this.ValidationResult = answer.ValidationResult;
+            }
+        });
+    }
+
+    private void BackAction()
+    {
+        NavigationManager.NavigateTo($"/person/edit/{this.PersonId}");
+    }
+}

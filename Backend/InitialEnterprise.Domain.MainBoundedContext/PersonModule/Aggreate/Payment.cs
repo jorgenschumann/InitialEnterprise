@@ -15,7 +15,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         public virtual Person Person { get; private set; }
 
         [JsonConstructor]
-        private Payment()
+        public Payment()
         {
         }
     }

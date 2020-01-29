@@ -33,7 +33,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate
         public virtual Person Person { get; private set; }
 
         [JsonConstructor]
-        private CreditCard()
+        public CreditCard()
         {
         }
 

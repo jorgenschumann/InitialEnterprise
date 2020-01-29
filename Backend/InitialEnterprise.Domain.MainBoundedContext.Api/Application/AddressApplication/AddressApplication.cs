@@ -1,7 +1,6 @@
 using AgileObjects.AgileMapper;
 using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate;
 using InitialEnterprise.Domain.MainBoundedContext.AddressModule.Queries;
-using InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication;
 using InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Commands;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate;
 using InitialEnterprise.Infrastructure.CQRS;

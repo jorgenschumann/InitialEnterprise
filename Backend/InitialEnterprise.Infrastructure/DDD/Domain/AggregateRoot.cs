@@ -7,10 +7,18 @@ namespace InitialEnterprise.Infrastructure.DDD.Domain
 {
     public class AggregateRoot : IAggregateRoot
     {
-        protected AggregateRoot()
+
+        public AggregateRoot()
         {
             Id = Guid.Empty;
         }
+
+        //todo
+
+        //protected AggregateRoot()
+        //{
+        //    Id = Guid.Empty;
+        //}
 
         protected AggregateRoot(Guid id , Guid userId)
         {

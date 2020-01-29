@@ -1,45 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <TypeScriptToolsVersion>3.2</TypeScriptToolsVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Application\UserAccountApplication\IUserAccountNaviationApplication.cs" />
     <Compile Remove="Application\UserAccountApplication\UserAccountNaviationApplication.cs" />
-    <Compile Remove="Controller\UserNavigationController.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="wwwroot\" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
-    <None Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AgileObjects.AgileMapper" Version="0.28.0" />
-    <PackageReference Include="DeepEqual" Version="1.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
-    <PackageReference Include="NUnit" Version="3.10.1" />
-    <PackageReference Include="Scrutor" Version="2.2.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.DataSeeding\InitialEnterprise.DataSeeding.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.DataSeeding\InitialEnterprise.Shared.DataSeeding.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Application\UserAccountApplication\" />
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

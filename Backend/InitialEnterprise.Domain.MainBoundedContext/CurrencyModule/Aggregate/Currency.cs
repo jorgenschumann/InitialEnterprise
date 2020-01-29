@@ -10,7 +10,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CurrencyModule.Aggregate
     public class Currency : AggregateRoot
     {
         [JsonConstructor]
-        private Currency()
+        public Currency()
         {
         }
 

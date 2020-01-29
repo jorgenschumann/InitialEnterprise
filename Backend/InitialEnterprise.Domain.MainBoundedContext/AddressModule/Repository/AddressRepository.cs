@@ -11,7 +11,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.Repository
     {
         private readonly IMainDbContext mainDbContext;
 
-        public AddressRepository(MainDbContext context)
+        public AddressRepository(IMainDbContext context)
         {
             mainDbContext = context;
         }

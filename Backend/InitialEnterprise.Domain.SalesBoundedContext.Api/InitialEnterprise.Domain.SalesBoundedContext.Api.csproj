@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.DataSeeding\InitialEnterprise.Shared.DataSeeding.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Domain.SalesBoundedContext\InitialEnterprise.Domain.SalesBoundedContext.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
+    <ProjectReference Include="..\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
+  </ItemGroup>
+
+
+</Project>

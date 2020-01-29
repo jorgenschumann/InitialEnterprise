@@ -11,7 +11,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.Repository
     {
         private readonly IMainDbContext mainDbContext;
 
-        public CreditCardRepository(MainDbContext context)
+        public CreditCardRepository(IMainDbContext context)
         {
             mainDbContext = context;
         }

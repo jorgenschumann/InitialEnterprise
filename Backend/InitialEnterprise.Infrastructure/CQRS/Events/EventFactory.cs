@@ -1,4 +1,5 @@
 ﻿
+
 using AgileObjects.AgileMapper;
 
 namespace InitialEnterprise.Infrastructure.CQRS.Events

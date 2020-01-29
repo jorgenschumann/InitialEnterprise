@@ -24,7 +24,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Aggreat
         public virtual Person Person { get; private set; }
 
         [JsonConstructor]
-        private EmailAddress()
+        public EmailAddress()
         {
         }
         

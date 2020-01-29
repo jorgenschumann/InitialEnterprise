@@ -1,0 +1,33 @@
+﻿@using InitialEnterprise.Frontend.UiServices
+
+@implements IDisposable
+
+@inject BusyIndicatorService _busyIndicatorService
+
+@if (progressindicator)
+{
+    <div class="app-progress-indicator"></div>
+}
+
+@code
+{   
+    private string LoadingDisplay = "display: none;";
+    bool progressindicator = false;
+
+    public void Dispose()
+    {       
+        _busyIndicatorService.SetBusyIndicatorHandler(null);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _busyIndicatorService.SetBusyIndicatorHandler(SetVisibility);
+    }
+
+    private void SetVisibility(bool visible)
+    {   
+        this.progressindicator = visible;
+        StateHasChanged();
+    }
+}

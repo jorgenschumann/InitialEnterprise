@@ -2,8 +2,6 @@
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.Utils;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate
 {
@@ -32,7 +30,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.AddressModule.Aggreate
         {
         }
 
-        public Address(AddressCreateCommand command)
+        protected Address(AddressCreateCommand command)
         {
             this.CopyPropertiesFrom(command);
         }

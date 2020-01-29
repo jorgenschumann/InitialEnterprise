@@ -9,16 +9,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using Microsoft.AspNetCore.Http;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication
 {
     public class PersonApplication : IPersonApplication
     {
-        private readonly IDispatcher dispatcher;
+        private readonly IDispatcher dispatcher;     
 
-        public PersonApplication(IDispatcher dispatcher)
+        public PersonApplication(IDispatcher dispatcher, IHttpContextAccessor httpContextAccessor)
         {
-            this.dispatcher = dispatcher;
+            this.dispatcher = dispatcher;         
         }
 
         public async Task<ICommandHandlerAggregateAnswer> Insert(PersonDto model)
@@ -31,7 +32,6 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
         {
             var query = new PersonQuery { Id = id };
             var person = await dispatcher.Query<PersonQuery, Person>(query);
-
             return Mapper.Map(person).ToANew<PersonDto>();
         }
 

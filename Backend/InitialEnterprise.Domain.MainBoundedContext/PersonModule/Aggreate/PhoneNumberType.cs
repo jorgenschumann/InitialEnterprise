@@ -5,13 +5,12 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
 {
     public class PhoneNumberType : Entity
     {
-        private PhoneNumberType()
-        {
-            PersonPhone = new HashSet<PersonPhone>();
+        public PhoneNumberType()
+        {           
         }
 
         public string Name { get; }
 
-        public virtual ICollection<PersonPhone> PersonPhone { get; private set; }
+        public virtual ICollection<PersonPhone> PersonPhone { get; private set; } = new HashSet<PersonPhone>();
     }
 }

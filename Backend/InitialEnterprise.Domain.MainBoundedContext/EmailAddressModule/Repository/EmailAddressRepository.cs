@@ -10,7 +10,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.EmailAddressModule.Reposit
     {
         private readonly IMainDbContext mainDbContext;
 
-        public EmailAddressRepository(MainDbContext context)
+        public EmailAddressRepository(IMainDbContext context)
         {
             mainDbContext = context;
         }
