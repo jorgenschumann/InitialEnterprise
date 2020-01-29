@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace InitialEnterprise.Domain.SalesBoundedContext.Api
@@ -72,6 +73,11 @@ namespace InitialEnterprise.Domain.SalesBoundedContext.Api
 
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InitialEnterprise.Indentity.Api", Version = "v1" });
+            });
+
             services.AddControllers();
         }
 
@@ -81,7 +87,12 @@ namespace InitialEnterprise.Domain.SalesBoundedContext.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint("/swagger/v1/swagger.json", "InitialEnterprise Indentity Api");
+            });
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

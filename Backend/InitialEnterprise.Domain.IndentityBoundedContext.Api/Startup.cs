@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using InitialEnterprise.Domain.IndentityBoundedContext.Api.Extensions;
 using InitialEnterprise.Domain.IndentityBoundedContext.EntityFramework;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace InitialEnterprise.Domain.IndentityBoundedContext.Api
 {
@@ -99,6 +101,10 @@ namespace InitialEnterprise.Domain.IndentityBoundedContext.Api
                 options.AddPolicy(ClaimQuery.PolicyName, policy => policy.Requirements.Add(new ClaimQuery().ClaimRequirement));
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InitialEnterprise.Indentity.Api", Version = "v1" });
+            });
 
             services.AddControllers();
         }
@@ -111,7 +117,13 @@ namespace InitialEnterprise.Domain.IndentityBoundedContext.Api
                 app.UseDeveloperExceptionPage();
             }
             
-            //app.UseHttpsRedirection();
+            app.UseStaticFiles(); 
+            app.UseSwagger();
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint("/swagger/v1/swagger.json", "InitialEnterprise Indentity Api");
+            });
+
             app.UseRouting();         
             app.UseAuthentication();
             app.UseAuthorization();
