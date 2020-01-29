@@ -35,11 +35,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
+    <Folder Include="Store\oldstateimpl\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Store\oldstateimpl\" />
+    <ProjectReference Include="..\..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
   </ItemGroup>
 
 </Project>

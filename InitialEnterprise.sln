@@ -51,6 +51,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.SalesFron
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.Fluxor", "Frontend\Blazor\Blazor.Fluxor\Blazor.Fluxor.csproj", "{8D86CF4D-70FD-4A26-AD23-B5051E475D1C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.ReactFrontend", "Frontend\React\InitialEnterprise.ReactFrontend\InitialEnterprise.ReactFrontend.csproj", "{41250CCE-76AB-40BC-9A96-465F31F466BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InitialEnterprise.Shared", "Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj", "{94456BCB-1EAA-42C1-841C-F8DAC2BD7AF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +129,14 @@ Global
 		{8D86CF4D-70FD-4A26-AD23-B5051E475D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D86CF4D-70FD-4A26-AD23-B5051E475D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D86CF4D-70FD-4A26-AD23-B5051E475D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41250CCE-76AB-40BC-9A96-465F31F466BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41250CCE-76AB-40BC-9A96-465F31F466BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41250CCE-76AB-40BC-9A96-465F31F466BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41250CCE-76AB-40BC-9A96-465F31F466BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94456BCB-1EAA-42C1-841C-F8DAC2BD7AF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94456BCB-1EAA-42C1-841C-F8DAC2BD7AF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94456BCB-1EAA-42C1-841C-F8DAC2BD7AF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94456BCB-1EAA-42C1-841C-F8DAC2BD7AF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,6 +158,7 @@ Global
 		{7D096826-F382-4A6A-8A4E-3B02662A7745} = {B6240DEE-8E48-4CE4-8CD4-1B05EB3F2465}
 		{19BB0984-E0DF-4337-AE0D-4C6DBEF72018} = {B6240DEE-8E48-4CE4-8CD4-1B05EB3F2465}
 		{8D86CF4D-70FD-4A26-AD23-B5051E475D1C} = {B6240DEE-8E48-4CE4-8CD4-1B05EB3F2465}
+		{41250CCE-76AB-40BC-9A96-465F31F466BD} = {276E950F-337C-4B78-A87F-8A2E95C808AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF3C9556-FAA8-47FF-888A-212FCAA67E51}

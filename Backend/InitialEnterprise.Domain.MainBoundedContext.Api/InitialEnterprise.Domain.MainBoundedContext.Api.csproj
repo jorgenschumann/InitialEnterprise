@@ -17,10 +17,10 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
     <ProjectReference Include="..\InitialEnterprise.DataSeeding\InitialEnterprise.Shared.DataSeeding.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.MainBoundedContext\InitialEnterprise.Domain.MainBoundedContext.csproj" />
     <ProjectReference Include="..\InitialEnterprise.Domain.SharedKernel\InitialEnterprise.Domain.SharedKernel.csproj" />
-    <ProjectReference Include="..\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
   </ItemGroup>
   
   <ItemGroup>
