@@ -11,3 +11,5 @@ namespace InitialEnterprise.Infrastructure.Application
     //    public Guid UserId { get; set; }
     //}
 }
+
+//todo

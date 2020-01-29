@@ -1,0 +1,61 @@
+﻿@page "/person/address/list"
+
+@inherits AddressListView
+
+@inject AddressController Controller
+@inject NavigationManager NavigationManager
+
+@if (this.Addresses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3 class="ui dividing header"><i class="address book icon"></i>Addresses</h3>    
+    <div class="ui cards">
+        @foreach (var address in this.Addresses)
+        {
+            <div class="card">
+                <div class="content">
+                    <div class="header">@address.City</div>
+                    <div class="description">
+                        <div class="meta">
+                            <div class="ui field">
+                                <label>@address.Zip</label>
+                                <label>@address.Street</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <span class="left floated like">
+                        <a class="header" href="/person/@Person.Id/address/details/@address.Id">
+                            <i class="edit icon"></i>edit
+                        </a>
+                    </span>
+                    <span class="right floated star">
+                        <a class="header" href="/person/@Person.Id/address/delete/@address.Id/@address.Zip @address.City  @address.Street @address.Number">
+                            <i class="trash icon"></i>delete
+                        </a>
+                    </span>
+                </div>
+            </div>
+        }   
+    <a class="card" href="/person/@Person.Id/address/details/@Guid.NewGuid().ToString()">
+        <CreateCard></CreateCard>
+    </a>       
+    </div>
+}
+
+@code {    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.Controller.SetView(this);     
+    }
+
+    private void EditAction(string personId, string id)
+    {
+        NavigationManager.NavigateTo($"/person/edit/{personId}/address/edit/{id}");
+    }
+}

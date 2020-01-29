@@ -1,0 +1,91 @@
+﻿@page "/customer/list"
+
+@inherits ViewComponentBase
+@inject IState<AppState> AppState
+@inject IDispatcher Dispatcher
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+
+<h1>Customer</h1>
+<Query />
+<div class="ui icon menu">
+    <a class="item" @onclick="@CreateAction">
+        <i class="add icon"></i>
+    </a>
+</div>
+
+<table class="ui celled striped table">
+    <thead>
+        <tr>
+            <th>Actions</th>
+            <th>AccountNumber</th>
+            <th>Id</th>
+            <th>PersonId</th>
+            <th>StoreId</th>
+            <th>TerritoryId</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (AppState.Value.Customers != null)
+        {
+            @foreach (var customer in AppState.Value.Customers)
+            {
+                <tr @onmouseover="@ShowActions">
+                    <td class="collapsing">
+                        <div class="ui mini compact menu">
+                            <div class="ui small simple dropdown item">
+                                <i class="cogs icon"></i>
+                                <div class="menu">
+                                    <a @onclick="@(() => EditAction(@customer.Id.ToString()))"
+                                       class="item">
+                                        <i class="edit icon"></i>
+                                    </a>
+                                    <a @onclick="@(() => DeleteAction(@customer.Id.ToString()))"
+                                       class="item">
+                                        <i class="trash icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@customer.AccountNumber</td>
+                    <td>@customer.Id</td>
+                    <td>@customer.PersonId</td>
+                    <td>@customer.StoreId</td>
+                    <td>@customer.TerritoryId</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
+
+@code {
+
+    private void EditAction(string id)
+    {
+        NavigationManager.NavigateTo($"/customer/edit/{id}");
+    }
+
+    private void DeleteAction(string id)
+    {
+        NavigationManager.NavigateTo($"/customer/delete/{id}");
+    }
+
+    private void CreateAction()
+    {
+        NavigationManager.NavigateTo($"/customer/edit/{Guid.Empty.ToString()}");
+    }
+
+    private void ShowActions()
+    {
+        //NavigationManager.NavigateTo($"/customer/edit/{Guid.NewGuid().ToString()}");
+    }
+
+    private void DeleteAction()
+    {
+        NavigationManager.NavigateTo($"/customer/edit/{Guid.NewGuid().ToString()}");
+    }
+}

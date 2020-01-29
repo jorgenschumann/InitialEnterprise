@@ -5,7 +5,7 @@ namespace InitialEnterprise.Shared.Dtos
 {
     public class PersonDto : DataTransferObject
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }     
 
         public string PersonType { get; set; }
 

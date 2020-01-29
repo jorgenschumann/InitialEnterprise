@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace InitialEnterpriseTests.DataSeeding
+namespace InitialEnterprise.Shared.DataSeeding
 {
     static class SeedDataCache
     {

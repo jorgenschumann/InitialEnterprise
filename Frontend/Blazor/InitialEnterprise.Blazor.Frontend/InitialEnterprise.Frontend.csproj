@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>InitialEnterprise.Frontend</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Store\**" />
+    <Content Remove="Store\**" />
+    <EmbeddedResource Remove="Store\**" />
+    <None Remove="Store\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Store\AppFeature.cs" />
+    <Compile Include="Store\AppState.cs" />
+    <Compile Include="Store\CustomersSearchAction.cs" />
+    <Compile Include="Store\CustomersSearchCompleteAction.cs" />
+    <Compile Include="Store\CustomersSearchCompleteReducer.cs" />
+    <Compile Include="Store\CustomersSearchEffect.cs" />
+    <Compile Include="Store\CustomersSearchReducer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Customer\List.razor" />
+    <None Include="Pages\Customer\Query.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazor.Fluxor" Version="1.1.0" />
+    <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
+    <PackageReference Include="Blazored.Modal" Version="3.0.0" />
+    <PackageReference Include="Blazored.Toast" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Store\oldstateimpl\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\InitialEnterprise.Shared\InitialEnterprise.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

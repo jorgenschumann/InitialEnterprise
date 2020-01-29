@@ -1,0 +1,111 @@
+﻿@page "/person/edit/{Id}"
+
+@using InitialEnterprise.Shared.Dtos
+
+@inherits Component.ViewComponentBase
+
+@inject PersonController Controller
+@inject NavigationManager NavigationManager
+
+<form class="ui form">
+    <h2 class="ui dividing header"><i class="user icon"></i> Edit Person</h2>
+    <div class="field">
+        <label>Person Type</label>
+        <div class="two fields">
+            <div class="field @Error(nameof(Person.Title))">
+                <input type="text" @bind="@Person.Title" placeholder="Title" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Suffix</label>
+        <div class="two fields">
+            <div class="field @Error(nameof(Person.Suffix))">
+                <input type="text" @bind="@Person.Suffix" placeholder="Suffix" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Title</label>
+        <div class="two fields">
+            <div class="field @Error(nameof(Person.FirstName))">
+                <input type="text" @bind="@Person.FirstName" placeholder="FirstName" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>MiddleName</label>
+        <div class="two fields">
+            <div class="field @Error(nameof(Person.MiddleName))">
+                <input type="text" @bind="@Person.MiddleName" placeholder="MiddleName" />
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label>LastName</label>
+        <div class="two fields">
+            <div class="field @Error(nameof(Person.LastName))">
+                <input type="text" @bind="@Person.LastName" placeholder="LastName" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="ui small basic icon buttons">
+    <button class="ui button" @onclick="@BackAction"><i class="reply icon"></i></button>
+    <button class="ui button" @onclick="@SubmitAction"><i class="save icon"></i></button>
+</div>
+
+
+<InitialEnterprise.Frontend.Pages.Person.MailAddress.List Person="this.Person"
+                                                                 EmailAddresses="this.Person.EmailAddresses">
+</InitialEnterprise.Frontend.Pages.Person.MailAddress.List>
+
+
+<InitialEnterprise.Frontend.Pages.Person.CreditCard.List Person="this.Person"
+                                                                CreditCards="this.Person.CreditCards">
+</InitialEnterprise.Frontend.Pages.Person.CreditCard.List>
+
+<InitialEnterprise.Frontend.Pages.Person.Address.List Person="this.Person"
+                                                             Addresses="this.Person.Addresses">
+</InitialEnterprise.Frontend.Pages.Person.Address.List>
+
+@code {
+    [Parameter]
+    public String Id { get; set; }
+
+    PersonDto Person = new PersonDto();
+
+    String NameState = String.Empty;
+    String IsoCodeState = String.Empty;
+
+    private Task FetchAction()
+    {
+        return TryRun(async () =>
+        {
+            this.Person = await Controller.Get(Guid.Parse(Id));
+        });
+    }
+
+    private Task SubmitAction()
+    {
+        return TryRun(async () =>
+        {
+            CommandHandlerAnswerDto<PersonDto> answer = await Controller.Save(Person);
+            {
+                this.Person = answer.AggregateRoot == null ? Person : answer.AggregateRoot;
+                this.ValidationResult = answer.ValidationResult;
+            }
+        });
+    }
+
+    private void BackAction()
+    {
+        NavigationManager.NavigateTo("/person/list");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.Person = await Controller.Get(Guid.Parse(Id));
+    }
+}

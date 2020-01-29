@@ -20,9 +20,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
             this.dispatcher = dispatcher;
         }
            
-        public async Task<ICommandHandlerAggregateAnswer> Insert(CurrencyDto currencyDto)
+        public async Task<ICommandHandlerAggregateAnswer> Insert(CurrencyDto model)
         {
-            var command = Mapper.Map(currencyDto).ToANew<CurrencyCreateCommand>();
+            var command = Mapper.Map(model).ToANew<CurrencyCreateCommand>();
             return await dispatcher.Send<CurrencyCreateCommand, CurrencyModule.Aggregate.Currency>(command);
         }
 
@@ -33,9 +33,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
             return Mapper.Map(currency).ToANew<CurrencyDto>();
         }
 
-        public async Task<IEnumerable<CurrencyDto>> Query(IQuery query)
+        public async Task<IEnumerable<CurrencyDto>> Query(IQuery model)
         {
-            var currenyQuery = query as CurrencyQuery;
+            var currenyQuery = model as CurrencyQuery;
             var currencies = await dispatcher.Query<CurrencyQuery, IEnumerable<CurrencyModule.Aggregate.Currency>>(currenyQuery);
             return Mapper.Map(currencies).ToANew<IEnumerable<CurrencyDto>>();
         }
@@ -47,9 +47,9 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.Currency
             return Mapper.Map(currencies).ToANew<IEnumerable<CurrencyDto>>();
         }
 
-        public async Task<ICommandHandlerAggregateAnswer> Update(CurrencyDto currencyDto)
+        public async Task<ICommandHandlerAggregateAnswer> Update(CurrencyDto model)
         {
-            var command = Mapper.Map(currencyDto).ToANew<CurrencyUpdateCommand>();
+            var command = Mapper.Map(model).ToANew<CurrencyUpdateCommand>();
             return await dispatcher.Send<CurrencyUpdateCommand, CurrencyModule.Aggregate.Currency>(command);
         }
     }

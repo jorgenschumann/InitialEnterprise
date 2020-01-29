@@ -20,7 +20,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.CreditCardModule.Aggreate
         public static CreditCardType Switch = new CreditCardType(11, nameof(Switch));
         public static CreditCardType VisaElectron = new CreditCardType(12, nameof(VisaElectron));
 
-        protected CreditCardType()
+        public CreditCardType()
         {
         }
 

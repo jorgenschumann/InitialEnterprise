@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="SalesPersonModule\CommandHandler\" />
+    <Folder Include="SalesPersonModule\Commands\" />
+    <Folder Include="SalesPersonModule\Events\" />
+    <Folder Include="SalesPersonModule\Queries\" />
+    <Folder Include="SalesPersonModule\QueryHandler\" />
+    <Folder Include="SalesPersonModule\Repository\" />
+    <Folder Include="SalesPersonModule\ValidationHandler\" />
+    <Folder Include="SalesOrderModule\Aggreate\" />
+    <Folder Include="SalesOrderModule\CommandHandler\" />
+    <Folder Include="SalesOrderModule\Commands\" />
+    <Folder Include="SalesOrderModule\Events\" />
+    <Folder Include="SalesOrderModule\Queries\" />
+    <Folder Include="SalesOrderModule\QueryHandler\" />
+    <Folder Include="SalesOrderModule\Repository\" />
+    <Folder Include="SalesOrderModule\ValidationHandler\" />
+    <Folder Include="SalesCustomerModule\ValidationHandler\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InitialEnterprise.Infrastructure\InitialEnterprise.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

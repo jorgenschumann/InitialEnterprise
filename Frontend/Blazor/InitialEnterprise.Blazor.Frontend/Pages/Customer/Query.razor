@@ -1,0 +1,33 @@
+﻿
+@inherits ViewComponentBase
+@inject IDispatcher Dispatcher
+@inject IBusyIndicatorService BusyIndicator
+
+<div class="item">
+    <div class="ui action left icon input">
+        <i class="search icon"></i>
+        <input type="text" placeholder="Search">
+        <button @onclick=@(() => OnSearchAction()) type="button" class="ui button">
+            Search
+        </button>
+    </div>
+</div>
+
+
+@code
+{
+    private CustomersSearchQueryDto criteria = new CustomersSearchQueryDto();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    private void OnSearchAction()
+    {
+        using (BusyIndicator.Show())
+        {
+            Dispatcher.Dispatch(new CustomersSearchAction(criteria));
+        }
+    }
+}

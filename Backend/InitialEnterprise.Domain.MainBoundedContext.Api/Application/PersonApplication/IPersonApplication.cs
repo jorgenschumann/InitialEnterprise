@@ -18,6 +18,5 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonAppl
         Task<ICommandHandlerAggregateAnswer> Insert(PersonDto model);
 
         Task<ICommandHandlerAggregateAnswer> Update(PersonDto model);
-
     }
 }

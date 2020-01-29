@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace InitialEnterprise.Domain.MainBoundedContext.Api
+namespace InitialEnterprise.Infrastructure.Api.Auth
 {
     public class ClaimRequirement : IAuthorizationRequirement
     {
+        public ClaimRequirement()
+        {
+        }
+
         public ClaimRequirement(string claimName, string claimValue)
         {
             ClaimName = claimName;

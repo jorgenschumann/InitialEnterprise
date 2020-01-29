@@ -22,7 +22,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         public virtual PhoneNumberType PhoneNumberType { get; }
 
         [JsonConstructor]
-        private PersonPhone()
+        public PersonPhone()
         {
         }
     }

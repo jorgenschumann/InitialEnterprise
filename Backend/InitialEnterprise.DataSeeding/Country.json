@@ -10,5 +10,17 @@
     "Name": "United States of Americ",
     "IsoCode": "USA",
     "Code": "US"
+  },
+  {
+    "Id": "40B59422-6D44-4FA4-A271-8D27D8759E8A",
+    "Name": "France",
+    "IsoCode": "FRA",
+    "Code": "FR"
+  },
+  {
+    "Id": "{291FDB58-302C-4156-B93D-E6C171A97331}",
+    "Name": "England",
+    "IsoCode": "GB",
+    "Code": "GB"
   }
 ]

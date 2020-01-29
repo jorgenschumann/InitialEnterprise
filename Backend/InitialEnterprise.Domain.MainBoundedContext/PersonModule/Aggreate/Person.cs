@@ -8,7 +8,6 @@ using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Events;
 using InitialEnterprise.Infrastructure.DDD.Domain;
 using InitialEnterprise.Infrastructure.Utils;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,7 +52,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.PersonModule.Aggreate
         public virtual ICollection<PersonPhone> PersonPhones { get; private set; }
 
         [JsonConstructor]
-        private Person()
+        public Person()
         {
             EmailAddresses = new HashSet<EmailAddress>();
             CreditCards = new HashSet<CreditCard>();

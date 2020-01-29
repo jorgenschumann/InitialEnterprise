@@ -1,7 +1,6 @@
 ﻿using InitialEnterprise.Domain.MainBoundedContext.Api.Application.EmailAddressApplication;
 using InitialEnterprise.Domain.MainBoundedContext.Api.Application.PersonApplication;
 using InitialEnterprise.Domain.MainBoundedContext.PersonModule.Queries;
-using InitialEnterprise.Domain.SharedKernel.ClaimDefinitions;
 using InitialEnterprise.Infrastructure.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using InitialEnterprise.Shared.Dtos;
+using InitialEnterprise.Infrastructure.Api;
+using InitialEnterprise.Domain.SharedKernel.ClaimModule.Aggreate;
 
 namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
 {
@@ -37,7 +38,7 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         [HttpPost]
         [Route("query")]
         [Authorize(Policy = PersonReadClaim.PolicyName)]
-        public async Task<IActionResult> Query([System.Web.Http.FromBody]PersonQuery query)
+        public async Task<IActionResult> Query([FromBody]PersonQuery query)
         {
             var result = await personApplication.Query(query);
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound();
@@ -52,10 +53,10 @@ namespace InitialEnterprise.Domain.MainBoundedContext.Api.Controller
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = PersonReadClaim.PolicyName)]
+        [Authorize(Policy = PersonReadClaim.PolicyName)]     
         public async Task<IActionResult> Get(Guid id)
         {
-            var result = await personApplication.Query(id);
+            var result = await personApplication.Query(id);           
             return result.IsNotNull() ? (IActionResult)Ok(result) : NotFound(new { id });
         }
 

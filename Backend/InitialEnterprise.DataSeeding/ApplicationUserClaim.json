@@ -76,6 +76,36 @@
     "ClaimType": "User",
     "ClaimValue": "Create",
     "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "14",
+    "ClaimType": "Customer",
+    "ClaimValue": "Read",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "15",
+    "ClaimType": "Customer",
+    "ClaimValue": "Write",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "16",
+    "ClaimType": "Customer",
+    "ClaimValue": "Query",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "17",
+    "ClaimType": "Customer",
+    "ClaimValue": "Create",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
+  },
+  {
+    "Id": "18",
+    "ClaimType": "Customer",
+    "ClaimValue": "Delete",
+    "UserId": "16075CDB-EA93-4A10-80F0-844E6FD85F76"
   }
 ]
  
